@@ -609,5 +609,4 @@ interface LemmyApi : LemmyApiBase {
      * @POST("custom_emoji/delete")
      */
     suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<DeleteCustomEmojiResponse>
-
 }

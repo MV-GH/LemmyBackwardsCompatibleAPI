@@ -6,18 +6,15 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
-import java.io.File
 import kotlinx.serialization.Serializable
-
+import java.io.File
 
 @Serializable
 enum class HttpMethod {
     GET, POST, PUT
 }
 
-
 const val lemmy_spec_link = """https://raw.githubusercontent.com/MV-GH/lemmy_openapi_spec/master/lemmy_spec.yaml"""
-
 
 data class RouteInfo(
     val path: String,
@@ -25,7 +22,7 @@ data class RouteInfo(
     val paramsOrBody: String,
     val summary: String?,
     val response: String?,
-    val operationId: String?
+    val operationId: String?,
 )
 
 fun RouteInfo.toInterface(): String {
@@ -56,14 +53,11 @@ suspend fun getRoutes(): List<RouteInfo> {
 
     val result = Yaml.default.parseToYamlNode(specText)
 
-
     val routes = mutableListOf<RouteInfo>()
 
     val paths = (result as YamlMap).get<YamlMap>("paths")!!
 
     for (path in paths.entries) {
-
-
         for (method in (path.value as YamlMap).entries) {
             val route = method.value as YamlMap
             val summary = route.get<YamlScalar>("summary")
@@ -73,7 +67,6 @@ suspend fun getRoutes(): List<RouteInfo> {
             val paramOrBodyName: String = if (httpMethod == HttpMethod.GET) {
                 val param = route.get<YamlList>("parameters")!![0] as YamlMap
                 param.get<YamlScalar>("name")!!.content
-
             } else {
                 val reqBody = route
                     .get<YamlMap>("requestBody")!!
@@ -84,7 +77,6 @@ suspend fun getRoutes(): List<RouteInfo> {
 
                 reqBody.content.substringAfterLast("/")
             }
-
 
             val responses = route.get<YamlMap>("responses")!!
 
@@ -102,8 +94,8 @@ suspend fun getRoutes(): List<RouteInfo> {
                     paramsOrBody = paramOrBodyName,
                     summary = summary?.content,
                     response = responseName,
-                    operationId = paramOrBodyName.replaceFirstChar { it.lowercase() }
-                )
+                    operationId = paramOrBodyName.replaceFirstChar { it.lowercase() },
+                ),
             )
         }
     }
@@ -122,7 +114,7 @@ fun genRouteInterface(routes: List<RouteInfo>) {
 
     fileInterface.writeText("\ninterface LemmyApi : LemmyApiBase {\n\n")
 
-    for (route in routes){
+    for (route in routes) {
         fileInterface.appendText(route.toInterface() + "\n\n")
     }
 
@@ -140,19 +132,15 @@ fun genRouteImpl(routes: List<RouteInfo>) {
 
     fileInterface.writeText("\nclass LemmyApiImpl(private val Ktor: HttpClient) : LemmyApi {\n\n")
 
-    for (route in routes){
+    for (route in routes) {
         fileInterface.appendText(route.toImpl() + "\n\n")
     }
 
     fileInterface.appendText("}\n")
 }
 
-
-
-
-
 suspend fun main() {
-    val routes  = getRoutes()
+    val routes = getRoutes()
     genRouteInterface(routes)
     genRouteImpl(routes)
 }

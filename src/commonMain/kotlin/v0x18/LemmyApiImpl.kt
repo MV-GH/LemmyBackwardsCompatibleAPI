@@ -696,9 +696,7 @@ class LemmyApiImpl(private val Ktor: HttpClient) : LemmyApi {
      */
     override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<DeleteCustomEmojiResponse> =
         Ktor.postResult("custom_emoji/delete", form)
-
 }
-
 
 suspend fun main() {
     val api = LemmyApiImpl(getKtor("https://lemmy.world/api/v3/"))
