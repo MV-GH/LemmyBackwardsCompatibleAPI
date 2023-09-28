@@ -42,5 +42,8 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+temp
+
 # TODO temp
 src/commonTest/kotlin/v0x18/datatypes/
+src/commonMain/kotlin/Secrets.kt

@@ -73,6 +73,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+                implementation("com.charleskorn.kaml:kaml:0.55.0")
             }
         }
         val jvmTest by getting

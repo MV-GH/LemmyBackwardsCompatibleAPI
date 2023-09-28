@@ -1,3 +1,6 @@
+package autogenscripts
+
+import coreKtor
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.util.cio.*
@@ -78,7 +81,7 @@ suspend fun downloadTypes(version: String, vShort: String) {
                 // Add header for each file
                 f.writeText(
                     """
-                    package ${rootPackage}$vShort.datatypes
+                    package $rootPackage$vShort.datatypes
                     
                     """.trimIndent(),
                 )
