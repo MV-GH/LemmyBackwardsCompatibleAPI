@@ -1,8 +1,7 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("multiplatform") version "1.9.0"
     kotlin("plugin.serialization") version "1.9.0"
+    id("org.jmailen.kotlinter") version "3.16.0"
 }
 
 group = "org.example"
@@ -91,4 +90,8 @@ kotlin {
         }
         val nativeTest by getting
     }
+}
+
+tasks.check {
+    dependsOn("installKotlinterPrePushHook")
 }
