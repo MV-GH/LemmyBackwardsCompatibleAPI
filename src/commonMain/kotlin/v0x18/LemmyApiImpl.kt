@@ -52,7 +52,6 @@ class LemmyApiImpl(private val Ktor: HttpClient) : LemmyApi {
     override suspend fun markAsRead(form: MarkPostAsRead): Result<PostResponse> =
         Ktor.postResult("post/mark_as_read", form)
 
-
     /**
      * Like / vote on a comment.
      *
@@ -290,6 +289,6 @@ suspend fun main() {
     val api = LemmyApiImpl(getKtor("https://lemmy.world/api/v3/"))
 
     println(api.version)
-    //println(api.getSite(GetSite()))
-    //println(api.login(Login("lemmy", "lemmy123")))
+    // println(api.getSite(GetSite()))
+    // println(api.login(Login("lemmy", "lemmy123")))
 }

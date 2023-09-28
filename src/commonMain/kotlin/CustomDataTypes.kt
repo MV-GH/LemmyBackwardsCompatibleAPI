@@ -39,48 +39,44 @@ enum class PostFeatureType {
 @Serializable
 enum class RegistrationMode(
     override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null
+    override val maximumVersion: String? = null,
 ) : VersionTracker {
-    Closed, RequireApplication, Open;
-
+    Closed, RequireApplication, Open
 }
-
 
 @Serializable
 enum class SearchType(
     override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null
+    override val maximumVersion: String? = null,
 ) : VersionTracker {
-    All, Comments, Posts, Communities, Users, Url;
-
+    All, Comments, Posts, Communities, Users, Url
 }
 
 @Serializable
 enum class ModlogActionType(
     override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null
+    override val maximumVersion: String? = null,
 ) : VersionTracker {
 
-    All, ModRemovePost, ModLockPost, ModFeaturePost, ModRemoveComment, ModRemoveCommunity, ModBanFromCommunity, ModAddCommunity, ModTransferCommunity, ModAdd, ModBan, ModHideCommunity, AdminPurgePerson, AdminPurgeCommunity, AdminPurgePost, AdminPurgeComment;
+    All, ModRemovePost, ModLockPost, ModFeaturePost, ModRemoveComment, ModRemoveCommunity, ModBanFromCommunity, ModAddCommunity, ModTransferCommunity, ModAdd, ModBan, ModHideCommunity, AdminPurgePerson, AdminPurgeCommunity, AdminPurgePost, AdminPurgeComment
 }
 
 @Serializable
 enum class SortType(
     override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null
+    override val maximumVersion: String? = null,
 ) : VersionTracker {
     Active, Hot, New, Old, Controversial, TopDay, TopWeek, TopMonth, TopYear, TopAll, MostComments, NewComments, TopHour("0.18.0"), TopSixHour("0.18.0"),
     TopTwelveHour("0.18.0"), TopThreeMonths("0.18.1"),
     TopSixMonths("0.18.1"), TopNineMonths("0.18.1")
-
 }
 
 @Serializable
 enum class CommentSortType(
     override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null
+    override val maximumVersion: String? = null,
 ) : VersionTracker {
-    Hot, Top, New, Old, Controversial("0.19") ;
+    Hot, Top, New, Old, Controversial("0.19")
 }
 
 /**
@@ -96,7 +92,6 @@ sealed interface VersionTracker {
     val maximumVersion: String?
 }
 
-
 /**
  * Returns the supported entries for the given version.
  * It is possible that this list is empty, such case means this type is not used at all in a newer version
@@ -108,8 +103,11 @@ sealed interface VersionTracker {
 inline fun <reified T> getSupportedEntries(instanceVersion: String): List<T> where T : Enum<T>, T : VersionTracker {
     return enumValues<T>().filter {
         val max = it.maximumVersion
-        if (max == null) compareVersions(instanceVersion, it.minimumVersion) >= 0
-        else isBetweenVersions(instanceVersion, it.minimumVersion, max)
+        if (max == null) {
+            compareVersions(instanceVersion, it.minimumVersion) >= 0
+        } else {
+            isBetweenVersions(instanceVersion, it.minimumVersion, max)
+        }
     }
 }
 

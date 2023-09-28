@@ -1,8 +1,8 @@
 package v0x18.datatypes
 
 import ListingType
-import SortType
 import SearchType
+import SortType
 import kotlinx.serialization.Serializable
 
 @Serializable

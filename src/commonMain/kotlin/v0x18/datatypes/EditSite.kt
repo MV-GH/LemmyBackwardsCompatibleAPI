@@ -1,7 +1,7 @@
 package v0x18.datatypes
 
-import RegistrationMode
 import ListingType
+import RegistrationMode
 import kotlinx.serialization.Serializable
 
 @Serializable

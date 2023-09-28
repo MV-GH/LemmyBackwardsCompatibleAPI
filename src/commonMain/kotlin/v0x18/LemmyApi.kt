@@ -8,7 +8,6 @@ interface LemmyApi : LemmyApiBase {
     override val version: String
         get() = "0.18"
 
-
     /**
      * Return site and user data.
      *

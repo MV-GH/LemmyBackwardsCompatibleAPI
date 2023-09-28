@@ -4,12 +4,7 @@ import JSON
 import arrow.core.compareTo
 import kotlinx.serialization.json.*
 
-
-
-
 // TODO: IMMUTABLE
-
-
 
 /**
  * Compare two version strings.
@@ -30,6 +25,7 @@ fun compareVersions(a: String, b: String): Int { // TODO remove this from Jerboa
     }
     return comparison
 }
+
 /**
  * Check if a version is between two other versions.
  *
@@ -42,8 +38,6 @@ fun compareVersions(a: String, b: String): Int { // TODO remove this from Jerboa
 fun isBetweenVersions(current: String, min: String, max: String): Boolean {
     return compareVersions(current, min) >= 0 && compareVersions(current, max) <= 0
 }
-
-
 
 inline fun <reified T> toMap(obj: T): Map<String, Any?> {
     return jsonObjectToMap(JSON.encodeToJsonElement(obj).jsonObject)
@@ -63,4 +57,3 @@ private fun extractValue(element: JsonElement): Any? {
         is JsonObject -> jsonObjectToMap(element)
     }
 }
-

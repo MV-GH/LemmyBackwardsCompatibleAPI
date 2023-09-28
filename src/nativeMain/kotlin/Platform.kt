@@ -11,12 +11,10 @@ actual val coreKtor: HttpClient = HttpClient(Curl) {
 actual fun getKtor(baseUrl: String) = HttpClient(Curl) {
     expectSuccess = true
 
-
     // set default request parameters
     defaultRequest {
         // add base url for all request
         url(baseUrl)
-
     }
 
     // use json content negotiation for serialize or deserialize
