@@ -130,7 +130,7 @@ fun genRouteImpl(routes: List<RouteInfo>) {
     val fileInterface = File("temp", "LemmyApiImpl.kt")
     fileInterface.createNewFile()
 
-    fileInterface.writeText("\nclass LemmyApiImpl(private val Ktor: HttpClient) : LemmyApi {\n\n")
+    fileInterface.writeText("\nclass LemmyApiService(private val Ktor: HttpClient) : LemmyApi {\n\n")
 
     for (route in routes) {
         fileInterface.appendText(route.toImpl() + "\n\n")

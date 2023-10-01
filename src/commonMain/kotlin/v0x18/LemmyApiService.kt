@@ -7,7 +7,7 @@ import utils.postResult
 import utils.putResult
 import v0x18.datatypes.*
 
-class LemmyApiImpl(private val Ktor: HttpClient) : LemmyApi {
+class LemmyApiService(private val Ktor: HttpClient) : LemmyApi {
 
     /**
      * Gets the site, and your user data.
@@ -699,7 +699,7 @@ class LemmyApiImpl(private val Ktor: HttpClient) : LemmyApi {
 }
 
 suspend fun main() {
-    val api = LemmyApiImpl(getKtor("https://lemmy.world/api/v3/"))
+    val api = LemmyApiService(getKtor("https://lemmy.world/api/v3/"))
 
     println(api.version)
     println(api.getSite(GetSite()).getOrThrow())
