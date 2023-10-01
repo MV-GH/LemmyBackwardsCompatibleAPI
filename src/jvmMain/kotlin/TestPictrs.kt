@@ -3,7 +3,7 @@ import pictrs.datatypes.UploadImage
 import java.io.File
 
 suspend fun main() {
-    val api = PictrsService(getKtor("https://lemmy.one"))
+    val api = PictrsService(getKtor("https://lemmy.one"), false)
 
     println(
         api.uploadImage(

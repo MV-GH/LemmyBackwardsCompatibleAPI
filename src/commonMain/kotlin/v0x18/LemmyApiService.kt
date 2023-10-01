@@ -2,12 +2,13 @@ package v0x18
 
 import getKtor
 import io.ktor.client.*
+import pictrs.PictrsService
 import utils.getResult
 import utils.postResult
 import utils.putResult
 import v0x18.datatypes.*
 
-class LemmyApiService(private val Ktor: HttpClient) : LemmyApi {
+class LemmyApiService(private val Ktor: HttpClient) : LemmyApi, PictrsService(Ktor, false) {
 
     /**
      * Gets the site, and your user data.

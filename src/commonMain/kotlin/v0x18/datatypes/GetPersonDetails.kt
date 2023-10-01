@@ -1,6 +1,6 @@
 package v0x18.datatypes
 
-import SortType
+import dto.SortType
 import kotlinx.serialization.Serializable
 
 @Serializable

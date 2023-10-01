@@ -39,6 +39,10 @@ fun isBetweenVersions(current: String, min: String, max: String): Boolean {
     return compareVersions(current, min) >= 0 && compareVersions(current, max) <= 0
 }
 
+fun dropPatchVersion(version: String): String {
+    return version.split(".").take(2).joinToString(".")
+}
+
 inline fun <reified T> toMap(obj: T): Map<String, Any?> {
     return jsonObjectToMap(JSON.encodeToJsonElement(obj).jsonObject)
 }

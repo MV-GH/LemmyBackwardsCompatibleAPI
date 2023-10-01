@@ -1,6 +1,6 @@
 package v0x18.datatypes
 
-import ModlogActionType
+import dto.ModlogActionType
 import kotlinx.serialization.Serializable
 
 @Serializable

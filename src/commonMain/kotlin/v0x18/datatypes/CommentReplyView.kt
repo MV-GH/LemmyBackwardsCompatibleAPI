@@ -1,6 +1,6 @@
 package v0x18.datatypes
 
-import SubscribedType
+import dto.SubscribedType
 import kotlinx.serialization.Serializable
 
 @Serializable

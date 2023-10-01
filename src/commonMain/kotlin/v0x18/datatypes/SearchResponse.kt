@@ -1,6 +1,6 @@
 package v0x18.datatypes
 
-import SearchType
+import dto.SearchType
 import kotlinx.serialization.Serializable
 
 @Serializable

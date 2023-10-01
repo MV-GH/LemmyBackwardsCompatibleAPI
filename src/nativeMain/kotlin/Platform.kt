@@ -6,8 +6,15 @@ import io.ktor.serialization.kotlinx.json.*
 
 actual val coreKtor: HttpClient = HttpClient(Curl) {
     expectSuccess = true
-}
 
+    install(ContentNegotiation) {
+        json(ktorJson)
+    }
+
+    install(HttpTimeout) {
+        requestTimeoutMillis = TIMEOUT_MS
+    }
+}
 actual fun getKtor(baseUrl: String) = HttpClient(Curl) {
     expectSuccess = true
 
@@ -20,5 +27,9 @@ actual fun getKtor(baseUrl: String) = HttpClient(Curl) {
     // use json content negotiation for serialize or deserialize
     install(ContentNegotiation) {
         json(ktorJson)
+    }
+
+    install(HttpTimeout) {
+        requestTimeoutMillis = TIMEOUT_MS
     }
 }

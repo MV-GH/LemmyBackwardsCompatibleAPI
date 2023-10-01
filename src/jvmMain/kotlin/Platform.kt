@@ -6,6 +6,14 @@ import io.ktor.serialization.kotlinx.json.*
 
 actual val coreKtor = HttpClient(OkHttp) {
     expectSuccess = true
+
+    install(ContentNegotiation) {
+        json(ktorJson)
+    }
+
+    install(HttpTimeout) {
+        requestTimeoutMillis = TIMEOUT_MS
+    }
 }
 
 // TODO https://ktor.io/docs/http-client-engines.html#okhttp
@@ -32,5 +40,9 @@ actual fun getKtor(baseUrl: String) = HttpClient(OkHttp) {
     // use json content negotiation for serialize or deserialize
     install(ContentNegotiation) {
         json(ktorJson)
+    }
+
+    install(HttpTimeout) {
+        requestTimeoutMillis = TIMEOUT_MS
     }
 }

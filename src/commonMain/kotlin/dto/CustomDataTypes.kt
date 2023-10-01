@@ -1,3 +1,8 @@
+@file:Suppress("unused")
+
+package dto
+
+import MINIMUM_API_VERSION
 import kotlinx.serialization.Serializable
 import utils.compareVersions
 import utils.isBetweenVersions

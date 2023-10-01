@@ -1,6 +1,6 @@
 package v0x18.datatypes
 
-import PostFeatureType
+import dto.PostFeatureType
 import kotlinx.serialization.Serializable
 
 @Serializable

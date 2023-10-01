@@ -1,6 +1,6 @@
 package v0x18.datatypes
 
-import CommentSortType
+import dto.CommentSortType
 import kotlinx.serialization.Serializable
 
 @Serializable
