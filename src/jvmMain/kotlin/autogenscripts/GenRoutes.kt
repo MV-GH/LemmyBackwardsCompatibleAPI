@@ -19,7 +19,7 @@ const val lemmy_spec_link = """https://raw.githubusercontent.com/MV-GH/lemmy_ope
 data class RouteInfo(
     val path: String,
     val method: HttpMethod,
-    val paramsOrBody: String,
+    val paramsOrBody: String?,
     val summary: String?,
     val response: String?,
     val operationId: String?,
@@ -28,18 +28,18 @@ data class RouteInfo(
 fun RouteInfo.toInterface(): String {
     return """
         /**
-         * $summary
+${summary?.lines()?.joinToString("\n") { "         * ${it.trim()}" } ?: ""}
          *
          * @${method.name}("$path")
          */
-        suspend fun $operationId(form: $paramsOrBody): Result<${response ?: "Unit"}>
+        suspend fun $operationId(${if (paramsOrBody != null) "form: $paramsOrBody" else ""}): Result<${response ?: "Unit"}>
     """.replaceIndent("    ")
 }
 
 fun RouteInfo.toImpl(): String {
     return this.toInterface()
         .replace("suspend fun", "override suspend fun")
-        .plus(" =\n        Ktor.${method.name.lowercase()}Result(\"$path\", form)")
+        .plus(" =\n        Ktor.${method.name.lowercase()}Result(\"$path\"${if (paramsOrBody != null) ", form" else ""})")
 }
 
 suspend fun getRoutes(): List<RouteInfo> {
@@ -60,23 +60,14 @@ suspend fun getRoutes(): List<RouteInfo> {
     for (path in paths.entries) {
         for (method in (path.value as YamlMap).entries) {
             val route = method.value as YamlMap
+
+            println(path.key.content)
+
             val summary = route.get<YamlScalar>("summary")
 
             val httpMethod = HttpMethod.valueOf(method.key.content.uppercase())
 
-            val paramOrBodyName: String = if (httpMethod == HttpMethod.GET) {
-                val param = route.get<YamlList>("parameters")!![0] as YamlMap
-                param.get<YamlScalar>("name")!!.content
-            } else {
-                val reqBody = route
-                    .get<YamlMap>("requestBody")!!
-                    .get<YamlMap>("content")!!
-                    .get<YamlMap>("application/json")!!
-                    .get<YamlMap>("schema")!!
-                    .get<YamlScalar>("\$ref")!!
-
-                reqBody.content.substringAfterLast("/")
-            }
+            val params = route.get<YamlList>("parameters")
 
             val responses = route.get<YamlMap>("responses")!!
 
@@ -87,6 +78,22 @@ suspend fun getRoutes(): List<RouteInfo> {
                 ?.get<YamlScalar>("\$ref")
                 ?.content?.substringAfterLast("/")
 
+            val paramOrBodyName: String? = if (params != null) {
+                val param = params[0] as YamlMap
+                param.get<YamlScalar>("name")!!.content
+            } else if (route.get<YamlMap>("requestBody") != null) {
+                val reqBody = route
+                    .get<YamlMap>("requestBody")!!
+                    .get<YamlMap>("content")!!
+                    .get<YamlMap>("application/json")!!
+                    .get<YamlMap>("schema")!!
+                    .get<YamlScalar>("\$ref")!!
+
+                reqBody.content.substringAfterLast("/")
+            } else null
+
+            val operationId: String = route.get<YamlScalar>("operationId")?.content ?: paramOrBodyName ?: responseName?.substringBefore("Response")!!
+
             routes.add(
                 RouteInfo(
                     path = path.key.content.substring(1), // Strip leading /
@@ -94,7 +101,7 @@ suspend fun getRoutes(): List<RouteInfo> {
                     paramsOrBody = paramOrBodyName,
                     summary = summary?.content,
                     response = responseName,
-                    operationId = paramOrBodyName.replaceFirstChar { it.lowercase() },
+                    operationId = operationId.replaceFirstChar { it.lowercase() },
                 ),
             )
         }

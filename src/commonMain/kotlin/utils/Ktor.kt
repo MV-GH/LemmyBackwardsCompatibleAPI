@@ -10,6 +10,17 @@ suspend inline fun <reified R> HttpClient.getResult(
     builder: HttpRequestBuilder.() -> Unit = {},
 ): Result<R> = runCatching { get(urlString, builder).body() }
 
+suspend inline fun <reified R> HttpClient.putResult(
+    urlString: String,
+    builder: HttpRequestBuilder.() -> Unit = {},
+): Result<R> = runCatching { put(urlString, builder).body() }
+
+suspend inline fun <reified R> HttpClient.postResult(
+    urlString: String,
+    builder: HttpRequestBuilder.() -> Unit = {},
+): Result<R> = runCatching { post(urlString, builder).body() }
+
+
 suspend inline fun <reified R, reified T> HttpClient.getResult(
     urlString: String,
     form: T,
@@ -18,12 +29,12 @@ suspend inline fun <reified R, reified T> HttpClient.getResult(
 suspend inline fun <reified R, reified T> HttpClient.postResult(
     urlString: String,
     body: T,
-): Result<R> = runCatching { post(urlString) { setJsonBody(body) }.body() }
+): Result<R> = this.postResult(urlString) { setJsonBody(body) }
 
 suspend inline fun <reified R, reified T> HttpClient.putResult(
     urlString: String,
     body: T,
-): Result<R> = runCatching { put(urlString) { setJsonBody(body) }.body() }
+): Result<R> = this.putResult(urlString) { setJsonBody(body) }
 
 inline fun <reified T> HttpRequestBuilder.addQueryParams(form: T) {
     toMap(form).forEach { (key, value) ->
