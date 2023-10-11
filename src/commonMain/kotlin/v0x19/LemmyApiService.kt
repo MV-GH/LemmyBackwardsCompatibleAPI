@@ -5,6 +5,7 @@ import utils.getResult
 import utils.postResult
 import utils.putResult
 import v0x19.datatypes.*
+
 class LemmyApiService(private val Ktor: HttpClient) : LemmyApi {
 
     /**
@@ -705,7 +706,7 @@ class LemmyApiService(private val Ktor: HttpClient) : LemmyApi {
 
     /**
      * Generate a TOTP / two-factor secret.
-     * 
+     *
      * Afterwards you need to call `/user/totp/update` with a valid token to enable it.
      *
      * @POST("user/totp/generate")
@@ -715,9 +716,9 @@ class LemmyApiService(private val Ktor: HttpClient) : LemmyApi {
 
     /**
      * Enable / Disable TOTP / two-factor authentication.
-     * 
+     *
      * To enable, you need to first call `/user/totp/generate` and then pass a valid token to this.
-     * 
+     *
      * Disabling is only possible if 2FA was previously enabled. Again it is necessary to pass a valid token.
      *
      * @POST("user/totp/update")

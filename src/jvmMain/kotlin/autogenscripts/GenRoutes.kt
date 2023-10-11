@@ -134,7 +134,7 @@ fun genRouteInterface(routes: List<RouteInfo>) {
  * This is used as a template for the actual Lemmy API Implementation
  */
 fun genRouteImpl(routes: List<RouteInfo>) {
-    val fileInterface = File("temp", "LemmyApiImpl.kt")
+    val fileInterface = File("temp", "LemmyApiService.kt")
     fileInterface.createNewFile()
 
     fileInterface.writeText("\nclass LemmyApiService(private val Ktor: HttpClient) : LemmyApi {\n\n")
