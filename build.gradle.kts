@@ -1,7 +1,8 @@
 plugins {
-    kotlin("multiplatform") version "1.9.0"
-    kotlin("plugin.serialization") version "1.9.0"
+    kotlin("multiplatform") version "1.9.10"
+    kotlin("plugin.serialization") version "1.9.10"
     id("org.jmailen.kotlinter") version "3.16.0"
+    id("com.google.devtools.ksp") version("1.9.10-1.0.13")
 }
 
 group = "org.example"
@@ -11,10 +12,11 @@ repositories {
     mavenCentral()
 }
 
+val konvertVersion = "2.3.0"
+
 kotlin {
     jvm {
-        jvmToolchain(11)
-        withJava()
+        jvmToolchain(17)
         testRuns.named("test") {
             executionTask.configure {
                 useJUnitPlatform()
@@ -62,6 +64,12 @@ kotlin {
                 implementation("io.arrow-kt:arrow-core:1.2.0")
                 implementation("io.arrow-kt:arrow-fx-coroutines:1.2.0")
 
+
+                // DTO mapper
+               //implementation("io.mcarle:konvert-api:$konvertVersion")
+
+
+
             }
         }
         val commonTest by getting {
@@ -74,6 +82,8 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
                 implementation("com.charleskorn.kaml:kaml:0.55.0")
+
+                implementation("io.mcarle:konvert-api:$konvertVersion")
             }
         }
         val jvmTest by getting
@@ -91,6 +101,12 @@ kotlin {
         }
         val nativeTest by getting
     }
+}
+
+dependencies {
+    //add("kspCommonMainMetadata", "io.mcarle:konvert:$konvertVersion")
+    add("kspJvm", "io.mcarle:konvert:$konvertVersion")
+
 }
 
 tasks.check {

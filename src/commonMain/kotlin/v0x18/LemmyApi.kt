@@ -72,7 +72,7 @@ interface LemmyApi : LemmyApiBase {
     suspend fun editCommunity(form: EditCommunity): Result<CommunityResponse>
 
     /**
-     * [MANUAL] Hide a community from the feed
+     * Hide a community from public view.
      *
      * @PUT("community/hide")
      */

@@ -1,13 +1,18 @@
 package v0x19
 
+import getKtor
 import io.ktor.client.*
+import pictrs.PictrsService
 import utils.getResult
 import utils.postResult
 import utils.putResult
 import v0x19.datatypes.*
 
-class LemmyApiService(private val Ktor: HttpClient) : LemmyApi {
+class LemmyApiService(private val Ktor: HttpClient, override var auth: String? = null) : LemmyApi, PictrsService(Ktor, true, auth) {
 
+//    val k = Ktor.config { TODO AUTH
+//        install()
+//    }
     /**
      * Gets the site, and your user data.
      *
@@ -741,5 +746,11 @@ class LemmyApiService(private val Ktor: HttpClient) : LemmyApi {
      */
 //    override suspend fun getUserImport(form: GetUserImport): Result<Unit> =
 //        Ktor.postResult("user/import", form)
+}
 
+suspend fun main() {
+    val api = LemmyApiService(getKtor("https://voyager.lemmy.ml/api/v3/"))
+
+    println(api.version)
+    println(api.getSite())
 }

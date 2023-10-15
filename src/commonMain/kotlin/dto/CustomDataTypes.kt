@@ -20,13 +20,6 @@ import utils.isBetweenVersions
 // GROUP 1
 
 @Serializable
-enum class ListingType {
-    All,
-    Local,
-    Subscribed,
-}
-
-@Serializable
 enum class SubscribedType {
     Subscribed,
     NotSubscribed,
@@ -40,6 +33,17 @@ enum class PostFeatureType {
 }
 
 // GROUP 2
+
+@Serializable
+enum class ListingType(
+    override val minimumVersion: String = MINIMUM_API_VERSION,
+    override val maximumVersion: String? = null,
+) : VersionTracker {
+    All,
+    Local,
+    Subscribed,
+    ModeratorView("0.19.0"),
+}
 
 @Serializable
 enum class RegistrationMode(
@@ -71,9 +75,9 @@ enum class SortType(
     override val minimumVersion: String = MINIMUM_API_VERSION,
     override val maximumVersion: String? = null,
 ) : VersionTracker {
-    Active, Hot, New, Old, Controversial, TopDay, TopWeek, TopMonth, TopYear, TopAll, MostComments, NewComments, TopHour("0.18.0"), TopSixHour("0.18.0"),
+    Active, Hot, New, Old, TopDay, TopWeek, TopMonth, TopYear, TopAll, MostComments, NewComments, TopHour("0.18.0"), TopSixHour("0.18.0"),
     TopTwelveHour("0.18.0"), TopThreeMonths("0.18.1"),
-    TopSixMonths("0.18.1"), TopNineMonths("0.18.1")
+    TopSixMonths("0.18.1"), TopNineMonths("0.18.1"), Controversial("0.19.0"), Scaled("0.19.0")
 }
 
 @Serializable
@@ -81,8 +85,18 @@ enum class CommentSortType(
     override val minimumVersion: String = MINIMUM_API_VERSION,
     override val maximumVersion: String? = null,
 ) : VersionTracker {
-    Hot, Top, New, Old, Controversial("0.19")
+    Hot, Top, New, Old, Controversial("0.19.0")
 }
+
+@Serializable
+enum class PostListingMode(
+    override val minimumVersion: String = "0.19.0",
+    override val maximumVersion: String? = null,
+) : VersionTracker {
+    List, Card, SmallCard
+}
+
+// TODO PersonSortType
 
 /**
  * Tracks the version of the supported entries from this enum

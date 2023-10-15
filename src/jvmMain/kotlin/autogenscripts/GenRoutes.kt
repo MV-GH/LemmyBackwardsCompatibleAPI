@@ -90,7 +90,9 @@ suspend fun getRoutes(): List<RouteInfo> {
                     .get<YamlScalar>("\$ref")!!
 
                 reqBody.content.substringAfterLast("/")
-            } else null
+            } else {
+                null
+            }
 
             val operationId: String = route.get<YamlScalar>("operationId")?.content ?: paramOrBodyName ?: responseName?.substringBefore("Response")!!
 

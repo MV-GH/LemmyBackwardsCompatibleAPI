@@ -2,11 +2,9 @@ import dto.NodeInfo
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import utils.dropPatchVersion
-import utils.isBetweenVersions
-import v0x18.datatypes.GetSite
 
 object LemmyApi {
-    const val MAX_SUPPORTED_VERSION = "0.18"
+    const val MAX_SUPPORTED_VERSION = "0.19"
     const val MIN_SUPPORTED_VERSION = "0.18"
     const val API_VERSION = "v3"
 
@@ -31,18 +29,31 @@ object LemmyApi {
         return node.software.version
     }
 
-    suspend fun getLemmyApi(instance: String): v0x18.LemmyApi {
+    /**
+     * Returns a LemmyApi instance.
+     *
+     * Throws several errors if the Instance isn't available or a Lemmy host or supported.
+     *
+     * Use the Feature Flags before using certain endpoints as they can be or not available depending
+     * on the version of the Lemmy Server.
+     */
+
+    suspend fun getLemmyApi(instance: String, auth: String? = null): v0x19.LemmyApi {
         val version = getVersion(instance)
 
-        if (!isBetweenVersions(dropPatchVersion(version), MIN_SUPPORTED_VERSION, MAX_SUPPORTED_VERSION)) throw Exception("Unsupported Lemmy version: $version")
+        val ktor = lazy { getKtor("$instance/api/$API_VERSION/") }
 
-        return v0x18.LemmyApiService(getKtor("$instance/api/$API_VERSION/"))
+        return when (dropPatchVersion(version)) {
+            "0.19" -> v0x19.LemmyApiService(ktor.value, auth)
+            "0.18" -> v0x18.LemmyV0x19Wrapper(ktor.value, auth)
+            else -> throw Exception("Unsupported Lemmy version: $version")
+        }
     }
 }
 
 suspend fun main() {
-    println(LemmyApi.getNodeInfo("https://lemmy.ml"))
+    // println(LemmyApi.getNodeInfo("https://lemmy.ml"))
 
     val api = LemmyApi.getLemmyApi("https://lemmy.ml")
-    println(api.getSite(GetSite()))
+    println(api.getSite())
 }

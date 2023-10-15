@@ -6,6 +6,8 @@ import pictrs.datatypes.UploadImageResponse
 
 interface PictrsAPI {
 
+    var auth: String?
+
     /**
      * Upload an image to the server.
      *

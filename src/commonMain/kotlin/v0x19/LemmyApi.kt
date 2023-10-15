@@ -5,7 +5,7 @@ import v0x19.datatypes.*
 interface LemmyApi : LemmyApiBase {
 
     override val version: String
-        get() = "0.18"
+        get() = "0.19"
 
     /**
      * Gets the site, and your user data.
@@ -618,7 +618,7 @@ interface LemmyApi : LemmyApiBase {
 
     /**
      * Generate a TOTP / two-factor secret.
-     * 
+     *
      * Afterwards you need to call `/user/totp/update` with a valid token to enable it.
      *
      * @POST("user/totp/generate")
@@ -627,9 +627,9 @@ interface LemmyApi : LemmyApiBase {
 
     /**
      * Enable / Disable TOTP / two-factor authentication.
-     * 
+     *
      * To enable, you need to first call `/user/totp/generate` and then pass a valid token to this.
-     * 
+     *
      * Disabling is only possible if 2FA was previously enabled. Again it is necessary to pass a valid token.
      *
      * @POST("user/totp/update")
@@ -641,13 +641,12 @@ interface LemmyApi : LemmyApiBase {
      *
      * @GET("user/export")
      */
-    //suspend fun getUserExport(): Result<GetUserExportResponse>
+    // suspend fun getUserExport(): Result<GetUserExportResponse>
 
     /**
      * [MANUAL] Import your user data.
      *
      * @POST("user/import")
      */
-    //suspend fun getUserImport(form: GetUserImport): Result<Unit>
-
+    // suspend fun getUserImport(form: GetUserImport): Result<Unit>
 }

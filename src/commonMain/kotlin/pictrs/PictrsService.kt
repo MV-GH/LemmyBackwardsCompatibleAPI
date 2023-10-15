@@ -8,7 +8,7 @@ import io.ktor.http.*
 import pictrs.datatypes.UploadImage
 import pictrs.datatypes.UploadImageResponse
 
-open class PictrsService(val ktor: HttpClient, val use0x19: Boolean) : PictrsAPI {
+open class PictrsService(val ktor: HttpClient, val use0x19: Boolean, override var auth: String?) : PictrsAPI {
     /**
      * Upload an image to the server.
      *
@@ -17,7 +17,7 @@ open class PictrsService(val ktor: HttpClient, val use0x19: Boolean) : PictrsAPI
     override suspend fun uploadImage(form: UploadImage): Result<UploadImageResponse> {
         return runCatching {
             val resp = ktor.post("/pictrs/image") {
-                form.auth?.let { cookie(if (use0x19) "auth" else "jwt", it) }
+                auth?.let { cookie(if (use0x19) "auth" else "jwt", it) }
                 setBody(
                     MultiPartFormDataContent(
                         formData {
@@ -56,7 +56,9 @@ open class PictrsService(val ktor: HttpClient, val use0x19: Boolean) : PictrsAPI
      */
     override suspend fun deleteImage(relativeUrl: String): Result<Unit> {
         return runCatching {
-            ktor.get(relativeUrl).body()
+            ktor.get(relativeUrl) {
+                auth?.let { cookie(if (use0x19) "auth" else "jwt", it) }
+            }.body()
         }
     }
 }

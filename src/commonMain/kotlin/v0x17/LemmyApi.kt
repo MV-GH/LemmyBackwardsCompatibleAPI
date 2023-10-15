@@ -1,8 +1,8 @@
 package v0x17
 
 import LemmyApiBase
-import v0x18.datatypes.*
 import v0x17.datatypes.GetSiteResponse
+import v0x18.datatypes.*
 
 // The only breaking change with v0.18 really is the that taglines were optional
 interface LemmyApi : LemmyApiBase {
@@ -74,7 +74,7 @@ interface LemmyApi : LemmyApiBase {
     suspend fun editCommunity(form: EditCommunity): Result<CommunityResponse>
 
     /**
-     * [MANUAL] Hide a community from the feed
+     * Hide a community from public view.
      *
      * @PUT("community/hide")
      */

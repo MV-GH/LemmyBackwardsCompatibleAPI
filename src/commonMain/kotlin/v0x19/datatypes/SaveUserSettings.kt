@@ -1,5 +1,6 @@
 package v0x19.datatypes
 
+import dto.ListingType
 import dto.SortType
 import kotlinx.serialization.Serializable
 
@@ -11,7 +12,7 @@ data class SaveUserSettings(
     val show_scores: Boolean? = null,
     val theme: String? = null,
     val default_sort_type: SortType? /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */ = null,
-    val default_listing_type: String? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
+    val default_listing_type: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
     val interface_language: String? = null,
     val avatar: String? = null,
     val banner: String? = null,

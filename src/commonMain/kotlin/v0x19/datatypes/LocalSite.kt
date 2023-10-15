@@ -1,5 +1,6 @@
 package v0x19.datatypes
 
+import dto.ListingType
 import dto.RegistrationMode
 import kotlinx.serialization.Serializable
 
@@ -15,7 +16,7 @@ data class LocalSite(
     val application_question: String? = null,
     val private_instance: Boolean,
     val default_theme: String,
-    val default_post_listing_type: String /* "All" | "Local" | "Subscribed" | "ModeratorView" */,
+    val default_post_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" */,
     val legal_information: String? = null,
     val hide_modlog_mod_names: Boolean,
     val application_email_admins: Boolean,

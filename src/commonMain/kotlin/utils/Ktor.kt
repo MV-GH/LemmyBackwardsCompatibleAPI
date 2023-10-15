@@ -20,7 +20,6 @@ suspend inline fun <reified R> HttpClient.postResult(
     builder: HttpRequestBuilder.() -> Unit = {},
 ): Result<R> = runCatching { post(urlString, builder).body() }
 
-
 suspend inline fun <reified R, reified T> HttpClient.getResult(
     urlString: String,
     form: T,

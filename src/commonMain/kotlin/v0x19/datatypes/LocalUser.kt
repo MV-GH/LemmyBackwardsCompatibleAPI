@@ -1,5 +1,7 @@
 package v0x19.datatypes
 
+import dto.ListingType
+import dto.PostListingMode
 import dto.SortType
 import kotlinx.serialization.Serializable
 
@@ -11,7 +13,7 @@ data class LocalUser(
     val show_nsfw: Boolean,
     val theme: String,
     val default_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */,
-    val default_listing_type: String /* "All" | "Local" | "Subscribed" | "ModeratorView" */,
+    val default_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" */,
     val interface_language: String,
     val show_avatars: Boolean,
     val send_notifications_to_email: Boolean,
@@ -27,6 +29,6 @@ data class LocalUser(
     val auto_expand: Boolean,
     val infinite_scroll_enabled: Boolean,
     val admin: Boolean,
-    val post_listing_mode: String /* "List" | "Card" | "SmallCard" */,
+    val post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
     val totp_2fa_enabled: Boolean,
 )

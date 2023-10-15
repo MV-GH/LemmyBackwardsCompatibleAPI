@@ -6,8 +6,8 @@ import pictrs.PictrsService
 import utils.getResult
 import utils.postResult
 import utils.putResult
-import v0x18.datatypes.*
 import v0x17.datatypes.GetSiteResponse
+import v0x18.datatypes.*
 
 /**
  * Barebone implementation for v0.17, not continued due to required effort to support
@@ -19,7 +19,7 @@ import v0x17.datatypes.GetSiteResponse
  * And whatever else problems show up.
  *
  */
-class LemmyApiService(private val Ktor: HttpClient) : LemmyApi, PictrsService(Ktor, false) {
+class LemmyApiService(private val Ktor: HttpClient, override var auth: String? = null) : LemmyApi, PictrsService(Ktor, false, auth) {
 
     /**
      * Gets the site, and your user data.
@@ -94,7 +94,7 @@ class LemmyApiService(private val Ktor: HttpClient) : LemmyApi, PictrsService(Kt
         Ktor.putResult("community", form)
 
     /**
-     * [MANUAL] Hide a community from the feed
+     * Hide a community from public view.
      *
      * @PUT("community/hide")
      */
