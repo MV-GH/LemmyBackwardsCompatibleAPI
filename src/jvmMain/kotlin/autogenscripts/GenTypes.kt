@@ -15,9 +15,6 @@ const val rootPackagePath = ""
 const val rootPackage = ""
 const val customDataTypesPackage = "dto."
 
-// These were accidentally added to the types, but are not actually exported by the API
-val propsThatShouldNotBeAdded = listOf("followers_url", "inbox_url")
-
 val filesThatShouldNotBeAdded = setOf("others.ts", "DeleteAccountResponse.ts", "PasswordResetResponse.ts", "VerifyEmailResponse.ts")
 
 fun getTypesPath(version: String, temp: Boolean = true) = "$rootPath$rootPackagePath$version/datatypes" + if (temp) "/temp" else ""
@@ -102,7 +99,6 @@ suspend fun downloadTypes(version: String, vShort: String) {
                     .split(Regex("\r?\n"))
                     .drop(15) // Remove weird dukat imports
                     .filter { !it.contains("definedExternally") } // Remove these weird getters and setters
-                    .filter { line -> !propsThatShouldNotBeAdded.any { line.contains(it) } } // Remove props that should not be added
                     .map { line ->
                         // Convert interface to data class
                         var k = line.replace("interface ", "data class ")
@@ -186,7 +182,6 @@ suspend fun downloadTypes(version: String, vShort: String) {
                                 "post_listing_mode: PostListingMode"
                             }
 
-                        // TODO fix custom others types
                     }
 
                 if (imports != "") {
@@ -211,7 +206,5 @@ suspend fun downloadTypes(version: String, vShort: String) {
 }
 
 suspend fun main() {
-    downloadTypes("0.19.0-rc.13", "v0x19")
+    downloadTypes("0.19.0-rc.14", "v0x19")
 }
-
-// TODO Site.inbox_url

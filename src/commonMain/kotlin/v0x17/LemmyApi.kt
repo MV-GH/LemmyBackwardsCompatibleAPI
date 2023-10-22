@@ -568,28 +568,28 @@ interface LemmyApi : LemmyApiBase {
      *
      * @POST("admin/purge/person")
      */
-    suspend fun purgePerson(form: PurgePerson): Result<PurgeItemResponse>
+    suspend fun purgePerson(form: PurgePerson): Result<Unit>
 
     /**
      * Purge / Delete a community from the database.
      *
      * @POST("admin/purge/community")
      */
-    suspend fun purgeCommunity(form: PurgeCommunity): Result<PurgeItemResponse>
+    suspend fun purgeCommunity(form: PurgeCommunity): Result<Unit>
 
     /**
      * Purge / Delete a post from the database.
      *
      * @POST("admin/purge/post")
      */
-    suspend fun purgePost(form: PurgePost): Result<PurgeItemResponse>
+    suspend fun purgePost(form: PurgePost): Result<Unit>
 
     /**
      * Purge / Delete a comment from the database.
      *
      * @POST("admin/purge/comment")
      */
-    suspend fun purgeComment(form: PurgeComment): Result<PurgeItemResponse>
+    suspend fun purgeComment(form: PurgeComment): Result<Unit>
 
     /**
      * Edit an existing custom emoji
@@ -610,5 +610,5 @@ interface LemmyApi : LemmyApiBase {
      *
      * @POST("custom_emoji/delete")
      */
-    suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<DeleteCustomEmojiResponse>
+    suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit>
 }

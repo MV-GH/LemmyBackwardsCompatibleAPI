@@ -5,4 +5,4 @@ interface LemmyApiBase : PictrsAPI {
     override var auth: String?
 }
 
-// TODO possibly add Pictrs
+// TODO: nodeinfo

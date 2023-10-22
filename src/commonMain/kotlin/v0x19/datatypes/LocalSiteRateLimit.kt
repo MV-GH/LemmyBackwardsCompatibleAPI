@@ -20,4 +20,6 @@ data class LocalSiteRateLimit(
     val search_per_second: Int,
     val published: String,
     val updated: String? = null,
+    val import_user_settings: Int,
+    val import_user_settings_per_second: Int,
 )

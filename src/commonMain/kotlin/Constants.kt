@@ -6,4 +6,4 @@ const val TIMEOUT_MS = 15000L
 val JSON = Json { encodeDefaults = true }
 
 // TODO think about this
-val ktorJson = Json { ignoreUnknownKeys = true }
+val ktorJson = Json

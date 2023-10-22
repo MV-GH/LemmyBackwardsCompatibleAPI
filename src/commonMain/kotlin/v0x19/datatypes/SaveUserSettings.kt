@@ -1,5 +1,6 @@
 package v0x19.datatypes
 
+import dto.PostListingMode
 import dto.ListingType
 import dto.SortType
 import kotlinx.serialization.Serializable
@@ -29,4 +30,7 @@ data class SaveUserSettings(
     val discussion_languages: List<LanguageId>? = null,
     val open_links_in_new_tab: Boolean? = null,
     val infinite_scroll_enabled: Boolean? = null,
+    val post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
+    val enable_keyboard_navigation: Boolean? = null,
+    val enable_animated_images: Boolean? = null,
 )

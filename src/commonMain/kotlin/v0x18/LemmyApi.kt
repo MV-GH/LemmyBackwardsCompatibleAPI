@@ -76,7 +76,7 @@ interface LemmyApi : LemmyApiBase {
      *
      * @PUT("community/hide")
      */
-    suspend fun hideCommunity(form: HideCommunity): Result<CommunityResponse>
+    suspend fun hideCommunity(form: HideCommunity): Result<Unit>
 
     /**
      * List communities, with various filters.
@@ -496,14 +496,14 @@ interface LemmyApi : LemmyApiBase {
      *
      * @PUT("user/save_user_settings")
      */
-    suspend fun saveUserSettings(form: SaveUserSettings): Result<LoginResponse>
+    suspend fun saveUserSettings(form: SaveUserSettings): Result<Unit>
 
     /**
      * Change your user password.
      *
      * @PUT("user/change_password")
      */
-    suspend fun changePassword(form: ChangePassword): Result<LoginResponse>
+    suspend fun changePassword(form: ChangePassword): Result<Unit>
 
     /**
      * Get counts for your reports
@@ -566,28 +566,28 @@ interface LemmyApi : LemmyApiBase {
      *
      * @POST("admin/purge/person")
      */
-    suspend fun purgePerson(form: PurgePerson): Result<PurgeItemResponse>
+    suspend fun purgePerson(form: PurgePerson): Result<Unit>
 
     /**
      * Purge / Delete a community from the database.
      *
      * @POST("admin/purge/community")
      */
-    suspend fun purgeCommunity(form: PurgeCommunity): Result<PurgeItemResponse>
+    suspend fun purgeCommunity(form: PurgeCommunity): Result<Unit>
 
     /**
      * Purge / Delete a post from the database.
      *
      * @POST("admin/purge/post")
      */
-    suspend fun purgePost(form: PurgePost): Result<PurgeItemResponse>
+    suspend fun purgePost(form: PurgePost): Result<Unit>
 
     /**
      * Purge / Delete a comment from the database.
      *
      * @POST("admin/purge/comment")
      */
-    suspend fun purgeComment(form: PurgeComment): Result<PurgeItemResponse>
+    suspend fun purgeComment(form: PurgeComment): Result<Unit>
 
     /**
      * Edit an existing custom emoji
@@ -608,5 +608,5 @@ interface LemmyApi : LemmyApiBase {
      *
      * @POST("custom_emoji/delete")
      */
-    suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<DeleteCustomEmojiResponse>
+    suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit>
 }

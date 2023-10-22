@@ -4,6 +4,8 @@ import io.ktor.client.*
 import pictrs.datatypes.UploadImage
 import pictrs.datatypes.UploadImageResponse
 import v0x18.datatypes.*
+import v0x19.GetUserExportSettingsResponse
+import v0x19.GetUserImportSettings
 import v0x19.datatypes.*
 import v0x19.datatypes.AddAdmin
 import v0x19.datatypes.AddAdminResponse
@@ -40,7 +42,6 @@ import v0x19.datatypes.DeleteAccount
 import v0x19.datatypes.DeleteComment
 import v0x19.datatypes.DeleteCommunity
 import v0x19.datatypes.DeleteCustomEmoji
-import v0x19.datatypes.DeleteCustomEmojiResponse
 import v0x19.datatypes.DeletePost
 import v0x19.datatypes.DeletePrivateMessage
 import v0x19.datatypes.DistinguishComment
@@ -107,7 +108,6 @@ import v0x19.datatypes.PrivateMessageResponse
 import v0x19.datatypes.PrivateMessagesResponse
 import v0x19.datatypes.PurgeComment
 import v0x19.datatypes.PurgeCommunity
-import v0x19.datatypes.PurgeItemResponse
 import v0x19.datatypes.PurgePerson
 import v0x19.datatypes.PurgePost
 import v0x19.datatypes.Register
@@ -142,6 +142,24 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
             field = value
             apiV18.auth = value // Not sure if this needed
         }
+
+    // PICTRS
+
+    /**
+     * Upload an image to the server.
+     *
+     * @POST(/pictrs/image)
+     */
+    override suspend fun uploadImage(form: UploadImage): Result<UploadImageResponse> = apiV18.uploadImage(form)
+
+    /**
+     * Delete an image from the server.
+     *
+     * @POST(/pictrs/image/delete)
+     */
+    override suspend fun deleteImage(relativeUrl: String): Result<Unit> = apiV18.deleteImage(relativeUrl)
+
+    // START
 
     /**
      * Gets the site, and your user data.
@@ -222,8 +240,8 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      *
      * @PUT("community/hide")
      */
-    override suspend fun hideCommunity(form: HideCommunity): Result<CommunityResponse> =
-        apiV18.hideCommunity(transformer.toV0x18(form)).map(transformer::toV0x19)
+    override suspend fun hideCommunity(form: HideCommunity): Result<Unit> =
+        apiV18.hideCommunity(transformer.toV0x18(form))
 
     /**
      * List communities, with various filters.
@@ -348,10 +366,18 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
     /**
      * Mark a post as read.
      *
+     * Maps v19 logic
+     *
      * @POST("post/mark_as_read")
      */
-    override suspend fun markPostAsRead(form: MarkPostAsRead): Result<PostResponse> =
-        apiV18.markPostAsRead(transformer.toV0x18(form)).map(transformer::toV0x19)
+    override suspend fun markPostAsRead(form: MarkPostAsRead): Result<Unit> {
+        return form.post_ids
+            .map { v0x18.datatypes.MarkPostAsRead(post_id = it, read = form.read, auth = "" + auth) }
+            .map { apiV18.markPostAsRead(it) }
+            .map { it.map { } }
+            .firstOrNull { it.isFailure } ?: Result.success(Unit)
+    }
+
 
     /**
      * A moderator can lock a post ( IE disable new comments ).
@@ -702,16 +728,16 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      *
      * @PUT("user/save_user_settings")
      */
-    override suspend fun saveUserSettings(form: SaveUserSettings): Result<LoginResponse> =
-        apiV18.saveUserSettings(transformer.toV0x18(form)).map(transformer::toV0x19)
+    override suspend fun saveUserSettings(form: SaveUserSettings): Result<Unit> =
+        apiV18.saveUserSettings(transformer.toV0x18(form))
 
     /**
      * Change your user password.
      *
      * @PUT("user/change_password")
      */
-    override suspend fun changePassword(form: ChangePassword): Result<LoginResponse> =
-        apiV18.changePassword(transformer.toV0x18(form)).map(transformer::toV0x19)
+    override suspend fun changePassword(form: ChangePassword): Result<Unit> =
+        apiV18.changePassword(transformer.toV0x18(form))
 
     /**
      * Get counts for your reports
@@ -782,32 +808,32 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      *
      * @POST("admin/purge/person")
      */
-    override suspend fun purgePerson(form: PurgePerson): Result<PurgeItemResponse> =
-        apiV18.purgePerson(transformer.toV0x18(form)).map(transformer::toV0x19)
+    override suspend fun purgePerson(form: PurgePerson): Result<Unit> =
+        apiV18.purgePerson(transformer.toV0x18(form))
 
     /**
      * Purge / Delete a community from the database.
      *
      * @POST("admin/purge/community")
      */
-    override suspend fun purgeCommunity(form: PurgeCommunity): Result<PurgeItemResponse> =
-        apiV18.purgeCommunity(transformer.toV0x18(form)).map(transformer::toV0x19)
+    override suspend fun purgeCommunity(form: PurgeCommunity): Result<Unit> =
+        apiV18.purgeCommunity(transformer.toV0x18(form))
 
     /**
      * Purge / Delete a post from the database.
      *
      * @POST("admin/purge/post")
      */
-    override suspend fun purgePost(form: PurgePost): Result<PurgeItemResponse> =
-        apiV18.purgePost(transformer.toV0x18(form)).map(transformer::toV0x19)
+    override suspend fun purgePost(form: PurgePost): Result<Unit> =
+        apiV18.purgePost(transformer.toV0x18(form))
 
     /**
      * Purge / Delete a comment from the database.
      *
      * @POST("admin/purge/comment")
      */
-    override suspend fun purgeComment(form: PurgeComment): Result<PurgeItemResponse> =
-        apiV18.purgeComment(transformer.toV0x18(form)).map(transformer::toV0x19)
+    override suspend fun purgeComment(form: PurgeComment): Result<Unit> =
+        apiV18.purgeComment(transformer.toV0x18(form))
 
     /**
      * Edit an existing custom emoji
@@ -830,8 +856,8 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      *
      * @POST("custom_emoji/delete")
      */
-    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<DeleteCustomEmojiResponse> =
-        apiV18.deleteCustomEmoji(transformer.toV0x18(form)).map(transformer::toV0x19)
+    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> =
+        apiV18.deleteCustomEmoji(transformer.toV0x18(form))
 
     /**
      * Block an instance.
@@ -866,19 +892,41 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
         TODO(" FEATURE FLAG")
     }
 
-    // PICTRS
+    /**
+     * Export a backup of your user settings, including your saved content,
+     * followed communities, and blocks.
+     *
+     * @GET("user/export_settings")
+     */
+    override suspend fun getUserExportSettings(): Result<GetUserExportSettingsResponse> {
+        TODO("Not yet implemented")
+    }
 
     /**
-     * Upload an image to the server.
+     * Import a backup of your user settings.
      *
-     * @POST(/pictrs/image)
+     * @POST("user/import_settings")
      */
-    override suspend fun uploadImage(form: UploadImage): Result<UploadImageResponse> = apiV18.uploadImage(form)
+    override suspend fun getUserImportSettings(form: GetUserImportSettings): Result<Unit> {
+        TODO("Not yet implemented")
+    }
 
     /**
-     * Delete an image from the server.
+     * List login tokens for your user
      *
-     * @POST(/pictrs/image/delete)
+     * @GET("user/list_logins")
      */
-    override suspend fun deleteImage(relativeUrl: String): Result<Unit> = apiV18.deleteImage(relativeUrl)
+    override suspend fun listLogins(): Result<LoginToken> {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Returns an error message if your auth token is invalid
+     *
+     * @GET("user/validate_auth")
+     */
+    override suspend fun validateAuth(): Result<Unit> {
+        TODO("Not yet implemented")
+    }
+
 }

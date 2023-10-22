@@ -2,8 +2,10 @@ package utils
 
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.util.*
 
 suspend inline fun <reified R> HttpClient.getResult(
     urlString: String,
@@ -48,4 +50,12 @@ inline fun <reified T> HttpRequestBuilder.addQueryParams(form: T) {
 inline fun <reified T> HttpRequestBuilder.setJsonBody(body: T) {
     contentType(ContentType.Application.Json)
     setBody(body)
+}
+
+fun HttpClient.addAuth(auth: String?)  = this.config {
+    if (auth != null) {
+        defaultRequest {
+            headers.appendIfNameAbsent(HttpHeaders.Authorization, "Bearer $auth")
+        }
+    }
 }

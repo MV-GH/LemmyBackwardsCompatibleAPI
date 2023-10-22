@@ -56,6 +56,8 @@ kotlin {
 
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
+                implementation("io.github.aakira:napier:2.6.1")
 
                 // Only to download new types, not sure how to do this as dev dep only
                 implementation("com.squareup.okio:okio:3.5.0")

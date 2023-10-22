@@ -71,11 +71,11 @@ interface LemmyApi : LemmyApiBase {
     suspend fun editCommunity(form: EditCommunity): Result<CommunityResponse>
 
     /**
-     * Hide a community from public view.
+     * Hide a community from public / "All" view. Admins only.
      *
      * @PUT("community/hide")
      */
-    suspend fun hideCommunity(form: HideCommunity): Result<CommunityResponse>
+    suspend fun hideCommunity(form: HideCommunity): Result<Unit>
 
     /**
      * List communities, with various filters.
@@ -187,7 +187,7 @@ interface LemmyApi : LemmyApiBase {
      *
      * @POST("post/mark_as_read")
      */
-    suspend fun markPostAsRead(form: MarkPostAsRead): Result<PostResponse>
+    suspend fun markPostAsRead(form: MarkPostAsRead): Result<Unit>
 
     /**
      * A moderator can lock a post ( IE disable new comments ).
@@ -495,14 +495,14 @@ interface LemmyApi : LemmyApiBase {
      *
      * @PUT("user/save_user_settings")
      */
-    suspend fun saveUserSettings(form: SaveUserSettings): Result<LoginResponse>
+    suspend fun saveUserSettings(form: SaveUserSettings): Result<Unit>
 
     /**
      * Change your user password.
      *
      * @PUT("user/change_password")
      */
-    suspend fun changePassword(form: ChangePassword): Result<LoginResponse>
+    suspend fun changePassword(form: ChangePassword): Result<Unit>
 
     /**
      * Get counts for your reports
@@ -565,28 +565,28 @@ interface LemmyApi : LemmyApiBase {
      *
      * @POST("admin/purge/person")
      */
-    suspend fun purgePerson(form: PurgePerson): Result<PurgeItemResponse>
+    suspend fun purgePerson(form: PurgePerson): Result<Unit>
 
     /**
      * Purge / Delete a community from the database.
      *
      * @POST("admin/purge/community")
      */
-    suspend fun purgeCommunity(form: PurgeCommunity): Result<PurgeItemResponse>
+    suspend fun purgeCommunity(form: PurgeCommunity): Result<Unit>
 
     /**
      * Purge / Delete a post from the database.
      *
      * @POST("admin/purge/post")
      */
-    suspend fun purgePost(form: PurgePost): Result<PurgeItemResponse>
+    suspend fun purgePost(form: PurgePost): Result<Unit>
 
     /**
      * Purge / Delete a comment from the database.
      *
      * @POST("admin/purge/comment")
      */
-    suspend fun purgeComment(form: PurgeComment): Result<PurgeItemResponse>
+    suspend fun purgeComment(form: PurgeComment): Result<Unit>
 
     /**
      * Edit an existing custom emoji
@@ -607,7 +607,7 @@ interface LemmyApi : LemmyApiBase {
      *
      * @POST("custom_emoji/delete")
      */
-    suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<DeleteCustomEmojiResponse>
+    suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit>
 
     /**
      * Block an instance.
@@ -637,16 +637,31 @@ interface LemmyApi : LemmyApiBase {
     suspend fun updateTotp(form: UpdateTotp): Result<UpdateTotpResponse>
 
     /**
-     * [MANUAL] Export your user data.
+     * Export a backup of your user settings, including your saved content,
+     * followed communities, and blocks.
      *
-     * @GET("user/export")
+     * @GET("user/export_settings")
      */
-    // suspend fun getUserExport(): Result<GetUserExportResponse>
+    suspend fun getUserExportSettings(): Result<GetUserExportSettingsResponse>
 
     /**
-     * [MANUAL] Import your user data.
+     * Import a backup of your user settings.
      *
-     * @POST("user/import")
+     * @POST("user/import_settings")
      */
-    // suspend fun getUserImport(form: GetUserImport): Result<Unit>
+    suspend fun getUserImportSettings(form: GetUserImportSettings): Result<Unit>
+
+    /**
+     * List login tokens for your user
+     *
+     * @GET("user/list_logins")
+     */
+    suspend fun listLogins(): Result<LoginToken>
+
+    /**
+     * Returns an error message if your auth token is invalid
+     *
+     * @GET("user/validate_auth")
+     */
+    suspend fun validateAuth(): Result<Unit>
 }

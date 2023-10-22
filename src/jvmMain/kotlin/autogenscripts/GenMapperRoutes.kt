@@ -61,7 +61,7 @@ fun classHasAuth(classFile: File): Boolean {
 }
 
 fun main() {
-    //  val exclusionSrc = setOf("ModHideCommunityView", "Person", "RegistrationApplicationView", "AdminPurgePostView", "AdminPurgeCommentView", "AdminPurgeCommunityView", "AdminPurgePersonView")
-    val exclusionTarget = setOf("LocalUser", "MyUserInfo", "PostAggregates", "CommentAggregates")
-    genMapRoutes("v0x18", "v0x19", setOf(), exclusionTarget)
+ val exclusionSrc = setOf("MarkPostAsRead")
+    val exclusionTarget = setOf("LocalUser", "MyUserInfo", "LocalSiteRateLimit")
+    genMapRoutes("v0x18", "v0x19", exclusionSrc, exclusionTarget)
 }

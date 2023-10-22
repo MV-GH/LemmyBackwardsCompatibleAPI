@@ -1,7 +1,7 @@
 package v0x19.datatypes
 
-import dto.ListingType
 import dto.PostListingMode
+import dto.ListingType
 import dto.SortType
 import kotlinx.serialization.Serializable
 
@@ -17,11 +17,9 @@ data class LocalUser(
     val interface_language: String,
     val show_avatars: Boolean,
     val send_notifications_to_email: Boolean,
-    val validator_time: String,
     val show_scores: Boolean,
     val show_bot_accounts: Boolean,
     val show_read_posts: Boolean,
-    val show_new_post_notifs: Boolean,
     val email_verified: Boolean,
     val accepted_application: Boolean,
     val open_links_in_new_tab: Boolean,
@@ -31,4 +29,6 @@ data class LocalUser(
     val admin: Boolean,
     val post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
     val totp_2fa_enabled: Boolean,
+    val enable_keyboard_navigation: Boolean,
+    val enable_animated_images: Boolean,
 )

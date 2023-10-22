@@ -87,7 +87,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @PUT("community/hide")
      */
-    override suspend fun hideCommunity(form: HideCommunity): Result<CommunityResponse> =
+    override suspend fun hideCommunity(form: HideCommunity): Result<Unit> =
         Ktor.putResult("community/hide", form)
 
     /**
@@ -567,7 +567,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @PUT("user/save_user_settings")
      */
-    override suspend fun saveUserSettings(form: SaveUserSettings): Result<LoginResponse> =
+    override suspend fun saveUserSettings(form: SaveUserSettings): Result<Unit> =
         Ktor.putResult("user/save_user_settings", form)
 
     /**
@@ -575,7 +575,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @PUT("user/change_password")
      */
-    override suspend fun changePassword(form: ChangePassword): Result<LoginResponse> =
+    override suspend fun changePassword(form: ChangePassword): Result<Unit> =
         Ktor.putResult("user/change_password", form)
 
     /**
@@ -647,7 +647,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("admin/purge/person")
      */
-    override suspend fun purgePerson(form: PurgePerson): Result<PurgeItemResponse> =
+    override suspend fun purgePerson(form: PurgePerson): Result<Unit> =
         Ktor.postResult("admin/purge/person", form)
 
     /**
@@ -655,7 +655,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("admin/purge/community")
      */
-    override suspend fun purgeCommunity(form: PurgeCommunity): Result<PurgeItemResponse> =
+    override suspend fun purgeCommunity(form: PurgeCommunity): Result<Unit> =
         Ktor.postResult("admin/purge/community", form)
 
     /**
@@ -663,7 +663,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("admin/purge/post")
      */
-    override suspend fun purgePost(form: PurgePost): Result<PurgeItemResponse> =
+    override suspend fun purgePost(form: PurgePost): Result<Unit> =
         Ktor.postResult("admin/purge/post", form)
 
     /**
@@ -671,7 +671,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("admin/purge/comment")
      */
-    override suspend fun purgeComment(form: PurgeComment): Result<PurgeItemResponse> =
+    override suspend fun purgeComment(form: PurgeComment): Result<Unit> =
         Ktor.postResult("admin/purge/comment", form)
 
     /**
@@ -695,7 +695,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("custom_emoji/delete")
      */
-    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<DeleteCustomEmojiResponse> =
+    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> =
         Ktor.postResult("custom_emoji/delete", form)
 }
 

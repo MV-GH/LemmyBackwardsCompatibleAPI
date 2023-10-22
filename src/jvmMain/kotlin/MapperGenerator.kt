@@ -1,15 +1,17 @@
 @file:Suppress("unused")
 
+import io.mcarle.konvert.api.Konfig
 import io.mcarle.konvert.api.Konvert
+import io.mcarle.konvert.api.Konverter
 import io.mcarle.konvert.api.Mapping
 import v0x18.datatypes.*
 
-// @Konverter(
-//    options=[
-//        Konfig(key="konvert.enable-converters", value="FloatToIntConverter"),
-//        Konfig(key="konvert.add-generated-konverter-annotation", value="false"),
+//@Konverter(
+//    options = [
+//        Konfig(key = "konvert.enable-converters", value = "FloatToIntConverter"),
+//        Konfig(key = "konvert.add-generated-konverter-annotation", value = "false"),
 //    ]
-// )
+//)
 interface DatatypesMapper {
     @Konvert(
         mappings = [
@@ -19,6 +21,8 @@ interface DatatypesMapper {
             Mapping(target = "post_listing_mode", constant = "PostListingMode.Card"),
             Mapping(target = "auto_expand", constant = "false"),
             Mapping(target = "totp_2fa_enabled", expression = "this.mapLocalUserTotp(it)"),
+            Mapping(target = "enable_keyboard_navigation", constant = "false"),
+            Mapping(target = "enable_animated_images", constant = "true"),
         ],
     )
     fun toV0x19(d: LocalUser): v0x19.datatypes.LocalUser
@@ -28,21 +32,11 @@ interface DatatypesMapper {
 
     @Konvert(
         mappings = [
-            Mapping(target = "controversy_rank", constant = "0"),
-            Mapping(target = "scaled_rank", constant = "0"),
-            Mapping(target = "instance_id", constant = "-1"), // TODO temp? prob be excluded in DTO
-            Mapping(target = "community_id", constant = "-1"),
-            Mapping(target = "creator_id", constant = "-1"),
-        ],
+            Mapping(target = "import_user_settings", constant = "-1"),
+            Mapping(target = "import_user_settings_per_second", constant = "-1")
+        ]
     )
-    fun toV0x19(d: PostAggregates): v0x19.datatypes.PostAggregates
-
-    @Konvert(
-        mappings = [
-            Mapping(target = "controversy_rank", constant = "0"),
-        ],
-    )
-    fun toV0x19(d: CommentAggregates): v0x19.datatypes.CommentAggregates
+    fun toV0x19(d: LocalSiteRateLimit): v0x19.datatypes.LocalSiteRateLimit
 
     // GENERATED
 
@@ -63,6 +57,7 @@ interface DatatypesMapper {
     fun toV0x19(d: BlockPersonResponse): v0x19.datatypes.BlockPersonResponse
     fun toV0x19(d: CaptchaResponse): v0x19.datatypes.CaptchaResponse
     fun toV0x19(d: Comment): v0x19.datatypes.Comment
+    fun toV0x19(d: CommentAggregates): v0x19.datatypes.CommentAggregates
     fun toV0x19(d: CommentReply): v0x19.datatypes.CommentReply
     fun toV0x19(d: CommentReplyResponse): v0x19.datatypes.CommentReplyResponse
     fun toV0x19(d: CommentReplyView): v0x19.datatypes.CommentReplyView
@@ -82,7 +77,6 @@ interface DatatypesMapper {
     fun toV0x19(d: CustomEmojiKeyword): v0x19.datatypes.CustomEmojiKeyword
     fun toV0x19(d: CustomEmojiResponse): v0x19.datatypes.CustomEmojiResponse
     fun toV0x19(d: CustomEmojiView): v0x19.datatypes.CustomEmojiView
-    fun toV0x19(d: DeleteCustomEmojiResponse): v0x19.datatypes.DeleteCustomEmojiResponse
     fun toV0x19(d: FederatedInstances): v0x19.datatypes.FederatedInstances
     fun toV0x19(d: GetCaptchaResponse): v0x19.datatypes.GetCaptchaResponse
     fun toV0x19(d: GetCommentsResponse): v0x19.datatypes.GetCommentsResponse
@@ -107,7 +101,6 @@ interface DatatypesMapper {
     fun toV0x19(d: ListPrivateMessageReportsResponse): v0x19.datatypes.ListPrivateMessageReportsResponse
     fun toV0x19(d: ListRegistrationApplicationsResponse): v0x19.datatypes.ListRegistrationApplicationsResponse
     fun toV0x19(d: LocalSite): v0x19.datatypes.LocalSite
-    fun toV0x19(d: LocalSiteRateLimit): v0x19.datatypes.LocalSiteRateLimit
     fun toV0x19(d: LocalUserView): v0x19.datatypes.LocalUserView
     fun toV0x19(d: LoginResponse): v0x19.datatypes.LoginResponse
     fun toV0x19(d: ModAdd): v0x19.datatypes.ModAdd
@@ -141,6 +134,7 @@ interface DatatypesMapper {
     fun toV0x19(d: PersonMentionView): v0x19.datatypes.PersonMentionView
     fun toV0x19(d: PersonView): v0x19.datatypes.PersonView
     fun toV0x19(d: Post): v0x19.datatypes.Post
+    fun toV0x19(d: PostAggregates): v0x19.datatypes.PostAggregates
     fun toV0x19(d: PostReport): v0x19.datatypes.PostReport
     fun toV0x19(d: PostReportResponse): v0x19.datatypes.PostReportResponse
     fun toV0x19(d: PostReportView): v0x19.datatypes.PostReportView
@@ -153,7 +147,6 @@ interface DatatypesMapper {
     fun toV0x19(d: PrivateMessageResponse): v0x19.datatypes.PrivateMessageResponse
     fun toV0x19(d: PrivateMessagesResponse): v0x19.datatypes.PrivateMessagesResponse
     fun toV0x19(d: PrivateMessageView): v0x19.datatypes.PrivateMessageView
-    fun toV0x19(d: PurgeItemResponse): v0x19.datatypes.PurgeItemResponse
     fun toV0x19(d: RegistrationApplication): v0x19.datatypes.RegistrationApplication
     fun toV0x19(d: RegistrationApplicationResponse): v0x19.datatypes.RegistrationApplicationResponse
     fun toV0x19(d: RegistrationApplicationView): v0x19.datatypes.RegistrationApplicationView
@@ -330,9 +323,6 @@ interface DatatypesMapper {
 
     @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
     fun toV0x18(d: v0x19.datatypes.MarkPersonMentionAsRead): MarkPersonMentionAsRead
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun toV0x18(d: v0x19.datatypes.MarkPostAsRead): MarkPostAsRead
 
     @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
     fun toV0x18(d: v0x19.datatypes.MarkPrivateMessageAsRead): MarkPrivateMessageAsRead

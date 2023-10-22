@@ -8,7 +8,7 @@ import io.ktor.http.*
 import pictrs.datatypes.UploadImage
 import pictrs.datatypes.UploadImageResponse
 
-open class PictrsService(val ktor: HttpClient, val use0x19: Boolean, override var auth: String?) : PictrsAPI {
+open class PictrsService(private val ktor: HttpClient, private val use0x19: Boolean, override var auth: String?) : PictrsAPI {
     /**
      * Upload an image to the server.
      *

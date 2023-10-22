@@ -25,4 +25,5 @@ data class LocalUser(
     val accepted_application: Boolean,
     val totp_2fa_url: String? = null,
     val open_links_in_new_tab: Boolean,
+    val infinite_scroll_enabled: Boolean = true, // 0.18.3
 )

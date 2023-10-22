@@ -3,16 +3,24 @@ package v0x19
 import getKtor
 import io.ktor.client.*
 import pictrs.PictrsService
+import utils.addAuth
 import utils.getResult
 import utils.postResult
 import utils.putResult
 import v0x19.datatypes.*
 
-class LemmyApiService(private val Ktor: HttpClient, override var auth: String? = null) : LemmyApi, PictrsService(Ktor, true, auth) {
+class LemmyApiService(val defaultKtor: HttpClient, auth: String? = null) : LemmyApi, PictrsService(defaultKtor, true, auth) {
 
-//    val k = Ktor.config { TODO AUTH
-//        install()
-//    }
+
+    var Ktor: HttpClient = defaultKtor.addAuth(auth)
+
+    override var auth: String?
+        get() = super.auth
+        set(value) {
+            super.auth = value
+            Ktor = defaultKtor.addAuth(value)
+        }
+
     /**
      * Gets the site, and your user data.
      *
@@ -90,7 +98,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @PUT("community/hide")
      */
-    override suspend fun hideCommunity(form: HideCommunity): Result<CommunityResponse> =
+    override suspend fun hideCommunity(form: HideCommunity): Result<Unit> =
         Ktor.putResult("community/hide", form)
 
     /**
@@ -218,7 +226,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("post/mark_as_read")
      */
-    override suspend fun markPostAsRead(form: MarkPostAsRead): Result<PostResponse> =
+    override suspend fun markPostAsRead(form: MarkPostAsRead): Result<Unit> =
         Ktor.postResult("post/mark_as_read", form)
 
     /**
@@ -570,7 +578,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @PUT("user/save_user_settings")
      */
-    override suspend fun saveUserSettings(form: SaveUserSettings): Result<LoginResponse> =
+    override suspend fun saveUserSettings(form: SaveUserSettings): Result<Unit> =
         Ktor.putResult("user/save_user_settings", form)
 
     /**
@@ -578,7 +586,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @PUT("user/change_password")
      */
-    override suspend fun changePassword(form: ChangePassword): Result<LoginResponse> =
+    override suspend fun changePassword(form: ChangePassword): Result<Unit> =
         Ktor.putResult("user/change_password", form)
 
     /**
@@ -650,7 +658,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("admin/purge/person")
      */
-    override suspend fun purgePerson(form: PurgePerson): Result<PurgeItemResponse> =
+    override suspend fun purgePerson(form: PurgePerson): Result<Unit> =
         Ktor.postResult("admin/purge/person", form)
 
     /**
@@ -658,7 +666,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("admin/purge/community")
      */
-    override suspend fun purgeCommunity(form: PurgeCommunity): Result<PurgeItemResponse> =
+    override suspend fun purgeCommunity(form: PurgeCommunity): Result<Unit> =
         Ktor.postResult("admin/purge/community", form)
 
     /**
@@ -666,7 +674,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("admin/purge/post")
      */
-    override suspend fun purgePost(form: PurgePost): Result<PurgeItemResponse> =
+    override suspend fun purgePost(form: PurgePost): Result<Unit> =
         Ktor.postResult("admin/purge/post", form)
 
     /**
@@ -674,7 +682,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("admin/purge/comment")
      */
-    override suspend fun purgeComment(form: PurgeComment): Result<PurgeItemResponse> =
+    override suspend fun purgeComment(form: PurgeComment): Result<Unit> =
         Ktor.postResult("admin/purge/comment", form)
 
     /**
@@ -698,7 +706,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("custom_emoji/delete")
      */
-    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<DeleteCustomEmojiResponse> =
+    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> =
         Ktor.postResult("custom_emoji/delete", form)
 
     /**
@@ -732,20 +740,37 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
         Ktor.postResult("user/totp/update", form)
 
     /**
-     * [MANUAL] Export your user data.
+     * Export a backup of your user settings, including your saved content,
+     * followed communities, and blocks.
      *
-     * @GET("user/export")
+     * @GET("user/export_settings")
      */
-//    override suspend fun getUserExport(): Result<GetUserExportResponse> =
-//        Ktor.getResult("user/export")
+    override suspend fun getUserExportSettings(): Result<GetUserExportSettingsResponse> =
+        Ktor.getResult("user/export_settings")
 
     /**
-     * [MANUAL] Import your user data.
+     * Import a backup of your user settings.
      *
-     * @POST("user/import")
+     * @POST("user/import_settings")
      */
-//    override suspend fun getUserImport(form: GetUserImport): Result<Unit> =
-//        Ktor.postResult("user/import", form)
+    override suspend fun getUserImportSettings(form: GetUserImportSettings): Result<Unit> =
+        Ktor.postResult("user/import_settings", form)
+
+    /**
+     * List login tokens for your user
+     *
+     * @GET("user/list_logins")
+     */
+    override suspend fun listLogins(): Result<LoginToken> =
+        Ktor.getResult("user/list_logins")
+
+    /**
+     * Returns an error message if your auth token is invalid
+     *
+     * @GET("user/validate_auth")
+     */
+    override suspend fun validateAuth(): Result<Unit> =
+        Ktor.getResult("user/validate_auth")
 }
 
 suspend fun main() {

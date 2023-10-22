@@ -11,6 +11,4 @@ data class CommentAggregates(
     val downvotes: Int,
     val published: String,
     val child_count: Int,
-    val hot_rank: Float,
-    val controversy_rank: Int,
 )
