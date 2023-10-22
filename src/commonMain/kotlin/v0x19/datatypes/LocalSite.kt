@@ -1,7 +1,7 @@
 package v0x19.datatypes
 
-import dto.RegistrationMode
 import dto.ListingType
+import dto.RegistrationMode
 import kotlinx.serialization.Serializable
 
 @Serializable

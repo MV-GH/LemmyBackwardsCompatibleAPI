@@ -134,218 +134,148 @@ interface DatatypesMapper {
 
     fun toV0x18(d: v0x19.datatypes.AddAdmin): AddAdmin
 
-
     fun toV0x18(d: v0x19.datatypes.AddModToCommunity): AddModToCommunity
-
 
     fun toV0x18(d: v0x19.datatypes.ApproveRegistrationApplication): ApproveRegistrationApplication
 
-
     fun toV0x18(d: v0x19.datatypes.BanFromCommunity): BanFromCommunity
-
 
     fun toV0x18(d: v0x19.datatypes.BanPerson): BanPerson
 
-
     fun toV0x18(d: v0x19.datatypes.BlockCommunity): BlockCommunity
-
 
     fun toV0x18(d: v0x19.datatypes.BlockPerson): BlockPerson
 
-
     fun toV0x18(d: v0x19.datatypes.ChangePassword): ChangePassword
-
 
     fun toV0x18(d: v0x19.datatypes.CreateComment): CreateComment
 
-
     fun toV0x18(d: v0x19.datatypes.CreateCommentLike): CreateCommentLike
-
 
     fun toV0x18(d: v0x19.datatypes.CreateCommentReport): CreateCommentReport
 
-
     fun toV0x18(d: v0x19.datatypes.CreateCommunity): CreateCommunity
-
 
     fun toV0x18(d: v0x19.datatypes.CreateCustomEmoji): CreateCustomEmoji
 
-
     fun toV0x18(d: v0x19.datatypes.CreatePost): CreatePost
-
 
     fun toV0x18(d: v0x19.datatypes.CreatePostLike): CreatePostLike
 
-
     fun toV0x18(d: v0x19.datatypes.CreatePostReport): CreatePostReport
-
 
     fun toV0x18(d: v0x19.datatypes.CreatePrivateMessage): CreatePrivateMessage
 
-
     fun toV0x18(d: v0x19.datatypes.CreatePrivateMessageReport): CreatePrivateMessageReport
-
 
     fun toV0x18(d: v0x19.datatypes.CreateSite): CreateSite
 
-
     fun toV0x18(d: v0x19.datatypes.DeleteAccount): DeleteAccount
-
 
     fun toV0x18(d: v0x19.datatypes.DeleteComment): DeleteComment
 
-
     fun toV0x18(d: v0x19.datatypes.DeleteCommunity): DeleteCommunity
-
 
     fun toV0x18(d: v0x19.datatypes.DeleteCustomEmoji): DeleteCustomEmoji
 
-
     fun toV0x18(d: v0x19.datatypes.DeletePost): DeletePost
-
 
     fun toV0x18(d: v0x19.datatypes.DeletePrivateMessage): DeletePrivateMessage
 
-
     fun toV0x18(d: v0x19.datatypes.DistinguishComment): DistinguishComment
-
 
     fun toV0x18(d: v0x19.datatypes.EditComment): EditComment
 
-
     fun toV0x18(d: v0x19.datatypes.EditCommunity): EditCommunity
-
 
     fun toV0x18(d: v0x19.datatypes.EditCustomEmoji): EditCustomEmoji
 
-
     fun toV0x18(d: v0x19.datatypes.EditPost): EditPost
-
 
     fun toV0x18(d: v0x19.datatypes.EditPrivateMessage): EditPrivateMessage
 
-
     fun toV0x18(d: v0x19.datatypes.EditSite): EditSite
-
 
     fun toV0x18(d: v0x19.datatypes.FeaturePost): FeaturePost
 
-
     fun toV0x18(d: v0x19.datatypes.FollowCommunity): FollowCommunity
-
 
     fun toV0x18(d: v0x19.datatypes.GetComment): GetComment
 
-
     fun toV0x18(d: v0x19.datatypes.GetComments): GetComments
-
 
     fun toV0x18(d: v0x19.datatypes.GetCommunity): GetCommunity
 
-
     fun toV0x18(d: v0x19.datatypes.GetModlog): GetModlog
-
 
     fun toV0x18(d: v0x19.datatypes.GetPersonDetails): GetPersonDetails
 
-
     fun toV0x18(d: v0x19.datatypes.GetPersonMentions): GetPersonMentions
-
 
     fun toV0x18(d: v0x19.datatypes.GetPost): GetPost
 
-
     fun toV0x18(d: v0x19.datatypes.GetPosts): GetPosts
-
 
     fun toV0x18(d: v0x19.datatypes.GetPrivateMessages): GetPrivateMessages
 
-
     fun toV0x18(d: v0x19.datatypes.GetReplies): GetReplies
-
 
     fun toV0x18(d: v0x19.datatypes.GetReportCount): GetReportCount
     fun toV0x18(d: v0x19.datatypes.GetSiteMetadata): GetSiteMetadata
 
-
     fun toV0x18(d: v0x19.datatypes.HideCommunity): HideCommunity
-
 
     fun toV0x18(d: v0x19.datatypes.ListCommentReports): ListCommentReports
 
-
     fun toV0x18(d: v0x19.datatypes.ListCommunities): ListCommunities
-
 
     fun toV0x18(d: v0x19.datatypes.ListPostReports): ListPostReports
 
-
     fun toV0x18(d: v0x19.datatypes.ListPrivateMessageReports): ListPrivateMessageReports
 
-
     fun toV0x18(d: v0x19.datatypes.ListRegistrationApplications): ListRegistrationApplications
-
 
     fun toV0x18(d: v0x19.datatypes.LockPost): LockPost
     fun toV0x18(d: v0x19.datatypes.Login): Login
 
-
     fun toV0x18(d: v0x19.datatypes.MarkCommentReplyAsRead): MarkCommentReplyAsRead
 
-
     fun toV0x18(d: v0x19.datatypes.MarkPersonMentionAsRead): MarkPersonMentionAsRead
-
 
     fun toV0x18(d: v0x19.datatypes.MarkPrivateMessageAsRead): MarkPrivateMessageAsRead
     fun toV0x18(d: v0x19.datatypes.PasswordChangeAfterReset): PasswordChangeAfterReset
     fun toV0x18(d: v0x19.datatypes.PasswordReset): PasswordReset
 
-
     fun toV0x18(d: v0x19.datatypes.PurgeComment): PurgeComment
-
 
     fun toV0x18(d: v0x19.datatypes.PurgeCommunity): PurgeCommunity
 
-
     fun toV0x18(d: v0x19.datatypes.PurgePerson): PurgePerson
-
 
     fun toV0x18(d: v0x19.datatypes.PurgePost): PurgePost
     fun toV0x18(d: v0x19.datatypes.Register): Register
 
-
     fun toV0x18(d: v0x19.datatypes.RemoveComment): RemoveComment
-
 
     fun toV0x18(d: v0x19.datatypes.RemoveCommunity): RemoveCommunity
 
-
     fun toV0x18(d: v0x19.datatypes.RemovePost): RemovePost
-
 
     fun toV0x18(d: v0x19.datatypes.ResolveCommentReport): ResolveCommentReport
 
-
     fun toV0x18(d: v0x19.datatypes.ResolveObject): ResolveObject
-
 
     fun toV0x18(d: v0x19.datatypes.ResolvePostReport): ResolvePostReport
 
-
     fun toV0x18(d: v0x19.datatypes.ResolvePrivateMessageReport): ResolvePrivateMessageReport
-
 
     fun toV0x18(d: v0x19.datatypes.SaveComment): SaveComment
 
-
     fun toV0x18(d: v0x19.datatypes.SavePost): SavePost
-
 
     fun toV0x18(d: v0x19.datatypes.SaveUserSettings): SaveUserSettings
 
-
     fun toV0x18(d: v0x19.datatypes.Search): Search
-
 
     fun toV0x18(d: v0x19.datatypes.TransferCommunity): TransferCommunity
     fun toV0x18(d: v0x19.datatypes.VerifyEmail): VerifyEmail

@@ -378,7 +378,6 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
             .firstOrNull { it.isFailure } ?: Result.success(Unit)
     }
 
-
     /**
      * A moderator can lock a post ( IE disable new comments ).
      *
@@ -929,4 +928,12 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
         TODO("Not yet implemented")
     }
 
+    /**
+     * Logout your user
+     *
+     * @POST("user/logout")
+     */
+    override suspend fun logout(): Result<Unit> {
+        TODO("Not yet implemented")
+    }
 }

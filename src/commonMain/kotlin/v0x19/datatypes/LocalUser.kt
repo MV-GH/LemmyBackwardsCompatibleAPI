@@ -1,7 +1,7 @@
 package v0x19.datatypes
 
-import dto.PostListingMode
 import dto.ListingType
+import dto.PostListingMode
 import dto.SortType
 import kotlinx.serialization.Serializable
 

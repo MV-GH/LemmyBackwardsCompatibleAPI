@@ -19,7 +19,7 @@ val filesThatShouldNotBeAdded = setOf("others.ts", "DeleteAccountResponse.ts", "
 
 fun getTypesPath(version: String, temp: Boolean = true) = "$rootPath$rootPackagePath$version/datatypes" + if (temp) "/temp" else ""
 
-fun isInteger(l: String) = !l.contains(Regex("""\b(hot_rank|hot_rank_active)\b"""))
+fun isInteger(_l: String) = true
 
 fun getDownloadLink(tag: String) = "https://github.com/LemmyNet/lemmy-js-client/archive/refs/tags/$tag.zip"
 
@@ -181,7 +181,6 @@ suspend fun downloadTypes(version: String, vShort: String) {
                                 imports = "import $rootPackage${customDataTypesPackage}PostListingMode\n$imports"
                                 "post_listing_mode: PostListingMode"
                             }
-
                     }
 
                 if (imports != "") {

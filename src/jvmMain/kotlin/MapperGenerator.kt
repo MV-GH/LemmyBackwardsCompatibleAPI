@@ -1,17 +1,15 @@
 @file:Suppress("unused")
 
-import io.mcarle.konvert.api.Konfig
 import io.mcarle.konvert.api.Konvert
-import io.mcarle.konvert.api.Konverter
 import io.mcarle.konvert.api.Mapping
 import v0x18.datatypes.*
 
-//@Konverter(
+// @Konverter(
 //    options = [
 //        Konfig(key = "konvert.enable-converters", value = "FloatToIntConverter"),
 //        Konfig(key = "konvert.add-generated-konverter-annotation", value = "false"),
 //    ]
-//)
+// )
 interface DatatypesMapper {
     @Konvert(
         mappings = [
@@ -33,8 +31,8 @@ interface DatatypesMapper {
     @Konvert(
         mappings = [
             Mapping(target = "import_user_settings", constant = "-1"),
-            Mapping(target = "import_user_settings_per_second", constant = "-1")
-        ]
+            Mapping(target = "import_user_settings_per_second", constant = "-1"),
+        ],
     )
     fun toV0x19(d: LocalSiteRateLimit): v0x19.datatypes.LocalSiteRateLimit
 

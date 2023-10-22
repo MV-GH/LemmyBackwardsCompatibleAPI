@@ -3,7 +3,8 @@ package autogenscripts
 import java.io.File
 
 const val src = "src/commonMain/kotlin/"
-val bodyRequestIndicators = listOf("Create", "Update", "Delete", "Edit", "Add", "Approve", "Ban", "Block", "Change", "PasswordChange", "Get", "Mark", "List", "Purge", "Save", "Register", "Login", "PasswordReset", "Verify")
+val bodyRequestIndicators =
+    listOf("Create", "Update", "Delete", "Edit", "Add", "Approve", "Ban", "Block", "Change", "PasswordChange", "Get", "Mark", "List", "Purge", "Save", "Register", "Login", "PasswordReset", "Verify")
 
 const val header = """
 @Konverter
@@ -61,7 +62,7 @@ fun classHasAuth(classFile: File): Boolean {
 }
 
 fun main() {
- val exclusionSrc = setOf("MarkPostAsRead")
+    val exclusionSrc = setOf("MarkPostAsRead")
     val exclusionTarget = setOf("LocalUser", "MyUserInfo", "LocalSiteRateLimit")
     genMapRoutes("v0x18", "v0x19", exclusionSrc, exclusionTarget)
 }

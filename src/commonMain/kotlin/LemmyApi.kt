@@ -1,6 +1,4 @@
 import dto.NodeInfo
-import io.github.aakira.napier.DebugAntilog
-import io.github.aakira.napier.Napier
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import utils.dropPatchVersion
@@ -55,10 +53,9 @@ object LemmyApi {
 
 suspend fun main() {
     // println(LemmyApi.getNodeInfo("https://lemmy.ml"))
-    Napier.base(DebugAntilog())
 //    val api = LemmyApi.getLemmyApi("https://lemmy.world", worldAuth)
 //    println(api.getSite().getOrThrow().my_user != null)
-    val api2 = LemmyApi.getLemmyApi("https://voyager.lemmy.ml", voyagerAuth )
+    val api2 = LemmyApi.getLemmyApi("https://voyager.lemmy.ml", voyagerAuth)
     println(api2.getSite().getOrThrow().my_user != null)
     api2.auth = null
     println(api2.getSite().getOrThrow().my_user != null)

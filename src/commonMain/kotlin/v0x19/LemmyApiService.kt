@@ -11,7 +11,6 @@ import v0x19.datatypes.*
 
 class LemmyApiService(val defaultKtor: HttpClient, auth: String? = null) : LemmyApi, PictrsService(defaultKtor, true, auth) {
 
-
     var Ktor: HttpClient = defaultKtor.addAuth(auth)
 
     override var auth: String?
@@ -771,6 +770,14 @@ class LemmyApiService(val defaultKtor: HttpClient, auth: String? = null) : Lemmy
      */
     override suspend fun validateAuth(): Result<Unit> =
         Ktor.getResult("user/validate_auth")
+
+    /**
+     * Logout your user
+     *
+     * @POST("user/logout")
+     */
+    override suspend fun logout(): Result<Unit> =
+        Ktor.postResult("user/logout")
 }
 
 suspend fun main() {

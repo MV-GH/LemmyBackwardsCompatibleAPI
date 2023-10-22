@@ -664,4 +664,11 @@ interface LemmyApi : LemmyApiBase {
      * @GET("user/validate_auth")
      */
     suspend fun validateAuth(): Result<Unit>
+
+    /**
+     * Logout your user
+     *
+     * @POST("user/logout")
+     */
+    suspend fun logout(): Result<Unit>
 }

@@ -52,7 +52,7 @@ inline fun <reified T> HttpRequestBuilder.setJsonBody(body: T) {
     setBody(body)
 }
 
-fun HttpClient.addAuth(auth: String?)  = this.config {
+fun HttpClient.addAuth(auth: String?) = this.config {
     if (auth != null) {
         defaultRequest {
             headers.appendIfNameAbsent(HttpHeaders.Authorization, "Bearer $auth")

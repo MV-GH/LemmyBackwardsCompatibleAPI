@@ -1,4 +1,3 @@
-import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -6,11 +5,10 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
 
 fun getKtor(baseUrl: String): HttpClient = coreKtor.config {
-
     install(Logging) {
         logger = object : Logger {
             override fun log(message: String) {
-                Napier.v("HTTP Client", null, message)
+               println(message)
             }
         }
         level = LogLevel.HEADERS
