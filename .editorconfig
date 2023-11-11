@@ -8,3 +8,7 @@ end_of_line = lf
 
 ktlint_standard_no-wildcard-imports = disabled
 ktlint_standard_comment-wrapping = disabled
+ktlint_standard_if-else-wrapping = disabled
+ktlint_standard_discouraged-comment-location = disabled
+ktlint_standard_max-line-length = disabled
+ktlint_standard_function-signature = disabled

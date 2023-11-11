@@ -2,16 +2,17 @@ package autogenscripts
 
 import java.io.File
 
-const val src = "src/commonMain/kotlin/"
+const val SRC = "src/commonMain/kotlin/"
 val bodyRequestIndicators =
     listOf("Create", "Update", "Delete", "Edit", "Add", "Approve", "Ban", "Block", "Change", "PasswordChange", "Get", "Mark", "List", "Purge", "Save", "Register", "Login", "PasswordReset", "Verify")
 
-const val header = """
+const val HEADER = """
 @Konverter
 interface DatatypesMapper {
 """
 
 //  fun toV0x19(d: GetSiteResponse): v0x19.datatypes.GetSiteResponse
+
 /**
  * Generates the mapping routes for the given source and target versions
  * @param source the source version, ex v0x18
@@ -19,12 +20,17 @@ interface DatatypesMapper {
  * @param toSourceExclusion a list of classes to exclude from the source version
  * @param toTargetExclusion a list of classes to exclude from the target version
  */
-fun genMapRoutes(source: String, target: String, toSourceExclusion: Collection<String>, toTargetExclusion: Collection<String>) {
+fun genMapRoutes(
+    source: String,
+    target: String,
+    toSourceExclusion: Collection<String>,
+    toTargetExclusion: Collection<String>,
+) {
     val tempFile = File("temp", "MapperGenerator.kt")
     tempFile.createNewFile()
-    tempFile.writeText(header + "\n")
-    val sourceFile = File("$src$source/datatypes")
-    val targetFile = File("$src$target/datatypes")
+    tempFile.writeText(HEADER + "\n")
+    val sourceFile = File("$SRC$source/datatypes")
+    val targetFile = File("$SRC$target/datatypes")
 
     val sourceLwr = source.replaceFirstChar { it.uppercase() }
     val targetLwr = target.replaceFirstChar { it.uppercase() }
@@ -39,7 +45,14 @@ fun genMapRoutes(source: String, target: String, toSourceExclusion: Collection<S
             // If doesn't end with response its request body thus needs reverse mapping
             if (it.nameWithoutExtension.endsWith("Response") && !isSourceExcluded) {
                 tempFile.appendText("    fun to$targetLwr(d: ${it.nameWithoutExtension}): $target.datatypes.${it.nameWithoutExtension}\n")
-            } else if (!isSourceExcluded && (classHasAuth(it) || bodyRequestIndicators.any { ind -> it.nameWithoutExtension.startsWith(ind) })) {
+            } else if (!isSourceExcluded && (
+                    classHasAuth(it) ||
+                        bodyRequestIndicators.any {
+                                ind ->
+                            it.nameWithoutExtension.startsWith(ind)
+                        }
+                )
+            ) {
                 if (classHasAuth(it)) {
                     toSourceMappings += "    @Konvert(mappings=[Mapping(target=\"auth\", constant=\"auth\")])\n"
                     toSourceMappings += "    fun to$sourceLwr(d: $target.datatypes.${it.nameWithoutExtension}): ${it.nameWithoutExtension}\n"
@@ -48,7 +61,9 @@ fun genMapRoutes(source: String, target: String, toSourceExclusion: Collection<S
                 }
             } else {
                 if (!isTargetExcluded) {
-                    tempFile.appendText("    fun to$targetLwr(d: ${it.nameWithoutExtension}): $target.datatypes.${it.nameWithoutExtension}\n")
+                    tempFile.appendText(
+                        "    fun to$targetLwr(d: ${it.nameWithoutExtension}): $target.datatypes.${it.nameWithoutExtension}\n",
+                    )
                 }
             }
         }

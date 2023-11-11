@@ -1,8 +1,7 @@
 package v0x18
 
 import io.ktor.client.*
-import pictrs.datatypes.UploadImage
-import pictrs.datatypes.UploadImageResponse
+import utils.notSupported
 import v0x18.datatypes.*
 import v0x19.GetUserExportSettingsResponse
 import v0x19.GetUserImportSettings
@@ -129,12 +128,13 @@ import v0x19.datatypes.SiteResponse
 import v0x19.datatypes.TransferCommunity
 import v0x19.datatypes.VerifyEmail
 
-class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi {
-    private val apiV18 = LemmyApiService(ktor, auth)
+class LemmyV0x19Wrapper(
+    ktor: HttpClient,
+    actualVersion: String,
+    auth: String? = null,
+) : v0x19.LemmyApi(ktor, actualVersion, auth) {
+    private val apiV18 = LemmyApiService(ktor, actualVersion, auth)
     private val transformer = Transformer(auth ?: "")
-
-    override val version: String
-        get() = apiV18.version
 
     override var auth: String? = auth
         set(value) {
@@ -142,22 +142,6 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
             field = value
             apiV18.auth = value // Not sure if this needed
         }
-
-    // PICTRS
-
-    /**
-     * Upload an image to the server.
-     *
-     * @POST(/pictrs/image)
-     */
-    override suspend fun uploadImage(form: UploadImage): Result<UploadImageResponse> = apiV18.uploadImage(form)
-
-    /**
-     * Delete an image from the server.
-     *
-     * @POST(/pictrs/image/delete)
-     */
-    override suspend fun deleteImage(relativeUrl: String): Result<Unit> = apiV18.deleteImage(relativeUrl)
 
     // START
 
@@ -727,8 +711,7 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      *
      * @PUT("user/save_user_settings")
      */
-    override suspend fun saveUserSettings(form: SaveUserSettings): Result<Unit> =
-        apiV18.saveUserSettings(transformer.toV0x18(form))
+    override suspend fun saveUserSettings(form: SaveUserSettings): Result<Unit> = apiV18.saveUserSettings(transformer.toV0x18(form))
 
     /**
      * Change your user password.
@@ -855,8 +838,7 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      *
      * @POST("custom_emoji/delete")
      */
-    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> =
-        apiV18.deleteCustomEmoji(transformer.toV0x18(form))
+    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> = apiV18.deleteCustomEmoji(transformer.toV0x18(form))
 
     /**
      * Block an instance.
@@ -864,7 +846,7 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      * @POST("site/block")
      */
     override suspend fun blockInstance(form: BlockInstance): Result<BlockInstanceResponse> {
-        TODO(" FEATURE FLAG")
+        notSupported()
     }
 
     /**
@@ -875,8 +857,8 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      * @POST("user/totp/generate")
      */
     override suspend fun generateTotpSecret(): Result<GenerateTotpSecretResponse> {
-        TODO(" FEATURE FLAG")
-    }
+        notSupported()
+    } // TODO possible supported by using old logic
 
     /**
      * Enable / Disable TOTP / two-factor authentication.
@@ -888,7 +870,7 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      * @POST("user/totp/update")
      */
     override suspend fun updateTotp(form: UpdateTotp): Result<UpdateTotpResponse> {
-        TODO(" FEATURE FLAG")
+        notSupported()
     }
 
     /**
@@ -898,7 +880,7 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      * @GET("user/export_settings")
      */
     override suspend fun getUserExportSettings(): Result<GetUserExportSettingsResponse> {
-        TODO("Not yet implemented")
+        notSupported()
     }
 
     /**
@@ -907,7 +889,7 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      * @POST("user/import_settings")
      */
     override suspend fun getUserImportSettings(form: GetUserImportSettings): Result<Unit> {
-        TODO("Not yet implemented")
+        notSupported()
     }
 
     /**
@@ -916,7 +898,7 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      * @GET("user/list_logins")
      */
     override suspend fun listLogins(): Result<LoginToken> {
-        TODO("Not yet implemented")
+        notSupported()
     }
 
     /**
@@ -924,9 +906,9 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      *
      * @GET("user/validate_auth")
      */
-    override suspend fun validateAuth(): Result<Unit> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun validateAuth(): Result<Unit> =
+        // This request can only fail if the auth token is invalid
+        apiV18.getPersonMentions(v0x18.datatypes.GetPersonMentions(auth = auth ?: "")).map { }
 
     /**
      * Logout your user
@@ -934,6 +916,6 @@ class LemmyV0x19Wrapper(ktor: HttpClient, auth: String? = null) : v0x19.LemmyApi
      * @POST("user/logout")
      */
     override suspend fun logout(): Result<Unit> {
-        TODO("Not yet implemented")
+        notSupported()
     }
 }

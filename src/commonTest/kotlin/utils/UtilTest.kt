@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class UtilTest {
-
     @Test
     fun compareVersions() {
         assertEquals(-1, compareVersions("0.0.1", "0.0.2"))

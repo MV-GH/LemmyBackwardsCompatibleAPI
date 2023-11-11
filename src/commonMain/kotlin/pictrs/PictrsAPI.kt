@@ -5,7 +5,6 @@ import pictrs.datatypes.UploadImage
 import pictrs.datatypes.UploadImageResponse
 
 interface PictrsAPI {
-
     var auth: String?
 
     /**

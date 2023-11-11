@@ -1,16 +1,4 @@
-interface k {
-    var h: String?
 
-    fun printH(): String
-}
-
-open class A(override var h: String?) : k {
-    override fun printH(): String {
-        return h ?: "null"
-    }
-}
-
-class B(override var h: String?) : A(h)
 
 fun main() {
 //    val api = PictrsService(getKtor("https://lemmy.one"), false)
@@ -26,12 +14,4 @@ fun main() {
 //            ),
 //        ),
 //    )
-
-    val b = B("test")
-
-    println(b.printH())
-
-    b.h = "cancer"
-
-    println(b.printH())
 }

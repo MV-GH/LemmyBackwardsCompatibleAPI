@@ -2,14 +2,16 @@ package v0x18
 
 import getKtor
 import io.ktor.client.*
-import pictrs.PictrsService
 import utils.getResult
 import utils.postResult
 import utils.putResult
 import v0x18.datatypes.*
 
-class LemmyApiService(private val Ktor: HttpClient, override var auth: String? = null) : LemmyApi, PictrsService(Ktor, false, auth) {
-
+class LemmyApiService(val Ktor: HttpClient, actualVersion: String, override var auth: String? = null) : LemmyApi(
+    Ktor,
+    actualVersion,
+    auth,
+) {
     /**
      * Gets the site, and your user data.
      *
@@ -700,7 +702,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
 }
 
 suspend fun main() {
-    val api = LemmyApiService(getKtor("https://lemmy.world/api/v3/"))
+    val api = LemmyApiService(getKtor("https://lemmy.world/api/v3/"), "0.18.5")
 
     println(api.version)
     println(api.getSite(GetSite()).getOrThrow())

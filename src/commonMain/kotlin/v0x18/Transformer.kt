@@ -401,44 +401,44 @@ import v0x19.datatypes.TransferCommunity as V0x19DatatypesTransferCommunity
 import v0x19.datatypes.VerifyEmail as V0x19DatatypesVerifyEmail
 
 class Transformer(var auth: String) : DatatypesMapper {
-
     private fun mapLocalUserTotp(l: LocalUser): Boolean = l.totp_2fa_url != null
 
     // Admin flag moved from Person to LocalUser in v0.19
     // https://github.com/LemmyNet/lemmy/pull/3403
-    private fun mapLocalUserView(l: LocalUserView): V0x19DatatypesLocalUserView = V0x19DatatypesLocalUserView(
-        local_user = V0x19DatatypesLocalUser(
-            id = l.local_user.id,
-            person_id = l.local_user.person_id,
-            email = l.local_user.email,
-            show_nsfw = l.local_user.show_nsfw,
-            theme = l.local_user.theme,
-            default_sort_type = l.local_user.default_sort_type,
-            default_listing_type = l.local_user.default_listing_type,
-            interface_language = l.local_user.interface_language,
-            show_avatars = l.local_user.show_avatars,
-            send_notifications_to_email = l.local_user.send_notifications_to_email,
-            show_scores = l.local_user.show_scores,
-            show_bot_accounts = l.local_user.show_bot_accounts,
-            show_read_posts = l.local_user.show_read_posts,
-            email_verified = l.local_user.email_verified,
-            accepted_application = l.local_user.accepted_application,
-            open_links_in_new_tab = l.local_user.open_links_in_new_tab,
-            blur_nsfw = false,
-            auto_expand = false,
-            infinite_scroll_enabled = true,
-            admin = l.person.admin,
-            post_listing_mode = PostListingMode.Card,
-            totp_2fa_enabled = l.local_user.let { this.mapLocalUserTotp(it) },
-            enable_keyboard_navigation = false,
-            enable_animated_images = true,
-        ),
-        person = this.toV0x19(l.person),
-        counts = this.toV0x19(l.counts),
-    )
+    private fun mapLocalUserView(l: LocalUserView): V0x19DatatypesLocalUserView =
+        V0x19DatatypesLocalUserView(
+            local_user =
+                V0x19DatatypesLocalUser(
+                    id = l.local_user.id,
+                    person_id = l.local_user.person_id,
+                    email = l.local_user.email,
+                    show_nsfw = l.local_user.show_nsfw,
+                    theme = l.local_user.theme,
+                    default_sort_type = l.local_user.default_sort_type,
+                    default_listing_type = l.local_user.default_listing_type,
+                    interface_language = l.local_user.interface_language,
+                    show_avatars = l.local_user.show_avatars,
+                    send_notifications_to_email = l.local_user.send_notifications_to_email,
+                    show_scores = l.local_user.show_scores,
+                    show_bot_accounts = l.local_user.show_bot_accounts,
+                    show_read_posts = l.local_user.show_read_posts,
+                    email_verified = l.local_user.email_verified,
+                    accepted_application = l.local_user.accepted_application,
+                    open_links_in_new_tab = l.local_user.open_links_in_new_tab,
+                    blur_nsfw = false,
+                    auto_expand = false,
+                    infinite_scroll_enabled = true,
+                    admin = l.person.admin,
+                    post_listing_mode = PostListingMode.Card,
+                    totp_2fa_enabled = l.local_user.let { this.mapLocalUserTotp(it) },
+                    enable_keyboard_navigation = false,
+                    enable_animated_images = true,
+                ),
+            person = this.toV0x19(l.person),
+            counts = this.toV0x19(l.counts),
+        )
 
-    override fun toV0x19(d: V0x18DatatypesLocalUserView): V0x19DatatypesLocalUserView =
-        this.mapLocalUserView(d)
+    override fun toV0x19(d: V0x18DatatypesLocalUserView): V0x19DatatypesLocalUserView = this.mapLocalUserView(d)
 
     // Generated
     override fun toV0x19(d: V0x18DatatypesLocalUser): V0x19DatatypesLocalUser =
@@ -507,9 +507,10 @@ class Transformer(var auth: String) : DatatypesMapper {
             admins = d.admins.map { this.toV0x19(d = it) },
         )
 
-    override fun toV0x19(d: V0x18DatatypesAddModToCommunityResponse): V0x19DatatypesAddModToCommunityResponse = v0x19.datatypes.AddModToCommunityResponse(
-        moderators = d.moderators.map { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesAddModToCommunityResponse): V0x19DatatypesAddModToCommunityResponse =
+        v0x19.datatypes.AddModToCommunityResponse(
+            moderators = d.moderators.map { this.toV0x19(d = it) },
+        )
 
     override fun toV0x19(d: V0x18DatatypesAdminPurgeComment): V0x19DatatypesAdminPurgeComment =
         v0x19.datatypes.AdminPurgeComment(
@@ -520,11 +521,12 @@ class Transformer(var auth: String) : DatatypesMapper {
             when_ = d.when_,
         )
 
-    override fun toV0x19(d: V0x18DatatypesAdminPurgeCommentView): V0x19DatatypesAdminPurgeCommentView = v0x19.datatypes.AdminPurgeCommentView(
-        admin_purge_comment = this.toV0x19(d = d.admin_purge_comment),
-        admin = d.admin?.let { this.toV0x19(d = it) },
-        post = this.toV0x19(d = d.post),
-    )
+    override fun toV0x19(d: V0x18DatatypesAdminPurgeCommentView): V0x19DatatypesAdminPurgeCommentView =
+        v0x19.datatypes.AdminPurgeCommentView(
+            admin_purge_comment = this.toV0x19(d = d.admin_purge_comment),
+            admin = d.admin?.let { this.toV0x19(d = it) },
+            post = this.toV0x19(d = d.post),
+        )
 
     override fun toV0x19(d: V0x18DatatypesAdminPurgeCommunity): V0x19DatatypesAdminPurgeCommunity =
         v0x19.datatypes.AdminPurgeCommunity(
@@ -534,10 +536,11 @@ class Transformer(var auth: String) : DatatypesMapper {
             when_ = d.when_,
         )
 
-    override fun toV0x19(d: V0x18DatatypesAdminPurgeCommunityView): V0x19DatatypesAdminPurgeCommunityView = v0x19.datatypes.AdminPurgeCommunityView(
-        admin_purge_community = this.toV0x19(d = d.admin_purge_community),
-        admin = d.admin?.let { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesAdminPurgeCommunityView): V0x19DatatypesAdminPurgeCommunityView =
+        v0x19.datatypes.AdminPurgeCommunityView(
+            admin_purge_community = this.toV0x19(d = d.admin_purge_community),
+            admin = d.admin?.let { this.toV0x19(d = it) },
+        )
 
     override fun toV0x19(d: V0x18DatatypesAdminPurgePerson): V0x19DatatypesAdminPurgePerson =
         v0x19.datatypes.AdminPurgePerson(
@@ -569,14 +572,16 @@ class Transformer(var auth: String) : DatatypesMapper {
             community = this.toV0x19(d = d.community),
         )
 
-    override fun toV0x19(d: V0x18DatatypesBanFromCommunityResponse): V0x19DatatypesBanFromCommunityResponse = v0x19.datatypes.BanFromCommunityResponse(
-        person_view = this.toV0x19(d = d.person_view),
-        banned = d.banned,
-    )
+    override fun toV0x19(d: V0x18DatatypesBanFromCommunityResponse): V0x19DatatypesBanFromCommunityResponse =
+        v0x19.datatypes.BanFromCommunityResponse(
+            person_view = this.toV0x19(d = d.person_view),
+            banned = d.banned,
+        )
 
-    override fun toV0x19(d: V0x18DatatypesBannedPersonsResponse): V0x19DatatypesBannedPersonsResponse = v0x19.datatypes.BannedPersonsResponse(
-        banned = d.banned.map { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesBannedPersonsResponse): V0x19DatatypesBannedPersonsResponse =
+        v0x19.datatypes.BannedPersonsResponse(
+            banned = d.banned.map { this.toV0x19(d = it) },
+        )
 
     override fun toV0x19(d: V0x18DatatypesBanPersonResponse): V0x19DatatypesBanPersonResponse =
         v0x19.datatypes.BanPersonResponse(
@@ -584,10 +589,11 @@ class Transformer(var auth: String) : DatatypesMapper {
             banned = d.banned,
         )
 
-    override fun toV0x19(d: V0x18DatatypesBlockCommunityResponse): V0x19DatatypesBlockCommunityResponse = v0x19.datatypes.BlockCommunityResponse(
-        community_view = this.toV0x19(d = d.community_view),
-        blocked = d.blocked,
-    )
+    override fun toV0x19(d: V0x18DatatypesBlockCommunityResponse): V0x19DatatypesBlockCommunityResponse =
+        v0x19.datatypes.BlockCommunityResponse(
+            community_view = this.toV0x19(d = d.community_view),
+            blocked = d.blocked,
+        )
 
     override fun toV0x19(d: V0x18DatatypesBlockPersonResponse): V0x19DatatypesBlockPersonResponse =
         v0x19.datatypes.BlockPersonResponse(
@@ -602,21 +608,22 @@ class Transformer(var auth: String) : DatatypesMapper {
             uuid = d.uuid,
         )
 
-    override fun toV0x19(d: V0x18DatatypesComment): V0x19DatatypesComment = v0x19.datatypes.Comment(
-        id = d.id,
-        creator_id = d.creator_id,
-        post_id = d.post_id,
-        content = d.content,
-        removed = d.removed,
-        published = d.published,
-        updated = d.updated,
-        deleted = d.deleted,
-        ap_id = d.ap_id,
-        local = d.local,
-        path = d.path,
-        distinguished = d.distinguished,
-        language_id = d.language_id,
-    )
+    override fun toV0x19(d: V0x18DatatypesComment): V0x19DatatypesComment =
+        v0x19.datatypes.Comment(
+            id = d.id,
+            creator_id = d.creator_id,
+            post_id = d.post_id,
+            content = d.content,
+            removed = d.removed,
+            published = d.published,
+            updated = d.updated,
+            deleted = d.deleted,
+            ap_id = d.ap_id,
+            local = d.local,
+            path = d.path,
+            distinguished = d.distinguished,
+            language_id = d.language_id,
+        )
 
     override fun toV0x19(d: V0x18DatatypesCommentAggregates): V0x19DatatypesCommentAggregates =
         v0x19.datatypes.CommentAggregates(
@@ -672,9 +679,10 @@ class Transformer(var auth: String) : DatatypesMapper {
             updated = d.updated,
         )
 
-    override fun toV0x19(d: V0x18DatatypesCommentReportResponse): V0x19DatatypesCommentReportResponse = v0x19.datatypes.CommentReportResponse(
-        comment_report_view = this.toV0x19(d = d.comment_report_view),
-    )
+    override fun toV0x19(d: V0x18DatatypesCommentReportResponse): V0x19DatatypesCommentReportResponse =
+        v0x19.datatypes.CommentReportResponse(
+            comment_report_view = this.toV0x19(d = d.comment_report_view),
+        )
 
     override fun toV0x19(d: V0x18DatatypesCommentReportView): V0x19DatatypesCommentReportView =
         v0x19.datatypes.CommentReportView(
@@ -750,15 +758,17 @@ class Transformer(var auth: String) : DatatypesMapper {
             community = this.toV0x19(d = d.community),
         )
 
-    override fun toV0x19(d: V0x18DatatypesCommunityFollowerView): V0x19DatatypesCommunityFollowerView = v0x19.datatypes.CommunityFollowerView(
-        community = this.toV0x19(d = d.community),
-        follower = this.toV0x19(d = d.follower),
-    )
+    override fun toV0x19(d: V0x18DatatypesCommunityFollowerView): V0x19DatatypesCommunityFollowerView =
+        v0x19.datatypes.CommunityFollowerView(
+            community = this.toV0x19(d = d.community),
+            follower = this.toV0x19(d = d.follower),
+        )
 
-    override fun toV0x19(d: V0x18DatatypesCommunityModeratorView): V0x19DatatypesCommunityModeratorView = v0x19.datatypes.CommunityModeratorView(
-        community = this.toV0x19(d = d.community),
-        moderator = this.toV0x19(d = d.moderator),
-    )
+    override fun toV0x19(d: V0x18DatatypesCommunityModeratorView): V0x19DatatypesCommunityModeratorView =
+        v0x19.datatypes.CommunityModeratorView(
+            community = this.toV0x19(d = d.community),
+            moderator = this.toV0x19(d = d.moderator),
+        )
 
     override fun toV0x19(d: V0x18DatatypesCommunityResponse): V0x19DatatypesCommunityResponse =
         v0x19.datatypes.CommunityResponse(
@@ -829,9 +839,10 @@ class Transformer(var auth: String) : DatatypesMapper {
             discussion_languages = d.discussion_languages,
         )
 
-    override fun toV0x19(d: V0x18DatatypesGetFederatedInstancesResponse): V0x19DatatypesGetFederatedInstancesResponse = v0x19.datatypes.GetFederatedInstancesResponse(
-        federated_instances = d.federated_instances?.let { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesGetFederatedInstancesResponse): V0x19DatatypesGetFederatedInstancesResponse =
+        v0x19.datatypes.GetFederatedInstancesResponse(
+            federated_instances = d.federated_instances?.let { this.toV0x19(d = it) },
+        )
 
     override fun toV0x19(d: V0x18DatatypesGetModlogResponse): V0x19DatatypesGetModlogResponse =
         v0x19.datatypes.GetModlogResponse(
@@ -852,16 +863,18 @@ class Transformer(var auth: String) : DatatypesMapper {
             hidden_communities = d.hidden_communities.map { this.toV0x19(d = it) },
         )
 
-    override fun toV0x19(d: V0x18DatatypesGetPersonDetailsResponse): V0x19DatatypesGetPersonDetailsResponse = v0x19.datatypes.GetPersonDetailsResponse(
-        person_view = this.toV0x19(d = d.person_view),
-        comments = d.comments.map { this.toV0x19(d = it) },
-        posts = d.posts.map { this.toV0x19(d = it) },
-        moderates = d.moderates.map { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesGetPersonDetailsResponse): V0x19DatatypesGetPersonDetailsResponse =
+        v0x19.datatypes.GetPersonDetailsResponse(
+            person_view = this.toV0x19(d = d.person_view),
+            comments = d.comments.map { this.toV0x19(d = it) },
+            posts = d.posts.map { this.toV0x19(d = it) },
+            moderates = d.moderates.map { this.toV0x19(d = it) },
+        )
 
-    override fun toV0x19(d: V0x18DatatypesGetPersonMentionsResponse): V0x19DatatypesGetPersonMentionsResponse = v0x19.datatypes.GetPersonMentionsResponse(
-        mentions = d.mentions.map { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesGetPersonMentionsResponse): V0x19DatatypesGetPersonMentionsResponse =
+        v0x19.datatypes.GetPersonMentionsResponse(
+            mentions = d.mentions.map { this.toV0x19(d = it) },
+        )
 
     override fun toV0x19(d: V0x18DatatypesGetPostResponse): V0x19DatatypesGetPostResponse =
         v0x19.datatypes.GetPostResponse(
@@ -881,16 +894,18 @@ class Transformer(var auth: String) : DatatypesMapper {
             replies = d.replies.map { this.toV0x19(d = it) },
         )
 
-    override fun toV0x19(d: V0x18DatatypesGetReportCountResponse): V0x19DatatypesGetReportCountResponse = v0x19.datatypes.GetReportCountResponse(
-        community_id = d.community_id,
-        comment_reports = d.comment_reports,
-        post_reports = d.post_reports,
-        private_message_reports = d.private_message_reports,
-    )
+    override fun toV0x19(d: V0x18DatatypesGetReportCountResponse): V0x19DatatypesGetReportCountResponse =
+        v0x19.datatypes.GetReportCountResponse(
+            community_id = d.community_id,
+            comment_reports = d.comment_reports,
+            post_reports = d.post_reports,
+            private_message_reports = d.private_message_reports,
+        )
 
-    override fun toV0x19(d: V0x18DatatypesGetSiteMetadataResponse): V0x19DatatypesGetSiteMetadataResponse = v0x19.datatypes.GetSiteMetadataResponse(
-        metadata = this.toV0x19(d = d.metadata),
-    )
+    override fun toV0x19(d: V0x18DatatypesGetSiteMetadataResponse): V0x19DatatypesGetSiteMetadataResponse =
+        v0x19.datatypes.GetSiteMetadataResponse(
+            metadata = this.toV0x19(d = d.metadata),
+        )
 
     override fun toV0x19(d: V0x18DatatypesGetSiteResponse): V0x19DatatypesGetSiteResponse =
         v0x19.datatypes.GetSiteResponse(
@@ -904,13 +919,16 @@ class Transformer(var auth: String) : DatatypesMapper {
             custom_emojis = d.custom_emojis.map { this.toV0x19(d = it) },
         )
 
-    override fun toV0x19(d: V0x18DatatypesGetUnreadCountResponse): V0x19DatatypesGetUnreadCountResponse = v0x19.datatypes.GetUnreadCountResponse(
-        replies = d.replies,
-        mentions = d.mentions,
-        private_messages = d.private_messages,
-    )
+    override fun toV0x19(d: V0x18DatatypesGetUnreadCountResponse): V0x19DatatypesGetUnreadCountResponse =
+        v0x19.datatypes.GetUnreadCountResponse(
+            replies = d.replies,
+            mentions = d.mentions,
+            private_messages = d.private_messages,
+        )
 
-    override fun toV0x19(d: V0x18DatatypesGetUnreadRegistrationApplicationCountResponse): V0x19DatatypesGetUnreadRegistrationApplicationCountResponse =
+    override fun toV0x19(
+        d: V0x18DatatypesGetUnreadRegistrationApplicationCountResponse,
+    ): V0x19DatatypesGetUnreadRegistrationApplicationCountResponse =
         v0x19.datatypes.GetUnreadRegistrationApplicationCountResponse(
             registration_applications = d.registration_applications,
         )
@@ -932,17 +950,20 @@ class Transformer(var auth: String) : DatatypesMapper {
             name = d.name,
         )
 
-    override fun toV0x19(d: V0x18DatatypesListCommentReportsResponse): V0x19DatatypesListCommentReportsResponse = v0x19.datatypes.ListCommentReportsResponse(
-        comment_reports = d.comment_reports.map { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesListCommentReportsResponse): V0x19DatatypesListCommentReportsResponse =
+        v0x19.datatypes.ListCommentReportsResponse(
+            comment_reports = d.comment_reports.map { this.toV0x19(d = it) },
+        )
 
-    override fun toV0x19(d: V0x18DatatypesListCommunitiesResponse): V0x19DatatypesListCommunitiesResponse = v0x19.datatypes.ListCommunitiesResponse(
-        communities = d.communities.map { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesListCommunitiesResponse): V0x19DatatypesListCommunitiesResponse =
+        v0x19.datatypes.ListCommunitiesResponse(
+            communities = d.communities.map { this.toV0x19(d = it) },
+        )
 
-    override fun toV0x19(d: V0x18DatatypesListPostReportsResponse): V0x19DatatypesListPostReportsResponse = v0x19.datatypes.ListPostReportsResponse(
-        post_reports = d.post_reports.map { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesListPostReportsResponse): V0x19DatatypesListPostReportsResponse =
+        v0x19.datatypes.ListPostReportsResponse(
+            post_reports = d.post_reports.map { this.toV0x19(d = it) },
+        )
 
     override fun toV0x19(d: V0x18DatatypesListPrivateMessageReportsResponse): V0x19DatatypesListPrivateMessageReportsResponse =
         v0x19.datatypes.ListPrivateMessageReportsResponse(
@@ -988,13 +1009,14 @@ class Transformer(var auth: String) : DatatypesMapper {
             verify_email_sent = d.verify_email_sent,
         )
 
-    override fun toV0x19(d: V0x18DatatypesModAdd): V0x19DatatypesModAdd = v0x19.datatypes.ModAdd(
-        id = d.id,
-        mod_person_id = d.mod_person_id,
-        other_person_id = d.other_person_id,
-        removed = d.removed,
-        when_ = d.when_,
-    )
+    override fun toV0x19(d: V0x18DatatypesModAdd): V0x19DatatypesModAdd =
+        v0x19.datatypes.ModAdd(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            other_person_id = d.other_person_id,
+            removed = d.removed,
+            when_ = d.when_,
+        )
 
     override fun toV0x19(d: V0x18DatatypesModAddCommunity): V0x19DatatypesModAddCommunity =
         v0x19.datatypes.ModAddCommunity(
@@ -1021,15 +1043,16 @@ class Transformer(var auth: String) : DatatypesMapper {
             modded_person = this.toV0x19(d = d.modded_person),
         )
 
-    override fun toV0x19(d: V0x18DatatypesModBan): V0x19DatatypesModBan = v0x19.datatypes.ModBan(
-        id = d.id,
-        mod_person_id = d.mod_person_id,
-        other_person_id = d.other_person_id,
-        reason = d.reason,
-        banned = d.banned,
-        expires = d.expires,
-        when_ = d.when_,
-    )
+    override fun toV0x19(d: V0x18DatatypesModBan): V0x19DatatypesModBan =
+        v0x19.datatypes.ModBan(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            other_person_id = d.other_person_id,
+            reason = d.reason,
+            banned = d.banned,
+            expires = d.expires,
+            when_ = d.when_,
+        )
 
     override fun toV0x19(d: V0x18DatatypesModBanFromCommunity): V0x19DatatypesModBanFromCommunity =
         v0x19.datatypes.ModBanFromCommunity(
@@ -1043,12 +1066,13 @@ class Transformer(var auth: String) : DatatypesMapper {
             when_ = d.when_,
         )
 
-    override fun toV0x19(d: V0x18DatatypesModBanFromCommunityView): V0x19DatatypesModBanFromCommunityView = v0x19.datatypes.ModBanFromCommunityView(
-        mod_ban_from_community = this.toV0x19(d = d.mod_ban_from_community),
-        moderator = d.moderator?.let { this.toV0x19(d = it) },
-        community = this.toV0x19(d = d.community),
-        banned_person = this.toV0x19(d = d.banned_person),
-    )
+    override fun toV0x19(d: V0x18DatatypesModBanFromCommunityView): V0x19DatatypesModBanFromCommunityView =
+        v0x19.datatypes.ModBanFromCommunityView(
+            mod_ban_from_community = this.toV0x19(d = d.mod_ban_from_community),
+            moderator = d.moderator?.let { this.toV0x19(d = it) },
+            community = this.toV0x19(d = d.community),
+            banned_person = this.toV0x19(d = d.banned_person),
+        )
 
     override fun toV0x19(d: V0x18DatatypesModBanView): V0x19DatatypesModBanView =
         v0x19.datatypes.ModBanView(
@@ -1149,11 +1173,12 @@ class Transformer(var auth: String) : DatatypesMapper {
             when_ = d.when_,
         )
 
-    override fun toV0x19(d: V0x18DatatypesModRemoveCommunityView): V0x19DatatypesModRemoveCommunityView = v0x19.datatypes.ModRemoveCommunityView(
-        mod_remove_community = this.toV0x19(d = d.mod_remove_community),
-        moderator = d.moderator?.let { this.toV0x19(d = it) },
-        community = this.toV0x19(d = d.community),
-    )
+    override fun toV0x19(d: V0x18DatatypesModRemoveCommunityView): V0x19DatatypesModRemoveCommunityView =
+        v0x19.datatypes.ModRemoveCommunityView(
+            mod_remove_community = this.toV0x19(d = d.mod_remove_community),
+            moderator = d.moderator?.let { this.toV0x19(d = it) },
+            community = this.toV0x19(d = d.community),
+        )
 
     override fun toV0x19(d: V0x18DatatypesModRemovePost): V0x19DatatypesModRemovePost =
         v0x19.datatypes.ModRemovePost(
@@ -1182,40 +1207,40 @@ class Transformer(var auth: String) : DatatypesMapper {
             when_ = d.when_,
         )
 
-    override fun toV0x19(d: V0x18DatatypesModTransferCommunityView): V0x19DatatypesModTransferCommunityView = v0x19.datatypes.ModTransferCommunityView(
-        mod_transfer_community = this.toV0x19(d = d.mod_transfer_community),
-        moderator = d.moderator?.let { this.toV0x19(d = it) },
-        community = this.toV0x19(d = d.community),
-        modded_person = this.toV0x19(d = d.modded_person),
-    )
+    override fun toV0x19(d: V0x18DatatypesModTransferCommunityView): V0x19DatatypesModTransferCommunityView =
+        v0x19.datatypes.ModTransferCommunityView(
+            mod_transfer_community = this.toV0x19(d = d.mod_transfer_community),
+            moderator = d.moderator?.let { this.toV0x19(d = it) },
+            community = this.toV0x19(d = d.community),
+            modded_person = this.toV0x19(d = d.modded_person),
+        )
 
-    override fun toV0x19(d: V0x18DatatypesPerson): V0x19DatatypesPerson = v0x19.datatypes.Person(
-        id = d.id,
-        name = d.name,
-        display_name = d.display_name,
-        avatar = d.avatar,
-        banned = d.banned,
-        published = d.published,
-        updated = d.updated,
-        actor_id = d.actor_id,
-        bio = d.bio,
-        local = d.local,
-        banner = d.banner,
-        deleted = d.deleted,
-        matrix_user_id = d.matrix_user_id,
-        bot_account = d.bot_account,
-        ban_expires = d.ban_expires,
-        instance_id = d.instance_id,
-    )
+    override fun toV0x19(d: V0x18DatatypesPerson): V0x19DatatypesPerson =
+        v0x19.datatypes.Person(
+            id = d.id,
+            name = d.name,
+            display_name = d.display_name,
+            avatar = d.avatar,
+            banned = d.banned,
+            published = d.published,
+            updated = d.updated,
+            actor_id = d.actor_id,
+            bio = d.bio,
+            local = d.local,
+            banner = d.banner,
+            deleted = d.deleted,
+            matrix_user_id = d.matrix_user_id,
+            bot_account = d.bot_account,
+            ban_expires = d.ban_expires,
+            instance_id = d.instance_id,
+        )
 
     override fun toV0x19(d: V0x18DatatypesPersonAggregates): V0x19DatatypesPersonAggregates =
         v0x19.datatypes.PersonAggregates(
             id = d.id,
             person_id = d.person_id,
             post_count = d.post_count,
-            post_score = d.post_score,
             comment_count = d.comment_count,
-            comment_score = d.comment_score,
         )
 
     override fun toV0x19(d: V0x18DatatypesPersonBlockView): V0x19DatatypesPersonBlockView =
@@ -1233,9 +1258,10 @@ class Transformer(var auth: String) : DatatypesMapper {
             published = d.published,
         )
 
-    override fun toV0x19(d: V0x18DatatypesPersonMentionResponse): V0x19DatatypesPersonMentionResponse = v0x19.datatypes.PersonMentionResponse(
-        person_mention_view = this.toV0x19(d = d.person_mention_view),
-    )
+    override fun toV0x19(d: V0x18DatatypesPersonMentionResponse): V0x19DatatypesPersonMentionResponse =
+        v0x19.datatypes.PersonMentionResponse(
+            person_mention_view = this.toV0x19(d = d.person_mention_view),
+        )
 
     override fun toV0x19(d: V0x18DatatypesPersonMentionView): V0x19DatatypesPersonMentionView =
         v0x19.datatypes.PersonMentionView(
@@ -1259,29 +1285,30 @@ class Transformer(var auth: String) : DatatypesMapper {
             counts = this.toV0x19(d = d.counts),
         )
 
-    override fun toV0x19(d: V0x18DatatypesPost): V0x19DatatypesPost = v0x19.datatypes.Post(
-        id = d.id,
-        name = d.name,
-        url = d.url,
-        body = d.body,
-        creator_id = d.creator_id,
-        community_id = d.community_id,
-        removed = d.removed,
-        locked = d.locked,
-        published = d.published,
-        updated = d.updated,
-        deleted = d.deleted,
-        nsfw = d.nsfw,
-        embed_title = d.embed_title,
-        embed_description = d.embed_description,
-        thumbnail_url = d.thumbnail_url,
-        ap_id = d.ap_id,
-        local = d.local,
-        embed_video_url = d.embed_video_url,
-        language_id = d.language_id,
-        featured_community = d.featured_community,
-        featured_local = d.featured_local,
-    )
+    override fun toV0x19(d: V0x18DatatypesPost): V0x19DatatypesPost =
+        v0x19.datatypes.Post(
+            id = d.id,
+            name = d.name,
+            url = d.url,
+            body = d.body,
+            creator_id = d.creator_id,
+            community_id = d.community_id,
+            removed = d.removed,
+            locked = d.locked,
+            published = d.published,
+            updated = d.updated,
+            deleted = d.deleted,
+            nsfw = d.nsfw,
+            embed_title = d.embed_title,
+            embed_description = d.embed_description,
+            thumbnail_url = d.thumbnail_url,
+            ap_id = d.ap_id,
+            local = d.local,
+            embed_video_url = d.embed_video_url,
+            language_id = d.language_id,
+            featured_community = d.featured_community,
+            featured_local = d.featured_local,
+        )
 
     override fun toV0x19(d: V0x18DatatypesPostAggregates): V0x19DatatypesPostAggregates =
         v0x19.datatypes.PostAggregates(
@@ -1374,25 +1401,29 @@ class Transformer(var auth: String) : DatatypesMapper {
             updated = d.updated,
         )
 
-    override fun toV0x19(d: V0x18DatatypesPrivateMessageReportResponse): V0x19DatatypesPrivateMessageReportResponse = v0x19.datatypes.PrivateMessageReportResponse(
-        private_message_report_view = this.toV0x19(d = d.private_message_report_view),
-    )
+    override fun toV0x19(d: V0x18DatatypesPrivateMessageReportResponse): V0x19DatatypesPrivateMessageReportResponse =
+        v0x19.datatypes.PrivateMessageReportResponse(
+            private_message_report_view = this.toV0x19(d = d.private_message_report_view),
+        )
 
-    override fun toV0x19(d: V0x18DatatypesPrivateMessageReportView): V0x19DatatypesPrivateMessageReportView = v0x19.datatypes.PrivateMessageReportView(
-        private_message_report = this.toV0x19(d = d.private_message_report),
-        private_message = this.toV0x19(d = d.private_message),
-        private_message_creator = this.toV0x19(d = d.private_message_creator),
-        creator = this.toV0x19(d = d.creator),
-        resolver = d.resolver?.let { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesPrivateMessageReportView): V0x19DatatypesPrivateMessageReportView =
+        v0x19.datatypes.PrivateMessageReportView(
+            private_message_report = this.toV0x19(d = d.private_message_report),
+            private_message = this.toV0x19(d = d.private_message),
+            private_message_creator = this.toV0x19(d = d.private_message_creator),
+            creator = this.toV0x19(d = d.creator),
+            resolver = d.resolver?.let { this.toV0x19(d = it) },
+        )
 
-    override fun toV0x19(d: V0x18DatatypesPrivateMessageResponse): V0x19DatatypesPrivateMessageResponse = v0x19.datatypes.PrivateMessageResponse(
-        private_message_view = this.toV0x19(d = d.private_message_view),
-    )
+    override fun toV0x19(d: V0x18DatatypesPrivateMessageResponse): V0x19DatatypesPrivateMessageResponse =
+        v0x19.datatypes.PrivateMessageResponse(
+            private_message_view = this.toV0x19(d = d.private_message_view),
+        )
 
-    override fun toV0x19(d: V0x18DatatypesPrivateMessagesResponse): V0x19DatatypesPrivateMessagesResponse = v0x19.datatypes.PrivateMessagesResponse(
-        private_messages = d.private_messages.map { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesPrivateMessagesResponse): V0x19DatatypesPrivateMessagesResponse =
+        v0x19.datatypes.PrivateMessagesResponse(
+            private_messages = d.private_messages.map { this.toV0x19(d = it) },
+        )
 
     override fun toV0x19(d: V0x18DatatypesPrivateMessageView): V0x19DatatypesPrivateMessageView =
         v0x19.datatypes.PrivateMessageView(
@@ -1401,33 +1432,36 @@ class Transformer(var auth: String) : DatatypesMapper {
             recipient = this.toV0x19(d = d.recipient),
         )
 
-    override fun toV0x19(d: V0x18DatatypesRegistrationApplication): V0x19DatatypesRegistrationApplication = v0x19.datatypes.RegistrationApplication(
-        id = d.id,
-        local_user_id = d.local_user_id,
-        answer = d.answer,
-        admin_id = d.admin_id,
-        deny_reason = d.deny_reason,
-        published = d.published,
-    )
+    override fun toV0x19(d: V0x18DatatypesRegistrationApplication): V0x19DatatypesRegistrationApplication =
+        v0x19.datatypes.RegistrationApplication(
+            id = d.id,
+            local_user_id = d.local_user_id,
+            answer = d.answer,
+            admin_id = d.admin_id,
+            deny_reason = d.deny_reason,
+            published = d.published,
+        )
 
     override fun toV0x19(d: V0x18DatatypesRegistrationApplicationResponse): V0x19DatatypesRegistrationApplicationResponse =
         v0x19.datatypes.RegistrationApplicationResponse(
             registration_application = this.toV0x19(d = d.registration_application),
         )
 
-    override fun toV0x19(d: V0x18DatatypesRegistrationApplicationView): V0x19DatatypesRegistrationApplicationView = v0x19.datatypes.RegistrationApplicationView(
-        registration_application = this.toV0x19(d = d.registration_application),
-        creator_local_user = this.toV0x19(d = d.creator_local_user),
-        creator = this.toV0x19(d = d.creator),
-        admin = d.admin?.let { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesRegistrationApplicationView): V0x19DatatypesRegistrationApplicationView =
+        v0x19.datatypes.RegistrationApplicationView(
+            registration_application = this.toV0x19(d = d.registration_application),
+            creator_local_user = this.toV0x19(d = d.creator_local_user),
+            creator = this.toV0x19(d = d.creator),
+            admin = d.admin?.let { this.toV0x19(d = it) },
+        )
 
-    override fun toV0x19(d: V0x18DatatypesResolveObjectResponse): V0x19DatatypesResolveObjectResponse = v0x19.datatypes.ResolveObjectResponse(
-        comment = d.comment?.let { this.toV0x19(d = it) },
-        post = d.post?.let { this.toV0x19(d = it) },
-        community = d.community?.let { this.toV0x19(d = it) },
-        person = d.person?.let { this.toV0x19(d = it) },
-    )
+    override fun toV0x19(d: V0x18DatatypesResolveObjectResponse): V0x19DatatypesResolveObjectResponse =
+        v0x19.datatypes.ResolveObjectResponse(
+            comment = d.comment?.let { this.toV0x19(d = it) },
+            post = d.post?.let { this.toV0x19(d = it) },
+            community = d.community?.let { this.toV0x19(d = it) },
+            person = d.person?.let { this.toV0x19(d = it) },
+        )
 
     override fun toV0x19(d: V0x18DatatypesSearchResponse): V0x19DatatypesSearchResponse =
         v0x19.datatypes.SearchResponse(
@@ -1438,22 +1472,23 @@ class Transformer(var auth: String) : DatatypesMapper {
             users = d.users.map { this.toV0x19(d = it) },
         )
 
-    override fun toV0x19(d: V0x18DatatypesSite): V0x19DatatypesSite = v0x19.datatypes.Site(
-        id = d.id,
-        name = d.name,
-        sidebar = d.sidebar,
-        published = d.published,
-        updated = d.updated,
-        icon = d.icon,
-        banner = d.banner,
-        description = d.description,
-        actor_id = d.actor_id,
-        last_refreshed_at = d.last_refreshed_at,
-        inbox_url = d.inbox_url,
-        private_key = d.private_key,
-        public_key = d.public_key,
-        instance_id = d.instance_id,
-    )
+    override fun toV0x19(d: V0x18DatatypesSite): V0x19DatatypesSite =
+        v0x19.datatypes.Site(
+            id = d.id,
+            name = d.name,
+            sidebar = d.sidebar,
+            published = d.published,
+            updated = d.updated,
+            icon = d.icon,
+            banner = d.banner,
+            description = d.description,
+            actor_id = d.actor_id,
+            last_refreshed_at = d.last_refreshed_at,
+            inbox_url = d.inbox_url,
+            private_key = d.private_key,
+            public_key = d.public_key,
+            instance_id = d.instance_id,
+        )
 
     override fun toV0x19(d: V0x18DatatypesSiteAggregates): V0x19DatatypesSiteAggregates =
         v0x19.datatypes.SiteAggregates(
@@ -1491,13 +1526,14 @@ class Transformer(var auth: String) : DatatypesMapper {
             counts = this.toV0x19(d = d.counts),
         )
 
-    override fun toV0x19(d: V0x18DatatypesTagline): V0x19DatatypesTagline = v0x19.datatypes.Tagline(
-        id = d.id,
-        local_site_id = d.local_site_id,
-        content = d.content,
-        published = d.published,
-        updated = d.updated,
-    )
+    override fun toV0x19(d: V0x18DatatypesTagline): V0x19DatatypesTagline =
+        v0x19.datatypes.Tagline(
+            id = d.id,
+            local_site_id = d.local_site_id,
+            content = d.content,
+            published = d.published,
+            updated = d.updated,
+        )
 
     override fun toV0x18(d: V0x19DatatypesAddAdmin): V0x18DatatypesAddAdmin =
         v0x18.datatypes.AddAdmin(
@@ -1514,12 +1550,13 @@ class Transformer(var auth: String) : DatatypesMapper {
             auth = auth,
         )
 
-    override fun toV0x18(d: V0x19DatatypesApproveRegistrationApplication): V0x18DatatypesApproveRegistrationApplication = v0x18.datatypes.ApproveRegistrationApplication(
-        id = d.id,
-        approve = d.approve,
-        deny_reason = d.deny_reason,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesApproveRegistrationApplication): V0x18DatatypesApproveRegistrationApplication =
+        v0x18.datatypes.ApproveRegistrationApplication(
+            id = d.id,
+            approve = d.approve,
+            deny_reason = d.deny_reason,
+            auth = auth,
+        )
 
     override fun toV0x18(d: V0x19DatatypesBanFromCommunity): V0x18DatatypesBanFromCommunity =
         v0x18.datatypes.BanFromCommunity(
@@ -1643,11 +1680,12 @@ class Transformer(var auth: String) : DatatypesMapper {
             auth = auth,
         )
 
-    override fun toV0x18(d: V0x19DatatypesCreatePrivateMessageReport): V0x18DatatypesCreatePrivateMessageReport = v0x18.datatypes.CreatePrivateMessageReport(
-        private_message_id = d.private_message_id,
-        reason = d.reason,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesCreatePrivateMessageReport): V0x18DatatypesCreatePrivateMessageReport =
+        v0x18.datatypes.CreatePrivateMessageReport(
+            private_message_id = d.private_message_id,
+            reason = d.reason,
+            auth = auth,
+        )
 
     override fun toV0x18(d: V0x19DatatypesCreateSite): V0x18DatatypesCreateSite =
         v0x18.datatypes.CreateSite(
@@ -1909,11 +1947,12 @@ class Transformer(var auth: String) : DatatypesMapper {
             auth = auth,
         )
 
-    override fun toV0x18(d: V0x19DatatypesGetPost): V0x18DatatypesGetPost = v0x18.datatypes.GetPost(
-        id = d.id,
-        comment_id = d.comment_id,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesGetPost): V0x18DatatypesGetPost =
+        v0x18.datatypes.GetPost(
+            id = d.id,
+            comment_id = d.comment_id,
+            auth = auth,
+        )
 
     override fun toV0x18(d: V0x19DatatypesGetPosts): V0x18DatatypesGetPosts =
         v0x18.datatypes.GetPosts(
@@ -1991,19 +2030,21 @@ class Transformer(var auth: String) : DatatypesMapper {
             auth = auth,
         )
 
-    override fun toV0x18(d: V0x19DatatypesListPrivateMessageReports): V0x18DatatypesListPrivateMessageReports = v0x18.datatypes.ListPrivateMessageReports(
-        page = d.page,
-        limit = d.limit,
-        unresolved_only = d.unresolved_only,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesListPrivateMessageReports): V0x18DatatypesListPrivateMessageReports =
+        v0x18.datatypes.ListPrivateMessageReports(
+            page = d.page,
+            limit = d.limit,
+            unresolved_only = d.unresolved_only,
+            auth = auth,
+        )
 
-    override fun toV0x18(d: V0x19DatatypesListRegistrationApplications): V0x18DatatypesListRegistrationApplications = v0x18.datatypes.ListRegistrationApplications(
-        unread_only = d.unread_only,
-        page = d.page,
-        limit = d.limit,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesListRegistrationApplications): V0x18DatatypesListRegistrationApplications =
+        v0x18.datatypes.ListRegistrationApplications(
+            unread_only = d.unread_only,
+            page = d.page,
+            limit = d.limit,
+            auth = auth,
+        )
 
     override fun toV0x18(d: V0x19DatatypesLockPost): V0x18DatatypesLockPost =
         v0x18.datatypes.LockPost(
@@ -2012,35 +2053,40 @@ class Transformer(var auth: String) : DatatypesMapper {
             auth = auth,
         )
 
-    override fun toV0x18(d: V0x19DatatypesLogin): V0x18DatatypesLogin = v0x18.datatypes.Login(
-        username_or_email = d.username_or_email,
-        password = d.password,
-        totp_2fa_token = d.totp_2fa_token,
-    )
+    override fun toV0x18(d: V0x19DatatypesLogin): V0x18DatatypesLogin =
+        v0x18.datatypes.Login(
+            username_or_email = d.username_or_email,
+            password = d.password,
+            totp_2fa_token = d.totp_2fa_token,
+        )
 
-    override fun toV0x18(d: V0x19DatatypesMarkCommentReplyAsRead): V0x18DatatypesMarkCommentReplyAsRead = v0x18.datatypes.MarkCommentReplyAsRead(
-        comment_reply_id = d.comment_reply_id,
-        read = d.read,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesMarkCommentReplyAsRead): V0x18DatatypesMarkCommentReplyAsRead =
+        v0x18.datatypes.MarkCommentReplyAsRead(
+            comment_reply_id = d.comment_reply_id,
+            read = d.read,
+            auth = auth,
+        )
 
-    override fun toV0x18(d: V0x19DatatypesMarkPersonMentionAsRead): V0x18DatatypesMarkPersonMentionAsRead = v0x18.datatypes.MarkPersonMentionAsRead(
-        person_mention_id = d.person_mention_id,
-        read = d.read,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesMarkPersonMentionAsRead): V0x18DatatypesMarkPersonMentionAsRead =
+        v0x18.datatypes.MarkPersonMentionAsRead(
+            person_mention_id = d.person_mention_id,
+            read = d.read,
+            auth = auth,
+        )
 
-    override fun toV0x18(d: V0x19DatatypesMarkPrivateMessageAsRead): V0x18DatatypesMarkPrivateMessageAsRead = v0x18.datatypes.MarkPrivateMessageAsRead(
-        private_message_id = d.private_message_id,
-        read = d.read,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesMarkPrivateMessageAsRead): V0x18DatatypesMarkPrivateMessageAsRead =
+        v0x18.datatypes.MarkPrivateMessageAsRead(
+            private_message_id = d.private_message_id,
+            read = d.read,
+            auth = auth,
+        )
 
-    override fun toV0x18(d: V0x19DatatypesPasswordChangeAfterReset): V0x18DatatypesPasswordChangeAfterReset = v0x18.datatypes.PasswordChangeAfterReset(
-        token = d.token,
-        password = d.password,
-        password_verify = d.password_verify,
-    )
+    override fun toV0x18(d: V0x19DatatypesPasswordChangeAfterReset): V0x18DatatypesPasswordChangeAfterReset =
+        v0x18.datatypes.PasswordChangeAfterReset(
+            token = d.token,
+            password = d.password,
+            password_verify = d.password_verify,
+        )
 
     override fun toV0x18(d: V0x19DatatypesPasswordReset): V0x18DatatypesPasswordReset =
         v0x18.datatypes.PasswordReset(
@@ -2132,11 +2178,12 @@ class Transformer(var auth: String) : DatatypesMapper {
             auth = auth,
         )
 
-    override fun toV0x18(d: V0x19DatatypesResolvePrivateMessageReport): V0x18DatatypesResolvePrivateMessageReport = v0x18.datatypes.ResolvePrivateMessageReport(
-        report_id = d.report_id,
-        resolved = d.resolved,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesResolvePrivateMessageReport): V0x18DatatypesResolvePrivateMessageReport =
+        v0x18.datatypes.ResolvePrivateMessageReport(
+            report_id = d.report_id,
+            resolved = d.resolved,
+            auth = auth,
+        )
 
     override fun toV0x18(d: V0x19DatatypesSaveComment): V0x18DatatypesSaveComment =
         v0x18.datatypes.SaveComment(
@@ -2177,18 +2224,19 @@ class Transformer(var auth: String) : DatatypesMapper {
             open_links_in_new_tab = d.open_links_in_new_tab,
         )
 
-    override fun toV0x18(d: V0x19DatatypesSearch): V0x18DatatypesSearch = v0x18.datatypes.Search(
-        q = d.q,
-        community_id = d.community_id,
-        community_name = d.community_name,
-        creator_id = d.creator_id,
-        type_ = d.type_,
-        sort = d.sort,
-        listing_type = d.listing_type,
-        page = d.page,
-        limit = d.limit,
-        auth = auth,
-    )
+    override fun toV0x18(d: V0x19DatatypesSearch): V0x18DatatypesSearch =
+        v0x18.datatypes.Search(
+            q = d.q,
+            community_id = d.community_id,
+            community_name = d.community_name,
+            creator_id = d.creator_id,
+            type_ = d.type_,
+            sort = d.sort,
+            listing_type = d.listing_type,
+            page = d.page,
+            limit = d.limit,
+            auth = auth,
+        )
 
     override fun toV0x18(d: V0x19DatatypesTransferCommunity): V0x18DatatypesTransferCommunity =
         v0x18.datatypes.TransferCommunity(

@@ -10,14 +10,17 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.zip.ZipFile
 
-const val rootPath = "src/commonMain/kotlin/"
-const val rootPackagePath = ""
-const val rootPackage = ""
-const val customDataTypesPackage = "dto."
+const val ROOT_PATH = "src/commonMain/kotlin/"
+const val ROOT_PACKAGE_PATH = ""
+const val ROOT_PACKAGE = ""
+const val CUSTOM_DATATYPES_PACKAGE = "dto."
 
 val filesThatShouldNotBeAdded = setOf("others.ts", "DeleteAccountResponse.ts", "PasswordResetResponse.ts", "VerifyEmailResponse.ts")
 
-fun getTypesPath(version: String, temp: Boolean = true) = "$rootPath$rootPackagePath$version/datatypes" + if (temp) "/temp" else ""
+fun getTypesPath(
+    version: String,
+    temp: Boolean = true,
+) = "$ROOT_PATH$ROOT_PACKAGE_PATH$version/datatypes" + if (temp) "/temp" else ""
 
 fun isInteger(_l: String) = true
 
@@ -25,7 +28,10 @@ fun getDownloadLink(tag: String) = "https://github.com/LemmyNet/lemmy-js-client/
 
 // Requires that dukat is installed https://github.com/Kotlin/dukat
 // Rewrites the TS types to Kotlin types
-suspend fun downloadTypes(version: String, vShort: String) {
+suspend fun downloadTypes(
+    version: String,
+    vShort: String,
+) {
     val temp = File("temp")
     temp.mkdir()
 
@@ -53,11 +59,12 @@ suspend fun downloadTypes(version: String, vShort: String) {
 
         val datatypes = File(getTypesPath(vShort, false))
 
-        val command = mutableListOf(
-            "cmd.exe",
-            "/c",
-            "dukat",
-        )
+        val command =
+            mutableListOf(
+                "cmd.exe",
+                "/c",
+                "dukat",
+            )
 
         // Adds all the ts files to the command, "*.ts" does not work and causes an error
         for (f in dest.listFiles()!!) {
@@ -83,7 +90,7 @@ suspend fun downloadTypes(version: String, vShort: String) {
                 // Add header for each file
                 f.writeText(
                     """
-                    package $rootPackage$vShort.datatypes
+                    package $ROOT_PACKAGE$vShort.datatypes
                     
                     """.trimIndent(),
                 )
@@ -95,93 +102,99 @@ suspend fun downloadTypes(version: String, vShort: String) {
                     imports += "import kotlinx.serialization.Serializable\n\n@Serializable"
                 }
 
-                val lines = typeFile.readText()
-                    .split(Regex("\r?\n"))
-                    .drop(15) // Remove weird dukat imports
-                    .filter { !it.contains("definedExternally") } // Remove these weird getters and setters
-                    .map { line ->
-                        // Convert interface to data class
-                        var k = line.replace("interface ", "data class ")
-                            .replace(" {", "(")
-                            .replace("}", ")")
+                val lines =
+                    typeFile.readText()
+                        .split(Regex("\r?\n"))
+                        .drop(15) // Remove weird dukat imports
+                        .filter { !it.contains("definedExternally") } // Remove these weird getters and setters
+                        .map { line ->
+                            // Convert interface to data class
+                            var k =
+                                line.replace("interface ", "data class ")
+                                    .replace(" {", "(")
+                                    .replace("}", ")")
 
-                        if (k.contains("?") && !k.contains("=")) {
-                            k += " = null"
-                        }
+                            if (k.contains("?") && !k.contains("=")) {
+                                k += " = null"
+                            }
 
-                        if (k.contains(":")) {
-                            k += ","
-                        }
+                            if (k.contains(":")) {
+                                k += ","
+                            }
 
-                        // Better align with kotlin conventions
-                        k = k.replace(Regex("""\b(var)\b"""), "val")
-                            .replace(Regex("""\b(Array)\b"""), "List")
+                            // Better align with kotlin conventions
+                            k =
+                                k.replace(Regex("""\b(var)\b"""), "val")
+                                    .replace(Regex("""\b(Array)\b"""), "List")
 
-                        k = if (isInteger(k)) {
-                            k.replace(Regex("""\b(Number)\b"""), "Int")
-                        } else {
-                            k.replace(Regex("""\b(Number)\b"""), "Float")
-                        }
+                            k =
+                                if (isInteger(k)) {
+                                    k.replace(Regex("""\b(Number)\b"""), "Int")
+                                } else {
+                                    k.replace(Regex("""\b(Number)\b"""), "Float")
+                                }
 
-                        // Add the CustomDataTypes, that aren't autogenerated
-                        k = k.replace(Regex("listing_type: String")) { _ ->
-                            imports = "import $rootPackage${customDataTypesPackage}ListingType\n$imports"
-                            "listing_type: ListingType"
-                        }
-                        k = when (fileName) {
-                            "SearchResponse", "Search" -> {
-                                k.replace(Regex("type_: String")) { _ ->
-                                    imports = "import $rootPackage${customDataTypesPackage}SearchType\n$imports"
-                                    "type_: SearchType"
+                            // Add the CustomDataTypes, that aren't autogenerated
+                            k =
+                                k.replace(Regex("listing_type: String")) { _ ->
+                                    imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}ListingType\n$imports"
+                                    "listing_type: ListingType"
+                                }
+                            k =
+                                when (fileName) {
+                                    "SearchResponse", "Search" -> {
+                                        k.replace(Regex("type_: String")) { _ ->
+                                            imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}SearchType\n$imports"
+                                            "type_: SearchType"
+                                        }
+                                    }
+
+                                    "GetModlog" -> {
+                                        k.replace(Regex("type_: String")) { _ ->
+                                            imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}ModlogActionType\n$imports"
+                                            "type_: ModlogActionType"
+                                        }
+                                    }
+
+                                    else -> {
+                                        k.replace(Regex("type_: String")) { _ ->
+                                            imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}ListingType\n$imports"
+                                            "type_: ListingType"
+                                        }
+                                    }
+                                }
+
+                            if (fileName == "GetComments" || fileName == "GetPersonMentions" || fileName == "GetReplies") {
+                                k.replace(Regex("sort: String")) { _ ->
+                                    imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}CommentSortType\n$imports"
+                                    "sort: CommentSortType"
+                                }
+                            } else {
+                                k.replace(Regex("sort: String")) { _ ->
+                                    imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}SortType\n$imports"
+                                    "sort: SortType"
+                                }.replace(Regex("sort_type: String")) { _ ->
+                                    imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}SortType\n$imports"
+                                    "sort_type: SortType"
                                 }
                             }
-
-                            "GetModlog" -> {
-                                k.replace(Regex("type_: String")) { _ ->
-                                    imports = "import $rootPackage${customDataTypesPackage}ModlogActionType\n$imports"
-                                    "type_: ModlogActionType"
+                                .replace(Regex("registration_mode: String")) { _ ->
+                                    imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}RegistrationMode\n$imports"
+                                    "registration_mode: RegistrationMode"
                                 }
-                            }
-
-                            else -> {
-                                k.replace(Regex("type_: String")) { _ ->
-                                    imports = "import $rootPackage${customDataTypesPackage}ListingType\n$imports"
-                                    "type_: ListingType"
+                                .replace(Regex("subscribed: String")) { _ ->
+                                    imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}SubscribedType\n$imports"
+                                    "subscribed: SubscribedType"
                                 }
-                            }
+                                .replace(Regex("feature_type: String")) { _ ->
+                                    imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}PostFeatureType\n$imports"
+                                    "feature_type: PostFeatureType"
+                                }
+                                .replace(Regex("post_listing_mode: String")) { _ ->
+                                    imports = "import $ROOT_PACKAGE${CUSTOM_DATATYPES_PACKAGE}PostListingMode\n$imports"
+                                    "post_listing_mode: PostListingMode"
+                                }
                         }
-
-                        if (fileName == "GetComments" || fileName == "GetPersonMentions" || fileName == "GetReplies") {
-                            k.replace(Regex("sort: String")) { _ ->
-                                imports = "import $rootPackage${customDataTypesPackage}CommentSortType\n$imports"
-                                "sort: CommentSortType"
-                            }
-                        } else {
-                            k.replace(Regex("sort: String")) { _ ->
-                                imports = "import $rootPackage${customDataTypesPackage}SortType\n$imports"
-                                "sort: SortType"
-                            }.replace(Regex("sort_type: String")) { _ ->
-                                imports = "import $rootPackage${customDataTypesPackage}SortType\n$imports"
-                                "sort_type: SortType"
-                            }
-                        }
-                            .replace(Regex("registration_mode: String")) { _ ->
-                                imports = "import $rootPackage${customDataTypesPackage}RegistrationMode\n$imports"
-                                "registration_mode: RegistrationMode"
-                            }
-                            .replace(Regex("subscribed: String")) { _ ->
-                                imports = "import $rootPackage${customDataTypesPackage}SubscribedType\n$imports"
-                                "subscribed: SubscribedType"
-                            }
-                            .replace(Regex("feature_type: String")) { _ ->
-                                imports = "import $rootPackage${customDataTypesPackage}PostFeatureType\n$imports"
-                                "feature_type: PostFeatureType"
-                            }
-                            .replace(Regex("post_listing_mode: String")) { _ ->
-                                imports = "import $rootPackage${customDataTypesPackage}PostListingMode\n$imports"
-                                "post_listing_mode: PostListingMode"
-                            }
-                    }
 
                 if (imports != "") {
                     f.appendText("\n")

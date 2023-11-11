@@ -1,6 +1,7 @@
 package pictrs.datatypes
 
 import kotlinx.serialization.Serializable
+
 @Serializable
 data class ImageFile(
     val file: String,

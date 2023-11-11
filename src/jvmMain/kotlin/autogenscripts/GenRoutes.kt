@@ -11,10 +11,12 @@ import java.io.File
 
 @Serializable
 enum class HttpMethod {
-    GET, POST, PUT
+    GET,
+    POST,
+    PUT,
 }
 
-const val lemmy_spec_link = """https://raw.githubusercontent.com/MV-GH/lemmy_openapi_spec/master/lemmy_spec.yaml"""
+const val LEMMY_SPEC_LINK = """https://raw.githubusercontent.com/MV-GH/lemmy_openapi_spec/master/lemmy_spec.yaml"""
 
 data class RouteInfo(
     val path: String,
@@ -45,7 +47,7 @@ fun RouteInfo.toImpl(): String {
 suspend fun getRoutes(): List<RouteInfo> {
     val lemmySpecFile = File("temp", "lemmy_spec.yaml")
 
-    coreKtor.get(lemmy_spec_link)
+    coreKtor.get(LEMMY_SPEC_LINK)
         .bodyAsChannel()
         .copyAndClose(lemmySpecFile.writeChannel())
 
@@ -71,28 +73,31 @@ suspend fun getRoutes(): List<RouteInfo> {
 
             val responses = route.get<YamlMap>("responses")!!
 
-            val responseName = (responses.get<YamlMap>("200") ?: responses.get<YamlMap>("201"))!!
-                .get<YamlMap>("content") // Not all responses have content
-                ?.get<YamlMap>("application/json")
-                ?.get<YamlMap>("schema")
-                ?.get<YamlScalar>("\$ref")
-                ?.content?.substringAfterLast("/")
+            val responseName =
+                (responses.get<YamlMap>("200") ?: responses.get<YamlMap>("201"))!!
+                    .get<YamlMap>("content") // Not all responses have content
+                    ?.get<YamlMap>("application/json")
+                    ?.get<YamlMap>("schema")
+                    ?.get<YamlScalar>("\$ref")
+                    ?.content?.substringAfterLast("/")
 
-            val paramOrBodyName: String? = if (params != null) {
-                val param = params[0] as YamlMap
-                param.get<YamlScalar>("name")!!.content
-            } else if (route.get<YamlMap>("requestBody") != null) {
-                val reqBody = route
-                    .get<YamlMap>("requestBody")!!
-                    .get<YamlMap>("content")!!
-                    .get<YamlMap>("application/json")!!
-                    .get<YamlMap>("schema")!!
-                    .get<YamlScalar>("\$ref")!!
+            val paramOrBodyName: String? =
+                if (params != null) {
+                    val param = params[0] as YamlMap
+                    param.get<YamlScalar>("name")!!.content
+                } else if (route.get<YamlMap>("requestBody") != null) {
+                    val reqBody =
+                        route
+                            .get<YamlMap>("requestBody")!!
+                            .get<YamlMap>("content")!!
+                            .get<YamlMap>("application/json")!!
+                            .get<YamlMap>("schema")!!
+                            .get<YamlScalar>("\$ref")!!
 
-                reqBody.content.substringAfterLast("/")
-            } else {
-                null
-            }
+                    reqBody.content.substringAfterLast("/")
+                } else {
+                    null
+                }
 
             val operationId: String = route.get<YamlScalar>("operationId")?.content ?: paramOrBodyName ?: responseName?.substringBefore("Response")!!
 

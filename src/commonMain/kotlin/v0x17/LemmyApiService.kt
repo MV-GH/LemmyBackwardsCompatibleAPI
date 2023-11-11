@@ -2,7 +2,6 @@ package v0x17
 
 import getKtor
 import io.ktor.client.*
-import pictrs.PictrsService
 import utils.getResult
 import utils.postResult
 import utils.putResult
@@ -16,138 +15,125 @@ import v0x18.datatypes.*
  * But I am accepting PRs for this. To fully support v0.17,
  * you need to make new enums that are all lowercase, make transformations that map those enums to the existing ones
  *
- * And whatever else problems show up.
+ * And whatever other problems show up.
  *
  */
-class LemmyApiService(private val Ktor: HttpClient, override var auth: String? = null) : LemmyApi, PictrsService(Ktor, false, auth) {
-
+class LemmyApiService(
+    val Ktor: HttpClient,
+    actualVersion: String,
+    override var auth: String? = null,
+) : LemmyApi(Ktor, actualVersion, auth) {
     /**
      * Gets the site, and your user data.
      *
      * @GET("site")
      */
-    override suspend fun getSite(form: GetSite): Result<GetSiteResponse> =
-        Ktor.getResult("site", form)
+    override suspend fun getSite(form: GetSite): Result<GetSiteResponse> = Ktor.getResult("site", form)
 
     /**
      * Create your site.
      *
      * @POST("site")
      */
-    override suspend fun createSite(form: CreateSite): Result<SiteResponse> =
-        Ktor.postResult("site", form)
+    override suspend fun createSite(form: CreateSite): Result<SiteResponse> = Ktor.postResult("site", form)
 
     /**
      * Edit your site.
      *
      * @PUT("site")
      */
-    override suspend fun editSite(form: EditSite): Result<SiteResponse> =
-        Ktor.putResult("site", form)
+    override suspend fun editSite(form: EditSite): Result<SiteResponse> = Ktor.putResult("site", form)
 
     /**
      * Get the modlog.
      *
      * @GET("modlog")
      */
-    override suspend fun getModlog(form: GetModlog): Result<GetModlogResponse> =
-        Ktor.getResult("modlog", form)
+    override suspend fun getModlog(form: GetModlog): Result<GetModlogResponse> = Ktor.getResult("modlog", form)
 
     /**
      * Search lemmy.
      *
      * @GET("search")
      */
-    override suspend fun search(form: Search): Result<SearchResponse> =
-        Ktor.getResult("search", form)
+    override suspend fun search(form: Search): Result<SearchResponse> = Ktor.getResult("search", form)
 
     /**
      * Fetch a non-local / federated object.
      *
      * @GET("resolve_object")
      */
-    override suspend fun resolveObject(form: ResolveObject): Result<ResolveObjectResponse> =
-        Ktor.getResult("resolve_object", form)
+    override suspend fun resolveObject(form: ResolveObject): Result<ResolveObjectResponse> = Ktor.getResult("resolve_object", form)
 
     /**
      * Get / fetch a community.
      *
      * @GET("community")
      */
-    override suspend fun getCommunity(form: GetCommunity): Result<GetCommunityResponse> =
-        Ktor.getResult("community", form)
+    override suspend fun getCommunity(form: GetCommunity): Result<GetCommunityResponse> = Ktor.getResult("community", form)
 
     /**
      * Create a new community.
      *
      * @POST("community")
      */
-    override suspend fun createCommunity(form: CreateCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community", form)
+    override suspend fun createCommunity(form: CreateCommunity): Result<CommunityResponse> = Ktor.postResult("community", form)
 
     /**
      * Edit a community.
      *
      * @PUT("community")
      */
-    override suspend fun editCommunity(form: EditCommunity): Result<CommunityResponse> =
-        Ktor.putResult("community", form)
+    override suspend fun editCommunity(form: EditCommunity): Result<CommunityResponse> = Ktor.putResult("community", form)
 
     /**
      * Hide a community from public view.
      *
      * @PUT("community/hide")
      */
-    override suspend fun hideCommunity(form: HideCommunity): Result<CommunityResponse> =
-        Ktor.putResult("community/hide", form)
+    override suspend fun hideCommunity(form: HideCommunity): Result<CommunityResponse> = Ktor.putResult("community/hide", form)
 
     /**
      * List communities, with various filters.
      *
      * @GET("community/list")
      */
-    override suspend fun listCommunities(form: ListCommunities): Result<ListCommunitiesResponse> =
-        Ktor.getResult("community/list", form)
+    override suspend fun listCommunities(form: ListCommunities): Result<ListCommunitiesResponse> = Ktor.getResult("community/list", form)
 
     /**
      * Follow / subscribe to a community.
      *
      * @POST("community/follow")
      */
-    override suspend fun followCommunity(form: FollowCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community/follow", form)
+    override suspend fun followCommunity(form: FollowCommunity): Result<CommunityResponse> = Ktor.postResult("community/follow", form)
 
     /**
      * Block a community.
      *
      * @POST("community/block")
      */
-    override suspend fun blockCommunity(form: BlockCommunity): Result<BlockCommunityResponse> =
-        Ktor.postResult("community/block", form)
+    override suspend fun blockCommunity(form: BlockCommunity): Result<BlockCommunityResponse> = Ktor.postResult("community/block", form)
 
     /**
      * Delete a community.
      *
      * @POST("community/delete")
      */
-    override suspend fun deleteCommunity(form: DeleteCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community/delete", form)
+    override suspend fun deleteCommunity(form: DeleteCommunity): Result<CommunityResponse> = Ktor.postResult("community/delete", form)
 
     /**
      * A moderator remove for a community.
      *
      * @POST("community/remove")
      */
-    override suspend fun removeCommunity(form: RemoveCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community/remove", form)
+    override suspend fun removeCommunity(form: RemoveCommunity): Result<CommunityResponse> = Ktor.postResult("community/remove", form)
 
     /**
      * Transfer your community to an existing moderator.
      *
      * @POST("community/transfer")
      */
-    override suspend fun transferCommunity(form: TransferCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community/transfer", form)
+    override suspend fun transferCommunity(form: TransferCommunity): Result<CommunityResponse> = Ktor.postResult("community/transfer", form)
 
     /**
      * Ban a user from a community.
@@ -178,96 +164,84 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @GET("post")
      */
-    override suspend fun getPost(form: GetPost): Result<GetPostResponse> =
-        Ktor.getResult("post", form)
+    override suspend fun getPost(form: GetPost): Result<GetPostResponse> = Ktor.getResult("post", form)
 
     /**
      * Edit a post.
      *
      * @PUT("post")
      */
-    override suspend fun editPost(form: EditPost): Result<PostResponse> =
-        Ktor.putResult("post", form)
+    override suspend fun editPost(form: EditPost): Result<PostResponse> = Ktor.putResult("post", form)
 
     /**
      * Create a post.
      *
      * @POST("post")
      */
-    override suspend fun createPost(form: CreatePost): Result<PostResponse> =
-        Ktor.postResult("post", form)
+    override suspend fun createPost(form: CreatePost): Result<PostResponse> = Ktor.postResult("post", form)
 
     /**
      * Get / fetch posts, with various filters.
      *
      * @GET("post/list")
      */
-    override suspend fun getPosts(form: GetPosts): Result<GetPostsResponse> =
-        Ktor.getResult("post/list", form)
+    override suspend fun getPosts(form: GetPosts): Result<GetPostsResponse> = Ktor.getResult("post/list", form)
 
     /**
      * Delete a post.
      *
      * @POST("post/delete")
      */
-    override suspend fun deletePost(form: DeletePost): Result<PostResponse> =
-        Ktor.postResult("post/delete", form)
+    override suspend fun deletePost(form: DeletePost): Result<PostResponse> = Ktor.postResult("post/delete", form)
 
     /**
      * A moderator remove for a post.
      *
      * @POST("post/remove")
      */
-    override suspend fun removePost(form: RemovePost): Result<PostResponse> =
-        Ktor.postResult("post/remove", form)
+    override suspend fun removePost(form: RemovePost): Result<PostResponse> = Ktor.postResult("post/remove", form)
 
     /**
      * Mark a post as read.
      *
      * @POST("post/mark_as_read")
      */
-    override suspend fun markPostAsRead(form: MarkPostAsRead): Result<PostResponse> =
-        Ktor.postResult("post/mark_as_read", form)
+    override suspend fun markPostAsRead(form: MarkPostAsRead): Result<PostResponse> = Ktor.postResult("post/mark_as_read", form)
 
     /**
      * A moderator can lock a post ( IE disable new comments ).
      *
      * @POST("post/lock")
      */
-    override suspend fun lockPost(form: LockPost): Result<PostResponse> =
-        Ktor.postResult("post/lock", form)
+    override suspend fun lockPost(form: LockPost): Result<PostResponse> = Ktor.postResult("post/lock", form)
 
     /**
      * A moderator can feature a community post ( IE stick it to the top of a community ).
      *
      * @POST("post/feature")
      */
-    override suspend fun featurePost(form: FeaturePost): Result<PostResponse> =
-        Ktor.postResult("post/feature", form)
+    override suspend fun featurePost(form: FeaturePost): Result<PostResponse> = Ktor.postResult("post/feature", form)
 
     /**
      * Like / vote on a post.
      *
      * @POST("post/like")
      */
-    override suspend fun createPostLike(form: CreatePostLike): Result<PostResponse> =
-        Ktor.postResult("post/like", form)
+    override suspend fun createPostLike(form: CreatePostLike): Result<PostResponse> = Ktor.postResult("post/like", form)
 
     /**
      * Save a post.
      *
      * @PUT("post/save")
      */
-    override suspend fun savePost(form: SavePost): Result<PostResponse> =
-        Ktor.putResult("post/save", form)
+    override suspend fun savePost(form: SavePost): Result<PostResponse> = Ktor.putResult("post/save", form)
 
     /**
      * Report a post.
      *
      * @POST("post/report")
      */
-    override suspend fun createPostReport(form: CreatePostReport): Result<PostReportResponse> =
-        Ktor.postResult("post/report", form)
+    override suspend fun createPostReport(form: CreatePostReport): Result<PostReportResponse> = Ktor.postResult("post/report", form)
 
     /**
      * Resolve a post report. Only a mod can do this.
@@ -282,8 +256,7 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @GET("post/report/list")
      */
-    override suspend fun listPostReports(form: ListPostReports): Result<ListPostReportsResponse> =
-        Ktor.getResult("post/report/list", form)
+    override suspend fun listPostReports(form: ListPostReports): Result<ListPostReportsResponse> = Ktor.getResult("post/report/list", form)
 
     /**
      * Fetch metadata for any given site.
@@ -298,48 +271,42 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @GET("comment")
      */
-    override suspend fun getComment(form: GetComment): Result<CommentResponse> =
-        Ktor.getResult("comment", form)
+    override suspend fun getComment(form: GetComment): Result<CommentResponse> = Ktor.getResult("comment", form)
 
     /**
      * Create a comment.
      *
      * @POST("comment")
      */
-    override suspend fun createComment(form: CreateComment): Result<CommentResponse> =
-        Ktor.postResult("comment", form)
+    override suspend fun createComment(form: CreateComment): Result<CommentResponse> = Ktor.postResult("comment", form)
 
     /**
      * Edit a comment.
      *
      * @PUT("comment")
      */
-    override suspend fun editComment(form: EditComment): Result<CommentResponse> =
-        Ktor.putResult("comment", form)
+    override suspend fun editComment(form: EditComment): Result<CommentResponse> = Ktor.putResult("comment", form)
 
     /**
      * Get / fetch comments.
      *
      * @GET("comment/list")
      */
-    override suspend fun getComments(form: GetComments): Result<GetCommentsResponse> =
-        Ktor.getResult("comment/list", form)
+    override suspend fun getComments(form: GetComments): Result<GetCommentsResponse> = Ktor.getResult("comment/list", form)
 
     /**
      * Delete a comment.
      *
      * @POST("comment/delete")
      */
-    override suspend fun deleteComment(form: DeleteComment): Result<CommentResponse> =
-        Ktor.postResult("comment/delete", form)
+    override suspend fun deleteComment(form: DeleteComment): Result<CommentResponse> = Ktor.postResult("comment/delete", form)
 
     /**
      * A moderator remove for a comment.
      *
      * @POST("comment/remove")
      */
-    override suspend fun removeComment(form: RemoveComment): Result<CommentResponse> =
-        Ktor.postResult("comment/remove", form)
+    override suspend fun removeComment(form: RemoveComment): Result<CommentResponse> = Ktor.postResult("comment/remove", form)
 
     /**
      * Mark a comment as read.
@@ -362,16 +329,14 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("comment/like")
      */
-    override suspend fun createCommentLike(form: CreateCommentLike): Result<CommentResponse> =
-        Ktor.postResult("comment/like", form)
+    override suspend fun createCommentLike(form: CreateCommentLike): Result<CommentResponse> = Ktor.postResult("comment/like", form)
 
     /**
      * Save a comment.
      *
      * @PUT("comment/save")
      */
-    override suspend fun saveComment(form: SaveComment): Result<CommentResponse> =
-        Ktor.putResult("comment/save", form)
+    override suspend fun saveComment(form: SaveComment): Result<CommentResponse> = Ktor.putResult("comment/save", form)
 
     /**
      * Report a comment.
@@ -466,24 +431,21 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @GET("user")
      */
-    override suspend fun getPersonDetails(form: GetPersonDetails): Result<GetPersonDetailsResponse> =
-        Ktor.getResult("user", form)
+    override suspend fun getPersonDetails(form: GetPersonDetails): Result<GetPersonDetailsResponse> = Ktor.getResult("user", form)
 
     /**
      * Register a new user.
      *
      * @POST("user/register")
      */
-    override suspend fun register(form: Register): Result<LoginResponse> =
-        Ktor.postResult("user/register", form)
+    override suspend fun register(form: Register): Result<LoginResponse> = Ktor.postResult("user/register", form)
 
     /**
      * Fetch a Captcha.
      *
      * @GET("user/get_captcha")
      */
-    override suspend fun getCaptcha(form: GetCaptcha): Result<GetCaptchaResponse> =
-        Ktor.getResult("user/get_captcha", form)
+    override suspend fun getCaptcha(form: GetCaptcha): Result<GetCaptchaResponse> = Ktor.getResult("user/get_captcha", form)
 
     /**
      * Get mentions for your user.
@@ -506,56 +468,49 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @GET("user/replies")
      */
-    override suspend fun getReplies(form: GetReplies): Result<GetRepliesResponse> =
-        Ktor.getResult("user/replies", form)
+    override suspend fun getReplies(form: GetReplies): Result<GetRepliesResponse> = Ktor.getResult("user/replies", form)
 
     /**
      * Ban a person from your site.
      *
      * @POST("user/ban")
      */
-    override suspend fun banPerson(form: BanPerson): Result<BanPersonResponse> =
-        Ktor.postResult("user/ban", form)
+    override suspend fun banPerson(form: BanPerson): Result<BanPersonResponse> = Ktor.postResult("user/ban", form)
 
     /**
      * Get a list of banned users
      *
      * @GET("user/banned")
      */
-    override suspend fun getBannedPersons(form: GetBannedPersons): Result<BannedPersonsResponse> =
-        Ktor.getResult("user/banned", form)
+    override suspend fun getBannedPersons(form: GetBannedPersons): Result<BannedPersonsResponse> = Ktor.getResult("user/banned", form)
 
     /**
      * Block a person.
      *
      * @POST("user/block")
      */
-    override suspend fun blockPerson(form: BlockPerson): Result<BlockPersonResponse> =
-        Ktor.postResult("user/block", form)
+    override suspend fun blockPerson(form: BlockPerson): Result<BlockPersonResponse> = Ktor.postResult("user/block", form)
 
     /**
      * Log into lemmy.
      *
      * @POST("user/login")
      */
-    override suspend fun login(form: Login): Result<LoginResponse> =
-        Ktor.postResult("user/login", form)
+    override suspend fun login(form: Login): Result<LoginResponse> = Ktor.postResult("user/login", form)
 
     /**
      * Delete your account.
      *
      * @POST("user/delete_account")
      */
-    override suspend fun deleteAccount(form: DeleteAccount): Result<Unit> =
-        Ktor.postResult("user/delete_account", form)
+    override suspend fun deleteAccount(form: DeleteAccount): Result<Unit> = Ktor.postResult("user/delete_account", form)
 
     /**
      * Reset your password.
      *
      * @POST("user/password_reset")
      */
-    override suspend fun passwordReset(form: PasswordReset): Result<Unit> =
-        Ktor.postResult("user/password_reset", form)
+    override suspend fun passwordReset(form: PasswordReset): Result<Unit> = Ktor.postResult("user/password_reset", form)
 
     /**
      * Change your password from an email / token based reset.
@@ -570,72 +525,65 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("user/mark_all_as_read")
      */
-    override suspend fun markAllAsRead(form: MarkAllAsRead): Result<GetRepliesResponse> =
-        Ktor.postResult("user/mark_all_as_read", form)
+    override suspend fun markAllAsRead(form: MarkAllAsRead): Result<GetRepliesResponse> = Ktor.postResult("user/mark_all_as_read", form)
 
     /**
      * Save your user settings.
      *
      * @PUT("user/save_user_settings")
      */
-    override suspend fun saveUserSettings(form: SaveUserSettings): Result<LoginResponse> =
-        Ktor.putResult("user/save_user_settings", form)
+    override suspend fun saveUserSettings(form: SaveUserSettings): Result<LoginResponse> = Ktor.putResult("user/save_user_settings", form)
 
     /**
      * Change your user password.
      *
      * @PUT("user/change_password")
      */
-    override suspend fun changePassword(form: ChangePassword): Result<LoginResponse> =
-        Ktor.putResult("user/change_password", form)
+    override suspend fun changePassword(form: ChangePassword): Result<LoginResponse> = Ktor.putResult("user/change_password", form)
 
     /**
      * Get counts for your reports
      *
      * @GET("user/report_count")
      */
-    override suspend fun getReportCount(form: GetReportCount): Result<GetReportCountResponse> =
-        Ktor.getResult("user/report_count", form)
+    override suspend fun getReportCount(form: GetReportCount): Result<GetReportCountResponse> = Ktor.getResult("user/report_count", form)
 
     /**
      * Get your unread counts
      *
      * @GET("user/unread_count")
      */
-    override suspend fun getUnreadCount(form: GetUnreadCount): Result<GetUnreadCountResponse> =
-        Ktor.getResult("user/unread_count", form)
+    override suspend fun getUnreadCount(form: GetUnreadCount): Result<GetUnreadCountResponse> = Ktor.getResult("user/unread_count", form)
 
     /**
      * Verify your email
      *
      * @POST("user/verify_email")
      */
-    override suspend fun verifyEmail(form: VerifyEmail): Result<Unit> =
-        Ktor.postResult("user/verify_email", form)
+    override suspend fun verifyEmail(form: VerifyEmail): Result<Unit> = Ktor.postResult("user/verify_email", form)
 
     /**
      * Leave the Site admins.
      *
      * @POST("user/leave_admin")
      */
-    override suspend fun leaveAdmin(form: LeaveAdmin): Result<GetSiteResponse> =
-        Ktor.postResult("user/leave_admin", form)
+    override suspend fun leaveAdmin(form: LeaveAdmin): Result<GetSiteResponse> = Ktor.postResult("user/leave_admin", form)
 
     /**
      * Add an admin to your site.
      *
      * @POST("admin/add")
      */
-    override suspend fun addAdmin(form: AddAdmin): Result<AddAdminResponse> =
-        Ktor.postResult("admin/add", form)
+    override suspend fun addAdmin(form: AddAdmin): Result<AddAdminResponse> = Ktor.postResult("admin/add", form)
 
     /**
      * Get the unread registration applications count.
      *
      * @GET("admin/registration_application/count")
      */
-    override suspend fun getUnreadRegistrationApplicationCount(form: GetUnreadRegistrationApplicationCount): Result<GetUnreadRegistrationApplicationCountResponse> =
-        Ktor.getResult("admin/registration_application/count", form)
+    override suspend fun getUnreadRegistrationApplicationCount(
+        form: GetUnreadRegistrationApplicationCount,
+    ): Result<GetUnreadRegistrationApplicationCountResponse> = Ktor.getResult("admin/registration_application/count", form)
 
     /**
      * List the registration applications.
@@ -658,61 +606,54 @@ class LemmyApiService(private val Ktor: HttpClient, override var auth: String? =
      *
      * @POST("admin/purge/person")
      */
-    override suspend fun purgePerson(form: PurgePerson): Result<Unit> =
-        Ktor.postResult("admin/purge/person", form)
+    override suspend fun purgePerson(form: PurgePerson): Result<Unit> = Ktor.postResult("admin/purge/person", form)
 
     /**
      * Purge / Delete a community from the database.
      *
      * @POST("admin/purge/community")
      */
-    override suspend fun purgeCommunity(form: PurgeCommunity): Result<Unit> =
-        Ktor.postResult("admin/purge/community", form)
+    override suspend fun purgeCommunity(form: PurgeCommunity): Result<Unit> = Ktor.postResult("admin/purge/community", form)
 
     /**
      * Purge / Delete a post from the database.
      *
      * @POST("admin/purge/post")
      */
-    override suspend fun purgePost(form: PurgePost): Result<Unit> =
-        Ktor.postResult("admin/purge/post", form)
+    override suspend fun purgePost(form: PurgePost): Result<Unit> = Ktor.postResult("admin/purge/post", form)
 
     /**
      * Purge / Delete a comment from the database.
      *
      * @POST("admin/purge/comment")
      */
-    override suspend fun purgeComment(form: PurgeComment): Result<Unit> =
-        Ktor.postResult("admin/purge/comment", form)
+    override suspend fun purgeComment(form: PurgeComment): Result<Unit> = Ktor.postResult("admin/purge/comment", form)
 
     /**
      * Edit an existing custom emoji
      *
      * @PUT("custom_emoji")
      */
-    override suspend fun editCustomEmoji(form: EditCustomEmoji): Result<CustomEmojiResponse> =
-        Ktor.putResult("custom_emoji", form)
+    override suspend fun editCustomEmoji(form: EditCustomEmoji): Result<CustomEmojiResponse> = Ktor.putResult("custom_emoji", form)
 
     /**
      * Create a new custom emoji
      *
      * @POST("custom_emoji")
      */
-    override suspend fun createCustomEmoji(form: CreateCustomEmoji): Result<CustomEmojiResponse> =
-        Ktor.postResult("custom_emoji", form)
+    override suspend fun createCustomEmoji(form: CreateCustomEmoji): Result<CustomEmojiResponse> = Ktor.postResult("custom_emoji", form)
 
     /**
      * Delete a custom emoji
      *
      * @POST("custom_emoji/delete")
      */
-    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> =
-        Ktor.postResult("custom_emoji/delete", form)
+    override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> = Ktor.postResult("custom_emoji/delete", form)
 }
 
 suspend fun main() {
-    val api = LemmyApiService(getKtor("https://animoe.xyz/api/v3/")) // v0.17.4
-
+    val api = LemmyApiService(getKtor("https://animoe.xyz/api/v3/"), "0.17.4") // v0.17.4
+    api.Ktor
     println(api.version)
     println(api.getSite(GetSite()).getOrThrow())
     // Throws because apparently enums are full lowercase in v0.17.4 D:

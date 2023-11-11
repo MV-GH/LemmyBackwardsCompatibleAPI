@@ -4,20 +4,22 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
 
-fun getKtor(baseUrl: String): HttpClient = coreKtor.config {
-    install(Logging) {
-        logger = object : Logger {
-            override fun log(message: String) {
-               println(message)
-            }
+fun getKtor(baseUrl: String): HttpClient =
+    coreKtor.config {
+        install(Logging) {
+            logger =
+                object : Logger {
+                    override fun log(message: String) {
+                        println(message)
+                    }
+                }
+            level = LogLevel.NONE
         }
-        level = LogLevel.HEADERS
-    }
 
-    defaultRequest {
-        url(baseUrl)
+        defaultRequest {
+            url(baseUrl)
+        }
     }
-}
 
 val coreKtor by lazy {
     baseClient.config {

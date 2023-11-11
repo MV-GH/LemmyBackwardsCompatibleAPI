@@ -1,6 +1,7 @@
 package utils
 
 import JSON
+import LemmyApiBase
 import arrow.core.compareTo
 import kotlinx.serialization.json.*
 
@@ -15,7 +16,10 @@ import kotlinx.serialization.json.*
  *
  * @author Jameson Little
  */
-fun compareVersions(a: String, b: String): Int { // TODO remove this from Jerboa
+fun compareVersions(
+    a: String,
+    b: String,
+): Int { // TODO remove this from Jerboa
     val versionA: List<Int> = a.split('.').mapNotNull { it.toIntOrNull() }
     val versionB: List<Int> = b.split('.').mapNotNull { it.toIntOrNull() }
 
@@ -35,7 +39,11 @@ fun compareVersions(a: String, b: String): Int { // TODO remove this from Jerboa
  * @return True if the current version is between the min and max versions.
  */
 
-fun isBetweenVersions(current: String, min: String, max: String): Boolean {
+fun isBetweenVersions(
+    current: String,
+    min: String,
+    max: String,
+): Boolean {
     return compareVersions(current, min) >= 0 && compareVersions(current, max) <= 0
 }
 
@@ -61,3 +69,8 @@ private fun extractValue(element: JsonElement): Any? {
         is JsonObject -> jsonObjectToMap(element)
     }
 }
+
+internal fun LemmyApiBase.notSupported(): Nothing =
+    throw IllegalStateException(
+        "This endpoint is not supported on this version of Lemmy: $version",
+    )

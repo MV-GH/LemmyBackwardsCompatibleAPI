@@ -35,17 +35,21 @@ object LemmyApi {
      * Throws several errors if the Instance isn't available or a Lemmy host or supported.
      *
      * Use the Feature Flags before using certain endpoints as they can be or not available depending
-     * on the version of the Lemmy Server.
+     * on the version of the Lemmy Server instance.
      */
 
-    suspend fun getLemmyApi(instance: String, auth: String? = null): v0x19.LemmyApi {
+    suspend fun getLemmyApi(
+        instance: String,
+        auth: String? = null,
+    ): v0x19.LemmyApi {
+        // TODO: strip trailing slash and only get host from url
         val version = getVersion(instance)
 
         val ktor = lazy { getKtor("$instance/api/$API_VERSION/") }
 
         return when (dropPatchVersion(version)) {
-            "0.19" -> v0x19.LemmyApiService(ktor.value, auth)
-            "0.18" -> v0x18.LemmyV0x19Wrapper(ktor.value, auth)
+            "0.19" -> v0x19.LemmyApiService(ktor.value, version, auth)
+            "0.18" -> v0x18.LemmyV0x19Wrapper(ktor.value, version, auth)
             else -> throw Exception("Unsupported Lemmy version: $version")
         }
     }
@@ -53,10 +57,12 @@ object LemmyApi {
 
 suspend fun main() {
     // println(LemmyApi.getNodeInfo("https://lemmy.ml"))
-//    val api = LemmyApi.getLemmyApi("https://lemmy.world", worldAuth)
-//    println(api.getSite().getOrThrow().my_user != null)
-    val api2 = LemmyApi.getLemmyApi("https://voyager.lemmy.ml", voyagerAuth)
+    val api = LemmyApi.getLemmyApi("https://lemmy.world", WORLD_AUTH)
+    println(api.getSite().getOrThrow().my_user != null)
+    val api2 = LemmyApi.getLemmyApi("https://voyager.lemmy.ml", VOYAGER_AUTH)
     println(api2.getSite().getOrThrow().my_user != null)
     api2.auth = null
+    println(api2.getSite().getOrThrow().my_user == null)
+    api2.auth = VOYAGER_AUTH
     println(api2.getSite().getOrThrow().my_user != null)
 }
