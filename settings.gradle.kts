@@ -10,3 +10,4 @@ plugins {
 }
 
 rootProject.name = "LemmyBackwardsCompatibleAPI"
+include("GeneratorScripts")

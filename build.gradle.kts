@@ -6,10 +6,8 @@ plugins {
     kotlin("plugin.serialization") version "1.9.20"
     id("org.jmailen.kotlinter") version "4.0.0"
     id("com.google.devtools.ksp") version ("1.9.20-1.0.13")
+    id("com.vanniktech.maven.publish") version "0.25.3"
 }
-
-group = "org.example"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -36,7 +34,7 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "2.3.4"
+        val ktorVersion = "2.3.6"
 
 
         commonMain.dependencies {
