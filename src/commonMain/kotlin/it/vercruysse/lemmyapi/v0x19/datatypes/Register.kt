@@ -13,4 +13,5 @@ data class Register(
     val captcha_answer: String? = null,
     val honeypot: String? = null,
     val answer: String? = null,
+    val collapse_bot_comments: Boolean? = null,
 )

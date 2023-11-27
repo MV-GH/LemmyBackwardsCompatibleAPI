@@ -31,4 +31,5 @@ data class LocalUser(
     val totp_2fa_enabled: Boolean,
     val enable_keyboard_navigation: Boolean,
     val enable_animated_images: Boolean,
+    val collapse_bot_comments: Boolean,
 )

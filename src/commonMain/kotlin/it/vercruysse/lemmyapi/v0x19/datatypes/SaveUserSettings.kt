@@ -32,4 +32,5 @@ data class SaveUserSettings(
     val post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
     val enable_keyboard_navigation: Boolean? = null,
     val enable_animated_images: Boolean? = null,
+    val collapse_bot_comments: Boolean? = null,
 )

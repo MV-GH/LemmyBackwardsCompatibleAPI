@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FederatedInstances(
-    val linked: List<Instance>,
-    val allowed: List<Instance>,
-    val blocked: List<Instance>,
+    val linked: List<InstanceWithFederationState>,
+    val allowed: List<InstanceWithFederationState>,
+    val blocked: List<InstanceWithFederationState>,
 )

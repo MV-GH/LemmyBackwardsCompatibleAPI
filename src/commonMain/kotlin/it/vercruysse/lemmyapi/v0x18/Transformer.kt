@@ -302,6 +302,7 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.GetUnreadCountResponse as V0x19Dat
 import it.vercruysse.lemmyapi.v0x19.datatypes.GetUnreadRegistrationApplicationCountResponse as V0x19DatatypesGetUnreadRegistrationApplicationCountResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.HideCommunity as V0x19DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v0x19.datatypes.Instance as V0x19DatatypesInstance
+import it.vercruysse.lemmyapi.v0x19.datatypes.InstanceWithFederationState as V0x19DatatypesInstanceWithFederationState
 import it.vercruysse.lemmyapi.v0x19.datatypes.Language as V0x19DatatypesLanguage
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReports as V0x19DatatypesListCommentReports
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReportsResponse as V0x19DatatypesListCommentReportsResponse
@@ -408,32 +409,33 @@ internal class Transformer(var auth: String) : DatatypesMapper {
     private fun mapLocalUserView(l: LocalUserView): V0x19DatatypesLocalUserView =
         V0x19DatatypesLocalUserView(
             local_user =
-                V0x19DatatypesLocalUser(
-                    id = l.local_user.id,
-                    person_id = l.local_user.person_id,
-                    email = l.local_user.email,
-                    show_nsfw = l.local_user.show_nsfw,
-                    theme = l.local_user.theme,
-                    default_sort_type = l.local_user.default_sort_type,
-                    default_listing_type = l.local_user.default_listing_type,
-                    interface_language = l.local_user.interface_language,
-                    show_avatars = l.local_user.show_avatars,
-                    send_notifications_to_email = l.local_user.send_notifications_to_email,
-                    show_scores = l.local_user.show_scores,
-                    show_bot_accounts = l.local_user.show_bot_accounts,
-                    show_read_posts = l.local_user.show_read_posts,
-                    email_verified = l.local_user.email_verified,
-                    accepted_application = l.local_user.accepted_application,
-                    open_links_in_new_tab = l.local_user.open_links_in_new_tab,
-                    blur_nsfw = false,
-                    auto_expand = false,
-                    infinite_scroll_enabled = true,
-                    admin = l.person.admin,
-                    post_listing_mode = PostListingMode.Card,
-                    totp_2fa_enabled = l.local_user.let { this.mapLocalUserTotp(it) },
-                    enable_keyboard_navigation = false,
-                    enable_animated_images = true,
-                ),
+            V0x19DatatypesLocalUser(
+                id = l.local_user.id,
+                person_id = l.local_user.person_id,
+                email = l.local_user.email,
+                show_nsfw = l.local_user.show_nsfw,
+                theme = l.local_user.theme,
+                default_sort_type = l.local_user.default_sort_type,
+                default_listing_type = l.local_user.default_listing_type,
+                interface_language = l.local_user.interface_language,
+                show_avatars = l.local_user.show_avatars,
+                send_notifications_to_email = l.local_user.send_notifications_to_email,
+                show_scores = l.local_user.show_scores,
+                show_bot_accounts = l.local_user.show_bot_accounts,
+                show_read_posts = l.local_user.show_read_posts,
+                email_verified = l.local_user.email_verified,
+                accepted_application = l.local_user.accepted_application,
+                open_links_in_new_tab = l.local_user.open_links_in_new_tab,
+                blur_nsfw = false,
+                auto_expand = false,
+                infinite_scroll_enabled = true,
+                admin = l.person.admin,
+                post_listing_mode = PostListingMode.Card,
+                totp_2fa_enabled = l.local_user.let { this.mapLocalUserTotp(it) },
+                enable_keyboard_navigation = false,
+                enable_animated_images = true,
+                collapse_bot_comments = false,
+            ),
             person = this.toV0x19(l.person),
             counts = this.toV0x19(l.counts),
         )
@@ -467,6 +469,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             totp_2fa_enabled = d.let { this.mapLocalUserTotp(it) },
             enable_keyboard_navigation = false,
             enable_animated_images = true,
+            collapse_bot_comments = false,
         )
 
     override fun toV0x19(d: V0x18DatatypesMyUserInfo): V0x19DatatypesMyUserInfo =
@@ -662,6 +665,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             saved = d.saved,
             creator_blocked = d.creator_blocked,
             my_vote = d.my_vote,
+            creator_is_admin = false,
+            creator_is_moderator = false,
         )
 
     override fun toV0x19(d: V0x18DatatypesCommentReport): V0x19DatatypesCommentReport =
@@ -714,6 +719,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             saved = d.saved,
             creator_blocked = d.creator_blocked,
             my_vote = d.my_vote,
+            creator_is_admin = false,
+            creator_is_moderator = false,
         )
 
     override fun toV0x19(d: V0x18DatatypesCommunity): V0x19DatatypesCommunity =
@@ -813,9 +820,9 @@ internal class Transformer(var auth: String) : DatatypesMapper {
 
     override fun toV0x19(d: V0x18DatatypesFederatedInstances): V0x19DatatypesFederatedInstances =
         it.vercruysse.lemmyapi.v0x19.datatypes.FederatedInstances(
-            linked = d.linked.map { this.toV0x19(d = it) },
-            allowed = d.allowed.map { this.toV0x19(d = it) },
-            blocked = d.blocked.map { this.toV0x19(d = it) },
+            linked = d.linked.map { this.toV0x19F(d = it) },
+            allowed = d.allowed.map { this.toV0x19F(d = it) },
+            blocked = d.blocked.map { this.toV0x19F(d = it) },
         )
 
     override fun toV0x19(d: V0x18DatatypesGetCaptchaResponse): V0x19DatatypesGetCaptchaResponse =
@@ -932,6 +939,16 @@ internal class Transformer(var auth: String) : DatatypesMapper {
 
     override fun toV0x19(d: V0x18DatatypesInstance): V0x19DatatypesInstance =
         it.vercruysse.lemmyapi.v0x19.datatypes.Instance(
+            id = d.id,
+            domain = d.domain,
+            published = d.published,
+            updated = d.updated,
+            software = d.software,
+            version = d.version,
+        )
+
+    override fun toV0x19F(d: V0x18DatatypesInstance): V0x19DatatypesInstanceWithFederationState =
+        it.vercruysse.lemmyapi.v0x19.datatypes.InstanceWithFederationState(
             id = d.id,
             domain = d.domain,
             published = d.published,
@@ -1274,6 +1291,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             saved = d.saved,
             creator_blocked = d.creator_blocked,
             my_vote = d.my_vote,
+            creator_is_admin = false,
+            creator_is_moderator = false,
         )
 
     override fun toV0x19(d: V0x18DatatypesPersonView): V0x19DatatypesPersonView =
@@ -1369,6 +1388,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             creator_blocked = d.creator_blocked,
             my_vote = d.my_vote,
             unread_comments = d.unread_comments,
+            creator_is_admin = false,
+            creator_is_moderator = false,
         )
 
     override fun toV0x19(d: V0x18DatatypesPrivateMessage): V0x19DatatypesPrivateMessage =
@@ -2214,7 +2235,6 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             bot_account = d.bot_account,
             show_bot_accounts = d.show_bot_accounts,
             show_read_posts = d.show_read_posts,
-            show_new_post_notifs = d.show_new_post_notifs,
             discussion_languages = d.discussion_languages,
             auth = auth,
             open_links_in_new_tab = d.open_links_in_new_tab,

@@ -17,4 +17,6 @@ internal data class PostAggregates(
     val featured_local: Boolean,
     val hot_rank: Int,
     val hot_rank_active: Int,
+    val community_id: Int? = null,
+    val creator_id: Int? = null,
 )

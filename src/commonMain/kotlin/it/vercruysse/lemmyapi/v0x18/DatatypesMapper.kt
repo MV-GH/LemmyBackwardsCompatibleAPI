@@ -118,6 +118,7 @@ internal interface DatatypesMapper {
     fun toV0x19(d: GetUnreadRegistrationApplicationCountResponse): it.vercruysse.lemmyapi.v0x19.datatypes.GetUnreadRegistrationApplicationCountResponse
 
     fun toV0x19(d: Instance): it.vercruysse.lemmyapi.v0x19.datatypes.Instance
+    fun toV0x19F(d: Instance): it.vercruysse.lemmyapi.v0x19.datatypes.InstanceWithFederationState
 
     fun toV0x19(d: Language): it.vercruysse.lemmyapi.v0x19.datatypes.Language
 

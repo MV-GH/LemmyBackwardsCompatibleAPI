@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi
 
 import io.ktor.client.*
+import it.vercruysse.lemmyapi.dto.NodeInfo
 import it.vercruysse.lemmyapi.dto.VersionTracker
 import it.vercruysse.lemmyapi.dto.getSupportedEntries
 import it.vercruysse.lemmyapi.pictrs.PictrsService
@@ -26,6 +27,8 @@ abstract class LemmyApiBase(
     inline fun <reified T> getSupportedEntries(): List<T> where T : Enum<T>, T : VersionTracker {
         return getSupportedEntries(version)
     }
+
+    suspend fun getNodeInfo(): Result<NodeInfo> = LemmyApi.getNodeInfo(baseUrl)
 }
 
 // TODO: nodeinfo

@@ -8,7 +8,7 @@ const val TIMEOUT_MS = 20000L
 
 // TODO think about this
 val ktorJson = Json {
-    ignoreUnknownKeys = true
+   // ignoreUnknownKeys = true
 }
 
 val lenientJson =
