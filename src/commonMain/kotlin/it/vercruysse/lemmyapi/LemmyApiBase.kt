@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi
 
+import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.dto.NodeInfo
 import it.vercruysse.lemmyapi.dto.VersionTracker
@@ -9,7 +10,7 @@ import it.vercruysse.lemmyapi.pictrs.PictrsService
 // Wanted to keep this as a interface, but interfaces can't keep state
 abstract class LemmyApiBase(
     val httpClient: HttpClient,
-    val version: String,
+    val version: Version,
     val baseUrl: String,
     override var auth: String?,
 ) : PictrsService(httpClient, version, auth), OldRoutes {

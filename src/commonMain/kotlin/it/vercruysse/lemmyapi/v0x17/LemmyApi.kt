@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.v0x17
 
+import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.LemmyApiBase
 import it.vercruysse.lemmyapi.v0x17.datatypes.GetSiteResponse
@@ -8,7 +9,7 @@ import it.vercruysse.lemmyapi.v0x18.datatypes.*
 // The only breaking change with v0.18 really is the that taglines were optional
 internal abstract class LemmyApi(
     ktor: HttpClient,
-    actualVersion: String,
+    actualVersion: Version,
     baseUrl: String,
     override var auth: String?,
 ) : LemmyApiBase(ktor, actualVersion, baseUrl, auth) {

@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.v0x18
 
+import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.utils.notSupported
 import it.vercruysse.lemmyapi.v0x18.datatypes.*
@@ -135,7 +136,7 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.VerifyEmail
 
 class LemmyV0x19Wrapper(
     ktor: HttpClient,
-    actualVersion: String,
+    actualVersion: Version,
     baseUrl: String,
     auth: String? = null,
 ) : it.vercruysse.lemmyapi.v0x19.LemmyApi(ktor, actualVersion, baseUrl, auth) {

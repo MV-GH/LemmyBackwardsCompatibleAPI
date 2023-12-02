@@ -2,18 +2,16 @@ import org.jmailen.gradle.kotlinter.tasks.FormatTask
 import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
-    kotlin("multiplatform") version "1.9.20"
-    kotlin("plugin.serialization") version "1.9.20"
+    kotlin("multiplatform") version "1.9.21"
+    kotlin("plugin.serialization") version "1.9.21"
     id("org.jmailen.kotlinter") version "4.0.0"
-    id("com.google.devtools.ksp") version ("1.9.20-1.0.13")
+    id("com.google.devtools.ksp") version ("1.9.21-1.0.15")
     id("com.vanniktech.maven.publish") version "0.25.3"
 }
 
 repositories {
     mavenCentral()
 }
-
-val konvertVersion = "2.3.0"
 
 kotlin {
     linuxX64()
@@ -31,6 +29,7 @@ kotlin {
     }
     js {
         nodejs()
+        browser()
     }
 
     sourceSets {
@@ -45,19 +44,7 @@ kotlin {
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
             implementation("io.ktor:ktor-client-logging:$ktorVersion")
-
-            // Only to download new types, not sure how to do this as dev dep only
-            implementation("com.squareup.okio:okio:3.5.0")
-            implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.3.0")
-
-            implementation("io.arrow-kt:arrow-core:1.2.0")
-            implementation("io.arrow-kt:arrow-fx-coroutines:1.2.0")
-
-
-            // DTO mapper
-            //implementation("io.mcarle:konvert-api:$konvertVersion")
-
-
+            api("io.github.z4kn4fein:semver:1.4.2")
         }
 
         commonTest.dependencies {
@@ -68,8 +55,6 @@ kotlin {
 
         jvmMain.dependencies {
             implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-            implementation("com.charleskorn.kaml:kaml:0.55.0")
-            implementation("io.mcarle:konvert-api:$konvertVersion")
         }
 
 
@@ -81,17 +66,11 @@ kotlin {
         nativeMain.dependencies {
             // Can't seem to get CIO to work, so using curl this probably won't work on all architectures
             implementation("io.ktor:ktor-client-curl:$ktorVersion")
-
         }
-
     }
 }
 
-dependencies {
-    //add("kspCommonMainMetadata", "io.mcarle:konvert:$konvertVersion")
-    add("kspJvm", "io.mcarle:konvert:$konvertVersion")
 
-}
 
 tasks.check {
     dependsOn("installKotlinterPrePushHook")

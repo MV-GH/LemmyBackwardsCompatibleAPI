@@ -1,9 +1,9 @@
 package it.vercruysse.lemmyapi
 
+import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import it.vercruysse.lemmyapi.dto.NodeInfo
-import it.vercruysse.lemmyapi.dto.NodeInfoUsage
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.dropPatchVersion
@@ -126,8 +126,8 @@ object LemmyApi {
         val ktor = getKtor("${baseUrlInstance}/api/$API_VERSION/")
 
         return when (dropPatchVersion(version)) {
-            "0.19" -> it.vercruysse.lemmyapi.v0x19.LemmyApiService(ktor, version, baseUrlInstance, auth)
-            "0.18" -> it.vercruysse.lemmyapi.v0x18.LemmyV0x19Wrapper(ktor, version, baseUrlInstance, auth)
+            "0.19" -> it.vercruysse.lemmyapi.v0x19.LemmyApiService(ktor, version.toVersion(false), baseUrlInstance, auth)
+            "0.18" -> it.vercruysse.lemmyapi.v0x18.LemmyV0x19Wrapper(ktor, version.toVersion(false), baseUrlInstance, auth)
             else -> throw NotSupportedException("Unsupported Lemmy version: $version")
         }
     }

@@ -1,47 +1,22 @@
 package it.vercruysse.lemmyapi.utils
 
-import arrow.core.compareTo
-import io.ktor.client.call.*
-import io.ktor.client.plugins.*
-import io.ktor.client.statement.*
+import io.github.z4kn4fein.semver.Version
+import io.github.z4kn4fein.semver.toVersion
 import io.ktor.http.*
 import it.vercruysse.lemmyapi.LemmyApiBase
-import it.vercruysse.lemmyapi.dto.ErrorResponse
 import it.vercruysse.lemmyapi.exception.NotSupportedException
-import it.vercruysse.lemmyapi.lenientJson
 import kotlinx.serialization.json.*
 
 // TODO: IMMUTABLE
 
-/**
- * Compare two version strings.
- *
- * This attempts to do a natural comparison assuming it's a typical semver (e.g. x.y.z),
- * but it ignores anything it doesn't understand. Since we're highly confident that these verisons
- * will be properly formed, this is safe enough without overcomplicating it.
- *
- * @author Jameson Little
- */
-fun compareVersions(
-    a: String,
-    b: String,
-): Int { // TODO remove this from Jerboa
-    val versionA: List<Int> = a.split('.').mapNotNull { it.toIntOrNull() }
-    val versionB: List<Int> = b.split('.').mapNotNull { it.toIntOrNull() }
 
-    val comparison = versionA.compareTo(versionB)
-    if (comparison == 0) {
-        return a.compareTo(b)
-    }
-    return comparison
-}
 
 /**
  * Check if a version is between two other versions.
  *
  * @param current The version to check.
  * @param min The minimum version (inclusive).
- * @param max The maximum version (inclusive).
+ * @param max The maximum version (exclusive).
  * @return True if the current version is between the min and max versions.
  */
 
@@ -50,7 +25,29 @@ fun isBetweenVersions(
     min: String,
     max: String,
 ): Boolean {
-    return compareVersions(current, min) >= 0 && compareVersions(current, max) <= 0
+    return isBetweenVersions(
+        current.toVersion(false),
+        min.toVersion(false),
+        max.toVersion(false)
+    )
+}
+
+
+/**
+ * Check if a version is between two other versions.
+ *
+ * @param current The version to check.
+ * @param min The minimum version (inclusive).
+ * @param max The maximum version (exclusive).
+ * @return True if the current version is between the min and max versions.
+ */
+
+fun isBetweenVersions(
+    current: Version,
+    min: Version,
+    max: Version,
+): Boolean {
+    return min <= current && current < max
 }
 
 fun dropPatchVersion(version: String): String {

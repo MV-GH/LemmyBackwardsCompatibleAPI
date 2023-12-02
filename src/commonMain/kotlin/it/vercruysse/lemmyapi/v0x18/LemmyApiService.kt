@@ -1,5 +1,7 @@
 package it.vercruysse.lemmyapi.v0x18
 
+import io.github.z4kn4fein.semver.Version
+import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.getKtor
 import it.vercruysse.lemmyapi.utils.getResult
@@ -7,7 +9,7 @@ import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v0x18.datatypes.*
 
-internal class LemmyApiService(val Ktor: HttpClient, actualVersion: String, baseUrl: String, override var auth: String? = null) : LemmyApi(
+internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String? = null) : LemmyApi(
     Ktor,
     actualVersion,
     baseUrl,
@@ -705,7 +707,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: String, base
 }
 
 suspend fun main() {
-    val api = LemmyApiService(getKtor("https://lemmy.world/api/v3/"), "0.18.5", "")
+    val api = LemmyApiService(getKtor("https://lemmy.world/api/v3/"), "0.18.5".toVersion(), "")
 
     println(api.version)
     println(api.getSite(GetSite()).getOrThrow())

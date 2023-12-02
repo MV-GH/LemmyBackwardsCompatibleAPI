@@ -2,9 +2,12 @@
 
 package it.vercruysse.lemmyapi.dto
 
+import io.github.z4kn4fein.semver.Version
+import io.github.z4kn4fein.semver.toVersion
 import it.vercruysse.lemmyapi.MINIMUM_API_VERSION
-import it.vercruysse.lemmyapi.utils.compareVersions
+import it.vercruysse.lemmyapi.V0_18_0
 import it.vercruysse.lemmyapi.utils.isBetweenVersions
+import it.vercruysse.lemmyapi.V0_19_0
 import kotlinx.serialization.Serializable
 
 /*
@@ -36,19 +39,19 @@ enum class PostFeatureType {
 
 @Serializable
 enum class ListingType(
-    override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null,
+    override val minimumVersion: Version = MINIMUM_API_VERSION,
+    override val maximumVersion: Version? = null,
 ) : VersionTracker {
     All,
     Local,
     Subscribed,
-    ModeratorView("0.19.0"),
+    ModeratorView(V0_19_0),
 }
 
 @Serializable
 enum class RegistrationMode(
-    override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null,
+    override val minimumVersion: Version = MINIMUM_API_VERSION,
+    override val maximumVersion: Version? = null,
 ) : VersionTracker {
     Closed,
     RequireApplication,
@@ -57,8 +60,8 @@ enum class RegistrationMode(
 
 @Serializable
 enum class SearchType(
-    override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null,
+    override val minimumVersion: Version = MINIMUM_API_VERSION,
+    override val maximumVersion: Version? = null,
 ) : VersionTracker {
     All,
     Comments,
@@ -70,8 +73,8 @@ enum class SearchType(
 
 @Serializable
 enum class ModlogActionType(
-    override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null,
+    override val minimumVersion: Version = MINIMUM_API_VERSION,
+    override val maximumVersion: Version? = null,
 ) : VersionTracker {
     All,
     ModRemovePost,
@@ -93,8 +96,8 @@ enum class ModlogActionType(
 
 @Serializable
 enum class SortType(
-    override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null,
+    override val minimumVersion: Version = MINIMUM_API_VERSION,
+    override val maximumVersion: Version? = null,
 ) : VersionTracker {
     Active,
     Hot,
@@ -107,32 +110,32 @@ enum class SortType(
     TopAll,
     MostComments,
     NewComments,
-    TopHour("0.18.0"),
-    TopSixHour("0.18.0"),
-    TopTwelveHour("0.18.0"),
-    TopThreeMonths("0.18.1"),
-    TopSixMonths("0.18.1"),
-    TopNineMonths("0.18.1"),
-    Controversial("0.19.0"),
-    Scaled("0.19.0"),
+    TopHour(V0_18_0),
+    TopSixHour(V0_18_0),
+    TopTwelveHour(V0_18_0),
+    TopThreeMonths("0.18.1".toVersion()),
+    TopSixMonths("0.18.1".toVersion()),
+    TopNineMonths("0.18.1".toVersion()),
+    Controversial(V0_19_0),
+    Scaled(V0_19_0),
 }
 
 @Serializable
 enum class CommentSortType(
-    override val minimumVersion: String = MINIMUM_API_VERSION,
-    override val maximumVersion: String? = null,
+    override val minimumVersion: Version = MINIMUM_API_VERSION,
+    override val maximumVersion: Version? = null,
 ) : VersionTracker {
     Hot,
     Top,
     New,
     Old,
-    Controversial("0.19.0"),
+    Controversial(V0_19_0),
 }
 
 @Serializable
 enum class PostListingMode(
-    override val minimumVersion: String = "0.19.0",
-    override val maximumVersion: String? = null,
+    override val minimumVersion: Version = V0_19_0,
+    override val maximumVersion: Version? = null,
 ) : VersionTracker {
     List,
     Card,
@@ -148,8 +151,8 @@ enum class PostListingMode(
  */
 @Serializable
 sealed interface VersionTracker {
-    val minimumVersion: String
-    val maximumVersion: String?
+    val minimumVersion: Version
+    val maximumVersion: Version?
 }
 
 /**
@@ -161,10 +164,22 @@ sealed interface VersionTracker {
  * @return A list of supported entries
  */
 inline fun <reified T> getSupportedEntries(instanceVersion: String): List<T> where T : Enum<T>, T : VersionTracker {
+    return getSupportedEntries(instanceVersion.toVersion(strict = false))
+}
+
+/**
+ * Returns the supported entries for the given version.
+ * It is possible that this list is empty, such case means this type is not used at all in a newer version
+ * Or doesn't exist in the older version.
+ *
+ * @param instanceVersion The version of the instance
+ * @return A list of supported entries
+ */
+inline fun <reified T> getSupportedEntries(instanceVersion: Version): List<T> where T : Enum<T>, T : VersionTracker {
     return enumValues<T>().filter {
         val max = it.maximumVersion
         if (max == null) {
-            compareVersions(instanceVersion, it.minimumVersion) >= 0
+            instanceVersion >= it.minimumVersion
         } else {
             isBetweenVersions(instanceVersion, it.minimumVersion, max)
         }

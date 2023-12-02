@@ -1,12 +1,13 @@
 package it.vercruysse.lemmyapi.v0x18
 
+import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.LemmyApiBase
 import it.vercruysse.lemmyapi.v0x18.datatypes.*
 
 internal abstract class LemmyApi(
     client: HttpClient,
-    actualVersion: String,
+    actualVersion: Version,
     baseUrl: String,
     override var auth: String?,
 ) : LemmyApiBase(client, actualVersion, baseUrl, auth) {

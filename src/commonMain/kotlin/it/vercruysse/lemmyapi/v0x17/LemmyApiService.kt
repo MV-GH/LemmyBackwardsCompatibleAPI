@@ -1,5 +1,7 @@
 package it.vercruysse.lemmyapi.v0x17
 
+import io.github.z4kn4fein.semver.Version
+import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.getKtor
 import it.vercruysse.lemmyapi.utils.getResult
@@ -20,7 +22,7 @@ import it.vercruysse.lemmyapi.v0x18.datatypes.*
  */
 internal class LemmyApiService(
     val Ktor: HttpClient,
-    actualVersion: String,
+    actualVersion: Version,
     baseUrl: String,
     override var auth: String? = null,
 ) : LemmyApi(Ktor, actualVersion, baseUrl, auth) {
@@ -653,7 +655,7 @@ internal class LemmyApiService(
 }
 
 suspend fun main() {
-    val api = LemmyApiService(getKtor("https://animoe.xyz/api/v3/"), "0.17.4", "") // v0.17.4
+    val api = LemmyApiService(getKtor("https://animoe.xyz/api/v3/"), "0.17.4".toVersion(), "") // v0.17.4
     println(api.version)
     println(api.getSite(GetSite()).getOrThrow())
     // Throws because apparently enums are full lowercase in v0.17.4 D:

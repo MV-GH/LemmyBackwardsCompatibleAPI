@@ -9,22 +9,11 @@ import kotlin.test.assertTrue
 
 class UtilTest {
     @Test
-    fun compareVersions() {
-        assertEquals(-1, it.vercruysse.lemmyapi.utils.compareVersions("0.0.1", "0.0.2"))
-        assertEquals(1, it.vercruysse.lemmyapi.utils.compareVersions("0.0.10", "0.0.2"))
-        assertEquals(1, it.vercruysse.lemmyapi.utils.compareVersions("0.1.10", "0.1.2"))
-        assertEquals(0, it.vercruysse.lemmyapi.utils.compareVersions("0.1.2", "0.1.2"))
-        assertEquals(-1, it.vercruysse.lemmyapi.utils.compareVersions("0.1.2-alpha1", "0.1.2-beta1"))
-        assertEquals(1, it.vercruysse.lemmyapi.utils.compareVersions("0.1.2-beta1", "0.1.2-alpha2"))
-    }
-
-    @Test
     fun compareBetweenVersions() {
         assertTrue(isBetweenVersions("0.0.2", "0.0.1", "0.0.3"))
-        assertTrue(isBetweenVersions("0.0.3", "0.0.1", "0.0.3"))
+        assertFalse(isBetweenVersions("0.0.3", "0.0.1", "0.0.3"))
         assertTrue(isBetweenVersions("0.0.1", "0.0.1", "0.0.3"))
-        assertTrue(isBetweenVersions("0.0.1", "0.0.1", "0.0.1"))
-        assertTrue(isBetweenVersions("0.0.3", "0.0.3", "0.0.3"))
+        assertFalse(isBetweenVersions("0.0.1", "0.0.1", "0.0.1"))
 
         assertFalse(isBetweenVersions("0.0.2", "0.0.3", "0.0.3"))
         assertFalse(isBetweenVersions("1.0.2", "0.0.3", "0.0.3"))

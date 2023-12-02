@@ -1,5 +1,7 @@
 package it.vercruysse.lemmyapi.v0x19
 
+import io.github.z4kn4fein.semver.Version
+import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.getKtor
 import it.vercruysse.lemmyapi.utils.addAuth
@@ -10,7 +12,7 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.*
 
 class LemmyApiService(
     private val defaultKtor: HttpClient,
-    actualVersion: String,
+    actualVersion: Version,
     baseUrl: String,
     auth: String? = null,
 ) : LemmyApi(defaultKtor, actualVersion, baseUrl, auth) {
@@ -715,7 +717,7 @@ class LemmyApiService(
 }
 
 suspend fun main() {
-    val api = LemmyApiService(getKtor("https://voyager.lemmy.ml/api/v3/"), "0.19.0", "")
+    val api = LemmyApiService(getKtor("https://voyager.lemmy.ml/api/v3/"), "0.19.0".toVersion(), "")
 
     println(api.version)
     println(api.getSite())
