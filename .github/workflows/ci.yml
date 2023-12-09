@@ -20,9 +20,12 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
-      - name: Install xmllint
+      - name: Install LibCurl
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get install -y curl
+        run: sudo apt-get install -y libcurl-dev
+      - name: Install LibCurl
+        if: matrix.os == 'macos-latest'
+        run: brew install libcurl-dev
       - run: ./gradlew build --no-daemon
   lint:
     runs-on: ubuntu-latest
