@@ -5,9 +5,16 @@ pluginManagement {
     }
 }
 
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0"
+    kotlin("jvm") version "1.9.21" apply false
 }
 
 rootProject.name = "LemmyBackwardsCompatibleAPI"
-include("GeneratorScripts")
+include("app", "GeneratorScripts")

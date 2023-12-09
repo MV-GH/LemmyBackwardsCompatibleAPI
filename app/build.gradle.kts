@@ -2,7 +2,7 @@ import org.jmailen.gradle.kotlinter.tasks.FormatTask
 import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
-    kotlin("multiplatform") version "1.9.21"
+    kotlin("multiplatform")
     kotlin("plugin.serialization") version "1.9.21"
     id("org.jmailen.kotlinter") version "4.0.0"
     id("com.google.devtools.ksp") version ("1.9.21-1.0.15")
@@ -10,6 +10,7 @@ plugins {
 }
 
 repositories {
+    gradlePluginPortal()
     mavenCentral()
 }
 

@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm")
+    kotlin("jvm") version "1.9.21"
     kotlin("plugin.serialization") version "1.9.21"
 }
 
@@ -27,6 +27,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.3.0")
     implementation("io.mcarle:konvert:$konvertVersion")
     implementation("io.mcarle:konvert-api:$konvertVersion")
+    implementation(project(":app"))
 }
 
 

@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 
 package org.example
 
@@ -14,7 +14,7 @@ import it.vercruysse.lemmyapi.v0x18.datatypes.*
 //        Konfig(key = "konvert.add-generated-konverter-annotation", value = "false"),
 //    ]
 // )
-interface MapperGenerator {
+internal interface MapperGenerator {
     @Konvert(
         mappings = [
             Mapping(target = "blur_nsfw", constant = "false"),
