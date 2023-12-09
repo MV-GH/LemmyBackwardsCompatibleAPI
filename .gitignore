@@ -45,4 +45,4 @@ bin/
 temp
 
 # TODO temp
-src/commonTest/kotlin/Secrets.kt
+**/Secrets.kt

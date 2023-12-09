@@ -19,6 +19,11 @@ kotlin {
     mingwX64()
     macosX64()
     macosArm64()
+    iosX64()
+    iosArm64()
+    watchosX64()
+    watchosArm32()
+    watchosArm64()
 
     jvm {
         jvmToolchain(17)
@@ -34,7 +39,7 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "2.3.6"
+        val ktorVersion = "2.3.7"
 
 
         commonMain.dependencies {
@@ -63,10 +68,12 @@ kotlin {
             implementation("io.ktor:ktor-client-js:$ktorVersion")
         }
 
+        mingwMain.dependencies {
+            implementation("io.ktor:ktor-client-winhttp:$ktorVersion")
+        }
 
-        nativeMain.dependencies {
-            // Can't seem to get CIO to work, so using curl this probably won't work on all architectures
-            implementation("io.ktor:ktor-client-curl:$ktorVersion")
+        appleMain.dependencies {
+            implementation("io.ktor:ktor-client-cio:$ktorVersion")
         }
     }
 }

@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-latest ]
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
 
     steps:
       - uses: actions/checkout@v4
@@ -20,9 +20,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
-      - name: Install LibCurl
-        if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get update && sudo apt-get install -y libcurl4-gnutls-dev
       - run: ./gradlew build --no-daemon
   lint:
     runs-on: ubuntu-latest
@@ -45,6 +42,4 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
-      - name: Install LibCurl
-        run: sudo apt-get update && sudo apt-get install -y libcurl4-gnutls-dev
       - run: ./gradlew allTests --no-daemon
