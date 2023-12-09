@@ -1,6 +1,9 @@
+import kotlin.test.Test
 
 
-//fun main() {
+class TestPictrs {
+    @Test
+    fun upload() {
 //    val api = PictrsService(getKtor("https://lemmy.one"), false)
 //
 //    println(
@@ -14,4 +17,5 @@
 //            ),
 //        ),
 //    )
-//}
+    }
+}

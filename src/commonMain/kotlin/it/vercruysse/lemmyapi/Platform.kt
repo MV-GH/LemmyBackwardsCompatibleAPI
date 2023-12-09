@@ -11,19 +11,18 @@ import it.vercruysse.lemmyapi.dto.ErrorResponse
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import kotlinx.serialization.SerializationException
 
+val baseClient: HttpClient =
+    HttpClient {
+        install(UserAgent) {
+            agent = "LemmyKotlinApi"
+        }
 
-val baseClient: HttpClient = HttpClient {
-    install(UserAgent) {
-        agent = "LemmyKotlinApi"
+        install(HttpTimeout) {
+            requestTimeoutMillis = TIMEOUT_MS
+            socketTimeoutMillis = TIMEOUT_MS / 2
+            connectTimeoutMillis = TIMEOUT_MS / 2
+        }
     }
-
-    install(HttpTimeout) {
-        requestTimeoutMillis = TIMEOUT_MS
-        socketTimeoutMillis = TIMEOUT_MS / 2
-        connectTimeoutMillis = TIMEOUT_MS / 2
-    }
-}
-
 
 fun getKtor(baseUrl: String): HttpClient =
     coreKtor.config {
@@ -71,22 +70,20 @@ val coreKtor =
                         throw LemmyBadRequestException(
                             exceptionResponse.call.response.status.value,
                             errorResponse.msg,
-                            exceptionResponse
+                            exceptionResponse,
                         )
                     } catch (_: SerializationException) {
-
                     }
                 }
             }
         }
     }
 
+val lenientKtor =
+    baseClient.config {
+        expectSuccess = true
 
-val lenientKtor = baseClient.config {
-    expectSuccess = true
-
-    install(ContentNegotiation) {
-        json(lenientJson)
+        install(ContentNegotiation) {
+            json(lenientJson)
+        }
     }
-}
-

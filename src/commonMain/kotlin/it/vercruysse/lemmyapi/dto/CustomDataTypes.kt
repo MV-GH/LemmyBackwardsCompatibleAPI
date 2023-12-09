@@ -6,8 +6,8 @@ import io.github.z4kn4fein.semver.Version
 import io.github.z4kn4fein.semver.toVersion
 import it.vercruysse.lemmyapi.MINIMUM_API_VERSION
 import it.vercruysse.lemmyapi.V0_18_0
-import it.vercruysse.lemmyapi.utils.isBetweenVersions
 import it.vercruysse.lemmyapi.V0_19_0
+import it.vercruysse.lemmyapi.utils.isBetweenVersions
 import kotlinx.serialization.Serializable
 
 /*

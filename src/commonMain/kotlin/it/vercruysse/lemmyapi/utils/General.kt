@@ -9,8 +9,6 @@ import kotlinx.serialization.json.*
 
 // TODO: IMMUTABLE
 
-
-
 /**
  * Check if a version is between two other versions.
  *
@@ -28,10 +26,9 @@ fun isBetweenVersions(
     return isBetweenVersions(
         current.toVersion(false),
         min.toVersion(false),
-        max.toVersion(false)
+        max.toVersion(false),
     )
 }
-
 
 /**
  * Check if a version is between two other versions.
@@ -86,15 +83,20 @@ internal fun LemmyApiBase.notSupported(): Nothing =
 internal fun constructBaseUrl(instance: String): String {
     val instanceUrl = instance.trim()
 
-    val url = if (instanceUrl.contains("://")) {
-        Url(instanceUrl)
-    } else {
-        // Really basic heuristic to determine if it's http or https,
-        // if wrong consumer should specify protocol
-        val protocol = if (instanceUrl.equals("localhost", true))
-            URLProtocol.HTTP else URLProtocol.HTTPS
-        Url("${protocol.name}://$instanceUrl")
-    }
+    val url =
+        if (instanceUrl.contains("://")) {
+            Url(instanceUrl)
+        } else {
+            // Really basic heuristic to determine if it's http or https,
+            // if wrong consumer should specify protocol
+            val protocol =
+                if (instanceUrl.equals("localhost", true)) {
+                    URLProtocol.HTTP
+                } else {
+                    URLProtocol.HTTPS
+                }
+            Url("${protocol.name}://$instanceUrl")
+        }
 
     return url.protocolWithAuthority
 }

@@ -20,11 +20,12 @@ object LemmyApi {
      * @Throws Exception if it is not a Lemmy instance
      */
 
-    suspend fun getNodeInfo(instance: String): Result<NodeInfo> = runCatching {
-        lenientKtor
-            .get("${constructBaseUrl(instance)}/nodeinfo/2.0.json")
-            .body<NodeInfo>()
-    }
+    suspend fun getNodeInfo(instance: String): Result<NodeInfo> =
+        runCatching {
+            lenientKtor
+                .get("${constructBaseUrl(instance)}/nodeinfo/2.0.json")
+                .body<NodeInfo>()
+        }
 
     /**
      * Gets the version of a Lemmy instance
@@ -35,7 +36,6 @@ object LemmyApi {
         check(isLemmyInstance(node)) { "Not a Lemmy instance" }
         return node.software.version
     }
-
 
     /**
      * Gets the version of a Lemmy instance
@@ -87,7 +87,6 @@ object LemmyApi {
         return nodeInfo.software.name.lowercase() == "lemmy"
     }
 
-
     /**
      * Returns a LemmyApi instance.
      *
@@ -97,8 +96,7 @@ object LemmyApi {
      * on the version of the Lemmy Server instance.
      */
 
-    // TODO ADD PGP KEY
-    suspend fun getLemmyApi(
+    suspend fun getLemmyApi( // TODO ADD PGP KEY
         instance: String,
         auth: String? = null,
     ): it.vercruysse.lemmyapi.v0x19.LemmyApi {
@@ -123,7 +121,7 @@ object LemmyApi {
         auth: String? = null,
     ): it.vercruysse.lemmyapi.v0x19.LemmyApi {
         val baseUrlInstance = constructBaseUrl(instance)
-        val ktor = getKtor("${baseUrlInstance}/api/$API_VERSION/")
+        val ktor = getKtor("$baseUrlInstance/api/$API_VERSION/")
 
         return when (dropPatchVersion(version)) {
             "0.19" -> it.vercruysse.lemmyapi.v0x19.LemmyApiService(ktor, version.toVersion(false), baseUrlInstance, auth)
@@ -131,10 +129,7 @@ object LemmyApi {
             else -> throw NotSupportedException("Unsupported Lemmy version: $version")
         }
     }
-
-
 }
-
 
 suspend fun main() {
     val api = LemmyApi.getLemmyApi("voyager.lemmy.ml")
@@ -144,5 +139,3 @@ suspend fun main() {
     val r2 = api.getSite()
     println(r2)
 }
-
-
