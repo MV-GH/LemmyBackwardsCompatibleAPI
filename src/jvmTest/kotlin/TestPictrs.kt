@@ -1,6 +1,5 @@
 import kotlin.test.Test
 
-
 class TestPictrs {
     @Test
     fun upload() {
