@@ -72,14 +72,6 @@ kotlin {
 }
 
 
-
-tasks.check {
-    dependsOn("installKotlinterPrePushHook")
-}
-
-
-
-
 tasks.withType<LintTask> {
     val l = fileTree(".")
     l.setIncludes(listOf("**/datatypes/**"))
