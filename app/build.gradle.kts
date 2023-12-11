@@ -15,15 +15,27 @@ repositories {
 }
 
 kotlin {
-    linuxX64()
-    mingwX64()
-    macosX64()
-    macosArm64()
-    iosX64()
-    iosArm64()
-    watchosX64()
-    watchosArm32()
-    watchosArm64()
+
+    when (getHostOsName()) {
+        OS.LINUX -> {
+            linuxX64()
+            linuxArm64()
+        }
+
+        OS.WINDOWS -> {
+            mingwX64()
+        }
+
+        OS.MAC -> {
+            macosX64()
+            macosArm64()
+            iosX64()
+            iosArm64()
+            watchosX64()
+            watchosArm32()
+            watchosArm64()
+        }
+    }
 
     jvm {
         jvmToolchain(17)
@@ -68,12 +80,38 @@ kotlin {
             implementation("io.ktor:ktor-client-js:$ktorVersion")
         }
 
-        mingwMain.dependencies {
-            implementation("io.ktor:ktor-client-winhttp:$ktorVersion")
-        }
+        when (getHostOsName()) {
+            OS.LINUX -> {
+                linuxMain.dependencies {
+                    implementation("io.ktor:ktor-client-cio:$ktorVersion")
+                }
+            }
 
-        appleMain.dependencies {
-            implementation("io.ktor:ktor-client-cio:$ktorVersion")
+            OS.WINDOWS -> {
+                mingwMain.dependencies {
+                    implementation("io.ktor:ktor-client-winhttp:$ktorVersion")
+                }
+            }
+
+            OS.MAC -> {
+                macosMain.dependencies {
+                    implementation("io.ktor:ktor-client-cio:$ktorVersion")
+                }
+            }
+        }
+    }
+
+    val publicationsFromMainHost =
+        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+
+    publishing {
+        publications {
+            matching { it.name in publicationsFromMainHost }.all {
+                val targetPublication = this@all
+                tasks.withType<AbstractPublishToMaven>()
+                    .matching { it.publication == targetPublication }
+                    .configureEach { onlyIf { getHostOsName() == OS.LINUX } }
+            }
         }
     }
 }
@@ -90,3 +128,17 @@ tasks.withType<FormatTask> {
     l.setIncludes(listOf("**/datatypes/**"))
     this.source = this.source.minus(l).asFileTree
 }
+
+enum class OS {
+    LINUX, WINDOWS, MAC
+}
+
+fun getHostOsName(): OS =
+    System.getProperty("os.name").let { osName ->
+        when {
+            osName == "Linux" -> OS.LINUX
+            osName.startsWith("Windows") -> OS.WINDOWS
+            osName.startsWith("Mac") -> OS.MAC
+            else -> throw GradleException("Unknown OS: $osName")
+        }
+    }
