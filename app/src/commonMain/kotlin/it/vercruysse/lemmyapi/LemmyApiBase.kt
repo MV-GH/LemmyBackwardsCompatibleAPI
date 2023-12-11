@@ -31,5 +31,3 @@ abstract class LemmyApiBase(
 
     suspend fun getNodeInfo(): Result<NodeInfo> = LemmyApi.getNodeInfo(baseUrl)
 }
-
-// TODO: nodeinfo

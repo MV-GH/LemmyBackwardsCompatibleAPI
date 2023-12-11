@@ -2,7 +2,7 @@ package org.example.autogenscripts
 
 import java.io.File
 
-const val SRC = "src/commonMain/kotlin/it/vercruysse/lemmyapi/"
+const val SRC = "app/src/commonMain/kotlin/it/vercruysse/lemmyapi/"
 val bodyRequestIndicators =
     listOf("Create", "Update", "Delete", "Edit", "Add", "Approve", "Ban", "Block", "Change", "PasswordChange", "Get", "Mark", "List", "Purge", "Save", "Register", "Login", "PasswordReset", "Verify")
 

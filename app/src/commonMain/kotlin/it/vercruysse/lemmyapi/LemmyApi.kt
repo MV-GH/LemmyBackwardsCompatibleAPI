@@ -96,7 +96,7 @@ object LemmyApi {
      * on the version of the Lemmy Server instance.
      */
 
-    suspend fun getLemmyApi( // TODO ADD PGP KEY
+    suspend fun getLemmyApi(
         instance: String,
         auth: String? = null,
     ): it.vercruysse.lemmyapi.v0x19.LemmyApi {

@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.zip.ZipFile
 
-const val ROOT_PATH = "src/commonMain/kotlin/"
+const val ROOT_PATH = "app/src/commonMain/kotlin/"
 const val ROOT_PACKAGE_PATH = "it/vercruysse/lemmyapi/"
 const val ROOT_PACKAGE = "it.vercruysse.lemmyapi."
 const val CUSTOM_DATATYPES_PACKAGE = "dto."

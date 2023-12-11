@@ -3,9 +3,6 @@ plugins {
     kotlin("plugin.serialization") version "1.9.21"
 }
 
-group = "org.example"
-version = "unspecified"
-
 repositories {
     mavenCentral()
 }

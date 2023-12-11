@@ -6,8 +6,6 @@ import io.mcarle.konvert.api.Konvert
 import io.mcarle.konvert.api.Mapping
 import it.vercruysse.lemmyapi.v0x18.datatypes.*
 
-// TODO gen final version of lemmy-js client
-
 // @Konverter(
 //    options = [
 //        Konfig(key = "konvert.enable-converters", value = "FloatToIntConverter"),
