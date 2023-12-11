@@ -28,5 +28,6 @@ jobs:
       - name: build
         run: ./gradlew build --no-daemon
       - name: publish
-        run: ./gradlew publish --no-configuration-cache --no-daemon
+        run: ./gradlew publishAllPublicationsToMavenCentral --no-configuration-cache --no-daemon
+      - run: ./gradlew closeAndReleaseRepository --no-configuration-cache --no-daemon
 
