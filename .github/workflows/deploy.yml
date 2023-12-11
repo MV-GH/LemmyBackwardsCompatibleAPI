@@ -25,11 +25,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
-      - name: test ENV
-        run: echo "$ORG_GRADLE_PROJECT_signingInMemoryKeyId"
       - name: build
         run: ./gradlew build --no-daemon
       - name: publish
         run: ./gradlew publishAllPublicationsToMavenCentral --no-configuration-cache --no-daemon --stacktrace
-      - run: ./gradlew closeAndReleaseRepository --no-configuration-cache --no-daemon
 
