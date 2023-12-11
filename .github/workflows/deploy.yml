@@ -30,6 +30,6 @@ jobs:
       - name: build
         run: ./gradlew build --no-daemon
       - name: publish
-        run: ./gradlew publishAllPublicationsToMavenCentral --no-configuration-cache --no-daemon
+        run: ./gradlew publishAllPublicationsToMavenCentral --no-configuration-cache --no-daemon --stacktrace
       - run: ./gradlew closeAndReleaseRepository --no-configuration-cache --no-daemon
 
