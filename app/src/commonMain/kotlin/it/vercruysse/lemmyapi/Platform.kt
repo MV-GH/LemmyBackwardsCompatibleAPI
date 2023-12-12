@@ -27,13 +27,7 @@ val baseClient: HttpClient =
 fun getKtor(baseUrl: String): HttpClient =
     coreKtor.config {
         install(Logging) {
-            logger =
-                object : Logger {
-                    override fun log(message: String) {
-                        println(message)
-                    }
-                }
-            level = LogLevel.NONE
+            level = LogLevel.ALL
         }
 
         defaultRequest {
