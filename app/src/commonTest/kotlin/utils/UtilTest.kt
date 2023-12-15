@@ -1,5 +1,7 @@
 package utils
 
+import it.vercruysse.lemmyapi.dto.SortType
+import it.vercruysse.lemmyapi.dto.getSupportedEntries
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.isBetweenVersions
 import kotlin.test.Test
@@ -33,5 +35,13 @@ class UtilTest {
         assertEquals("https://voyager.lemmy.ml:8888", constructBaseUrl("voyager.lemmy.ml:8888/rando/stuff"))
         assertEquals("https://211.80.65.20", constructBaseUrl("211.80.65.20"))
         assertEquals("https://211.80.65.20:8888", constructBaseUrl("211.80.65.20:8888"))
+    }
+
+    @Test
+    fun shouldIgnorePreReleaseTags() {
+        val supportedEntries = getSupportedEntries<SortType>("0.19.0-rc.1")
+        assertTrue { supportedEntries.contains(SortType.Scaled) }
+
+        assertFalse { getSupportedEntries<SortType>("0.18.5").contains(SortType.Scaled) }
     }
 }
