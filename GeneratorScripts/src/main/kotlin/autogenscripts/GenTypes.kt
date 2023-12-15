@@ -21,7 +21,7 @@ fun getTypesPath(
     temp: Boolean = true,
 ) = "$ROOT_PATH$ROOT_PACKAGE_PATH$version/datatypes" + if (temp) "/temp" else ""
 
-fun isInteger(_l: String) = true
+fun isInteger(@Suppress("UNUSED_PARAMETER") _l: String) = true
 
 fun getDownloadLink(tag: String) = "https://github.com/LemmyNet/lemmy-js-client/archive/refs/tags/$tag.zip"
 
@@ -41,6 +41,10 @@ suspend fun downloadTypes(
         .copyAndClose(lemmyJsClient.writeChannel())
 
     val dest = File(getTypesPath(vShort))
+
+    for (typeFile in dest.listFiles() ?: emptyArray<File>()) {
+        typeFile.delete()
+    }
     dest.mkdirs()
 
     withContext(Dispatchers.IO) {
@@ -79,7 +83,7 @@ suspend fun downloadTypes(
         println(String(proc.inputStream.readAllBytes()))
 
         for (typeFile in datatypes.listFiles()!!) {
-            if (typeFile.name.startsWith("lib")) {
+            if (typeFile.name.startsWith("lib") || !typeFile.name.contains("module")) {
                 typeFile.delete()
             } else if (typeFile.name.endsWith(".kt") && typeFile.isFile()) {
                 val fileName = typeFile.name.substringBefore(".")
@@ -217,5 +221,5 @@ suspend fun downloadTypes(
 }
 
 suspend fun main() {
-    downloadTypes("0.19.0-rc.14", "v0x19")
+    downloadTypes("0.19.0", "v0x19")
 }
