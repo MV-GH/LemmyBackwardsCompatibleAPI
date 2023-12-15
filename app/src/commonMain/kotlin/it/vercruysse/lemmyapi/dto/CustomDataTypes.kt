@@ -4,6 +4,7 @@ package it.vercruysse.lemmyapi.dto
 
 import io.github.z4kn4fein.semver.Version
 import io.github.z4kn4fein.semver.toVersion
+import io.github.z4kn4fein.semver.withoutSuffixes
 import it.vercruysse.lemmyapi.MINIMUM_API_VERSION
 import it.vercruysse.lemmyapi.V0_18_0
 import it.vercruysse.lemmyapi.V0_19_0
@@ -176,21 +177,13 @@ inline fun <reified T> getSupportedEntries(instanceVersion: String): List<T> whe
  * @return A list of supported entries
  */
 inline fun <reified T> getSupportedEntries(instanceVersion: Version): List<T> where T : Enum<T>, T : VersionTracker {
+    val ignorePreReleaseVersion = instanceVersion.withoutSuffixes()
     return enumValues<T>().filter {
         val max = it.maximumVersion
         if (max == null) {
-            instanceVersion >= it.minimumVersion
+            ignorePreReleaseVersion >= it.minimumVersion
         } else {
-            isBetweenVersions(instanceVersion, it.minimumVersion, max)
+            isBetweenVersions(ignorePreReleaseVersion, it.minimumVersion, max)
         }
     }
 }
-
-fun main() {
-    val siteVersion = "0.18.0"
-
-    val supportedEntries = getSupportedEntries<RegistrationMode>(siteVersion)
-    println(supportedEntries)
-}
-
-// TODO check order of enums
