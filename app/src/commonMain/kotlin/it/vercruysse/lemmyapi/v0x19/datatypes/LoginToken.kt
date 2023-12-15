@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LoginToken(
-    val id: Int,
     val user_id: LocalUserId,
     val published: String,
     val ip: String? = null,

@@ -802,7 +802,6 @@ internal class Transformer(var auth: String) : DatatypesMapper {
 
     override fun toV0x19(d: V0x18DatatypesCustomEmojiKeyword): V0x19DatatypesCustomEmojiKeyword =
         it.vercruysse.lemmyapi.v0x19.datatypes.CustomEmojiKeyword(
-            id = d.id,
             custom_emoji_id = d.custom_emoji_id,
             keyword = d.keyword,
         )
