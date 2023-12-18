@@ -13,7 +13,7 @@ abstract class LemmyApiBase(
     val version: Version,
     val baseUrl: String,
     override var auth: String?,
-) : PictrsService(httpClient, version, auth), OldRoutes {
+) : PictrsService(httpClient, auth), OldRoutes {
     @Suppress("PropertyName")
     val FF = FeatureFlags(version)
 
