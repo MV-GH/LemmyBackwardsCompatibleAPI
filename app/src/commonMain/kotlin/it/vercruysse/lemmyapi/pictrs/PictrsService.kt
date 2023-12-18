@@ -23,7 +23,7 @@ open class PictrsService(private val ktor: HttpClient, version: Version, overrid
         return runCatching {
             val resp =
                 ktor.post("/pictrs/image") {
-                    auth?.let { cookie(if (is0x19Plus) "auth" else "jwt", it) }
+                    auth?.let { cookie("jwt", it) }
                     setBody(
                         MultiPartFormDataContent(
                             formData {
@@ -46,12 +46,12 @@ open class PictrsService(private val ktor: HttpClient, version: Version, overrid
 
             imageResp.copy(
                 files =
-                    imageResp.files.map {
-                        it.copy(
-                            url = "${resp.call.request.url}/${it.file}",
-                            delete_url = "${resp.call.request.url}/delete/${it.delete_token}/${it.file}",
-                        )
-                    },
+                imageResp.files.map {
+                    it.copy(
+                        url = "${resp.call.request.url}/${it.file}",
+                        delete_url = "${resp.call.request.url}/delete/${it.delete_token}/${it.file}",
+                    )
+                },
             )
         }
     }
@@ -64,7 +64,7 @@ open class PictrsService(private val ktor: HttpClient, version: Version, overrid
     override suspend fun deleteImage(relativeUrl: String): Result<Unit> {
         return runCatching {
             ktor.get(relativeUrl) {
-                auth?.let { cookie(if (is0x19Plus) "auth" else "jwt", it) }
+                auth?.let { cookie("jwt", it) }
             }.body()
         }
     }
