@@ -46,12 +46,12 @@ open class PictrsService(private val ktor: HttpClient, version: Version, overrid
 
             imageResp.copy(
                 files =
-                imageResp.files.map {
-                    it.copy(
-                        url = "${resp.call.request.url}/${it.file}",
-                        delete_url = "${resp.call.request.url}/delete/${it.delete_token}/${it.file}",
-                    )
-                },
+                    imageResp.files.map {
+                        it.copy(
+                            url = "${resp.call.request.url}/${it.file}",
+                            delete_url = "${resp.call.request.url}/delete/${it.delete_token}/${it.file}",
+                        )
+                    },
             )
         }
     }
