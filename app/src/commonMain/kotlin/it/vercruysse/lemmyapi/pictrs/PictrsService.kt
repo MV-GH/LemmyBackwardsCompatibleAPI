@@ -1,8 +1,5 @@
 package it.vercruysse.lemmyapi.pictrs
 
-import io.github.z4kn4fein.semver.Version
-import io.github.z4kn4fein.semver.toVersion
-import io.github.z4kn4fein.semver.withoutSuffixes
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -11,9 +8,7 @@ import io.ktor.http.*
 import it.vercruysse.lemmyapi.pictrs.datatypes.UploadImage
 import it.vercruysse.lemmyapi.pictrs.datatypes.UploadImageResponse
 
-open class PictrsService(private val ktor: HttpClient, version: Version, override var auth: String?) : PictrsAPI {
-    private val is0x19Plus = version.withoutSuffixes() >= "0.19.0".toVersion()
-
+open class PictrsService(private val ktor: HttpClient, override var auth: String?) : PictrsAPI {
     /**
      * Upload an image to the server.
      *
@@ -23,7 +18,7 @@ open class PictrsService(private val ktor: HttpClient, version: Version, overrid
         return runCatching {
             val resp =
                 ktor.post("/pictrs/image") {
-                    auth?.let { cookie(if (is0x19Plus) "auth" else "jwt", it) }
+                    auth?.let { cookie("jwt", it) }
                     setBody(
                         MultiPartFormDataContent(
                             formData {
@@ -64,7 +59,7 @@ open class PictrsService(private val ktor: HttpClient, version: Version, overrid
     override suspend fun deleteImage(relativeUrl: String): Result<Unit> {
         return runCatching {
             ktor.get(relativeUrl) {
-                auth?.let { cookie(if (is0x19Plus) "auth" else "jwt", it) }
+                auth?.let { cookie("jwt", it) }
             }.body()
         }
     }
