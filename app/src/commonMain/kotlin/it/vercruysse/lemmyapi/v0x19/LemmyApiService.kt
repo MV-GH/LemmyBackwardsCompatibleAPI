@@ -188,7 +188,9 @@ class LemmyApiService(
      *
      * @GET("post/list")
      */
-    override suspend fun getPosts(form: GetPosts): Result<GetPostsResponse> = ktor.getResult("post/list", form)
+    override suspend fun getPosts(form: GetPosts): Result<GetPostsResponse> = ktor.getResult("post/list",
+        form.copy(page = if (form.page_cursor != null) null else form.page)
+    )
 
     /**
      * Delete a post.
