@@ -14,6 +14,6 @@ internal data class PostView(
     val saved: Boolean,
     val read: Boolean,
     val creator_blocked: Boolean,
-    val my_vote: Int? = null,
+    val my_vote: Int = 0,
     val unread_comments: Int,
 )

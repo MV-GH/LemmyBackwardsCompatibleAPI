@@ -12,6 +12,6 @@ data class CommentReportView(
     val comment_creator: Person,
     val counts: CommentAggregates,
     val creator_banned_from_community: Boolean,
-    val my_vote: Int? = null,
+    val my_vote: Int = 0,
     val resolver: Person? = null,
 )
