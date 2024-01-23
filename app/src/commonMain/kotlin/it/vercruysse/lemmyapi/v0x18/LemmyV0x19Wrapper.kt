@@ -83,14 +83,14 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.GetSiteResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.GetUnreadCountResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.GetUnreadRegistrationApplicationCountResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.HideCommunity
+import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentLikes
+import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentLikesResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReports
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReportsResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommunities
-import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentLikes
-import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentLikesResponse
+import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommunitiesResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostLikes
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostLikesResponse
-import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommunitiesResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostReports
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostReportsResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPrivateMessageReports
