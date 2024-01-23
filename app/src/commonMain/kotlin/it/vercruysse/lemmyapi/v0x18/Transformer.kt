@@ -754,6 +754,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             users_active_week = d.users_active_week,
             users_active_month = d.users_active_month,
             users_active_half_year = d.users_active_half_year,
+            subscribers_local = null,
         )
 
     override fun toV0x19(d: V0x18DatatypesCommunityBlockView): V0x19DatatypesCommunityBlockView =

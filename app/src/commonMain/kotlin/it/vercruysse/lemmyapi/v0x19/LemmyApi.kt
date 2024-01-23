@@ -680,4 +680,18 @@ abstract class LemmyApi(
      * @POST("user/logout")
      */
     abstract suspend fun logout(): Result<Unit>
+
+    /**
+     * List a post's likes. Admin-only.
+     *
+     * @GET("post/like/list")
+     */
+    abstract suspend fun listPostLikes(form: ListPostLikes): Result<ListPostLikesResponse>
+
+    /**
+     * List a comment's likes. Admin-only.
+     *
+     * @GET("comment/like/list")
+     */
+    abstract suspend fun listCommentLikes(form: ListCommentLikes): Result<ListCommentLikesResponse>
 }

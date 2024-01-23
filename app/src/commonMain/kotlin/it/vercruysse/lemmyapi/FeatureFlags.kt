@@ -7,8 +7,10 @@ import io.github.z4kn4fein.semver.withoutSuffixes
 /**
  * Use these flags to check if a certain feature is available on this version of Lemmy.
  */
+@Suppress("unused")
 class FeatureFlags(val version: Version) {
     private val v0x19Plus = version.withoutSuffixes() >= "0.19.0".toVersion()
+    private val v0x19x2Plus = version.withoutSuffixes() >= "0.19.2".toVersion()
 
     /**
      * InstanceBlock Feature added in 0.19
@@ -39,4 +41,9 @@ class FeatureFlags(val version: Version) {
      * Logout, invalidate current token Feature added in 0.19
      */
     fun logout(): Boolean = v0x19Plus
+
+    /**
+     * List comment/post votes, feature added in 0.19.2
+     */
+    fun listAdminVotes(): Boolean = v0x19x2Plus
 }
