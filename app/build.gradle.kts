@@ -80,6 +80,10 @@ kotlin {
             implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
         }
 
+        jvmTest.dependencies {
+            implementation(kotlin("reflect"))
+        }
+
 
         jsMain.dependencies {
             implementation("io.ktor:ktor-client-js:$ktorVersion")
