@@ -19,8 +19,8 @@ val baseClient: HttpClient =
 
         install(HttpTimeout) {
             requestTimeoutMillis = TIMEOUT_MS
-            socketTimeoutMillis = TIMEOUT_MS / 2
-            connectTimeoutMillis = TIMEOUT_MS / 2
+            socketTimeoutMillis = TIMEOUT_MS
+            connectTimeoutMillis = TIMEOUT_MS
         }
     }
 

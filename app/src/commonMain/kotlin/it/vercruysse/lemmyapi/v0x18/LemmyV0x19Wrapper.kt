@@ -86,6 +86,10 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.HideCommunity
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReports
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReportsResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommunities
+import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentLikes
+import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentLikesResponse
+import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostLikes
+import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostLikesResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommunitiesResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostReports
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostReportsResponse
@@ -923,6 +927,24 @@ class LemmyV0x19Wrapper(
      * @POST("user/logout")
      */
     override suspend fun logout(): Result<Unit> {
+        notSupported()
+    }
+
+    /**
+     * List a post's likes. Admin-only.
+     *
+     * @GET("post/like/list")
+     */
+    override suspend fun listPostLikes(form: ListPostLikes): Result<ListPostLikesResponse> {
+        notSupported()
+    }
+
+    /**
+     * List a comment's likes. Admin-only.
+     *
+     * @GET("comment/like/list")
+     */
+    override suspend fun listCommentLikes(form: ListCommentLikes): Result<ListCommentLikesResponse> {
         notSupported()
     }
 }
