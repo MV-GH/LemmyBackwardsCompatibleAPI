@@ -5,27 +5,24 @@ import kotlin.reflect.full.primaryConstructor
 import kotlin.test.Test
 import kotlin.test.fail
 
-
 class DatatypesValidation {
-
     private val versions = listOf("v0x18", "v0x19")
 
     @Test
     fun `all datatypes that are nullable should also be optional`() {
-
         versions.flatMap { getClasses(this.javaClass.classLoader, "it/vercruysse/lemmyapi/$it/datatypes") }
             .forEach { clazz ->
                 val kClass = clazz.kotlin
                 if (kClass.isData) {
                     val primaryConstructor = kClass.primaryConstructor
                     primaryConstructor?.parameters?.forEach { parameter ->
-                        if (parameter.type.isMarkedNullable && !parameter.isOptional)
+                        if (parameter.type.isMarkedNullable && !parameter.isOptional) {
                             fail("Parameter ${parameter.name} of class ${clazz.name} is nullable but not optional")
+                        }
                     }
                 }
             }
     }
-
 
     @Throws(Exception::class)
     private fun getClasses(cl: ClassLoader, pack: String): List<Class<*>> {
