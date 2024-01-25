@@ -15,6 +15,7 @@ const val ROOT_PACKAGE = "it.vercruysse.lemmyapi."
 const val CUSTOM_DATATYPES_PACKAGE = "dto."
 
 val filesThatShouldNotBeAdded = setOf("others.ts", "DeleteAccountResponse.ts", "PasswordResetResponse.ts", "VerifyEmailResponse.ts")
+val propsThatShouldBeLongs = setOf("expires")
 
 fun getTypesPath(
     version: String,
@@ -132,7 +133,11 @@ suspend fun downloadTypes(
 
                             k =
                                 if (isInteger(k)) {
-                                    k.replace(Regex("""\b(Number)\b"""), "Int")
+                                    if(propsThatShouldBeLongs.any { k.contains(it)}) {
+                                        k.replace(Regex("""\b(Number)\b"""), "Long")
+                                    } else {
+                                        k.replace(Regex("""\b(Number)\b"""), "Int")
+                                    }
                                 } else {
                                     k.replace(Regex("""\b(Number)\b"""), "Float")
                                 }
