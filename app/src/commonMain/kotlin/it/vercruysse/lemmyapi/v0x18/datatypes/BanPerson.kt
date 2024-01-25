@@ -8,6 +8,6 @@ internal data class BanPerson(
     val ban: Boolean,
     val remove_data: Boolean? = null,
     val reason: String? = null,
-    val expires: Int? = null,
+    val expires: Long? = null,
     val auth: String,
 )

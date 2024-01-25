@@ -718,6 +718,22 @@ class LemmyApiService(
      * @POST("user/logout")
      */
     override suspend fun logout(): Result<Unit> = ktor.postResult("user/logout")
+
+    /**
+     * List a post's likes. Admin-only.
+     *
+     * @GET("post/like/list")
+     */
+    override suspend fun listPostLikes(form: ListPostLikes): Result<ListPostLikesResponse> =
+        ktor.getResult("post/like/list", form)
+
+    /**
+     * List a comment's likes. Admin-only.
+     *
+     * @GET("comment/like/list")
+     */
+    override suspend fun listCommentLikes(form: ListCommentLikes): Result<ListCommentLikesResponse> =
+        ktor.getResult("comment/like/list", form)
 }
 
 suspend fun main() {
