@@ -14,5 +14,5 @@ internal data class CommentView(
     val subscribed: SubscribedType /* "Subscribed" | "NotSubscribed" | "Pending" */,
     val saved: Boolean,
     val creator_blocked: Boolean,
-    val my_vote: Int? = null,
+    val my_vote: Int = 0,
 )

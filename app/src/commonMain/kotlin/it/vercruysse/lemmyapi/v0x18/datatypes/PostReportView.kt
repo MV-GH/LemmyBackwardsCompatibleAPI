@@ -10,7 +10,7 @@ internal data class PostReportView(
     val creator: Person,
     val post_creator: Person,
     val creator_banned_from_community: Boolean,
-    val my_vote: Int? = null,
+    val my_vote: Int = 0,
     val counts: PostAggregates,
     val resolver: Person? = null,
 )
