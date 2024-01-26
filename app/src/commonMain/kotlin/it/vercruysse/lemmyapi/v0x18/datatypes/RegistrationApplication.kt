@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class RegistrationApplication(
-    val id: Int,
+    val id: Long,
     val local_user_id: LocalUserId,
     val answer: String,
     val admin_id: PersonId? = null,

@@ -4,19 +4,19 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class PostAggregates(
-    val id: Int,
+    val id: Long,
     val post_id: PostId,
-    val comments: Int,
-    val score: Int,
-    val upvotes: Int,
-    val downvotes: Int,
+    val comments: Long,
+    val score: Long,
+    val upvotes: Long,
+    val downvotes: Long,
     val published: String,
     val newest_comment_time_necro: String,
     val newest_comment_time: String,
     val featured_community: Boolean,
     val featured_local: Boolean,
-    val hot_rank: Int,
-    val hot_rank_active: Int,
-    val community_id: Int? = null,
-    val creator_id: Int? = null,
+    val hot_rank: Long,
+    val hot_rank_active: Long,
+    val community_id: Long? = null,
+    val creator_id: Long? = null,
 )

@@ -13,5 +13,5 @@ data class CommunityAggregates(
     val users_active_week: Long,
     val users_active_month: Long,
     val users_active_half_year: Long,
-    val subscribers_local: Long,
+    val subscribers_local: Long? = null,
 )

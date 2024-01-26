@@ -1,3 +1,3 @@
 package it.vercruysse.lemmyapi.v0x18.datatypes
 
-typealias PostId = Int
+typealias PostId = Long
