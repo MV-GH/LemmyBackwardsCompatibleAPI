@@ -21,7 +21,7 @@ data class LocalSite(
     val hide_modlog_mod_names: Boolean,
     val application_email_admins: Boolean,
     val slur_filter_regex: String? = null,
-    val actor_name_max_length: Int,
+    val actor_name_max_length: Long,
     val federation_enabled: Boolean,
     val captcha_enabled: Boolean,
     val captcha_difficulty: String,

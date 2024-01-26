@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ModHideCommunity(
-    val id: Int,
+    val id: Long,
     val community_id: CommunityId,
     val mod_person_id: PersonId,
     val when_: String,

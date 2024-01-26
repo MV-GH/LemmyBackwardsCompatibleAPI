@@ -1,3 +1,3 @@
 package it.vercruysse.lemmyapi.v0x18.datatypes
 
-typealias CommentReplyId = Int
+typealias CommentReplyId = Long

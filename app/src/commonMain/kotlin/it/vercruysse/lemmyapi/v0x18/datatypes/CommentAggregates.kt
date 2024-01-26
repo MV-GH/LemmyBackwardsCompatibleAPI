@@ -4,12 +4,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class CommentAggregates(
-    val id: Int,
+    val id: Long,
     val comment_id: CommentId,
-    val score: Int,
-    val upvotes: Int,
-    val downvotes: Int,
+    val score: Long,
+    val upvotes: Long,
+    val downvotes: Long,
     val published: String,
-    val child_count: Int,
-    val hot_rank: Int,
+    val child_count: Long,
+    val hot_rank: Long,
 )

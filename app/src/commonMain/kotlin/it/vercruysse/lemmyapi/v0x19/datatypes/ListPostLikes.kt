@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ListPostLikes(
     val post_id: PostId,
-    val page: Int? = null,
-    val limit: Int? = null,
+    val page: Long? = null,
+    val limit: Long? = null,
 )

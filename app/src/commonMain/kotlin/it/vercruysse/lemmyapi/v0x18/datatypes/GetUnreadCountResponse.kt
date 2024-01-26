@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class GetUnreadCountResponse(
-    val replies: Int,
-    val mentions: Int,
-    val private_messages: Int,
+    val replies: Long,
+    val mentions: Long,
+    val private_messages: Long,
 )

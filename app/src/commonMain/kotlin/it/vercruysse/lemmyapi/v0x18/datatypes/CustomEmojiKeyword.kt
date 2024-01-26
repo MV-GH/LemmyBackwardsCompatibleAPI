@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class CustomEmojiKeyword(
-    val id: Int,
+    val id: Long,
     val custom_emoji_id: CustomEmojiId,
     val keyword: String,
 )

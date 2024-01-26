@@ -4,10 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class LocalSiteRateLimit(
-    val id: Int,
+    val id: Long,
     val local_site_id: LocalSiteId,
-    val message: Int,
-    val message_per_second: Int,
+    val message: Long,
+    val message_per_second: Long,
     val post: Int,
     val post_per_second: Int,
     val register: Int,

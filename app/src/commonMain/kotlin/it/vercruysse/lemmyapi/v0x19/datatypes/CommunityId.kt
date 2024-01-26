@@ -1,3 +1,3 @@
 package it.vercruysse.lemmyapi.v0x19.datatypes
 
-typealias CommunityId = Int
+typealias CommunityId = Long

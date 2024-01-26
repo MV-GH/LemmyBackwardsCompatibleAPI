@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetUnreadRegistrationApplicationCountResponse(
-    val registration_applications: Int,
+    val registration_applications: Long,
 )
