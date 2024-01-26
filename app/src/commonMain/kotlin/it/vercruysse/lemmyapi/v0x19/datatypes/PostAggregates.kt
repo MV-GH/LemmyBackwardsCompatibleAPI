@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PostAggregates(
     val post_id: PostId,
-    val comments: Int,
-    val score: Int,
-    val upvotes: Int,
-    val downvotes: Int,
+    val comments: Long,
+    val score: Long,
+    val upvotes: Long,
+    val downvotes: Long,
     val published: String,
 )

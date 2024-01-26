@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ModAdd(
-    val id: Int,
+    val id: Long,
     val mod_person_id: PersonId,
     val other_person_id: PersonId,
     val removed: Boolean,

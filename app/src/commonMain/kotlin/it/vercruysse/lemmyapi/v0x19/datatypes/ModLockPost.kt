@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ModLockPost(
-    val id: Int,
+    val id: Long,
     val mod_person_id: PersonId,
     val post_id: PostId,
     val locked: Boolean,

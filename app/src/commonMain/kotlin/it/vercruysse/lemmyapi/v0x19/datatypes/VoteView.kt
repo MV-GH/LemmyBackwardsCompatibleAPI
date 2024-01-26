@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class VoteView(
     val creator: Person,
-    val score: Int,
+    val score: Long,
 )

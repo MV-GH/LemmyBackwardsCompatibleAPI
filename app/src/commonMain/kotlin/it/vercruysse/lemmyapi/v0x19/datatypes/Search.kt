@@ -14,6 +14,6 @@ data class Search(
     val type_: SearchType? /* "All" | "Comments" | "Posts" | "Communities" | "Users" | "Url" */ = null,
     val sort: SortType? /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */ = null,
     val listing_type: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
-    val page: Int? = null,
-    val limit: Int? = null,
+    val page: Long? = null,
+    val limit: Long? = null,
 )

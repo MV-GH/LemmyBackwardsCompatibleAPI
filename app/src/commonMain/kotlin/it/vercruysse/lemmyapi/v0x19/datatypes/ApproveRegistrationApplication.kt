@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ApproveRegistrationApplication(
-    val id: Int,
+    val id: Long,
     val approve: Boolean,
     val deny_reason: String? = null,
 )

@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class AdminPurgeComment(
-    val id: Int,
+    val id: Long,
     val admin_person_id: PersonId,
     val post_id: PostId,
     val reason: String? = null,

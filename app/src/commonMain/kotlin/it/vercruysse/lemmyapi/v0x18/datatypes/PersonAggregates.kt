@@ -4,10 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class PersonAggregates(
-    val id: Int,
+    val id: Long,
     val person_id: PersonId,
-    val post_count: Int,
-    val post_score: Int,
-    val comment_count: Int,
-    val comment_score: Int,
+    val post_count: Long,
+    val post_score: Long,
+    val comment_count: Long,
+    val comment_score: Long,
 )

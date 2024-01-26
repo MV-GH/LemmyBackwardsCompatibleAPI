@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CommunityAggregates(
     val community_id: CommunityId,
-    val subscribers: Int,
-    val posts: Int,
-    val comments: Int,
+    val subscribers: Long,
+    val posts: Long,
+    val comments: Long,
     val published: String,
-    val users_active_day: Int,
-    val users_active_week: Int,
-    val users_active_month: Int,
-    val users_active_half_year: Int,
-    val subscribers_local: Int? = null,
+    val users_active_day: Long,
+    val users_active_week: Long,
+    val users_active_month: Long,
+    val users_active_half_year: Long,
+    val subscribers_local: Long? = null,
 )

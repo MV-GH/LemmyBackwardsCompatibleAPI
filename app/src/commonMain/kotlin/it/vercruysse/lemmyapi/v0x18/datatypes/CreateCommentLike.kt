@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class CreateCommentLike(
     val comment_id: CommentId,
-    val score: Int,
+    val score: Long,
     val auth: String,
 )
