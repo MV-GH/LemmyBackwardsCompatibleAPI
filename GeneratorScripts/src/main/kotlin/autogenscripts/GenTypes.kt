@@ -14,7 +14,7 @@ const val ROOT_PACKAGE_PATH = "it/vercruysse/lemmyapi/"
 const val ROOT_PACKAGE = "it.vercruysse.lemmyapi."
 const val CUSTOM_DATATYPES_PACKAGE = "dto."
 
-val filesThatShouldNotBeAdded = setOf("others.ts", "DeleteAccountResponse.ts", "PasswordResetResponse.ts", "VerifyEmailResponse.ts")
+val filesThatShouldNotBeAdded = setOf("others.ts", "DeleteAccountResponse.ts", "PasswordResetResponse.ts", "VerifyEmailResponse.ts", "SuccessResponse.ts")
 val propsThatShouldBeInt = setOf("my_vote")
 
 fun getTypesPath(
