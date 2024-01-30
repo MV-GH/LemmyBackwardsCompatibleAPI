@@ -566,7 +566,7 @@ internal abstract class LemmyApi(
      *
      * @PUT("admin/registration_application/approve")
      */
-    abstract suspend fun approveRegistrationApplication(form: ApproveRegistrationApplication): Result<RegistrationApplicationView>
+    abstract suspend fun approveRegistrationApplication(form: ApproveRegistrationApplication): Result<RegistrationApplicationResponse>
 
     /**
      * Purge / Delete a person from the database.

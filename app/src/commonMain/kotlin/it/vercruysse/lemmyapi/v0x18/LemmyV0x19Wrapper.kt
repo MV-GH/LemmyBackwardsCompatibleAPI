@@ -118,7 +118,7 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.PurgeCommunity
 import it.vercruysse.lemmyapi.v0x19.datatypes.PurgePerson
 import it.vercruysse.lemmyapi.v0x19.datatypes.PurgePost
 import it.vercruysse.lemmyapi.v0x19.datatypes.Register
-import it.vercruysse.lemmyapi.v0x19.datatypes.RegistrationApplicationView
+import it.vercruysse.lemmyapi.v0x19.datatypes.RegistrationApplicationResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.RemoveComment
 import it.vercruysse.lemmyapi.v0x19.datatypes.RemoveCommunity
 import it.vercruysse.lemmyapi.v0x19.datatypes.RemovePost
@@ -793,7 +793,7 @@ class LemmyV0x19Wrapper(
      *
      * @PUT("admin/registration_application/approve")
      */
-    override suspend fun approveRegistrationApplication(form: ApproveRegistrationApplication): Result<RegistrationApplicationView> =
+    override suspend fun approveRegistrationApplication(form: ApproveRegistrationApplication): Result<RegistrationApplicationResponse> =
         apiV18.approveRegistrationApplication(transformer.toV0x18(form)).map(transformer::toV0x19)
 
     /**
