@@ -604,7 +604,7 @@ class LemmyApiService(
      *
      * @PUT("admin/registration_application/approve")
      */
-    override suspend fun approveRegistrationApplication(form: ApproveRegistrationApplication): Result<RegistrationApplicationView> =
+    override suspend fun approveRegistrationApplication(form: ApproveRegistrationApplication): Result<RegistrationApplicationResponse> =
         ktor.putResult("admin/registration_application/approve", form)
 
     /**

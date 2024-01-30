@@ -646,7 +646,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      *
      * @PUT("admin/registration_application/approve")
      */
-    override suspend fun approveRegistrationApplication(form: ApproveRegistrationApplication): Result<RegistrationApplicationView> =
+    override suspend fun approveRegistrationApplication(form: ApproveRegistrationApplication): Result<RegistrationApplicationResponse> =
         Ktor.putResult("admin/registration_application/approve", form)
 
     /**
