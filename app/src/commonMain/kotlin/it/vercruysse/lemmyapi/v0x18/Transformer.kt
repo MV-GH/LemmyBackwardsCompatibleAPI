@@ -1299,7 +1299,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
         it.vercruysse.lemmyapi.v0x19.datatypes.PersonView(
             person = this.toV0x19(d = d.person),
             counts = this.toV0x19(d = d.counts),
-            is_admin = false, // TODO could possibly be done better in some places
+            // TODO could possibly be done better in some places
+            is_admin = false,
         )
 
     override fun toV0x19(d: V0x18DatatypesPost): V0x19DatatypesPost =
