@@ -404,6 +404,10 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.VerifyEmail as V0x19DatatypesVerif
 internal class Transformer(var auth: String) : DatatypesMapper {
     private fun mapLocalUserTotp(l: LocalUser): Boolean = l.totp_2fa_url != null
 
+    private fun addTimezoneOffset(d: String): String = d + "Z"
+
+    private fun addTimezoneOffsetNullable(d: String?): String? = d?.let { d + "Z" }
+
     // Admin flag moved from Person to LocalUser in v0.19
     // https://github.com/LemmyNet/lemmy/pull/3403
     private fun mapLocalUserView(l: LocalUserView): V0x19DatatypesLocalUserView =
@@ -498,8 +502,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             comment_per_second = d.comment_per_second,
             search = d.search,
             search_per_second = d.search_per_second,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
             import_user_settings = -1,
             import_user_settings_per_second = -1,
         )
@@ -520,7 +524,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             admin_person_id = d.admin_person_id,
             post_id = d.post_id,
             reason = d.reason,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesAdminPurgeCommentView): V0x19DatatypesAdminPurgeCommentView =
@@ -535,7 +539,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             id = d.id,
             admin_person_id = d.admin_person_id,
             reason = d.reason,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesAdminPurgeCommunityView): V0x19DatatypesAdminPurgeCommunityView =
@@ -549,7 +553,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             id = d.id,
             admin_person_id = d.admin_person_id,
             reason = d.reason,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesAdminPurgePersonView): V0x19DatatypesAdminPurgePersonView =
@@ -564,7 +568,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             admin_person_id = d.admin_person_id,
             community_id = d.community_id,
             reason = d.reason,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesAdminPurgePostView): V0x19DatatypesAdminPurgePostView =
@@ -617,8 +621,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             post_id = d.post_id,
             content = d.content,
             removed = d.removed,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
             deleted = d.deleted,
             ap_id = d.ap_id,
             local = d.local,
@@ -633,7 +637,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             score = d.score,
             upvotes = d.upvotes,
             downvotes = d.downvotes,
-            published = d.published,
+            published = addTimezoneOffset(d.published),
             child_count = d.child_count,
         )
 
@@ -643,7 +647,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             recipient_id = d.recipient_id,
             comment_id = d.comment_id,
             read = d.read,
-            published = d.published,
+            published = addTimezoneOffset(d.published),
         )
 
     override fun toV0x19(d: V0x18DatatypesCommentReplyResponse): V0x19DatatypesCommentReplyResponse =
@@ -678,8 +682,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             reason = d.reason,
             resolved = d.resolved,
             resolver_id = d.resolver_id,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
         )
 
     override fun toV0x19(d: V0x18DatatypesCommentReportResponse): V0x19DatatypesCommentReportResponse =
@@ -730,8 +734,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             title = d.title,
             description = d.description,
             removed = d.removed,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
             deleted = d.deleted,
             nsfw = d.nsfw,
             actor_id = d.actor_id,
@@ -749,7 +753,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             subscribers = d.subscribers,
             posts = d.posts,
             comments = d.comments,
-            published = d.published,
+            published = addTimezoneOffset(d.published),
             users_active_day = d.users_active_day,
             users_active_week = d.users_active_week,
             users_active_month = d.users_active_month,
@@ -797,8 +801,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             image_url = d.image_url,
             alt_text = d.alt_text,
             category = d.category,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
         )
 
     override fun toV0x19(d: V0x18DatatypesCustomEmojiKeyword): V0x19DatatypesCustomEmojiKeyword =
@@ -941,7 +945,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
         it.vercruysse.lemmyapi.v0x19.datatypes.Instance(
             id = d.id,
             domain = d.domain,
-            published = d.published,
+            published = addTimezoneOffset(d.published),
             updated = d.updated,
             software = d.software,
             version = d.version,
@@ -951,8 +955,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
         it.vercruysse.lemmyapi.v0x19.datatypes.InstanceWithFederationState(
             id = d.id,
             domain = d.domain,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
             software = d.software,
             version = d.version,
         )
@@ -1010,8 +1014,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             federation_enabled = d.federation_enabled,
             captcha_enabled = d.captcha_enabled,
             captcha_difficulty = d.captcha_difficulty,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
             registration_mode = d.registration_mode,
             reports_email_admins = d.reports_email_admins,
             federation_signed_fetch = false,
@@ -1030,7 +1034,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             mod_person_id = d.mod_person_id,
             other_person_id = d.other_person_id,
             removed = d.removed,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesModAddCommunity): V0x19DatatypesModAddCommunity =
@@ -1040,7 +1044,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             other_person_id = d.other_person_id,
             community_id = d.community_id,
             removed = d.removed,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesModAddCommunityView): V0x19DatatypesModAddCommunityView =
@@ -1065,8 +1069,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             other_person_id = d.other_person_id,
             reason = d.reason,
             banned = d.banned,
-            expires = d.expires,
-            when_ = d.when_,
+            expires = addTimezoneOffsetNullable(d.expires),
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesModBanFromCommunity): V0x19DatatypesModBanFromCommunity =
@@ -1077,8 +1081,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             community_id = d.community_id,
             reason = d.reason,
             banned = d.banned,
-            expires = d.expires,
-            when_ = d.when_,
+            expires = addTimezoneOffsetNullable(d.expires),
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesModBanFromCommunityView): V0x19DatatypesModBanFromCommunityView =
@@ -1102,7 +1106,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             mod_person_id = d.mod_person_id,
             post_id = d.post_id,
             featured = d.featured,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
             is_featured_community = d.is_featured_community,
         )
 
@@ -1119,7 +1123,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             id = d.id,
             community_id = d.community_id,
             mod_person_id = d.mod_person_id,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
             reason = d.reason,
             hidden = d.hidden,
         )
@@ -1137,7 +1141,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             mod_person_id = d.mod_person_id,
             post_id = d.post_id,
             locked = d.locked,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesModLockPostView): V0x19DatatypesModLockPostView =
@@ -1165,7 +1169,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             comment_id = d.comment_id,
             reason = d.reason,
             removed = d.removed,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesModRemoveCommentView): V0x19DatatypesModRemoveCommentView =
@@ -1185,7 +1189,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             community_id = d.community_id,
             reason = d.reason,
             removed = d.removed,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesModRemoveCommunityView): V0x19DatatypesModRemoveCommunityView =
@@ -1202,7 +1206,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             post_id = d.post_id,
             reason = d.reason,
             removed = d.removed,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesModRemovePostView): V0x19DatatypesModRemovePostView =
@@ -1219,7 +1223,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             mod_person_id = d.mod_person_id,
             other_person_id = d.other_person_id,
             community_id = d.community_id,
-            when_ = d.when_,
+            when_ = addTimezoneOffset(d.when_),
         )
 
     override fun toV0x19(d: V0x18DatatypesModTransferCommunityView): V0x19DatatypesModTransferCommunityView =
@@ -1237,8 +1241,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             display_name = d.display_name,
             avatar = d.avatar,
             banned = d.banned,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
             actor_id = d.actor_id,
             bio = d.bio,
             local = d.local,
@@ -1246,7 +1250,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             deleted = d.deleted,
             matrix_user_id = d.matrix_user_id,
             bot_account = d.bot_account,
-            ban_expires = d.ban_expires,
+            ban_expires = addTimezoneOffsetNullable(d.ban_expires),
             instance_id = d.instance_id,
         )
 
@@ -1269,7 +1273,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             recipient_id = d.recipient_id,
             comment_id = d.comment_id,
             read = d.read,
-            published = d.published,
+            published = addTimezoneOffset(d.published),
         )
 
     override fun toV0x19(d: V0x18DatatypesPersonMentionResponse): V0x19DatatypesPersonMentionResponse =
@@ -1313,8 +1317,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             community_id = d.community_id,
             removed = d.removed,
             locked = d.locked,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
             deleted = d.deleted,
             nsfw = d.nsfw,
             embed_title = d.embed_title,
@@ -1335,7 +1339,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             score = d.score,
             upvotes = d.upvotes,
             downvotes = d.downvotes,
-            published = d.published,
+            published = addTimezoneOffset(d.published),
         )
 
     override fun toV0x19(d: V0x18DatatypesPostReport): V0x19DatatypesPostReport =
@@ -1349,8 +1353,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             reason = d.reason,
             resolved = d.resolved,
             resolver_id = d.resolver_id,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
         )
 
     override fun toV0x19(d: V0x18DatatypesPostReportResponse): V0x19DatatypesPostReportResponse =
@@ -1401,8 +1405,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             content = d.content,
             deleted = d.deleted,
             read = d.read,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
             ap_id = d.ap_id,
             local = d.local,
         )
@@ -1416,8 +1420,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             reason = d.reason,
             resolved = d.resolved,
             resolver_id = d.resolver_id,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
         )
 
     override fun toV0x19(d: V0x18DatatypesPrivateMessageReportResponse): V0x19DatatypesPrivateMessageReportResponse =
@@ -1458,7 +1462,7 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             answer = d.answer,
             admin_id = d.admin_id,
             deny_reason = d.deny_reason,
-            published = d.published,
+            published = addTimezoneOffset(d.published),
         )
 
     override fun toV0x19(d: V0x18DatatypesRegistrationApplicationResponse): V0x19DatatypesRegistrationApplicationResponse =
@@ -1496,13 +1500,13 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             id = d.id,
             name = d.name,
             sidebar = d.sidebar,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
             icon = d.icon,
             banner = d.banner,
             description = d.description,
             actor_id = d.actor_id,
-            last_refreshed_at = d.last_refreshed_at,
+            last_refreshed_at = addTimezoneOffset(d.last_refreshed_at),
             inbox_url = d.inbox_url,
             private_key = d.private_key,
             public_key = d.public_key,
@@ -1549,8 +1553,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             id = d.id,
             local_site_id = d.local_site_id,
             content = d.content,
-            published = d.published,
-            updated = d.updated,
+            published = addTimezoneOffset(d.published),
+            updated = addTimezoneOffsetNullable(d.updated),
         )
 
     override fun toV0x18(d: V0x19DatatypesAddAdmin): V0x18DatatypesAddAdmin =
