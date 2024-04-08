@@ -12,3 +12,5 @@ ktlint_standard_if-else-wrapping = disabled
 ktlint_standard_discouraged-comment-location = disabled
 ktlint_standard_max-line-length = disabled
 ktlint_standard_function-signature = disabled
+ktlint_standard_multiline-expression-wrapping = disabled
+ktlint_standard_string-template-indent = disabled
