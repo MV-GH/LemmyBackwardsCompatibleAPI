@@ -4,9 +4,9 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.9.22"
+    kotlin("plugin.serialization") version "1.9.23"
     id("org.jmailen.kotlinter") version "4.2.0"
-    id("com.google.devtools.ksp") version ("1.9.22-1.0.17")
+    id("com.google.devtools.ksp") version ("1.9.23-1.0.20")
     id("com.vanniktech.maven.publish") version "0.27.0"
 }
 
@@ -33,7 +33,6 @@ kotlin {
             iosX64()
             iosArm64()
             watchosX64()
-            watchosArm32()
             watchosArm64()
         }
     }
@@ -56,18 +55,18 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "2.3.8"
+        val ktorVersion = "2.3.10"
 
 
         commonMain.dependencies {
             implementation("io.ktor:ktor-client-core:$ktorVersion")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
             implementation("io.ktor:ktor-client-logging:$ktorVersion")
-            api("io.github.z4kn4fein:semver:1.4.2")
+            api("io.github.z4kn4fein:semver:2.0.0")
         }
 
         commonTest.dependencies {
@@ -110,8 +109,7 @@ kotlin {
         }
     }
 
-    val publicationsFromMainHost =
-        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+    val publicationsFromMainHost = listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
 
     publishing {
         publications {

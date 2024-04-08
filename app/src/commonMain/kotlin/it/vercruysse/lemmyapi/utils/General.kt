@@ -7,8 +7,6 @@ import it.vercruysse.lemmyapi.LemmyApiBase
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import kotlinx.serialization.json.*
 
-// TODO: IMMUTABLE
-
 /**
  * Check if a version is between two other versions.
  *

@@ -8,14 +8,11 @@ val V0_18_0 = "0.18.0".toVersion()
 val V0_19_0 = "0.19.0".toVersion()
 const val TIMEOUT_MS = 20000L
 
-// TODO think about this
-val ktorJson =
-    Json {
-        ignoreUnknownKeys = true
-    }
+val ktorJson = Json {
+    ignoreUnknownKeys = true
+}
 
-val lenientJson =
-    Json {
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
+val lenientJson = Json {
+    ignoreUnknownKeys = true
+    isLenient = true
+}

@@ -16,6 +16,5 @@ internal data class Site(
     val last_refreshed_at: String,
     val private_key: String? = null,
     val inbox_url: String,
-    val public_key: String,
     val instance_id: InstanceId,
 )
