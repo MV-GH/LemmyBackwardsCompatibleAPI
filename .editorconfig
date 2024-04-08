@@ -1,5 +1,6 @@
 root = true
 
+# noinspection EditorConfigKeyCorrectness
 [*.{kt,kts}]
 
 indent_size = 4
