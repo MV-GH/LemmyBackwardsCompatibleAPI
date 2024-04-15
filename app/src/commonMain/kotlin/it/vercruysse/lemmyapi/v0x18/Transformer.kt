@@ -1508,7 +1508,6 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             actor_id = d.actor_id,
             last_refreshed_at = addTimezoneOffset(d.last_refreshed_at),
             inbox_url = d.inbox_url,
-            private_key = d.private_key,
             instance_id = d.instance_id,
         )
 
