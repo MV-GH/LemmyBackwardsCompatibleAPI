@@ -28,6 +28,7 @@ fun getKtor(baseUrl: String): HttpClient =
     coreKtor.config {
         install(Logging) {
             level = LogLevel.ALL
+            sanitizeHeader { header -> header == HttpHeaders.Authorization }
         }
 
         defaultRequest {
