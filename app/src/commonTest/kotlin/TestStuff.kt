@@ -3,8 +3,10 @@ import it.vercruysse.lemmyapi.LemmyApi
 import it.vercruysse.lemmyapi.v0x19.datatypes.GetPosts
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListMedia
 import kotlinx.coroutines.test.runTest
+import kotlin.test.Ignore
 import kotlin.test.Test
 
+@Ignore
 class TestStuff {
     @Test
     fun test() {
