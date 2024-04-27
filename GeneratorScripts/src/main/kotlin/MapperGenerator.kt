@@ -268,7 +268,7 @@ internal interface MapperGenerator {
 
     fun toV0x19(d: SiteAggregates): it.vercruysse.lemmyapi.v0x19.datatypes.SiteAggregates
 
-    fun toV0x19(d: SiteMetadata): it.vercruysse.lemmyapi.v0x19.datatypes.SiteMetadata
+    fun toV0x19(d: SiteMetadata): it.vercruysse.lemmyapi.v0x19.datatypes.LinkMetadata
 
     fun toV0x19(d: SiteResponse): it.vercruysse.lemmyapi.v0x19.datatypes.SiteResponse
 

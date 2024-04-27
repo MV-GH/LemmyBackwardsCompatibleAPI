@@ -68,10 +68,11 @@ private fun extractValue(element: JsonElement): Any? {
     }
 }
 
-internal fun LemmyApiBase.notSupported(): Nothing =
-    throw NotSupportedException(
-        "This endpoint is not supported on this version of Lemmy: $version",
-    )
+internal inline fun <reified T> LemmyApiBase.notSupported(): Result<T> = Result.failure(
+    NotSupportedException(
+        "This endpoint is not supported on this version of Lemmy: $version, use a FeatureFlag to check if it's supported",
+    ),
+)
 
 /**
  * Constructs a base url from any instance string.

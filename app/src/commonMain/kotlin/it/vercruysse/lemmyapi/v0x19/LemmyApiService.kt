@@ -1,9 +1,7 @@
 package it.vercruysse.lemmyapi.v0x19
 
 import io.github.z4kn4fein.semver.Version
-import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.*
-import it.vercruysse.lemmyapi.getKtor
 import it.vercruysse.lemmyapi.utils.addAuth
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
@@ -734,11 +732,28 @@ class LemmyApiService(
      */
     override suspend fun listCommentLikes(form: ListCommentLikes): Result<ListCommentLikesResponse> =
         ktor.getResult("comment/like/list", form)
-}
 
-suspend fun main() {
-    val api = LemmyApiService(getKtor("https://voyager.lemmy.ml/api/v3/"), "0.19.0".toVersion(), "")
+    /**
+     * List all the media for your user
+     *
+     * @GET("account/list_media")
+     */
+    override suspend fun listMedia(form: ListMedia): Result<ListMediaResponse> =
+        ktor.getResult("account/list_media", form)
 
-    println(api.version)
-    println(api.getSite())
+    /**
+     * List all the media known to your instance.
+     *
+     * @GET("admin/list_all_media")
+     */
+    override suspend fun listAllMedia(form: ListMedia): Result<ListMediaResponse> =
+        ktor.getResult("admin/list_all_media", form)
+
+    /**
+     * Hide a post from list views.
+     *
+     * @POST("post/hide")
+     */
+    override suspend fun hidePost(form: HidePost): Result<Unit> =
+        ktor.postResult("post/hide", form)
 }

@@ -10,4 +10,5 @@ data class PostAggregates(
     val upvotes: Long,
     val downvotes: Long,
     val published: String,
+    val newest_comment_time: String? = null, // Was removed in 0.19.3
 )

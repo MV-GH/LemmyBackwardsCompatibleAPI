@@ -10,7 +10,6 @@ data class SaveUserSettings(
     val show_nsfw: Boolean? = null,
     val blur_nsfw: Boolean? = null,
     val auto_expand: Boolean? = null,
-    val show_scores: Boolean? = null,
     val theme: String? = null,
     val default_sort_type: SortType? /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */ = null,
     val default_listing_type: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
@@ -33,4 +32,8 @@ data class SaveUserSettings(
     val enable_keyboard_navigation: Boolean? = null,
     val enable_animated_images: Boolean? = null,
     val collapse_bot_comments: Boolean? = null,
+    val show_scores: Boolean? = null,
+    val show_upvotes: Boolean? = null, // Added 0.19.4
+    val show_downvotes: Boolean? = null, // Added 0.19.4
+    val show_upvote_percentage: Boolean? = null, // Added 0.19.4
 )

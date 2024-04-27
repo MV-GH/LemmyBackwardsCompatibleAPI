@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.v0x19.datatypes
 
+import it.vercruysse.lemmyapi.dto.CommunityVisibility
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -20,4 +21,5 @@ data class Community(
     val hidden: Boolean,
     val posting_restricted_to_mods: Boolean,
     val instance_id: InstanceId,
+    val visibility: CommunityVisibility? = null /* "Public" | "LocalOnly" */, // Added in 0.19.4
 )

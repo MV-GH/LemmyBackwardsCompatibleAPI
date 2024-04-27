@@ -16,4 +16,5 @@ data class Site(
     val last_refreshed_at: String,
     val inbox_url: String,
     val instance_id: InstanceId,
+    val content_warning: String? = null, // Added 0.19.4
 )
