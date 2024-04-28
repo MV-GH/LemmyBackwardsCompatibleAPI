@@ -25,4 +25,6 @@ data class Post(
     val language_id: LanguageId,
     val featured_community: Boolean,
     val featured_local: Boolean,
+    val url_content_type: String? = null, // Added in 0.19.4
+    val alt_text: String? = null, // Added in 0.19.4
 )

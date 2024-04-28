@@ -694,4 +694,25 @@ abstract class LemmyApi(
      * @GET("comment/like/list")
      */
     abstract suspend fun listCommentLikes(form: ListCommentLikes): Result<ListCommentLikesResponse>
+
+    /**
+     * List all the media for your user
+     *
+     * @GET("account/list_media")
+     */
+    abstract suspend fun listMedia(form: ListMedia): Result<ListMediaResponse>
+
+    /**
+     * List all the media known to your instance.
+     *
+     * @GET("admin/list_all_media")
+     */
+    abstract suspend fun listAllMedia(form: ListMedia): Result<ListMediaResponse>
+
+    /**
+     * Hide a post from list views.
+     *
+     * @POST("post/hide")
+     */
+    abstract suspend fun hidePost(form: HidePost): Result<Unit>
 }

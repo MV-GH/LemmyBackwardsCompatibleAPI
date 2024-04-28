@@ -304,6 +304,7 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.HideCommunity as V0x19DatatypesHid
 import it.vercruysse.lemmyapi.v0x19.datatypes.Instance as V0x19DatatypesInstance
 import it.vercruysse.lemmyapi.v0x19.datatypes.InstanceWithFederationState as V0x19DatatypesInstanceWithFederationState
 import it.vercruysse.lemmyapi.v0x19.datatypes.Language as V0x19DatatypesLanguage
+import it.vercruysse.lemmyapi.v0x19.datatypes.LinkMetadata as V0x19DatatypesLinkMetadata
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReports as V0x19DatatypesListCommentReports
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReportsResponse as V0x19DatatypesListCommentReportsResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommunities as V0x19DatatypesListCommunities
@@ -394,7 +395,6 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.Search as V0x19DatatypesSearch
 import it.vercruysse.lemmyapi.v0x19.datatypes.SearchResponse as V0x19DatatypesSearchResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.Site as V0x19DatatypesSite
 import it.vercruysse.lemmyapi.v0x19.datatypes.SiteAggregates as V0x19DatatypesSiteAggregates
-import it.vercruysse.lemmyapi.v0x19.datatypes.SiteMetadata as V0x19DatatypesSiteMetadata
 import it.vercruysse.lemmyapi.v0x19.datatypes.SiteResponse as V0x19DatatypesSiteResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.SiteView as V0x19DatatypesSiteView
 import it.vercruysse.lemmyapi.v0x19.datatypes.Tagline as V0x19DatatypesTagline
@@ -1524,8 +1524,8 @@ internal class Transformer(var auth: String) : DatatypesMapper {
             users_active_half_year = d.users_active_half_year,
         )
 
-    override fun toV0x19(d: V0x18DatatypesSiteMetadata): V0x19DatatypesSiteMetadata =
-        it.vercruysse.lemmyapi.v0x19.datatypes.SiteMetadata(
+    override fun toV0x19(d: V0x18DatatypesSiteMetadata): V0x19DatatypesLinkMetadata =
+        it.vercruysse.lemmyapi.v0x19.datatypes.LinkMetadata(
             title = d.title,
             description = d.description,
             image = d.image,

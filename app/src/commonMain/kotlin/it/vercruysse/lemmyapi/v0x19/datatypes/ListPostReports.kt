@@ -8,4 +8,5 @@ data class ListPostReports(
     val limit: Long? = null,
     val unresolved_only: Boolean? = null,
     val community_id: CommunityId? = null,
+    val post_id: PostId? = null, // Added in 0.19.4
 )

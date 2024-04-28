@@ -12,4 +12,5 @@ data class GetSiteResponse(
     val discussion_languages: List<LanguageId>,
     val taglines: List<Tagline>,
     val custom_emojis: List<CustomEmojiView>,
+    val blocked_urls: List<LocalSiteUrlBlocklist> = listOf(), // Added in 0.19.4
 )

@@ -8,6 +8,7 @@ import io.github.z4kn4fein.semver.withoutSuffixes
 import it.vercruysse.lemmyapi.MINIMUM_API_VERSION
 import it.vercruysse.lemmyapi.V0_18_0
 import it.vercruysse.lemmyapi.V0_19_0
+import it.vercruysse.lemmyapi.V0_19_4
 import it.vercruysse.lemmyapi.utils.isBetweenVersions
 import kotlinx.serialization.Serializable
 
@@ -141,6 +142,15 @@ enum class PostListingMode(
     List,
     Card,
     SmallCard,
+}
+
+@Serializable
+enum class CommunityVisibility(
+    override val minimumVersion: Version = V0_19_4,
+    override val maximumVersion: Version? = null,
+) : VersionTracker {
+    Public,
+    LocalOnly,
 }
 
 /**

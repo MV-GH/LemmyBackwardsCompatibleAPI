@@ -13,6 +13,7 @@ data class CommentReplyView(
     val recipient: Person,
     val counts: CommentAggregates,
     val creator_banned_from_community: Boolean,
+    val banned_from_community: Boolean = false, // Added in 0.19.4
     val creator_is_moderator: Boolean,
     val creator_is_admin: Boolean,
     val subscribed: SubscribedType /* "Subscribed" | "NotSubscribed" | "Pending" */,

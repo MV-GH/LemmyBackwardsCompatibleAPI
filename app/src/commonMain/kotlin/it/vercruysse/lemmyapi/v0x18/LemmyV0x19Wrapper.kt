@@ -83,12 +83,15 @@ import it.vercruysse.lemmyapi.v0x19.datatypes.GetSiteResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.GetUnreadCountResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.GetUnreadRegistrationApplicationCountResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.HideCommunity
+import it.vercruysse.lemmyapi.v0x19.datatypes.HidePost
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentLikes
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentLikesResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReports
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommentReportsResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommunities
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListCommunitiesResponse
+import it.vercruysse.lemmyapi.v0x19.datatypes.ListMedia
+import it.vercruysse.lemmyapi.v0x19.datatypes.ListMediaResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostLikes
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostLikesResponse
 import it.vercruysse.lemmyapi.v0x19.datatypes.ListPostReports
@@ -856,9 +859,9 @@ class LemmyV0x19Wrapper(
      *
      * @POST("site/block")
      */
-    override suspend fun blockInstance(form: BlockInstance): Result<BlockInstanceResponse> {
-        notSupported()
-    }
+    override suspend fun blockInstance(form: BlockInstance): Result<BlockInstanceResponse> = notSupported()
+
+    // TODO possible supported by using old logic, might not be worth the effort
 
     /**
      * Generate a TOTP / two-factor secret.
@@ -867,9 +870,7 @@ class LemmyV0x19Wrapper(
      *
      * @POST("user/totp/generate")
      */
-    override suspend fun generateTotpSecret(): Result<GenerateTotpSecretResponse> {
-        notSupported()
-    } // TODO possible supported by using old logic
+    override suspend fun generateTotpSecret(): Result<GenerateTotpSecretResponse> = notSupported()
 
     /**
      * Enable / Disable TOTP / two-factor authentication.
@@ -880,9 +881,7 @@ class LemmyV0x19Wrapper(
      *
      * @POST("user/totp/update")
      */
-    override suspend fun updateTotp(form: UpdateTotp): Result<UpdateTotpResponse> {
-        notSupported()
-    }
+    override suspend fun updateTotp(form: UpdateTotp): Result<UpdateTotpResponse> = notSupported()
 
     /**
      * Export a backup of your user settings, including your saved content,
@@ -890,27 +889,21 @@ class LemmyV0x19Wrapper(
      *
      * @GET("user/export_settings")
      */
-    override suspend fun getUserExportSettings(): Result<GetUserExportSettingsResponse> {
-        notSupported()
-    }
+    override suspend fun getUserExportSettings(): Result<GetUserExportSettingsResponse> = notSupported()
 
     /**
      * Import a backup of your user settings.
      *
      * @POST("user/import_settings")
      */
-    override suspend fun getUserImportSettings(form: GetUserImportSettings): Result<Unit> {
-        notSupported()
-    }
+    override suspend fun getUserImportSettings(form: GetUserImportSettings): Result<Unit> = notSupported()
 
     /**
      * List login tokens for your user
      *
      * @GET("user/list_logins")
      */
-    override suspend fun listLogins(): Result<LoginToken> {
-        notSupported()
-    }
+    override suspend fun listLogins(): Result<LoginToken> = notSupported()
 
     /**
      * Returns an error message if your auth token is invalid
@@ -926,25 +919,40 @@ class LemmyV0x19Wrapper(
      *
      * @POST("user/logout")
      */
-    override suspend fun logout(): Result<Unit> {
-        notSupported()
-    }
+    override suspend fun logout(): Result<Unit> = notSupported()
 
     /**
      * List a post's likes. Admin-only.
      *
      * @GET("post/like/list")
      */
-    override suspend fun listPostLikes(form: ListPostLikes): Result<ListPostLikesResponse> {
-        notSupported()
-    }
+    override suspend fun listPostLikes(form: ListPostLikes): Result<ListPostLikesResponse> = notSupported()
 
     /**
      * List a comment's likes. Admin-only.
      *
      * @GET("comment/like/list")
      */
-    override suspend fun listCommentLikes(form: ListCommentLikes): Result<ListCommentLikesResponse> {
-        notSupported()
-    }
+    override suspend fun listCommentLikes(form: ListCommentLikes): Result<ListCommentLikesResponse> = notSupported()
+
+    /**
+     * List all the media for your user
+     *
+     * @GET("account/list_media")
+     */
+    override suspend fun listMedia(form: ListMedia): Result<ListMediaResponse> = notSupported()
+
+    /**
+     * List all the media known to your instance.
+     *
+     * @GET("admin/list_all_media")
+     */
+    override suspend fun listAllMedia(form: ListMedia): Result<ListMediaResponse> = notSupported()
+
+    /**
+     * Hide a post from list views.
+     *
+     * @POST("post/hide")
+     */
+    override suspend fun hidePost(form: HidePost): Result<Unit> = notSupported()
 }

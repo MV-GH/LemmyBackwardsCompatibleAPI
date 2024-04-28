@@ -11,6 +11,7 @@ import io.github.z4kn4fein.semver.withoutSuffixes
 class FeatureFlags(val version: Version) {
     private val v0x19Plus = version.withoutSuffixes() >= "0.19.0".toVersion()
     private val v0x19x2Plus = version.withoutSuffixes() >= "0.19.2".toVersion()
+    private val v0x19x4Plus = version.withoutSuffixes() >= "0.19.4".toVersion()
 
     /**
      * InstanceBlock Feature added in 0.19
@@ -46,4 +47,19 @@ class FeatureFlags(val version: Version) {
      * List comment/post votes, feature added in 0.19.2
      */
     fun listAdminVotes(): Boolean = v0x19x2Plus
+
+    /**
+     * List media for admin and user, feature added in 0.19.4
+     */
+    fun listMedia(): Boolean = v0x19x4Plus
+
+    /**
+     * List blocked urls, feature added in 0.19.4
+     */
+    fun listBlockedUrls(): Boolean = v0x19x4Plus
+
+    /**
+     * Hide posts, feature added in 0.19.4
+     */
+    fun hidePost(): Boolean = v0x19x4Plus
 }

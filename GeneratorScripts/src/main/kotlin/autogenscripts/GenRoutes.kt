@@ -36,14 +36,14 @@ ${summary?.lines()?.joinToString("\n") { "         * ${it.trim()}" } ?: ""}
          *
          * @${method.name}("$path")
          */
-        suspend fun $operationId(${if (paramsOrBody != null) "form: $paramsOrBody" else ""}): Result<${response ?: "Unit"}>
+        abstract suspend fun $operationId(${if (paramsOrBody != null) "form: $paramsOrBody" else ""}): Result<${response ?: "Unit"}>
     """.replaceIndent("    ")
 }
 
 fun RouteInfo.toImpl(): String {
     return this.toInterface()
         .replace("suspend fun", "override suspend fun")
-        .plus(" =\n        Ktor.${method.name.lowercase()}Result(\"$path\"${if (paramsOrBody != null) ", form" else ""})")
+        .plus(" =\n        ktor.${method.name.lowercase()}Result(\"$path\"${if (paramsOrBody != null) ", form" else ""})")
 }
 
 suspend fun getRoutes(): List<RouteInfo> {
@@ -124,11 +124,11 @@ suspend fun getRoutes(): List<RouteInfo> {
  *
  * This is used as a template for the actual Lemmy API interface
  */
-fun genRouteInterface(routes: List<RouteInfo>) {
+fun genRouteAbstractInterface(routes: List<RouteInfo>) {
     val fileInterface = File("temp", "LemmyApi.kt")
     fileInterface.createNewFile()
 
-    fileInterface.writeText("\ninterface LemmyApi : LemmyApiBase {\n\n")
+    fileInterface.writeText("\nabstract class LemmyApi : LemmyApiBase {\n\n")
 
     for (route in routes) {
         fileInterface.appendText(route.toInterface() + "\n\n")
@@ -157,6 +157,6 @@ fun genRouteImpl(routes: List<RouteInfo>) {
 
 suspend fun main() {
     val routes = getRoutes()
-    genRouteInterface(routes)
+    genRouteAbstractInterface(routes)
     genRouteImpl(routes)
 }
