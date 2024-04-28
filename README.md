@@ -1,12 +1,13 @@
 <!--suppress HtmlDeprecatedAttribute -->
 <div align="center">
 
-![badge][badge-ios]
+![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/it.vercruysse.lemmyapi/lemmy-api?server=https%3A%2F%2Fs01.oss.sonatype.org)
 ![badge][badge-js]
 ![badge][badge-jvm]
 ![badge][badge-linux]
 ![badge][badge-windows]
 ![badge][badge-mac]
+![badge][badge-ios]
 ![badge][badge-watchos]
 ![badge][badge-tvos]
 ![example workflow](https://github.com//mv-gh/lemmybackwardsCompatibleAPi/actions/workflows/ci.yml/badge.svg)
