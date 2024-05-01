@@ -8,11 +8,11 @@ import it.vercruysse.lemmyapi.v0x18.datatypes.*
 
 // The only breaking change with v0.18 really is the that taglines were optional
 internal abstract class LemmyApi(
-    ktor: HttpClient,
+    client: HttpClient,
     actualVersion: Version,
     baseUrl: String,
     override var auth: String?,
-) : LemmyApiBase(ktor, actualVersion, baseUrl, auth) {
+) : LemmyApiBase(client, actualVersion, baseUrl, auth) {
     /**
      * Gets the site, and your user data.
      *
