@@ -3,7 +3,7 @@ package it.vercruysse.lemmyapi.v0x17
 import io.github.z4kn4fein.semver.Version
 import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.*
-import it.vercruysse.lemmyapi.getKtor
+import it.vercruysse.lemmyapi.LemmyApi.getKtor
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
@@ -11,7 +11,7 @@ import it.vercruysse.lemmyapi.v0x17.datatypes.GetSiteResponse
 import it.vercruysse.lemmyapi.v0x18.datatypes.*
 
 /**
- * Barebone implementation for v0.17, not continued due to required effort to support
+ * Barebones implementation for v0.17, not continued due to required effort to support
  * while having a very low usage rate.
  *
  * But I am accepting PRs for this. To fully support v0.17,

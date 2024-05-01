@@ -18,6 +18,14 @@ repositories {
 kotlin {
     jvmToolchain(17)
 
+    jvm {
+        testRuns.named("test") {
+            executionTask.configure {
+                useJUnitPlatform()
+            }
+        }
+    }
+
     when (getHostOsName()) {
         OS.LINUX -> {
             linuxX64()
@@ -38,13 +46,6 @@ kotlin {
         }
     }
 
-    jvm {
-        testRuns.named("test") {
-            executionTask.configure {
-                useJUnitPlatform()
-            }
-        }
-    }
     js {
         nodejs()
         browser {
@@ -65,7 +66,6 @@ kotlin {
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-            implementation("io.ktor:ktor-client-logging:$ktorVersion")
             api("io.github.z4kn4fein:semver:2.0.0")
         }
 
@@ -117,7 +117,7 @@ kotlin {
                 val targetPublication = this@all
                 tasks.withType<AbstractPublishToMaven>()
                     .matching { it.publication == targetPublication }
-                    .configureEach { onlyIf { getHostOsName() == OS.LINUX } }
+                    .configureEach { onlyIf { getHostOsName() == OS.WINDOWS } }
             }
         }
     }

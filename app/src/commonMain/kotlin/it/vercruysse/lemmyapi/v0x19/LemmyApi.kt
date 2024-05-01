@@ -11,11 +11,11 @@ abstract class LemmyApi(
     baseUrl: String,
     override var auth: String?,
 ) : LemmyApiBase(
-        ktor,
-        actualVersion,
-        baseUrl,
-        auth,
-    ) {
+    ktor,
+    actualVersion,
+    baseUrl,
+    auth,
+) {
     /**
      * Gets the site, and your user data.
      *

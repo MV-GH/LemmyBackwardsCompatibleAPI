@@ -1,16 +1,14 @@
 package it.vercruysse.lemmyapi.v0x18
 
 import io.github.z4kn4fein.semver.Version
-import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.*
-import it.vercruysse.lemmyapi.getKtor
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v0x18.datatypes.*
 
-internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String? = null) : LemmyApi(
-    Ktor,
+internal class LemmyApiService(val client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String? = null) : LemmyApi(
+    client,
     actualVersion,
     baseUrl,
     auth,
@@ -21,7 +19,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("site")
      */
     override suspend fun getSite(form: GetSite): Result<GetSiteResponse> =
-        Ktor.getResult("site", form)
+        client.getResult("site", form)
 
     /**
      * Create your site.
@@ -29,7 +27,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("site")
      */
     override suspend fun createSite(form: CreateSite): Result<SiteResponse> =
-        Ktor.postResult("site", form)
+        client.postResult("site", form)
 
     /**
      * Edit your site.
@@ -37,7 +35,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("site")
      */
     override suspend fun editSite(form: EditSite): Result<SiteResponse> =
-        Ktor.putResult("site", form)
+        client.putResult("site", form)
 
     /**
      * Get the modlog.
@@ -45,7 +43,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("modlog")
      */
     override suspend fun getModlog(form: GetModlog): Result<GetModlogResponse> =
-        Ktor.getResult("modlog", form)
+        client.getResult("modlog", form)
 
     /**
      * Search lemmy.
@@ -53,7 +51,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("search")
      */
     override suspend fun search(form: Search): Result<SearchResponse> =
-        Ktor.getResult("search", form)
+        client.getResult("search", form)
 
     /**
      * Fetch a non-local / federated object.
@@ -61,7 +59,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("resolve_object")
      */
     override suspend fun resolveObject(form: ResolveObject): Result<ResolveObjectResponse> =
-        Ktor.getResult("resolve_object", form)
+        client.getResult("resolve_object", form)
 
     /**
      * Get / fetch a community.
@@ -69,7 +67,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("community")
      */
     override suspend fun getCommunity(form: GetCommunity): Result<GetCommunityResponse> =
-        Ktor.getResult("community", form)
+        client.getResult("community", form)
 
     /**
      * Create a new community.
@@ -77,7 +75,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("community")
      */
     override suspend fun createCommunity(form: CreateCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community", form)
+        client.postResult("community", form)
 
     /**
      * Edit a community.
@@ -85,7 +83,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("community")
      */
     override suspend fun editCommunity(form: EditCommunity): Result<CommunityResponse> =
-        Ktor.putResult("community", form)
+        client.putResult("community", form)
 
     /**
      * Hide a community from public view.
@@ -93,7 +91,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("community/hide")
      */
     override suspend fun hideCommunity(form: HideCommunity): Result<Unit> =
-        Ktor.putResult("community/hide", form)
+        client.putResult("community/hide", form)
 
     /**
      * List communities, with various filters.
@@ -101,7 +99,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("community/list")
      */
     override suspend fun listCommunities(form: ListCommunities): Result<ListCommunitiesResponse> =
-        Ktor.getResult("community/list", form)
+        client.getResult("community/list", form)
 
     /**
      * Follow / subscribe to a community.
@@ -109,7 +107,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("community/follow")
      */
     override suspend fun followCommunity(form: FollowCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community/follow", form)
+        client.postResult("community/follow", form)
 
     /**
      * Block a community.
@@ -117,7 +115,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("community/block")
      */
     override suspend fun blockCommunity(form: BlockCommunity): Result<BlockCommunityResponse> =
-        Ktor.postResult("community/block", form)
+        client.postResult("community/block", form)
 
     /**
      * Delete a community.
@@ -125,7 +123,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("community/delete")
      */
     override suspend fun deleteCommunity(form: DeleteCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community/delete", form)
+        client.postResult("community/delete", form)
 
     /**
      * A moderator remove for a community.
@@ -133,7 +131,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("community/remove")
      */
     override suspend fun removeCommunity(form: RemoveCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community/remove", form)
+        client.postResult("community/remove", form)
 
     /**
      * Transfer your community to an existing moderator.
@@ -141,7 +139,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("community/transfer")
      */
     override suspend fun transferCommunity(form: TransferCommunity): Result<CommunityResponse> =
-        Ktor.postResult("community/transfer", form)
+        client.postResult("community/transfer", form)
 
     /**
      * Ban a user from a community.
@@ -149,7 +147,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("community/ban_user")
      */
     override suspend fun banFromCommunity(form: BanFromCommunity): Result<BanFromCommunityResponse> =
-        Ktor.postResult("community/ban_user", form)
+        client.postResult("community/ban_user", form)
 
     /**
      * Add a moderator to your community.
@@ -157,7 +155,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("community/mod")
      */
     override suspend fun addModToCommunity(form: AddModToCommunity): Result<AddModToCommunityResponse> =
-        Ktor.postResult("community/mod", form)
+        client.postResult("community/mod", form)
 
     /**
      * Fetch federated instances.
@@ -165,7 +163,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("federated_instances")
      */
     override suspend fun getFederatedInstances(form: GetFederatedInstances): Result<GetFederatedInstancesResponse> =
-        Ktor.getResult("federated_instances", form)
+        client.getResult("federated_instances", form)
 
     /**
      * Get / fetch a post.
@@ -173,7 +171,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("post")
      */
     override suspend fun getPost(form: GetPost): Result<GetPostResponse> =
-        Ktor.getResult("post", form)
+        client.getResult("post", form)
 
     /**
      * Edit a post.
@@ -181,7 +179,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("post")
      */
     override suspend fun editPost(form: EditPost): Result<PostResponse> =
-        Ktor.putResult("post", form)
+        client.putResult("post", form)
 
     /**
      * Create a post.
@@ -189,7 +187,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("post")
      */
     override suspend fun createPost(form: CreatePost): Result<PostResponse> =
-        Ktor.postResult("post", form)
+        client.postResult("post", form)
 
     /**
      * Get / fetch posts, with various filters.
@@ -197,7 +195,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("post/list")
      */
     override suspend fun getPosts(form: GetPosts): Result<GetPostsResponse> =
-        Ktor.getResult("post/list", form)
+        client.getResult("post/list", form)
 
     /**
      * Delete a post.
@@ -205,7 +203,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("post/delete")
      */
     override suspend fun deletePost(form: DeletePost): Result<PostResponse> =
-        Ktor.postResult("post/delete", form)
+        client.postResult("post/delete", form)
 
     /**
      * A moderator remove for a post.
@@ -213,7 +211,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("post/remove")
      */
     override suspend fun removePost(form: RemovePost): Result<PostResponse> =
-        Ktor.postResult("post/remove", form)
+        client.postResult("post/remove", form)
 
     /**
      * Mark a post as read.
@@ -221,7 +219,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("post/mark_as_read")
      */
     override suspend fun markPostAsRead(form: MarkPostAsRead): Result<PostResponse> =
-        Ktor.postResult("post/mark_as_read", form)
+        client.postResult("post/mark_as_read", form)
 
     /**
      * A moderator can lock a post ( IE disable new comments ).
@@ -229,7 +227,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("post/lock")
      */
     override suspend fun lockPost(form: LockPost): Result<PostResponse> =
-        Ktor.postResult("post/lock", form)
+        client.postResult("post/lock", form)
 
     /**
      * A moderator can feature a community post ( IE stick it to the top of a community ).
@@ -237,7 +235,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("post/feature")
      */
     override suspend fun featurePost(form: FeaturePost): Result<PostResponse> =
-        Ktor.postResult("post/feature", form)
+        client.postResult("post/feature", form)
 
     /**
      * Like / vote on a post.
@@ -245,7 +243,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("post/like")
      */
     override suspend fun createPostLike(form: CreatePostLike): Result<PostResponse> =
-        Ktor.postResult("post/like", form)
+        client.postResult("post/like", form)
 
     /**
      * Save a post.
@@ -253,7 +251,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("post/save")
      */
     override suspend fun savePost(form: SavePost): Result<PostResponse> =
-        Ktor.putResult("post/save", form)
+        client.putResult("post/save", form)
 
     /**
      * Report a post.
@@ -261,7 +259,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("post/report")
      */
     override suspend fun createPostReport(form: CreatePostReport): Result<PostReportResponse> =
-        Ktor.postResult("post/report", form)
+        client.postResult("post/report", form)
 
     /**
      * Resolve a post report. Only a mod can do this.
@@ -269,7 +267,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("post/report/resolve")
      */
     override suspend fun resolvePostReport(form: ResolvePostReport): Result<PostReportResponse> =
-        Ktor.putResult("post/report/resolve", form)
+        client.putResult("post/report/resolve", form)
 
     /**
      * List post reports.
@@ -277,7 +275,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("post/report/list")
      */
     override suspend fun listPostReports(form: ListPostReports): Result<ListPostReportsResponse> =
-        Ktor.getResult("post/report/list", form)
+        client.getResult("post/report/list", form)
 
     /**
      * Fetch metadata for any given site.
@@ -285,7 +283,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("post/site_metadata")
      */
     override suspend fun getSiteMetadata(form: GetSiteMetadata): Result<GetSiteMetadataResponse> =
-        Ktor.getResult("post/site_metadata", form)
+        client.getResult("post/site_metadata", form)
 
     /**
      * Get / fetch comment.
@@ -293,7 +291,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("comment")
      */
     override suspend fun getComment(form: GetComment): Result<CommentResponse> =
-        Ktor.getResult("comment", form)
+        client.getResult("comment", form)
 
     /**
      * Create a comment.
@@ -301,7 +299,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("comment")
      */
     override suspend fun createComment(form: CreateComment): Result<CommentResponse> =
-        Ktor.postResult("comment", form)
+        client.postResult("comment", form)
 
     /**
      * Edit a comment.
@@ -309,7 +307,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("comment")
      */
     override suspend fun editComment(form: EditComment): Result<CommentResponse> =
-        Ktor.putResult("comment", form)
+        client.putResult("comment", form)
 
     /**
      * Get / fetch comments.
@@ -317,7 +315,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("comment/list")
      */
     override suspend fun getComments(form: GetComments): Result<GetCommentsResponse> =
-        Ktor.getResult("comment/list", form)
+        client.getResult("comment/list", form)
 
     /**
      * Delete a comment.
@@ -325,7 +323,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("comment/delete")
      */
     override suspend fun deleteComment(form: DeleteComment): Result<CommentResponse> =
-        Ktor.postResult("comment/delete", form)
+        client.postResult("comment/delete", form)
 
     /**
      * A moderator remove for a comment.
@@ -333,7 +331,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("comment/remove")
      */
     override suspend fun removeComment(form: RemoveComment): Result<CommentResponse> =
-        Ktor.postResult("comment/remove", form)
+        client.postResult("comment/remove", form)
 
     /**
      * Mark a comment as read.
@@ -341,7 +339,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("comment/mark_as_read")
      */
     override suspend fun markCommentReplyAsRead(form: MarkCommentReplyAsRead): Result<CommentReplyResponse> =
-        Ktor.postResult("comment/mark_as_read", form)
+        client.postResult("comment/mark_as_read", form)
 
     /**
      * Distinguishes a comment (speak as moderator)
@@ -349,7 +347,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("comment/distinguish")
      */
     override suspend fun distinguishComment(form: DistinguishComment): Result<CommentResponse> =
-        Ktor.postResult("comment/distinguish", form)
+        client.postResult("comment/distinguish", form)
 
     /**
      * Like / vote on a comment.
@@ -357,7 +355,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("comment/like")
      */
     override suspend fun createCommentLike(form: CreateCommentLike): Result<CommentResponse> =
-        Ktor.postResult("comment/like", form)
+        client.postResult("comment/like", form)
 
     /**
      * Save a comment.
@@ -365,7 +363,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("comment/save")
      */
     override suspend fun saveComment(form: SaveComment): Result<CommentResponse> =
-        Ktor.putResult("comment/save", form)
+        client.putResult("comment/save", form)
 
     /**
      * Report a comment.
@@ -373,7 +371,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("comment/report")
      */
     override suspend fun createCommentReport(form: CreateCommentReport): Result<CommentReportResponse> =
-        Ktor.postResult("comment/report", form)
+        client.postResult("comment/report", form)
 
     /**
      * Resolve a comment report. Only a mod can do this.
@@ -381,7 +379,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("comment/report/resolve")
      */
     override suspend fun resolveCommentReport(form: ResolveCommentReport): Result<CommentReportResponse> =
-        Ktor.putResult("comment/report/resolve", form)
+        client.putResult("comment/report/resolve", form)
 
     /**
      * List comment reports.
@@ -389,7 +387,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("comment/report/list")
      */
     override suspend fun listCommentReports(form: ListCommentReports): Result<ListCommentReportsResponse> =
-        Ktor.getResult("comment/report/list", form)
+        client.getResult("comment/report/list", form)
 
     /**
      * Edit a private message.
@@ -397,7 +395,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("private_message")
      */
     override suspend fun editPrivateMessage(form: EditPrivateMessage): Result<PrivateMessageResponse> =
-        Ktor.putResult("private_message", form)
+        client.putResult("private_message", form)
 
     /**
      * Create a private message.
@@ -405,7 +403,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("private_message")
      */
     override suspend fun createPrivateMessage(form: CreatePrivateMessage): Result<PrivateMessageResponse> =
-        Ktor.postResult("private_message", form)
+        client.postResult("private_message", form)
 
     /**
      * Get / fetch private messages.
@@ -413,7 +411,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("private_message/list")
      */
     override suspend fun getPrivateMessages(form: GetPrivateMessages): Result<PrivateMessagesResponse> =
-        Ktor.getResult("private_message/list", form)
+        client.getResult("private_message/list", form)
 
     /**
      * Delete a private message.
@@ -421,7 +419,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("private_message/delete")
      */
     override suspend fun deletePrivateMessage(form: DeletePrivateMessage): Result<PrivateMessageResponse> =
-        Ktor.postResult("private_message/delete", form)
+        client.postResult("private_message/delete", form)
 
     /**
      * Mark a private message as read.
@@ -429,7 +427,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("private_message/mark_as_read")
      */
     override suspend fun markPrivateMessageAsRead(form: MarkPrivateMessageAsRead): Result<PrivateMessageResponse> =
-        Ktor.postResult("private_message/mark_as_read", form)
+        client.postResult("private_message/mark_as_read", form)
 
     /**
      * Create a report for a private message.
@@ -437,7 +435,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("private_message/report")
      */
     override suspend fun createPrivateMessageReport(form: CreatePrivateMessageReport): Result<PrivateMessageReportResponse> =
-        Ktor.postResult("private_message/report", form)
+        client.postResult("private_message/report", form)
 
     /**
      * Resolve a report for a private message.
@@ -445,7 +443,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("private_message/report/resolve")
      */
     override suspend fun resolvePrivateMessageReport(form: ResolvePrivateMessageReport): Result<PrivateMessageReportResponse> =
-        Ktor.putResult("private_message/report/resolve", form)
+        client.putResult("private_message/report/resolve", form)
 
     /**
      * List private message reports.
@@ -453,7 +451,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("private_message/report/list")
      */
     override suspend fun listPrivateMessageReports(form: ListPrivateMessageReports): Result<ListPrivateMessageReportsResponse> =
-        Ktor.getResult("private_message/report/list", form)
+        client.getResult("private_message/report/list", form)
 
     /**
      * Get the details for a person.
@@ -461,7 +459,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("user")
      */
     override suspend fun getPersonDetails(form: GetPersonDetails): Result<GetPersonDetailsResponse> =
-        Ktor.getResult("user", form)
+        client.getResult("user", form)
 
     /**
      * Register a new user.
@@ -469,7 +467,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/register")
      */
     override suspend fun register(form: Register): Result<LoginResponse> =
-        Ktor.postResult("user/register", form)
+        client.postResult("user/register", form)
 
     /**
      * Fetch a Captcha.
@@ -477,7 +475,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("user/get_captcha")
      */
     override suspend fun getCaptcha(form: GetCaptcha): Result<GetCaptchaResponse> =
-        Ktor.getResult("user/get_captcha", form)
+        client.getResult("user/get_captcha", form)
 
     /**
      * Get mentions for your user.
@@ -485,7 +483,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("user/mention")
      */
     override suspend fun getPersonMentions(form: GetPersonMentions): Result<GetPersonMentionsResponse> =
-        Ktor.getResult("user/mention", form)
+        client.getResult("user/mention", form)
 
     /**
      * Mark a person mention as read.
@@ -493,7 +491,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/mention/mark_as_read")
      */
     override suspend fun markPersonMentionAsRead(form: MarkPersonMentionAsRead): Result<PersonMentionResponse> =
-        Ktor.postResult("user/mention/mark_as_read", form)
+        client.postResult("user/mention/mark_as_read", form)
 
     /**
      * Get comment replies.
@@ -501,7 +499,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("user/replies")
      */
     override suspend fun getReplies(form: GetReplies): Result<GetRepliesResponse> =
-        Ktor.getResult("user/replies", form)
+        client.getResult("user/replies", form)
 
     /**
      * Ban a person from your site.
@@ -509,7 +507,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/ban")
      */
     override suspend fun banPerson(form: BanPerson): Result<BanPersonResponse> =
-        Ktor.postResult("user/ban", form)
+        client.postResult("user/ban", form)
 
     /**
      * Get a list of banned users
@@ -517,7 +515,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("user/banned")
      */
     override suspend fun getBannedPersons(form: GetBannedPersons): Result<BannedPersonsResponse> =
-        Ktor.getResult("user/banned", form)
+        client.getResult("user/banned", form)
 
     /**
      * Block a person.
@@ -525,7 +523,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/block")
      */
     override suspend fun blockPerson(form: BlockPerson): Result<BlockPersonResponse> =
-        Ktor.postResult("user/block", form)
+        client.postResult("user/block", form)
 
     /**
      * Log into lemmy.
@@ -533,7 +531,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/login")
      */
     override suspend fun login(form: Login): Result<LoginResponse> =
-        Ktor.postResult("user/login", form)
+        client.postResult("user/login", form)
 
     /**
      * Delete your account.
@@ -541,7 +539,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/delete_account")
      */
     override suspend fun deleteAccount(form: DeleteAccount): Result<Unit> =
-        Ktor.postResult("user/delete_account", form)
+        client.postResult("user/delete_account", form)
 
     /**
      * Reset your password.
@@ -549,7 +547,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/password_reset")
      */
     override suspend fun passwordReset(form: PasswordReset): Result<Unit> =
-        Ktor.postResult("user/password_reset", form)
+        client.postResult("user/password_reset", form)
 
     /**
      * Change your password from an email / token based reset.
@@ -557,7 +555,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/password_change")
      */
     override suspend fun passwordChangeAfterReset(form: PasswordChangeAfterReset): Result<Unit> =
-        Ktor.postResult("user/password_change", form)
+        client.postResult("user/password_change", form)
 
     /**
      * Mark all replies as read.
@@ -565,7 +563,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/mark_all_as_read")
      */
     override suspend fun markAllAsRead(form: MarkAllAsRead): Result<GetRepliesResponse> =
-        Ktor.postResult("user/mark_all_as_read", form)
+        client.postResult("user/mark_all_as_read", form)
 
     /**
      * Save your user settings.
@@ -573,7 +571,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("user/save_user_settings")
      */
     override suspend fun saveUserSettings(form: SaveUserSettings): Result<Unit> =
-        Ktor.putResult("user/save_user_settings", form)
+        client.putResult("user/save_user_settings", form)
 
     /**
      * Change your user password.
@@ -581,7 +579,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("user/change_password")
      */
     override suspend fun changePassword(form: ChangePassword): Result<Unit> =
-        Ktor.putResult("user/change_password", form)
+        client.putResult("user/change_password", form)
 
     /**
      * Get counts for your reports
@@ -589,7 +587,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("user/report_count")
      */
     override suspend fun getReportCount(form: GetReportCount): Result<GetReportCountResponse> =
-        Ktor.getResult("user/report_count", form)
+        client.getResult("user/report_count", form)
 
     /**
      * Get your unread counts
@@ -597,7 +595,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("user/unread_count")
      */
     override suspend fun getUnreadCount(form: GetUnreadCount): Result<GetUnreadCountResponse> =
-        Ktor.getResult("user/unread_count", form)
+        client.getResult("user/unread_count", form)
 
     /**
      * Verify your email
@@ -605,7 +603,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/verify_email")
      */
     override suspend fun verifyEmail(form: VerifyEmail): Result<Unit> =
-        Ktor.postResult("user/verify_email", form)
+        client.postResult("user/verify_email", form)
 
     /**
      * Leave the Site admins.
@@ -613,7 +611,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("user/leave_admin")
      */
     override suspend fun leaveAdmin(form: LeaveAdmin): Result<GetSiteResponse> =
-        Ktor.postResult("user/leave_admin", form)
+        client.postResult("user/leave_admin", form)
 
     /**
      * Add an admin to your site.
@@ -621,7 +619,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("admin/add")
      */
     override suspend fun addAdmin(form: AddAdmin): Result<AddAdminResponse> =
-        Ktor.postResult("admin/add", form)
+        client.postResult("admin/add", form)
 
     /**
      * Get the unread registration applications count.
@@ -631,7 +629,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
     override suspend fun getUnreadRegistrationApplicationCount(
         form: GetUnreadRegistrationApplicationCount,
     ): Result<GetUnreadRegistrationApplicationCountResponse> =
-        Ktor.getResult("admin/registration_application/count", form)
+        client.getResult("admin/registration_application/count", form)
 
     /**
      * List the registration applications.
@@ -639,7 +637,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @GET("admin/registration_application/list")
      */
     override suspend fun listRegistrationApplications(form: ListRegistrationApplications): Result<ListRegistrationApplicationsResponse> =
-        Ktor.getResult("admin/registration_application/list", form)
+        client.getResult("admin/registration_application/list", form)
 
     /**
      * Approve a registration application
@@ -647,7 +645,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("admin/registration_application/approve")
      */
     override suspend fun approveRegistrationApplication(form: ApproveRegistrationApplication): Result<RegistrationApplicationResponse> =
-        Ktor.putResult("admin/registration_application/approve", form)
+        client.putResult("admin/registration_application/approve", form)
 
     /**
      * Purge / Delete a person from the database.
@@ -655,7 +653,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("admin/purge/person")
      */
     override suspend fun purgePerson(form: PurgePerson): Result<Unit> =
-        Ktor.postResult("admin/purge/person", form)
+        client.postResult("admin/purge/person", form)
 
     /**
      * Purge / Delete a community from the database.
@@ -663,7 +661,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("admin/purge/community")
      */
     override suspend fun purgeCommunity(form: PurgeCommunity): Result<Unit> =
-        Ktor.postResult("admin/purge/community", form)
+        client.postResult("admin/purge/community", form)
 
     /**
      * Purge / Delete a post from the database.
@@ -671,7 +669,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("admin/purge/post")
      */
     override suspend fun purgePost(form: PurgePost): Result<Unit> =
-        Ktor.postResult("admin/purge/post", form)
+        client.postResult("admin/purge/post", form)
 
     /**
      * Purge / Delete a comment from the database.
@@ -679,7 +677,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("admin/purge/comment")
      */
     override suspend fun purgeComment(form: PurgeComment): Result<Unit> =
-        Ktor.postResult("admin/purge/comment", form)
+        client.postResult("admin/purge/comment", form)
 
     /**
      * Edit an existing custom emoji
@@ -687,7 +685,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @PUT("custom_emoji")
      */
     override suspend fun editCustomEmoji(form: EditCustomEmoji): Result<CustomEmojiResponse> =
-        Ktor.putResult("custom_emoji", form)
+        client.putResult("custom_emoji", form)
 
     /**
      * Create a new custom emoji
@@ -695,7 +693,7 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("custom_emoji")
      */
     override suspend fun createCustomEmoji(form: CreateCustomEmoji): Result<CustomEmojiResponse> =
-        Ktor.postResult("custom_emoji", form)
+        client.postResult("custom_emoji", form)
 
     /**
      * Delete a custom emoji
@@ -703,13 +701,5 @@ internal class LemmyApiService(val Ktor: HttpClient, actualVersion: Version, bas
      * @POST("custom_emoji/delete")
      */
     override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> =
-        Ktor.postResult("custom_emoji/delete", form)
-}
-
-suspend fun main() {
-    val api = LemmyApiService(getKtor("https://lemmy.world/api/v3/"), "0.18.5".toVersion(), "")
-
-    println(api.version)
-    println(api.getSite(GetSite()).getOrThrow())
-    // println(api.login(Login("lemmy", "lemmy123")))
+        client.postResult("custom_emoji/delete", form)
 }

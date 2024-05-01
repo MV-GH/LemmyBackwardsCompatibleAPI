@@ -1,40 +1,62 @@
 package it.vercruysse.lemmyapi
 
 import io.github.z4kn4fein.semver.toVersion
+import io.ktor.client.HttpClient
 import io.ktor.client.call.*
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.*
+import io.ktor.client.HttpClientConfig
 import it.vercruysse.lemmyapi.dto.NodeInfo
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.dropPatchVersion
-import it.vercruysse.lemmyapi.v0x19.datatypes.Login
 
 object LemmyApi {
     const val MAX_SUPPORTED_VERSION = "0.19"
     const val MIN_SUPPORTED_VERSION = "0.18"
     const val API_VERSION = "v3"
+    var defaultClient = coreHttpClient
+
+    /**
+     * Overrides the config for the default HTTP Client.
+     */
+    fun setDefaultClientConfig(block: HttpClientConfig<*>.() -> Unit) {
+        defaultClient = defaultClient.config(block)
+    }
+
+    internal fun getKtor(baseUrl: String): HttpClient =
+        defaultClient.config {
+            defaultRequest {
+                url(baseUrl)
+            }
+        }
+
 
     /**
      * Gets the node info of a Lemmy instance
-     *
-     * @Throws Exception if it is not a Lemmy instance
      */
-
     suspend fun getNodeInfo(instance: String): Result<NodeInfo> =
         runCatching {
-            lenientKtor
+            lenientClient
                 .get("${constructBaseUrl(instance)}/nodeinfo/2.0.json")
                 .body<NodeInfo>()
         }
 
     /**
-     * Gets the version of a Lemmy instance
+     * Gets the version from NodeInfo
+     */
+    fun getVersion(node: NodeInfo): String {
+        return node.software.version
+    }
+
+    /**
+     * Gets the version from the NodeInfo of an instance
      *
      * @Throws Exception if it is not a Lemmy instance
      */
-    fun getVersion(node: NodeInfo): String {
+    fun getLemmyVersion(node: NodeInfo): String {
         check(isLemmyInstance(node)) { "Not a Lemmy instance" }
-        return node.software.version
+        return getVersion(node)
     }
 
     /**
@@ -42,9 +64,9 @@ object LemmyApi {
      *
      * @Throws Exception if it is not a Lemmy instance
      */
-    suspend fun getVersion(instance: String): String {
+    suspend fun getLemmyVersion(instance: String): String {
         val node = getNodeInfo(instance).getOrThrow()
-        return getVersion(node)
+        return getLemmyVersion(node)
     }
 
     /**
@@ -68,7 +90,7 @@ object LemmyApi {
     }
 
     /**
-     * Returns if it is a lemmy instance
+     * Returns if it is a Lemmy instance
      */
     suspend fun isLemmyInstance(instance: String): Boolean {
         val nodeResult = getNodeInfo(instance)
@@ -81,7 +103,7 @@ object LemmyApi {
     }
 
     /**
-     * Returns if it is a lemmy instance
+     * Returns if it is a Lemmy instance
      */
     fun isLemmyInstance(nodeInfo: NodeInfo): Boolean {
         return nodeInfo.software.name.lowercase() == "lemmy"
@@ -100,27 +122,26 @@ object LemmyApi {
         instance: String,
         auth: String? = null,
     ): it.vercruysse.lemmyapi.v0x19.LemmyApi {
-        val version = getVersion(instance)
+        val version = getLemmyVersion(instance)
         return getLemmyApi(instance, version, auth)
     }
 
     /**
      * Returns a LemmyApi instance.
      *
-     * Throws NotSupportedException if the instance isn't supported.
+     * @throws NotSupportedException if the instance isn't supported.
      *
      * Be warned that this function assumes that the instance and the version are correct.
      *
      * Use the Feature Flags before using certain endpoints as they can be or not available depending
      * on the version of the Lemmy Server instance.
      */
-
     fun getLemmyApi(
         instance: String,
         version: String,
         auth: String? = null,
     ): it.vercruysse.lemmyapi.v0x19.LemmyApi {
-        val baseUrlInstance = constructBaseUrl(instance)
+        val baseUrlInstance = constructBaseUrl(instance) // TODO duplicate constructBaseURL see NodeINFO
         val ktor = getKtor("$baseUrlInstance/api/$API_VERSION/")
 
         return when (dropPatchVersion(version)) {
@@ -129,13 +150,4 @@ object LemmyApi {
             else -> throw NotSupportedException("Unsupported Lemmy version: $version")
         }
     }
-}
-
-suspend fun main() {
-    val api = LemmyApi.getLemmyApi("voyager.lemmy.ml")
-
-    val r = api.login(Login("test", "test"))
-    println(r)
-    val r2 = api.getSite()
-    println(r2)
 }
