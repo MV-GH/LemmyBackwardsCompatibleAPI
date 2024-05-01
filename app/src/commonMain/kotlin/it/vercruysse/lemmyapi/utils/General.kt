@@ -3,8 +3,6 @@ package it.vercruysse.lemmyapi.utils
 import io.github.z4kn4fein.semver.Version
 import io.github.z4kn4fein.semver.toVersion
 import io.ktor.http.*
-import it.vercruysse.lemmyapi.LemmyApiBase
-import it.vercruysse.lemmyapi.exception.NotSupportedException
 import kotlinx.serialization.json.*
 
 /**
@@ -68,12 +66,6 @@ private fun extractValue(element: JsonElement): Any? {
     }
 }
 
-internal inline fun <reified T> LemmyApiBase.notSupported(): Result<T> = Result.failure(
-    NotSupportedException(
-        "This endpoint is not supported on this version of Lemmy: $version, use a FeatureFlag to check if it's supported",
-    ),
-)
-
 /**
  * Constructs a base url from any instance string.
  *
@@ -87,13 +79,13 @@ internal fun constructBaseUrl(instance: String): String {
             Url(instanceUrl)
         } else {
             // Really basic heuristic to determine if it's http or https,
-            // if wrong consumer should specify protocol
-            val protocol =
-                if (instanceUrl.equals("localhost", true)) {
-                    URLProtocol.HTTP
-                } else {
-                    URLProtocol.HTTPS
-                }
+            // if wrong, consumer should specify protocol
+            val protocol = if (instanceUrl.equals("localhost", true)) {
+                URLProtocol.HTTP
+            } else {
+                URLProtocol.HTTPS
+            }
+
             Url("${protocol.name}://$instanceUrl")
         }
 

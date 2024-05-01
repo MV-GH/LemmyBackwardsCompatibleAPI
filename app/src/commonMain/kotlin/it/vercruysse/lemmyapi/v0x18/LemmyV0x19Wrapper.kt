@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi.v0x18
 
 import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
-import it.vercruysse.lemmyapi.utils.notSupported
 import it.vercruysse.lemmyapi.v0x18.datatypes.*
 import it.vercruysse.lemmyapi.v0x19.GetUserExportSettingsResponse
 import it.vercruysse.lemmyapi.v0x19.GetUserImportSettings

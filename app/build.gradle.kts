@@ -4,10 +4,10 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.9.23"
-    id("org.jmailen.kotlinter") version "4.2.0"
-    id("com.google.devtools.ksp") version ("1.9.23-1.0.20")
-    id("com.vanniktech.maven.publish") version "0.27.0"
+    kotlin("plugin.serialization") version "2.0.0-RC2"
+    id("org.jmailen.kotlinter") version "4.3.0"
+    id("com.google.devtools.ksp") version ("2.0.0-RC2-1.0.20")
+    id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
 repositories {
@@ -16,6 +16,7 @@ repositories {
 }
 
 kotlin {
+    jvmToolchain(17)
 
     when (getHostOsName()) {
         OS.LINUX -> {
@@ -38,7 +39,6 @@ kotlin {
     }
 
     jvm {
-        jvmToolchain(17)
         testRuns.named("test") {
             executionTask.configure {
                 useJUnitPlatform()
