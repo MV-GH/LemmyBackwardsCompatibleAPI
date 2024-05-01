@@ -2,10 +2,10 @@ package it.vercruysse.lemmyapi
 
 import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.HttpClient
+import io.ktor.client.HttpClientConfig
 import io.ktor.client.call.*
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.*
-import io.ktor.client.HttpClientConfig
 import it.vercruysse.lemmyapi.dto.NodeInfo
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
@@ -30,7 +30,6 @@ object LemmyApi {
                 url(baseUrl)
             }
         }
-
 
     /**
      * Gets the node info of a Lemmy instance

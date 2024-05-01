@@ -22,7 +22,6 @@ val baseClient: HttpClient = HttpClient {
     }
 }
 
-
 /**
  * This client contains all the core configuration for LemmyAPI
  */
@@ -58,14 +57,13 @@ val coreHttpClient = baseClient.config {
                         errorResponse.msg,
                         exceptionResponse,
                     )
-                // Don't throw if it's not an ErrorResponse
+                    // Don't throw if it's not an ErrorResponse
                 } catch (_: SerializationException) {
                 }
             }
         }
     }
 }
-
 
 val lenientClient = baseClient.config {
     expectSuccess = true
