@@ -19,10 +19,6 @@ object LemmyApi {
     /**
      * Overrides the config for the default HTTP Client.
      */
-//    fun <T : HttpClientEngineConfig> setDefaultClientConfig(block: HttpClientConfig<T>.() -> Unit) {
-//                defaultClient = defaultClient.config(block as HttpClientConfig<*>.() -> Unit)
-//    }
-
     internal fun getKtor(baseUrl: String): HttpClient =
         defaultClient.config {
             defaultRequest {
@@ -149,9 +145,3 @@ object LemmyApi {
         }
     }
 }
-
-// expect interface ClientConfigurator {
-//   fun config(block: HttpClientConfig<*>.() -> Unit): Unit
-// }
-
-// expect fun LemmyApi.setDefaultClientConfig(block: HttpClientConfig<*>.() -> Unit)

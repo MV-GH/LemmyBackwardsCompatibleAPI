@@ -100,7 +100,7 @@ kotlin {
                 val targetPublication = this@all
                 tasks.withType<AbstractPublishToMaven>()
                     .matching { it.publication == targetPublication }
-                    .configureEach { onlyIf { getHostOsName() == OS.WINDOWS } }
+                    .configureEach { onlyIf { getHostOsName() == OS.LINUX } }
             }
         }
     }
