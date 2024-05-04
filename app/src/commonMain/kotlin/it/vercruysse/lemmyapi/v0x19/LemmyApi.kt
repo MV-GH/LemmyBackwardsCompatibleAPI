@@ -6,16 +6,16 @@ import it.vercruysse.lemmyapi.LemmyApiBase
 import it.vercruysse.lemmyapi.v0x19.datatypes.*
 
 abstract class LemmyApi(
-    ktor: HttpClient,
+    client: HttpClient,
     actualVersion: Version,
     baseUrl: String,
     override var auth: String?,
 ) : LemmyApiBase(
-        ktor,
-        actualVersion,
-        baseUrl,
-        auth,
-    ) {
+    client,
+    actualVersion,
+    baseUrl,
+    auth,
+) {
     /**
      * Gets the site, and your user data.
      *
