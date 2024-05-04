@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi
 
 import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.HttpClient
-import io.ktor.client.HttpClientConfig
 import io.ktor.client.call.*
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.*
@@ -20,9 +19,9 @@ object LemmyApi {
     /**
      * Overrides the config for the default HTTP Client.
      */
-    fun setDefaultClientConfig(block: HttpClientConfig<*>.() -> Unit) {
-        defaultClient = defaultClient.config(block)
-    }
+//    fun <T : HttpClientEngineConfig> setDefaultClientConfig(block: HttpClientConfig<T>.() -> Unit) {
+//                defaultClient = defaultClient.config(block as HttpClientConfig<*>.() -> Unit)
+//    }
 
     internal fun getKtor(baseUrl: String): HttpClient =
         defaultClient.config {
@@ -150,3 +149,9 @@ object LemmyApi {
         }
     }
 }
+
+// expect interface ClientConfigurator {
+//   fun config(block: HttpClientConfig<*>.() -> Unit): Unit
+// }
+
+// expect fun LemmyApi.setDefaultClientConfig(block: HttpClientConfig<*>.() -> Unit)

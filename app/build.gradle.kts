@@ -26,25 +26,15 @@ kotlin {
         }
     }
 
-    when (getHostOsName()) {
-        OS.LINUX -> {
-            linuxX64()
-            linuxArm64()
-        }
-
-        OS.WINDOWS -> {
-            mingwX64()
-        }
-
-        OS.MAC -> {
-            macosX64()
-            macosArm64()
-            iosX64()
-            iosArm64()
-            watchosX64()
-            watchosArm64()
-        }
-    }
+    linuxX64()
+    linuxArm64()
+    mingwX64()
+    macosX64()
+    macosArm64()
+    iosX64()
+    iosArm64()
+    watchosX64()
+    watchosArm64()
 
     js {
         nodejs()
@@ -83,30 +73,23 @@ kotlin {
             implementation(kotlin("reflect"))
         }
 
-
         jsMain.dependencies {
             implementation("io.ktor:ktor-client-js:$ktorVersion")
         }
 
-        when (getHostOsName()) {
-            OS.LINUX -> {
-                linuxMain.dependencies {
-                    implementation("io.ktor:ktor-client-cio:$ktorVersion")
-                }
-            }
-
-            OS.WINDOWS -> {
-                mingwMain.dependencies {
-                    implementation("io.ktor:ktor-client-winhttp:$ktorVersion")
-                }
-            }
-
-            OS.MAC -> {
-                macosMain.dependencies {
-                    implementation("io.ktor:ktor-client-cio:$ktorVersion")
-                }
-            }
+        linuxMain.dependencies {
+            implementation("io.ktor:ktor-client-cio:$ktorVersion")
         }
+
+        // CIO is not available on Windows yet
+        mingwMain.dependencies {
+            implementation("io.ktor:ktor-client-winhttp:$ktorVersion")
+        }
+
+        appleMain.dependencies {
+            implementation("io.ktor:ktor-client-cio:$ktorVersion")
+        }
+
     }
 
     val publicationsFromMainHost = listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
@@ -117,7 +100,18 @@ kotlin {
                 val targetPublication = this@all
                 tasks.withType<AbstractPublishToMaven>()
                     .matching { it.publication == targetPublication }
-                    .configureEach { onlyIf { getHostOsName() == OS.LINUX } }
+                    .configureEach { onlyIf { getHostOsName() == OS.WINDOWS } }
+            }
+        }
+    }
+
+    targets.configureEach {
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    // Disable beta warning actual/expect usage
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
             }
         }
     }
