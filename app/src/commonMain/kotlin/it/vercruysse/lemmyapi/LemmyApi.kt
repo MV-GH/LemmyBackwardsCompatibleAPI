@@ -80,7 +80,7 @@ object LemmyApi {
      * Returns if it is a fediverse instance, meaning it supports ActivityPub protocol
      */
     fun isFediverse(nodeInfo: NodeInfo): Boolean {
-        return nodeInfo.protocols.contains("activitypub")
+        return nodeInfo.protocols?.contains("activitypub") ?: false
     }
 
     /**
