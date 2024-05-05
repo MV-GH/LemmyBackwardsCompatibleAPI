@@ -66,7 +66,7 @@ kotlin {
 
 
         jvmMain.dependencies {
-            implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+            api("io.ktor:ktor-client-okhttp:$ktorVersion")
         }
 
         jvmTest.dependencies {
@@ -74,20 +74,20 @@ kotlin {
         }
 
         jsMain.dependencies {
-            implementation("io.ktor:ktor-client-js:$ktorVersion")
+            api("io.ktor:ktor-client-js:$ktorVersion")
         }
 
         linuxMain.dependencies {
-            implementation("io.ktor:ktor-client-cio:$ktorVersion")
+            api("io.ktor:ktor-client-cio:$ktorVersion")
         }
 
         // CIO is not available on Windows yet
         mingwMain.dependencies {
-            implementation("io.ktor:ktor-client-winhttp:$ktorVersion")
+            api("io.ktor:ktor-client-winhttp:$ktorVersion")
         }
 
         appleMain.dependencies {
-            implementation("io.ktor:ktor-client-cio:$ktorVersion")
+            api("io.ktor:ktor-client-cio:$ktorVersion")
         }
 
     }
