@@ -8,6 +8,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import kotlin.test.assertTrue
 
 class NodeInfoIT {
 
@@ -47,10 +48,10 @@ class NodeInfoIT {
         }
 
         val nodeInfo = runBlocking {
-            LemmyApi.getNodeInfo(wm.baseUrl() + "/nodeinfo/2.0.json")
+            LemmyApi.getNodeInfo(wm.baseUrl() + "/nodeinfo/2.0.json").getOrThrow()
         }
 
-        assertNotNull(nodeInfo.isSuccess)
-        assertNotNull(nodeInfo.getOrThrow().protocols)
+        assertNotNull(nodeInfo.protocols)
+        assertTrue { nodeInfo.software.name == "Lemmy" }
     }
 }
