@@ -20,7 +20,7 @@ class NodeInfoIT {
     }
 
     @Test
-    fun `Should allow NodeInfo without protocols field`(){
+    fun `Should allow NodeInfo without protocols field`() {
         val nodeInfoJson = """{
             "version": "2.0",
             "software": {
@@ -37,17 +37,17 @@ class NodeInfoIT {
                 "localPosts": 1,
                 "localComments": 1
             }
-        }""".trimIndent()
-
+        }
+        """.trimIndent()
 
         wm.get {
             url equalTo "/nodeinfo/2.0.json"
-        } returnsJson  {
+        } returnsJson {
             body = nodeInfoJson
         }
 
-       val nodeInfo =  runBlocking {
-           LemmyApi.getNodeInfo(wm.baseUrl() + "/nodeinfo/2.0.json")
+        val nodeInfo = runBlocking {
+            LemmyApi.getNodeInfo(wm.baseUrl() + "/nodeinfo/2.0.json")
         }
 
         assertNotNull(nodeInfo.isSuccess)

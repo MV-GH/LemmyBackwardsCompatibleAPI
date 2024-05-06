@@ -24,7 +24,8 @@ class NodeInfoTest {
                 "localPosts": 1,
                 "localComments": 1
             }
-        }""".trimIndent()
+        }
+        """.trimIndent()
 
         val nodeInfo = lenientJson.decodeFromString<NodeInfo>(nodeInfoJson)
         assertNotNull(nodeInfo)
@@ -50,7 +51,8 @@ class NodeInfoTest {
                 "localPosts": 1,
                 "localComments": 1
             }
-        }""".trimIndent()
+        }
+        """.trimIndent()
 
         val nodeInfo = lenientJson.decodeFromString<NodeInfo>(nodeInfoJson)
         assertNotNull(nodeInfo)
