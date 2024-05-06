@@ -17,4 +17,5 @@ val ktorJson = Json {
 val lenientJson = Json {
     ignoreUnknownKeys = true
     isLenient = true
+    coerceInputValues = true
 }

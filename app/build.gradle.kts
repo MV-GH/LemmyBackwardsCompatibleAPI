@@ -71,6 +71,10 @@ kotlin {
 
         jvmTest.dependencies {
             implementation(kotlin("reflect"))
+            implementation("io.mockk:mockk:1.13.10")
+            implementation("org.wiremock:wiremock:3.5.4")
+            implementation("com.marcinziolo:kotlin-wiremock:2.1.1")
+            implementation("ch.qos.logback:logback-classic:1.5.6")
         }
 
         jsMain.dependencies {
