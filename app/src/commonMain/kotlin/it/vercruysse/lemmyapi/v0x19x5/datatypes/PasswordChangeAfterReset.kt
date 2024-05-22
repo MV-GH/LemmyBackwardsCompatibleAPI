@@ -1,0 +1,10 @@
+package it.vercruysse.lemmyapi.v0x19x5.datatypes
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PasswordChangeAfterReset(
+    val token: String,
+    val password: String,
+    val password_verify: String,
+)
