@@ -2,6 +2,7 @@ package it.vercruysse.lemmyapi.v0x19
 
 import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
+import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
 import it.vercruysse.lemmyapi.utils.addAuth
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
@@ -189,7 +190,7 @@ class LemmyApiService(
     override suspend fun getPosts(form: GetPosts): Result<GetPostsResponse> =
         client.getResult(
             "post/list",
-            form.copy(page = if (form.page_cursor != null) null else form.page),
+            form.copy(page = if (form.page_cursor != PAGE_CURSOR_GUARD) null else form.page),
         )
 
     /**
