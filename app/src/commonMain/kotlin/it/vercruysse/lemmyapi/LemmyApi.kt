@@ -11,8 +11,6 @@ import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.dropPatchVersion
 import it.vercruysse.lemmyapi.utils.getPatchVersion
 
-//import it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiService
-
 object LemmyApi {
     const val MAX_SUPPORTED_VERSION = "0.19"
     const val MIN_SUPPORTED_VERSION = "0.18"
@@ -141,14 +139,10 @@ object LemmyApi {
         val baseUrlInstance = constructBaseUrl(instance) // TODO duplicate constructBaseURL see NodeINFO
         val client = getKtorClient("$baseUrlInstance/api/$API_VERSION/")
 
-        // group 19 (0,1)
-        // group 19 (2,3)
-        // group 19 (4, 5)
-
         return when (dropPatchVersion(version)) {
             "0.19" -> when (getPatchVersion(version)) {
                 "0", "1" -> it.vercruysse.lemmyapi.v0.x19.x0.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
-//                "2", "3" -> it.vercruysse.lemmyapi.v0.x19.x2.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+                "2", "3" -> it.vercruysse.lemmyapi.v0.x19.x3.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
                 "4", "5" -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
                 else -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
             }

@@ -230,5 +230,5 @@ suspend fun downloadTypes(
 }
 
 suspend fun main() {
-    downloadTypes("0.19.0", "v0/x19/x0")
+    downloadTypes("0.19.3-alpha.6", "v0/x19/x3")
 }

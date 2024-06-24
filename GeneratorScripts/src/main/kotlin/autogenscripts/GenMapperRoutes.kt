@@ -79,5 +79,5 @@ fun main() {
     val exclusionTarget = setOf<String>(
 //        "LocalUser", "MyUserInfo", "LocalSiteRateLimit"
     )
-    genMapRoutes("v0/x19/x0", exclusionSrc, exclusionTarget)
+    genMapRoutes("v0/x19/x3", exclusionSrc, exclusionTarget)
 }
