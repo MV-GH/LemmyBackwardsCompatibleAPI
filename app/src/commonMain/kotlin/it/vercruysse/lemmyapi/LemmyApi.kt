@@ -10,6 +10,8 @@ import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.dropPatchVersion
 
+//import it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiService
+
 object LemmyApi {
     const val MAX_SUPPORTED_VERSION = "0.19"
     const val MIN_SUPPORTED_VERSION = "0.18"
@@ -19,7 +21,7 @@ object LemmyApi {
     /**
      * Overrides the config for the default HTTP Client.
      */
-    internal fun getKtor(baseUrl: String): HttpClient =
+    internal fun getKtorClient(baseUrl: String): HttpClient =
         defaultClient.config {
             defaultRequest {
                 url(baseUrl)
@@ -115,7 +117,7 @@ object LemmyApi {
     suspend fun getLemmyApi(
         instance: String,
         auth: String? = null,
-    ): it.vercruysse.lemmyapi.v0x19.LemmyApi {
+    ): LemmyApiBaseController {
         val version = getLemmyVersion(instance)
         return getLemmyApi(instance, version, auth)
     }
@@ -134,13 +136,16 @@ object LemmyApi {
         instance: String,
         version: String,
         auth: String? = null,
-    ): it.vercruysse.lemmyapi.v0x19.LemmyApi {
+    ): LemmyApiBaseController {
         val baseUrlInstance = constructBaseUrl(instance) // TODO duplicate constructBaseURL see NodeINFO
-        val ktor = getKtor("$baseUrlInstance/api/$API_VERSION/")
+        val client = getKtorClient("$baseUrlInstance/api/$API_VERSION/")
+
+        // group 19 (0,1) possible (2,3)
+        // group 19 (4, 5)
 
         return when (dropPatchVersion(version)) {
-            "0.19" -> it.vercruysse.lemmyapi.v0x19.LemmyApiService(ktor, version.toVersion(false), baseUrlInstance, auth)
-            "0.18" -> it.vercruysse.lemmyapi.v0x18.LemmyV0x19Wrapper(ktor, version.toVersion(false), baseUrlInstance, auth)
+            "0.19" -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+            "0.18" -> it.vercruysse.lemmyapi.v0.x18.x5.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
             else -> throw NotSupportedException("Unsupported Lemmy version: $version")
         }
     }

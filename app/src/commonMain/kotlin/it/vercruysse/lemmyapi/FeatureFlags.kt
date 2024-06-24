@@ -62,4 +62,14 @@ class FeatureFlags(val version: Version) {
      * Hide posts, feature added in 0.19.4
      */
     fun hidePost(): Boolean = v0x19x4Plus
+
+    /**
+     * Voting types reworked, changed in 0.19.4
+     */
+    fun votingTypeRework(): Boolean = v0x19x4Plus
+
+    /**
+     * Alt text field for images, feature added in 0.19.4
+     */
+    fun altText(): Boolean = v0x19x4Plus
 }

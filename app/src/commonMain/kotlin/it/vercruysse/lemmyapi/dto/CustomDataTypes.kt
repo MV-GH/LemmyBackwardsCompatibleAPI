@@ -197,3 +197,6 @@ inline fun <reified T> getSupportedEntries(instanceVersion: Version): List<T> wh
         }
     }
 }
+
+typealias ImportUserSettings = String
+typealias ExportUserSettingsResponse = String

@@ -1,6 +1,6 @@
 import io.ktor.http.*
 import it.vercruysse.lemmyapi.LemmyApi
-import it.vercruysse.lemmyapi.v0x19.datatypes.GetPosts
+import it.vercruysse.lemmyapi.datatypes.GetPosts
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Ignore
 import kotlin.test.Test

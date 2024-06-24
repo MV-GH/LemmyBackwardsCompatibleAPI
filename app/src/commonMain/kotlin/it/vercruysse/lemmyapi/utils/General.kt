@@ -47,6 +47,10 @@ fun dropPatchVersion(version: String): String {
     return version.split(".").take(2).joinToString(".")
 }
 
+fun getPatchVersion(version: String): String {
+    return version.split(".")[2]
+}
+
 inline fun <reified T> toMap(obj: T): Map<String, Any?> {
     return jsonObjectToMap(Json.encodeToJsonElement(obj).jsonObject)
 }
