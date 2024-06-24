@@ -1,9 +1,9 @@
-package it.vercruysse.lemmyapi.v0x19x5.datatypes
+package it.vercruysse.lemmyapi.v0.x19.x0.datatypes
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class OpenGraphData(
+internal data class SiteMetadata(
     val title: String? = null,
     val description: String? = null,
     val image: String? = null,

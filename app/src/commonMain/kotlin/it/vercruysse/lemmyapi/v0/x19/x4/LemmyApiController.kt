@@ -769,7 +769,7 @@ internal class LemmyApiController(val client: HttpClient, actualVersion: Version
         client.getResult("user/validate_auth")
 
     /**
-     * [MANUAL] Logout your user, which clears the cookie and invalidates the auth token
+     * Invalidate the currently used auth token.
      *
      * @POST("user/logout")
      */

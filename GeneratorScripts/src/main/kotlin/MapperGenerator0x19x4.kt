@@ -1,7 +1,5 @@
 @file:Suppress("unused", "INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 
-package org.example
-
 import io.mcarle.konvert.api.Konfig
 import io.mcarle.konvert.api.Konverter
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.*

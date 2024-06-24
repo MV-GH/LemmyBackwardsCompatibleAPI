@@ -674,7 +674,7 @@ internal abstract class LemmyApiRouter(
     abstract suspend fun validateAuth(): Result<Unit>
 
     /**
-     * [MANUAL] Logout your user, which clears the cookie and invalidates the auth token
+     * Invalidate the currently used auth token.
      *
      * @POST("user/logout")
      */

@@ -30,7 +30,7 @@ fun getDownloadLink(tag: String) = "https://github.com/LemmyNet/lemmy-js-client/
 // Rewrites the TS types to Kotlin types
 suspend fun downloadTypes(
     version: String,
-    vShort: String,
+    subLocation: String,
 ) {
     val temp = File("temp")
     temp.mkdir()
@@ -41,7 +41,7 @@ suspend fun downloadTypes(
         .bodyAsChannel()
         .copyAndClose(lemmyJsClient.writeChannel())
 
-    val dest = File(getTypesPath(vShort))
+    val dest = File(getTypesPath(subLocation))
 
     for (typeFile in dest.listFiles() ?: emptyArray<File>()) {
         typeFile.delete()
@@ -61,7 +61,7 @@ suspend fun downloadTypes(
             }
         }
 
-        val datatypes = File(getTypesPath(vShort, false))
+        val datatypes = File(getTypesPath(subLocation, false))
 
         val command =
             mutableListOf(
@@ -94,7 +94,7 @@ suspend fun downloadTypes(
                 // Add header for each file
                 f.writeText(
                     """
-                    package $ROOT_PACKAGE$vShort.datatypes
+                    package $ROOT_PACKAGE${subLocation.replace("/", ".")}.datatypes
                     
                     """.trimIndent(),
                 )
@@ -114,7 +114,7 @@ suspend fun downloadTypes(
                         .map { line ->
                             // Convert interface to data class
                             var k =
-                                line.replace("interface ", "data class ")
+                                line.replace("interface ", "internal data class ")
                                     .replace(" {", "(")
                                     .replace("}", ")")
 
@@ -230,5 +230,5 @@ suspend fun downloadTypes(
 }
 
 suspend fun main() {
-    downloadTypes("0.19.5-alpha.1", "v0/x19/x5")
+    downloadTypes("0.19.0", "v0/x19/x0")
 }

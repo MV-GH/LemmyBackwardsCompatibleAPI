@@ -441,6 +441,7 @@ import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.UpdateTotp as X4DatatypesUpdat
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.VerifyEmail as X4DatatypesVerifyEmail
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.VoteView as X4DatatypesVoteView
 
+// Based on tags/0.19.4
 internal class Transformer : MapperGenerator {
     override fun toUni(d: X4DatatypesAddAdminResponse): LemmyapiDatatypesAddAdminResponse =
         LemmyapiDatatypesAddAdminResponse(
