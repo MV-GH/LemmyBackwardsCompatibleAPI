@@ -19,6 +19,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: SimonMarquis/ci-gradle-properties-action@v1
+        with:
+          path: .github/gradle.properties
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
