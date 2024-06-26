@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi.v0.x19.x0
 
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.*
 
-
 internal interface MapperGenerator {
 
     fun toUni(d: CommentReplyView): it.vercruysse.lemmyapi.datatypes.CommentReplyView
@@ -12,7 +11,6 @@ internal interface MapperGenerator {
     fun toUni(d: CommentView): it.vercruysse.lemmyapi.datatypes.CommentView
 
     fun toUni(d: Community): it.vercruysse.lemmyapi.datatypes.Community
-
 
     fun toUni(d: CommunityAggregates): it.vercruysse.lemmyapi.datatypes.CommunityAggregates
 
@@ -66,7 +64,6 @@ internal interface MapperGenerator {
 
     fun toUni(d: CommentResponse): it.vercruysse.lemmyapi.datatypes.CommentResponse
 
-
     fun toUni(d: CommunityBlockView): it.vercruysse.lemmyapi.datatypes.CommunityBlockView
     fun toUni(d: CommunityFollowerView): it.vercruysse.lemmyapi.datatypes.CommunityFollowerView
     fun toUni(d: CommunityModeratorView): it.vercruysse.lemmyapi.datatypes.CommunityModeratorView
@@ -92,7 +89,9 @@ internal interface MapperGenerator {
     fun toUni(d: GetSiteMetadataResponse): it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse
 
     fun toUni(d: GetUnreadCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadCountResponse
-    fun toUni(d: GetUnreadRegistrationApplicationCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
+    fun toUni(
+        d: GetUnreadRegistrationApplicationCountResponse,
+    ): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
     fun toUni(d: Instance): it.vercruysse.lemmyapi.datatypes.Instance
     fun toUni(d: InstanceBlockView): it.vercruysse.lemmyapi.datatypes.InstanceBlockView
     fun toUni(d: InstanceWithFederationState): it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState

@@ -812,6 +812,4 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
      */
     override suspend fun hidePost(form: HidePost): Result<Unit> =
         client.postResult("post/hide", form)
-
-
 }

@@ -1,11 +1,11 @@
 package it.vercruysse.lemmyapi.v0.x19.x3
 
 import io.ktor.client.HttpClient
+import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
+import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
-import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
-import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.*
 
 internal class LemmyApiController(client: HttpClient, auth: String?) :
@@ -788,5 +788,4 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
      */
     override suspend fun listCommentLikes(form: ListCommentLikes): Result<ListCommentLikesResponse> =
         client.getResult("comment/like/list", form)
-
 }

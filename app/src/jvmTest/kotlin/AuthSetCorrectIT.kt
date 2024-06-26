@@ -20,7 +20,6 @@ class AuthSetCorrectIT {
             .build()
     }
 
-
     @Test
     fun `Changing auth should propagate everywhere`() {
         LemmyApi.setDefaultClientConfig {
@@ -53,7 +52,6 @@ class AuthSetCorrectIT {
             url equalTo "/api/v3/site"
             method = RequestMethod.GET
             headers contains HttpHeaders.Authorization equalTo "Bearer auth"
-
         }
 
         controller.auth = "newAuth"
@@ -77,6 +75,5 @@ class AuthSetCorrectIT {
             headers contains HttpHeaders.Authorization equalTo "Bearer newAuth"
             method = RequestMethod.GET
         }
-
     }
 }

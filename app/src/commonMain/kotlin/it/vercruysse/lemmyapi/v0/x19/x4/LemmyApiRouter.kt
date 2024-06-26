@@ -11,7 +11,6 @@ internal abstract class LemmyApiRouter(
     auth: String?,
 ) : AuthBaseClient(client, auth) {
 
-
     /**
      * Gets the site, and your user data.
      *
@@ -711,5 +710,4 @@ internal abstract class LemmyApiRouter(
      * @POST("post/hide")
      */
     abstract suspend fun hidePost(form: HidePost): Result<Unit>
-
 }

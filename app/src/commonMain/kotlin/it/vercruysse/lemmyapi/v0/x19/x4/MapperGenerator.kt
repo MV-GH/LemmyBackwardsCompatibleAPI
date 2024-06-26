@@ -57,7 +57,9 @@ internal interface MapperGenerator {
     fun toUni(d: GetSiteMetadataResponse): it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse
     fun toUni(d: GetSiteResponse): it.vercruysse.lemmyapi.datatypes.GetSiteResponse
     fun toUni(d: GetUnreadCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadCountResponse
-    fun toUni(d: GetUnreadRegistrationApplicationCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
+    fun toUni(
+        d: GetUnreadRegistrationApplicationCountResponse,
+    ): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
     fun toUni(d: Instance): it.vercruysse.lemmyapi.datatypes.Instance
     fun toUni(d: InstanceBlockView): it.vercruysse.lemmyapi.datatypes.InstanceBlockView
     fun toUni(d: InstanceWithFederationState): it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState
@@ -226,4 +228,3 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.UpdateTotp): UpdateTotp
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.VerifyEmail): VerifyEmail
 }
-

@@ -1,11 +1,11 @@
 package it.vercruysse.lemmyapi.v0.x19.x0
 
 import io.ktor.client.HttpClient
+import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
+import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
-import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
-import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.*
 
 internal class LemmyApiController(client: HttpClient, auth: String?) :
@@ -772,5 +772,4 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
      */
     override suspend fun logout(): Result<Unit> =
         client.postResult("user/logout")
-
 }

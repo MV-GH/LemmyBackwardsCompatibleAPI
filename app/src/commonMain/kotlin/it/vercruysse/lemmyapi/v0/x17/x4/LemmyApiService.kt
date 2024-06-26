@@ -136,7 +136,9 @@ internal class LemmyApiService(
      *
      * @POST("community/transfer")
      */
-    override suspend fun transferCommunity(form: TransferCommunity): Result<CommunityResponse> = client.postResult("community/transfer", form)
+    override suspend fun transferCommunity(
+        form: TransferCommunity,
+    ): Result<CommunityResponse> = client.postResult("community/transfer", form)
 
     /**
      * Ban a user from a community.
@@ -259,7 +261,9 @@ internal class LemmyApiService(
      *
      * @GET("post/report/list")
      */
-    override suspend fun listPostReports(form: ListPostReports): Result<ListPostReportsResponse> = client.getResult("post/report/list", form)
+    override suspend fun listPostReports(
+        form: ListPostReports,
+    ): Result<ListPostReportsResponse> = client.getResult("post/report/list", form)
 
     /**
      * Fetch metadata for any given site.

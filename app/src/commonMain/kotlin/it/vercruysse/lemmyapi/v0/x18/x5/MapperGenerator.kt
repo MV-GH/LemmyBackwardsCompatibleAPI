@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi.v0.x18.x5
 
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
 
-
 internal interface MapperGenerator {
     fun toUni(d: LocalUser): it.vercruysse.lemmyapi.datatypes.LocalUser
 
@@ -79,7 +78,6 @@ internal interface MapperGenerator {
 
     fun toUni(d: CommentResponse): it.vercruysse.lemmyapi.datatypes.CommentResponse
 
-
     fun toUni(d: CommunityBlockView): it.vercruysse.lemmyapi.datatypes.CommunityBlockView
     fun toUni(d: CommunityFollowerView): it.vercruysse.lemmyapi.datatypes.CommunityFollowerView
     fun toUni(d: CommunityModeratorView): it.vercruysse.lemmyapi.datatypes.CommunityModeratorView
@@ -104,7 +102,9 @@ internal interface MapperGenerator {
     fun toUni(d: GetSiteMetadataResponse): it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse
 
     fun toUni(d: GetUnreadCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadCountResponse
-    fun toUni(d: GetUnreadRegistrationApplicationCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
+    fun toUni(
+        d: GetUnreadRegistrationApplicationCountResponse,
+    ): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
     fun toUni(d: Instance): it.vercruysse.lemmyapi.datatypes.Instance
     fun toUni(d: Language): it.vercruysse.lemmyapi.datatypes.Language
     fun toUni(d: ListCommentReportsResponse): it.vercruysse.lemmyapi.datatypes.ListCommentReportsResponse
@@ -144,7 +144,6 @@ internal interface MapperGenerator {
     fun toUni(d: PersonMention): it.vercruysse.lemmyapi.datatypes.PersonMention
     fun toUni(d: PersonMentionResponse): it.vercruysse.lemmyapi.datatypes.PersonMentionResponse
 
-
     fun toUni(d: Post): it.vercruysse.lemmyapi.datatypes.Post
     fun toUni(d: PostAggregates): it.vercruysse.lemmyapi.datatypes.PostAggregates
     fun toUni(d: PostReport): it.vercruysse.lemmyapi.datatypes.PostReport
@@ -174,220 +173,149 @@ internal interface MapperGenerator {
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddAdmin): AddAdmin
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddModToCommunity): AddModToCommunity
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ApproveRegistrationApplication): ApproveRegistrationApplication
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BanFromCommunity): BanFromCommunity
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BanPerson): BanPerson
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BlockCommunity): BlockCommunity
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BlockPerson): BlockPerson
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ChangePassword): ChangePassword
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateComment): CreateComment
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateCommentLike): CreateCommentLike
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateCommentReport): CreateCommentReport
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateCommunity): CreateCommunity
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateCustomEmoji): CreateCustomEmoji
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreatePost): CreatePost
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreatePostLike): CreatePostLike
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreatePostReport): CreatePostReport
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreatePrivateMessage): CreatePrivateMessage
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreatePrivateMessageReport): CreatePrivateMessageReport
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateSite): CreateSite
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.DeleteAccount): DeleteAccount
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.DeleteComment): DeleteComment
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.DeleteCommunity): DeleteCommunity
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.DeleteCustomEmoji): DeleteCustomEmoji
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.DeletePost): DeletePost
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.DeletePrivateMessage): DeletePrivateMessage
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.DistinguishComment): DistinguishComment
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.EditComment): EditComment
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.EditCommunity): EditCommunity
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.EditCustomEmoji): EditCustomEmoji
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.EditPost): EditPost
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.EditPrivateMessage): EditPrivateMessage
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.EditSite): EditSite
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.FeaturePost): FeaturePost
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.FollowCommunity): FollowCommunity
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetComment): GetComment
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetComments): GetComments
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetCommunity): GetCommunity
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetModlog): GetModlog
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPersonDetails): GetPersonDetails
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPersonMentions): GetPersonMentions
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPost): GetPost
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPosts): GetPosts
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPrivateMessages): GetPrivateMessages
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetReplies): GetReplies
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetReportCount): GetReportCount
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetSiteMetadata): GetSiteMetadata
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.HideCommunity): HideCommunity
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCommentReports): ListCommentReports
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCommunities): ListCommunities
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListPostReports): ListPostReports
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReports): ListPrivateMessageReports
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListRegistrationApplications): ListRegistrationApplications
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.LockPost): LockPost
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.Login): Login
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkCommentReplyAsRead): MarkCommentReplyAsRead
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkPersonMentionAsRead): MarkPersonMentionAsRead
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkPrivateMessageAsRead): MarkPrivateMessageAsRead
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset): PasswordChangeAfterReset
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordReset): PasswordReset
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgeComment): PurgeComment
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgeCommunity): PurgeCommunity
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgePerson): PurgePerson
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgePost): PurgePost
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.Register): Register
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.RemoveComment): RemoveComment
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.RemoveCommunity): RemoveCommunity
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.RemovePost): RemovePost
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolveCommentReport): ResolveCommentReport
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolveObject): ResolveObject
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolvePostReport): ResolvePostReport
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolvePrivateMessageReport): ResolvePrivateMessageReport
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.SaveComment): SaveComment
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.SavePost): SavePost
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.SaveUserSettings): SaveUserSettings
 
-
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.Search): Search
-
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.TransferCommunity): TransferCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.VerifyEmail): VerifyEmail
-
 }

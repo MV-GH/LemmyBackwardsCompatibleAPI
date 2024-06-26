@@ -675,5 +675,4 @@ internal abstract class LemmyApiRouter(
      * @POST("user/logout")
      */
     abstract suspend fun logout(): Result<Unit>
-
 }
