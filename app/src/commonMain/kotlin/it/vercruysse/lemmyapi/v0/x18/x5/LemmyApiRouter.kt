@@ -5,12 +5,8 @@ import io.ktor.client.*
 import it.vercruysse.lemmyapi.LemmyApiBase
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
 
-internal abstract class LemmyApiRouter(
-    client: HttpClient,
-    actualVersion: Version,
-    baseUrl: String,
-    auth: String?,
-) : LemmyApiBase(client, actualVersion, baseUrl, auth) {
+internal abstract class LemmyApiRouter(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
+    LemmyApiBase(client, actualVersion, baseUrl, auth) {
     /**
      * Gets the site, and your user data.
      *

@@ -6,7 +6,7 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "2.0.0"
-    id("org.jmailen.kotlinter") version "4.3.0"
+    id("org.jmailen.kotlinter") version "4.4.0"
     id("com.google.devtools.ksp") version ("2.0.0-1.0.22")
     id("com.vanniktech.maven.publish") version "0.29.0"
     id("com.github.ben-manes.versions") version "0.51.0"
@@ -107,7 +107,7 @@ kotlin {
                 val targetPublication = this@all
                 tasks.withType<AbstractPublishToMaven>()
                     .matching { it.publication == targetPublication }
-                    .configureEach { onlyIf { getHostOsName() == OS.WINDOWS } }
+                    .configureEach { onlyIf { getHostOsName() == OS.LINUX } }
             }
         }
     }

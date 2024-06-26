@@ -9,12 +9,8 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCaptcha
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadCount
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.MarkPostAsRead
 
-internal class LemmyApiUniWrapper(
-    client: HttpClient,
-    actualVersion: Version,
-    baseUrl: String,
-    auth: String?,
-) : LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
+internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
+    LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
     private val apiV18 = LemmyApiController(client, actualVersion, baseUrl, auth)
     private val transformer = Transformer(auth ?: "")
 
@@ -32,8 +28,10 @@ internal class LemmyApiUniWrapper(
      *
      * @GET("site")
      */
-    override suspend fun getSite(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> {
-        return apiV18.getSite(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSite(auth)).map { transformer.toUni(it) }
+    override suspend fun getSite(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> = apiV18.getSite(
+        it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSite(auth),
+    ).map {
+        transformer.toUni(it)
     }
 
     /**
@@ -43,9 +41,7 @@ internal class LemmyApiUniWrapper(
      */
     override suspend fun createSite(
         form: it.vercruysse.lemmyapi.datatypes.CreateSite,
-    ): Result<it.vercruysse.lemmyapi.datatypes.SiteResponse> {
-        return apiV18.createSite(transformer.fromUni(form)).map { transformer.toUni(it) }
-    }
+    ): Result<it.vercruysse.lemmyapi.datatypes.SiteResponse> = apiV18.createSite(transformer.fromUni(form)).map { transformer.toUni(it) }
 
     /**
      * Edit your site.
@@ -272,13 +268,11 @@ internal class LemmyApiUniWrapper(
      *
      * @POST("post/mark_as_read")
      */
-    override suspend fun markPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): Result<Unit> {
-        return form.post_ids
-            .map { MarkPostAsRead(post_id = it, read = form.read, auth = "" + auth) }
-            .map { apiV18.markPostAsRead(it) }
-            .map { it.map { } }
-            .firstOrNull { it.isFailure } ?: Result.success(Unit)
-    }
+    override suspend fun markPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): Result<Unit> = form.post_ids
+        .map { MarkPostAsRead(post_id = it, read = form.read, auth = "" + auth) }
+        .map { apiV18.markPostAsRead(it) }
+        .map { it.map { } }
+        .firstOrNull { it.isFailure } ?: Result.success(Unit)
 
     /**
      * A moderator can lock a post ( IE disable new comments ).

@@ -40,10 +40,8 @@ enum class PostFeatureType {
 // GROUP 2
 
 @Serializable
-enum class ListingType(
-    override val minimumVersion: Version = MINIMUM_API_VERSION,
-    override val maximumVersion: Version? = null,
-) : VersionTracker {
+enum class ListingType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
+    VersionTracker {
     All,
     Local,
     Subscribed,
@@ -51,20 +49,16 @@ enum class ListingType(
 }
 
 @Serializable
-enum class RegistrationMode(
-    override val minimumVersion: Version = MINIMUM_API_VERSION,
-    override val maximumVersion: Version? = null,
-) : VersionTracker {
+enum class RegistrationMode(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
+    VersionTracker {
     Closed,
     RequireApplication,
     Open,
 }
 
 @Serializable
-enum class SearchType(
-    override val minimumVersion: Version = MINIMUM_API_VERSION,
-    override val maximumVersion: Version? = null,
-) : VersionTracker {
+enum class SearchType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
+    VersionTracker {
     All,
     Comments,
     Posts,
@@ -74,10 +68,8 @@ enum class SearchType(
 }
 
 @Serializable
-enum class ModlogActionType(
-    override val minimumVersion: Version = MINIMUM_API_VERSION,
-    override val maximumVersion: Version? = null,
-) : VersionTracker {
+enum class ModlogActionType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
+    VersionTracker {
     All,
     ModRemovePost,
     ModLockPost,
@@ -97,10 +89,8 @@ enum class ModlogActionType(
 }
 
 @Serializable
-enum class SortType(
-    override val minimumVersion: Version = MINIMUM_API_VERSION,
-    override val maximumVersion: Version? = null,
-) : VersionTracker {
+enum class SortType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
+    VersionTracker {
     Active,
     Hot,
     New,
@@ -123,10 +113,8 @@ enum class SortType(
 }
 
 @Serializable
-enum class CommentSortType(
-    override val minimumVersion: Version = MINIMUM_API_VERSION,
-    override val maximumVersion: Version? = null,
-) : VersionTracker {
+enum class CommentSortType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
+    VersionTracker {
     Hot,
     Top,
     New,
@@ -135,20 +123,15 @@ enum class CommentSortType(
 }
 
 @Serializable
-enum class PostListingMode(
-    override val minimumVersion: Version = V0_19_0,
-    override val maximumVersion: Version? = null,
-) : VersionTracker {
+enum class PostListingMode(override val minimumVersion: Version = V0_19_0, override val maximumVersion: Version? = null) : VersionTracker {
     List,
     Card,
     SmallCard,
 }
 
 @Serializable
-enum class CommunityVisibility(
-    override val minimumVersion: Version = V0_19_4,
-    override val maximumVersion: Version? = null,
-) : VersionTracker {
+enum class CommunityVisibility(override val minimumVersion: Version = V0_19_4, override val maximumVersion: Version? = null) :
+    VersionTracker {
     Public,
     LocalOnly,
 }
@@ -174,9 +157,9 @@ sealed interface VersionTracker {
  * @param instanceVersion The version of the instance
  * @return A list of supported entries
  */
-inline fun <reified T> getSupportedEntries(instanceVersion: String): List<T> where T : Enum<T>, T : VersionTracker {
-    return getSupportedEntries(instanceVersion.toVersion(strict = false))
-}
+inline fun <reified T> getSupportedEntries(
+    instanceVersion: String,
+): List<T> where T : Enum<T>, T : VersionTracker = getSupportedEntries(instanceVersion.toVersion(strict = false))
 
 /**
  * Returns the supported entries for the given version.

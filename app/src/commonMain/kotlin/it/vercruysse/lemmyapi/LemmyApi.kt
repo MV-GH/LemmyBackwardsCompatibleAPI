@@ -38,9 +38,7 @@ object LemmyApi {
     /**
      * Gets the version from NodeInfo
      */
-    fun getVersion(node: NodeInfo): String {
-        return node.software.version
-    }
+    fun getVersion(node: NodeInfo): String = node.software.version
 
     /**
      * Gets the version from the NodeInfo of an instance
@@ -79,9 +77,7 @@ object LemmyApi {
     /**
      * Returns if it is a fediverse instance, meaning it supports ActivityPub protocol
      */
-    fun isFediverse(nodeInfo: NodeInfo): Boolean {
-        return nodeInfo.protocols.contains("activitypub")
-    }
+    fun isFediverse(nodeInfo: NodeInfo): Boolean = nodeInfo.protocols.contains("activitypub")
 
     /**
      * Returns if it is a Lemmy instance
@@ -99,9 +95,7 @@ object LemmyApi {
     /**
      * Returns if it is a Lemmy instance
      */
-    fun isLemmyInstance(nodeInfo: NodeInfo): Boolean {
-        return nodeInfo.software.name.lowercase() == "lemmy"
-    }
+    fun isLemmyInstance(nodeInfo: NodeInfo): Boolean = nodeInfo.software.name.lowercase() == "lemmy"
 
     /**
      * Returns a LemmyApi instance.

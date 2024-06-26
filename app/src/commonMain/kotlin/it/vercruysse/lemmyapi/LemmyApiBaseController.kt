@@ -6,17 +6,13 @@ import it.vercruysse.lemmyapi.datatypes.*
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
-abstract class LemmyApiBaseController(
-    client: HttpClient,
-    actualVersion: Version,
-    baseUrl: String,
-    override var auth: String?,
-) : LemmyApiBase(
-    client,
-    actualVersion,
-    baseUrl,
-    auth,
-) {
+abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String?) :
+    LemmyApiBase(
+        client,
+        actualVersion,
+        baseUrl,
+        auth,
+    ) {
     /**
      * Gets the site, and your user data.
      *

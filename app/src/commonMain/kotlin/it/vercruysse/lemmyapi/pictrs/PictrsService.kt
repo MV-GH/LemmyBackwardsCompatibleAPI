@@ -14,24 +14,22 @@ open class PictrsService(private val client: HttpClient, override var auth: Stri
      *
      * @POST(/pictrs/image)
      */
-    override suspend fun uploadImage(form: UploadImage): Result<UploadImageResponse> {
-        return runCatching {
-            val resp = client.post("/pictrs/image") {
-                auth?.let { cookie("jwt", it) }
-                setBody(createFormData(form.images))
-            }
-
-            val imageResp = resp.body<UploadImageResponse>()
-
-            imageResp.copy(
-                files = imageResp.files.map {
-                    it.copy(
-                        url = "${resp.call.request.url}/${it.file}",
-                        delete_url = "${resp.call.request.url}/delete/${it.delete_token}/${it.file}",
-                    )
-                },
-            )
+    override suspend fun uploadImage(form: UploadImage): Result<UploadImageResponse> = runCatching {
+        val resp = client.post("/pictrs/image") {
+            auth?.let { cookie("jwt", it) }
+            setBody(createFormData(form.images))
         }
+
+        val imageResp = resp.body<UploadImageResponse>()
+
+        imageResp.copy(
+            files = imageResp.files.map {
+                it.copy(
+                    url = "${resp.call.request.url}/${it.file}",
+                    delete_url = "${resp.call.request.url}/delete/${it.delete_token}/${it.file}",
+                )
+            },
+        )
     }
 
     /**
@@ -39,12 +37,10 @@ open class PictrsService(private val client: HttpClient, override var auth: Stri
      *
      * @POST(/pictrs/image/delete)
      */
-    override suspend fun deleteImage(relativeUrl: String): Result<Unit> {
-        return runCatching {
-            client.get(relativeUrl) {
-                auth?.let { cookie("jwt", it) }
-            }.body()
-        }
+    override suspend fun deleteImage(relativeUrl: String): Result<Unit> = runCatching {
+        client.get(relativeUrl) {
+            auth?.let { cookie("jwt", it) }
+        }.body()
     }
 
     private fun createFormData(images: List<ByteArray>): MultiPartFormDataContent =

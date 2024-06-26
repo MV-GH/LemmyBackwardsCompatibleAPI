@@ -7,12 +7,8 @@ import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
 // Based on tags/0.19.3-alpha.6
-internal class LemmyApiUniWrapper(
-    client: HttpClient,
-    actualVersion: Version,
-    baseUrl: String,
-    auth: String?,
-) : LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
+internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
+    LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
     private val api = LemmyApiController(client, auth)
     private val transformer = Transformer()
 
@@ -28,9 +24,7 @@ internal class LemmyApiUniWrapper(
      *
      * @GET("site")
      */
-    override suspend fun getSite(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> {
-        return api.getSite().map { transformer.toUni(it) }
-    }
+    override suspend fun getSite(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> = api.getSite().map { transformer.toUni(it) }
 
     /**
      * Create your site.
@@ -39,9 +33,7 @@ internal class LemmyApiUniWrapper(
      */
     override suspend fun createSite(
         form: it.vercruysse.lemmyapi.datatypes.CreateSite,
-    ): Result<it.vercruysse.lemmyapi.datatypes.SiteResponse> {
-        return api.createSite(transformer.fromUni(form)).map(transformer::toUni)
-    }
+    ): Result<it.vercruysse.lemmyapi.datatypes.SiteResponse> = api.createSite(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Edit your site.

@@ -6,10 +6,7 @@ import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.*
 
-internal abstract class LemmyApiRouter(
-    client: HttpClient,
-    auth: String?,
-) : AuthBaseClient(client, auth) {
+internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : AuthBaseClient(client, auth) {
 
     /**
      * Gets the site, and your user data.
