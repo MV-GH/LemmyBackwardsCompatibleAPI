@@ -13,8 +13,8 @@ plugins {
 }
 
 repositories {
-    gradlePluginPortal()
     mavenCentral()
+    gradlePluginPortal()
 }
 
 kotlin {
@@ -54,7 +54,7 @@ kotlin {
         commonMain.dependencies {
             implementation("io.ktor:ktor-client-core:$ktorVersion")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
