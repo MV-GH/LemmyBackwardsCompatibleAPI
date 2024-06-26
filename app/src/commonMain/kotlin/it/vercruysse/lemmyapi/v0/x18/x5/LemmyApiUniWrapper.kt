@@ -10,12 +10,12 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCaptcha
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadCount
 
 internal class LemmyApiUniWrapper(
-    ktor: HttpClient,
+    client: HttpClient,
     actualVersion: Version,
     baseUrl: String,
-    auth: String? = null,
-) : LemmyApiBaseController(ktor, actualVersion, baseUrl, auth) {
-    private val apiV18 = LemmyApiController(ktor, actualVersion, baseUrl, auth)
+    auth: String?,
+) : LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
+    private val apiV18 = LemmyApiController(client, actualVersion, baseUrl, auth)
     private val transformer = Transformer(auth ?: "")
 
     override var auth: String? = auth

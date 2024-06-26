@@ -1,18 +1,15 @@
 package it.vercruysse.lemmyapi.v0.x19.x0
 
-import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
-import it.vercruysse.lemmyapi.LemmyApiBase
+import it.vercruysse.lemmyapi.AuthBaseClient
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.*
 
 internal abstract class LemmyApiRouter(
     client: HttpClient,
-    actualVersion: Version,
-    baseUrl: String,
-    override var auth: String?,
-) : LemmyApiBase(client, actualVersion, baseUrl, auth)  {
+    auth: String?,
+) : AuthBaseClient(client, auth) {
 
     /**
      * Gets the site, and your user data.

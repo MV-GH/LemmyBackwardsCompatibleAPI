@@ -10,7 +10,7 @@ import it.vercruysse.lemmyapi.pictrs.PictrsService
 
 // Wanted to keep this as an interface, but interfaces can't keep state
 abstract class LemmyApiBase(
-    val httpClient: HttpClient,
+    httpClient: HttpClient,
     val version: Version,
     val baseUrl: String,
     override var auth: String?,

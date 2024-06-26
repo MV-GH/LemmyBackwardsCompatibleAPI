@@ -6,7 +6,7 @@ import kotlin.test.Test
 import kotlin.test.fail
 
 class DatatypesValidation {
-    private val versions = listOf("v0x18", "v0x19")
+    private val versions = listOf("v0/x18/x5", "v0/x19/x0", "v0/x19/x3", "v0/x19/x4")
 
     @Test
     fun `all datatypes that are nullable should also be optional`() {

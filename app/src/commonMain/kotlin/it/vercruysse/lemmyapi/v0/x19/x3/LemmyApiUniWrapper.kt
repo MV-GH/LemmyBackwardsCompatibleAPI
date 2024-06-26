@@ -6,14 +6,22 @@ import it.vercruysse.lemmyapi.LemmyApiBaseController
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
+// Based on tags/0.19.3-alpha.6
 internal class LemmyApiUniWrapper(
-    ktor: HttpClient,
+    client: HttpClient,
     actualVersion: Version,
     baseUrl: String,
-    auth: String? = null,
-) : LemmyApiBaseController(ktor, actualVersion, baseUrl, auth) {
-    private val api = LemmyApiController(ktor, actualVersion, baseUrl, auth)
+    auth: String?,
+) : LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
+    private val api = LemmyApiController(client, auth)
     private val transformer = Transformer()
+
+    override var auth: String?
+        get() = super.auth
+        set(value) {
+            super.auth = value
+            api.auth = value
+        }
 
     /**
      * Gets the site, and your user data.

@@ -9,7 +9,7 @@ internal abstract class LemmyApiRouter(
     client: HttpClient,
     actualVersion: Version,
     baseUrl: String,
-    override var auth: String?,
+    auth: String?,
 ) : LemmyApiBase(client, actualVersion, baseUrl, auth) {
     /**
      * Gets the site, and your user data.

@@ -1,15 +1,13 @@
 package it.vercruysse.lemmyapi
 
 import io.github.z4kn4fein.semver.toVersion
-import io.ktor.client.HttpClient
+import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import it.vercruysse.lemmyapi.dto.NodeInfo
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
-import it.vercruysse.lemmyapi.utils.dropPatchVersion
-import it.vercruysse.lemmyapi.utils.getPatchVersion
 
 object LemmyApi {
     const val MAX_SUPPORTED_VERSION = "0.19"
@@ -30,9 +28,9 @@ object LemmyApi {
     /**
      * Gets the node info of a Lemmy instance
      */
-    suspend fun getNodeInfo(instance: String): Result<NodeInfo> =
+    suspend fun getNodeInfo(instance: String, httpClient: HttpClient = lenientClient): Result<NodeInfo> =
         runCatching {
-            lenientClient
+            httpClient
                 .get("${constructBaseUrl(instance)}/nodeinfo/2.0.json")
                 .body<NodeInfo>()
         }
@@ -58,6 +56,7 @@ object LemmyApi {
      * Gets the version of a Lemmy instance
      *
      * @Throws Exception if it is not a Lemmy instance
+     * @Throws Exception if nodeInfo failed to retrieve
      */
     suspend fun getLemmyVersion(instance: String): String {
         val node = getNodeInfo(instance).getOrThrow()
@@ -138,17 +137,22 @@ object LemmyApi {
     ): LemmyApiBaseController {
         val baseUrlInstance = constructBaseUrl(instance) // TODO duplicate constructBaseURL see NodeINFO
         val client = getKtorClient("$baseUrlInstance/api/$API_VERSION/")
+        val semverV = version.toVersion(false)
 
-        return when (dropPatchVersion(version)) {
-            "0.19" -> when (getPatchVersion(version)) {
-                "0", "1" -> it.vercruysse.lemmyapi.v0.x19.x0.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
-                "2", "3" -> it.vercruysse.lemmyapi.v0.x19.x3.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
-                "4", "5" -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
-                else -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+        return when (semverV.major) {
+            0 -> when (semverV.minor) {
+                18 -> it.vercruysse.lemmyapi.v0.x18.x5.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+                19 -> when (semverV.patch) {
+                    0, 1 -> it.vercruysse.lemmyapi.v0.x19.x0.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+                    2, 3 -> it.vercruysse.lemmyapi.v0.x19.x3.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+                    4, 5 -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+                    else -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+                }
+
+                else -> throw NotSupportedException("Unsupported Lemmy minor version: $version")
             }
 
-            "0.18" -> it.vercruysse.lemmyapi.v0.x18.x5.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
-            else -> throw NotSupportedException("Unsupported Lemmy version: $version")
+            else -> throw NotSupportedException("Unsupported Lemmy major version: $version")
         }
     }
 }

@@ -7,12 +7,13 @@ import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
 
-internal class LemmyApiController(val client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String? = null) : LemmyApiRouter(
-    client,
-    actualVersion,
-    baseUrl,
-    auth,
-) {
+internal class LemmyApiController(val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
+    LemmyApiRouter(
+        client,
+        actualVersion,
+        baseUrl,
+        auth,
+    ) {
     /**
      * Gets the site, and your user data.
      *

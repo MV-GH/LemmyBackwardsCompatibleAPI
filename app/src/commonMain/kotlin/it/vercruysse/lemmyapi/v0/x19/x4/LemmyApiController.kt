@@ -1,6 +1,5 @@
 package it.vercruysse.lemmyapi.v0.x19.x4
 
-import io.github.z4kn4fein.semver.Version
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
@@ -9,11 +8,9 @@ import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.*
 
-internal class LemmyApiController(val client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String? = null) :
+internal class LemmyApiController(client: HttpClient, auth: String?) :
     LemmyApiRouter(
         client,
-        actualVersion,
-        baseUrl,
         auth,
     ) {
 
