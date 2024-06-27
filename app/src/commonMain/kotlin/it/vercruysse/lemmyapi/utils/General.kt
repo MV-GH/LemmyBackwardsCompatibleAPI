@@ -18,13 +18,11 @@ fun isBetweenVersions(
     current: String,
     min: String,
     max: String,
-): Boolean {
-    return isBetweenVersions(
-        current.toVersion(false),
-        min.toVersion(false),
-        max.toVersion(false),
-    )
-}
+): Boolean = isBetweenVersions(
+    current.toVersion(false),
+    min.toVersion(false),
+    max.toVersion(false),
+)
 
 /**
  * Check if a version is between two other versions.
@@ -39,31 +37,19 @@ fun isBetweenVersions(
     current: Version,
     min: Version,
     max: Version,
-): Boolean {
-    return min <= current && current < max
+): Boolean = min <= current && current < max
+
+inline fun <reified T> toMap(obj: T): Map<String, Any?> = jsonObjectToMap(Json.encodeToJsonElement(obj).jsonObject)
+
+fun jsonObjectToMap(element: JsonObject): Map<String, Any?> = element.entries.associate {
+    it.key to extractValue(it.value)
 }
 
-fun dropPatchVersion(version: String): String {
-    return version.split(".").take(2).joinToString(".")
-}
-
-inline fun <reified T> toMap(obj: T): Map<String, Any?> {
-    return jsonObjectToMap(Json.encodeToJsonElement(obj).jsonObject)
-}
-
-fun jsonObjectToMap(element: JsonObject): Map<String, Any?> {
-    return element.entries.associate {
-        it.key to extractValue(it.value)
-    }
-}
-
-private fun extractValue(element: JsonElement): Any? {
-    return when (element) {
-        is JsonNull -> null
-        is JsonPrimitive -> element.content
-        is JsonArray -> element.map { extractValue(it) }
-        is JsonObject -> jsonObjectToMap(element)
-    }
+private fun extractValue(element: JsonElement): Any? = when (element) {
+    is JsonNull -> null
+    is JsonPrimitive -> element.content
+    is JsonArray -> element.map { extractValue(it) }
+    is JsonObject -> jsonObjectToMap(element)
 }
 
 /**

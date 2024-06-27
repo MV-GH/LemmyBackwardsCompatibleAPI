@@ -20,6 +20,14 @@ val baseClient: HttpClient = HttpClient {
         socketTimeoutMillis = TIMEOUT_MS
         connectTimeoutMillis = TIMEOUT_MS / 2
     }
+
+    install(HttpRequestRetry) {
+        maxRetries = 5
+        retryIf { _, response ->
+            response.status.value >= 500
+        }
+        exponentialDelay()
+    }
 }
 
 /**
@@ -30,14 +38,6 @@ val coreHttpClient = baseClient.config {
 
     install(ContentNegotiation) {
         json(ktorJson)
-    }
-
-    install(HttpRequestRetry) {
-        maxRetries = 5
-        retryIf { _, response ->
-            response.status.value >= 500
-        }
-        exponentialDelay()
     }
 
     HttpResponseValidator {

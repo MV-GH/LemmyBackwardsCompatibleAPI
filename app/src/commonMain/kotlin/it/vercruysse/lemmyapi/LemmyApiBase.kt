@@ -9,12 +9,9 @@ import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.pictrs.PictrsService
 
 // Wanted to keep this as an interface, but interfaces can't keep state
-abstract class LemmyApiBase(
-    val httpClient: HttpClient,
-    val version: Version,
-    val baseUrl: String,
-    override var auth: String?,
-) : PictrsService(httpClient, auth), OldRoutes {
+abstract class LemmyApiBase(httpClient: HttpClient, val version: Version, val baseUrl: String, override var auth: String?) :
+    PictrsService(httpClient, auth),
+    OldRoutes {
     @Suppress("PropertyName")
     val FF = FeatureFlags(version)
 
@@ -26,9 +23,7 @@ abstract class LemmyApiBase(
      *
      * @return A list of supported entries
      */
-    inline fun <reified T> getSupportedEntries(): List<T> where T : Enum<T>, T : VersionTracker {
-        return getSupportedEntries(version)
-    }
+    inline fun <reified T> getSupportedEntries(): List<T> where T : Enum<T>, T : VersionTracker = getSupportedEntries(version)
 
     suspend fun getNodeInfo(): Result<NodeInfo> = LemmyApi.getNodeInfo(baseUrl)
 

@@ -10,7 +10,7 @@ This file documents the transformations that are applied to the datatypes.
 
 ## Line level
 - Drops the first 15 dukat imports
-- Converts the interfaces to data class
+- Convert the interfaces to data class
 - Adds default null to nullable types
 - Add missing commas
 - Replaces vars with vals

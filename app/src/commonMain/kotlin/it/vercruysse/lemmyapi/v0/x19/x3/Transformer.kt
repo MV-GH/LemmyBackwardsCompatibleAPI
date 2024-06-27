@@ -1,0 +1,2286 @@
+package it.vercruysse.lemmyapi.v0.x19.x3
+
+import it.vercruysse.lemmyapi.datatypes.LinkMetadata
+import it.vercruysse.lemmyapi.dto.CommunityVisibility
+import it.vercruysse.lemmyapi.dto.PostListingMode
+import it.vercruysse.lemmyapi.dto.SortType
+import it.vercruysse.lemmyapi.dto.SubscribedType
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SiteMetadata
+import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
+import it.vercruysse.lemmyapi.datatypes.AddAdminResponse as LemmyapiDatatypesAddAdminResponse
+import it.vercruysse.lemmyapi.datatypes.AddModToCommunity as LemmyapiDatatypesAddModToCommunity
+import it.vercruysse.lemmyapi.datatypes.AddModToCommunityResponse as LemmyapiDatatypesAddModToCommunityResponse
+import it.vercruysse.lemmyapi.datatypes.AdminPurgeComment as LemmyapiDatatypesAdminPurgeComment
+import it.vercruysse.lemmyapi.datatypes.AdminPurgeCommentView as LemmyapiDatatypesAdminPurgeCommentView
+import it.vercruysse.lemmyapi.datatypes.AdminPurgeCommunity as LemmyapiDatatypesAdminPurgeCommunity
+import it.vercruysse.lemmyapi.datatypes.AdminPurgeCommunityView as LemmyapiDatatypesAdminPurgeCommunityView
+import it.vercruysse.lemmyapi.datatypes.AdminPurgePerson as LemmyapiDatatypesAdminPurgePerson
+import it.vercruysse.lemmyapi.datatypes.AdminPurgePersonView as LemmyapiDatatypesAdminPurgePersonView
+import it.vercruysse.lemmyapi.datatypes.AdminPurgePost as LemmyapiDatatypesAdminPurgePost
+import it.vercruysse.lemmyapi.datatypes.AdminPurgePostView as LemmyapiDatatypesAdminPurgePostView
+import it.vercruysse.lemmyapi.datatypes.ApproveRegistrationApplication as LemmyapiDatatypesApproveRegistrationApplication
+import it.vercruysse.lemmyapi.datatypes.BanFromCommunity as LemmyapiDatatypesBanFromCommunity
+import it.vercruysse.lemmyapi.datatypes.BanFromCommunityResponse as LemmyapiDatatypesBanFromCommunityResponse
+import it.vercruysse.lemmyapi.datatypes.BanPerson as LemmyapiDatatypesBanPerson
+import it.vercruysse.lemmyapi.datatypes.BanPersonResponse as LemmyapiDatatypesBanPersonResponse
+import it.vercruysse.lemmyapi.datatypes.BannedPersonsResponse as LemmyapiDatatypesBannedPersonsResponse
+import it.vercruysse.lemmyapi.datatypes.BlockCommunity as LemmyapiDatatypesBlockCommunity
+import it.vercruysse.lemmyapi.datatypes.BlockCommunityResponse as LemmyapiDatatypesBlockCommunityResponse
+import it.vercruysse.lemmyapi.datatypes.BlockInstance as LemmyapiDatatypesBlockInstance
+import it.vercruysse.lemmyapi.datatypes.BlockInstanceResponse as LemmyapiDatatypesBlockInstanceResponse
+import it.vercruysse.lemmyapi.datatypes.BlockPerson as LemmyapiDatatypesBlockPerson
+import it.vercruysse.lemmyapi.datatypes.BlockPersonResponse as LemmyapiDatatypesBlockPersonResponse
+import it.vercruysse.lemmyapi.datatypes.CaptchaResponse as LemmyapiDatatypesCaptchaResponse
+import it.vercruysse.lemmyapi.datatypes.ChangePassword as LemmyapiDatatypesChangePassword
+import it.vercruysse.lemmyapi.datatypes.Comment as LemmyapiDatatypesComment
+import it.vercruysse.lemmyapi.datatypes.CommentAggregates as LemmyapiDatatypesCommentAggregates
+import it.vercruysse.lemmyapi.datatypes.CommentReply as LemmyapiDatatypesCommentReply
+import it.vercruysse.lemmyapi.datatypes.CommentReplyResponse as LemmyapiDatatypesCommentReplyResponse
+import it.vercruysse.lemmyapi.datatypes.CommentReplyView as LemmyapiDatatypesCommentReplyView
+import it.vercruysse.lemmyapi.datatypes.CommentReport as LemmyapiDatatypesCommentReport
+import it.vercruysse.lemmyapi.datatypes.CommentReportResponse as LemmyapiDatatypesCommentReportResponse
+import it.vercruysse.lemmyapi.datatypes.CommentReportView as LemmyapiDatatypesCommentReportView
+import it.vercruysse.lemmyapi.datatypes.CommentResponse as LemmyapiDatatypesCommentResponse
+import it.vercruysse.lemmyapi.datatypes.CommentView as LemmyapiDatatypesCommentView
+import it.vercruysse.lemmyapi.datatypes.Community as LemmyapiDatatypesCommunity
+import it.vercruysse.lemmyapi.datatypes.CommunityAggregates as LemmyapiDatatypesCommunityAggregates
+import it.vercruysse.lemmyapi.datatypes.CommunityBlockView as LemmyapiDatatypesCommunityBlockView
+import it.vercruysse.lemmyapi.datatypes.CommunityFollowerView as LemmyapiDatatypesCommunityFollowerView
+import it.vercruysse.lemmyapi.datatypes.CommunityModeratorView as LemmyapiDatatypesCommunityModeratorView
+import it.vercruysse.lemmyapi.datatypes.CommunityResponse as LemmyapiDatatypesCommunityResponse
+import it.vercruysse.lemmyapi.datatypes.CommunityView as LemmyapiDatatypesCommunityView
+import it.vercruysse.lemmyapi.datatypes.CreateComment as LemmyapiDatatypesCreateComment
+import it.vercruysse.lemmyapi.datatypes.CreateCommentLike as LemmyapiDatatypesCreateCommentLike
+import it.vercruysse.lemmyapi.datatypes.CreateCommentReport as LemmyapiDatatypesCreateCommentReport
+import it.vercruysse.lemmyapi.datatypes.CreateCommunity as LemmyapiDatatypesCreateCommunity
+import it.vercruysse.lemmyapi.datatypes.CreateCustomEmoji as LemmyapiDatatypesCreateCustomEmoji
+import it.vercruysse.lemmyapi.datatypes.CreatePost as LemmyapiDatatypesCreatePost
+import it.vercruysse.lemmyapi.datatypes.CreatePostLike as LemmyapiDatatypesCreatePostLike
+import it.vercruysse.lemmyapi.datatypes.CreatePostReport as LemmyapiDatatypesCreatePostReport
+import it.vercruysse.lemmyapi.datatypes.CreatePrivateMessage as LemmyapiDatatypesCreatePrivateMessage
+import it.vercruysse.lemmyapi.datatypes.CreatePrivateMessageReport as LemmyapiDatatypesCreatePrivateMessageReport
+import it.vercruysse.lemmyapi.datatypes.CreateSite as LemmyapiDatatypesCreateSite
+import it.vercruysse.lemmyapi.datatypes.CustomEmoji as LemmyapiDatatypesCustomEmoji
+import it.vercruysse.lemmyapi.datatypes.CustomEmojiKeyword as LemmyapiDatatypesCustomEmojiKeyword
+import it.vercruysse.lemmyapi.datatypes.CustomEmojiResponse as LemmyapiDatatypesCustomEmojiResponse
+import it.vercruysse.lemmyapi.datatypes.CustomEmojiView as LemmyapiDatatypesCustomEmojiView
+import it.vercruysse.lemmyapi.datatypes.DeleteAccount as LemmyapiDatatypesDeleteAccount
+import it.vercruysse.lemmyapi.datatypes.DeleteComment as LemmyapiDatatypesDeleteComment
+import it.vercruysse.lemmyapi.datatypes.DeleteCommunity as LemmyapiDatatypesDeleteCommunity
+import it.vercruysse.lemmyapi.datatypes.DeleteCustomEmoji as LemmyapiDatatypesDeleteCustomEmoji
+import it.vercruysse.lemmyapi.datatypes.DeletePost as LemmyapiDatatypesDeletePost
+import it.vercruysse.lemmyapi.datatypes.DeletePrivateMessage as LemmyapiDatatypesDeletePrivateMessage
+import it.vercruysse.lemmyapi.datatypes.DistinguishComment as LemmyapiDatatypesDistinguishComment
+import it.vercruysse.lemmyapi.datatypes.EditComment as LemmyapiDatatypesEditComment
+import it.vercruysse.lemmyapi.datatypes.EditCommunity as LemmyapiDatatypesEditCommunity
+import it.vercruysse.lemmyapi.datatypes.EditCustomEmoji as LemmyapiDatatypesEditCustomEmoji
+import it.vercruysse.lemmyapi.datatypes.EditPost as LemmyapiDatatypesEditPost
+import it.vercruysse.lemmyapi.datatypes.EditPrivateMessage as LemmyapiDatatypesEditPrivateMessage
+import it.vercruysse.lemmyapi.datatypes.EditSite as LemmyapiDatatypesEditSite
+import it.vercruysse.lemmyapi.datatypes.FeaturePost as LemmyapiDatatypesFeaturePost
+import it.vercruysse.lemmyapi.datatypes.FederatedInstances as LemmyapiDatatypesFederatedInstances
+import it.vercruysse.lemmyapi.datatypes.FollowCommunity as LemmyapiDatatypesFollowCommunity
+import it.vercruysse.lemmyapi.datatypes.GenerateTotpSecretResponse as LemmyapiDatatypesGenerateTotpSecretResponse
+import it.vercruysse.lemmyapi.datatypes.GetCaptchaResponse as LemmyapiDatatypesGetCaptchaResponse
+import it.vercruysse.lemmyapi.datatypes.GetComment as LemmyapiDatatypesGetComment
+import it.vercruysse.lemmyapi.datatypes.GetComments as LemmyapiDatatypesGetComments
+import it.vercruysse.lemmyapi.datatypes.GetCommentsResponse as LemmyapiDatatypesGetCommentsResponse
+import it.vercruysse.lemmyapi.datatypes.GetCommunity as LemmyapiDatatypesGetCommunity
+import it.vercruysse.lemmyapi.datatypes.GetCommunityResponse as LemmyapiDatatypesGetCommunityResponse
+import it.vercruysse.lemmyapi.datatypes.GetFederatedInstancesResponse as LemmyapiDatatypesGetFederatedInstancesResponse
+import it.vercruysse.lemmyapi.datatypes.GetModlog as LemmyapiDatatypesGetModlog
+import it.vercruysse.lemmyapi.datatypes.GetModlogResponse as LemmyapiDatatypesGetModlogResponse
+import it.vercruysse.lemmyapi.datatypes.GetPersonDetails as LemmyapiDatatypesGetPersonDetails
+import it.vercruysse.lemmyapi.datatypes.GetPersonDetailsResponse as LemmyapiDatatypesGetPersonDetailsResponse
+import it.vercruysse.lemmyapi.datatypes.GetPersonMentions as LemmyapiDatatypesGetPersonMentions
+import it.vercruysse.lemmyapi.datatypes.GetPersonMentionsResponse as LemmyapiDatatypesGetPersonMentionsResponse
+import it.vercruysse.lemmyapi.datatypes.GetPost as LemmyapiDatatypesGetPost
+import it.vercruysse.lemmyapi.datatypes.GetPostResponse as LemmyapiDatatypesGetPostResponse
+import it.vercruysse.lemmyapi.datatypes.GetPosts as LemmyapiDatatypesGetPosts
+import it.vercruysse.lemmyapi.datatypes.GetPostsResponse as LemmyapiDatatypesGetPostsResponse
+import it.vercruysse.lemmyapi.datatypes.GetPrivateMessages as LemmyapiDatatypesGetPrivateMessages
+import it.vercruysse.lemmyapi.datatypes.GetReplies as LemmyapiDatatypesGetReplies
+import it.vercruysse.lemmyapi.datatypes.GetRepliesResponse as LemmyapiDatatypesGetRepliesResponse
+import it.vercruysse.lemmyapi.datatypes.GetReportCount as LemmyapiDatatypesGetReportCount
+import it.vercruysse.lemmyapi.datatypes.GetReportCountResponse as LemmyapiDatatypesGetReportCountResponse
+import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetSiteMetadata
+import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatatypesGetSiteMetadataResponse
+import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
+import it.vercruysse.lemmyapi.datatypes.GetUnreadCountResponse as LemmyapiDatatypesGetUnreadCountResponse
+import it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse as LemmyapiDatatypesGetUnreadRegistrationApplicationCountResponse
+import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
+import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
+import it.vercruysse.lemmyapi.datatypes.InstanceBlockView as LemmyapiDatatypesInstanceBlockView
+import it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState as LemmyapiDatatypesInstanceWithFederationState
+import it.vercruysse.lemmyapi.datatypes.Language as LemmyapiDatatypesLanguage
+import it.vercruysse.lemmyapi.datatypes.ListCommentLikes as LemmyapiDatatypesListCommentLikes
+import it.vercruysse.lemmyapi.datatypes.ListCommentLikesResponse as LemmyapiDatatypesListCommentLikesResponse
+import it.vercruysse.lemmyapi.datatypes.ListCommentReports as LemmyapiDatatypesListCommentReports
+import it.vercruysse.lemmyapi.datatypes.ListCommentReportsResponse as LemmyapiDatatypesListCommentReportsResponse
+import it.vercruysse.lemmyapi.datatypes.ListCommunities as LemmyapiDatatypesListCommunities
+import it.vercruysse.lemmyapi.datatypes.ListCommunitiesResponse as LemmyapiDatatypesListCommunitiesResponse
+import it.vercruysse.lemmyapi.datatypes.ListPostLikes as LemmyapiDatatypesListPostLikes
+import it.vercruysse.lemmyapi.datatypes.ListPostLikesResponse as LemmyapiDatatypesListPostLikesResponse
+import it.vercruysse.lemmyapi.datatypes.ListPostReports as LemmyapiDatatypesListPostReports
+import it.vercruysse.lemmyapi.datatypes.ListPostReportsResponse as LemmyapiDatatypesListPostReportsResponse
+import it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReports as LemmyapiDatatypesListPrivateMessageReports
+import it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReportsResponse as LemmyapiDatatypesListPrivateMessageReportsResponse
+import it.vercruysse.lemmyapi.datatypes.ListRegistrationApplications as LemmyapiDatatypesListRegistrationApplications
+import it.vercruysse.lemmyapi.datatypes.ListRegistrationApplicationsResponse as LemmyapiDatatypesListRegistrationApplicationsResponse
+import it.vercruysse.lemmyapi.datatypes.LocalSite as LemmyapiDatatypesLocalSite
+import it.vercruysse.lemmyapi.datatypes.LocalSiteRateLimit as LemmyapiDatatypesLocalSiteRateLimit
+import it.vercruysse.lemmyapi.datatypes.LocalUser as LemmyapiDatatypesLocalUser
+import it.vercruysse.lemmyapi.datatypes.LocalUserView as LemmyapiDatatypesLocalUserView
+import it.vercruysse.lemmyapi.datatypes.LockPost as LemmyapiDatatypesLockPost
+import it.vercruysse.lemmyapi.datatypes.Login as LemmyapiDatatypesLogin
+import it.vercruysse.lemmyapi.datatypes.LoginResponse as LemmyapiDatatypesLoginResponse
+import it.vercruysse.lemmyapi.datatypes.LoginToken as LemmyapiDatatypesLoginToken
+import it.vercruysse.lemmyapi.datatypes.MarkCommentReplyAsRead as LemmyapiDatatypesMarkCommentReplyAsRead
+import it.vercruysse.lemmyapi.datatypes.MarkPersonMentionAsRead as LemmyapiDatatypesMarkPersonMentionAsRead
+import it.vercruysse.lemmyapi.datatypes.MarkPostAsRead as LemmyapiDatatypesMarkPostAsRead
+import it.vercruysse.lemmyapi.datatypes.MarkPrivateMessageAsRead as LemmyapiDatatypesMarkPrivateMessageAsRead
+import it.vercruysse.lemmyapi.datatypes.ModAdd as LemmyapiDatatypesModAdd
+import it.vercruysse.lemmyapi.datatypes.ModAddCommunity as LemmyapiDatatypesModAddCommunity
+import it.vercruysse.lemmyapi.datatypes.ModAddCommunityView as LemmyapiDatatypesModAddCommunityView
+import it.vercruysse.lemmyapi.datatypes.ModAddView as LemmyapiDatatypesModAddView
+import it.vercruysse.lemmyapi.datatypes.ModBan as LemmyapiDatatypesModBan
+import it.vercruysse.lemmyapi.datatypes.ModBanFromCommunity as LemmyapiDatatypesModBanFromCommunity
+import it.vercruysse.lemmyapi.datatypes.ModBanFromCommunityView as LemmyapiDatatypesModBanFromCommunityView
+import it.vercruysse.lemmyapi.datatypes.ModBanView as LemmyapiDatatypesModBanView
+import it.vercruysse.lemmyapi.datatypes.ModFeaturePost as LemmyapiDatatypesModFeaturePost
+import it.vercruysse.lemmyapi.datatypes.ModFeaturePostView as LemmyapiDatatypesModFeaturePostView
+import it.vercruysse.lemmyapi.datatypes.ModHideCommunity as LemmyapiDatatypesModHideCommunity
+import it.vercruysse.lemmyapi.datatypes.ModHideCommunityView as LemmyapiDatatypesModHideCommunityView
+import it.vercruysse.lemmyapi.datatypes.ModLockPost as LemmyapiDatatypesModLockPost
+import it.vercruysse.lemmyapi.datatypes.ModLockPostView as LemmyapiDatatypesModLockPostView
+import it.vercruysse.lemmyapi.datatypes.ModRemoveComment as LemmyapiDatatypesModRemoveComment
+import it.vercruysse.lemmyapi.datatypes.ModRemoveCommentView as LemmyapiDatatypesModRemoveCommentView
+import it.vercruysse.lemmyapi.datatypes.ModRemoveCommunity as LemmyapiDatatypesModRemoveCommunity
+import it.vercruysse.lemmyapi.datatypes.ModRemoveCommunityView as LemmyapiDatatypesModRemoveCommunityView
+import it.vercruysse.lemmyapi.datatypes.ModRemovePost as LemmyapiDatatypesModRemovePost
+import it.vercruysse.lemmyapi.datatypes.ModRemovePostView as LemmyapiDatatypesModRemovePostView
+import it.vercruysse.lemmyapi.datatypes.ModTransferCommunity as LemmyapiDatatypesModTransferCommunity
+import it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView as LemmyapiDatatypesModTransferCommunityView
+import it.vercruysse.lemmyapi.datatypes.ModlogListParams as LemmyapiDatatypesModlogListParams
+import it.vercruysse.lemmyapi.datatypes.MyUserInfo as LemmyapiDatatypesMyUserInfo
+import it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
+import it.vercruysse.lemmyapi.datatypes.PasswordReset as LemmyapiDatatypesPasswordReset
+import it.vercruysse.lemmyapi.datatypes.Person as LemmyapiDatatypesPerson
+import it.vercruysse.lemmyapi.datatypes.PersonAggregates as LemmyapiDatatypesPersonAggregates
+import it.vercruysse.lemmyapi.datatypes.PersonBlockView as LemmyapiDatatypesPersonBlockView
+import it.vercruysse.lemmyapi.datatypes.PersonMention as LemmyapiDatatypesPersonMention
+import it.vercruysse.lemmyapi.datatypes.PersonMentionResponse as LemmyapiDatatypesPersonMentionResponse
+import it.vercruysse.lemmyapi.datatypes.PersonMentionView as LemmyapiDatatypesPersonMentionView
+import it.vercruysse.lemmyapi.datatypes.PersonView as LemmyapiDatatypesPersonView
+import it.vercruysse.lemmyapi.datatypes.Post as LemmyapiDatatypesPost
+import it.vercruysse.lemmyapi.datatypes.PostAggregates as LemmyapiDatatypesPostAggregates
+import it.vercruysse.lemmyapi.datatypes.PostReport as LemmyapiDatatypesPostReport
+import it.vercruysse.lemmyapi.datatypes.PostReportResponse as LemmyapiDatatypesPostReportResponse
+import it.vercruysse.lemmyapi.datatypes.PostReportView as LemmyapiDatatypesPostReportView
+import it.vercruysse.lemmyapi.datatypes.PostResponse as LemmyapiDatatypesPostResponse
+import it.vercruysse.lemmyapi.datatypes.PostView as LemmyapiDatatypesPostView
+import it.vercruysse.lemmyapi.datatypes.PrivateMessage as LemmyapiDatatypesPrivateMessage
+import it.vercruysse.lemmyapi.datatypes.PrivateMessageReport as LemmyapiDatatypesPrivateMessageReport
+import it.vercruysse.lemmyapi.datatypes.PrivateMessageReportResponse as LemmyapiDatatypesPrivateMessageReportResponse
+import it.vercruysse.lemmyapi.datatypes.PrivateMessageReportView as LemmyapiDatatypesPrivateMessageReportView
+import it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse as LemmyapiDatatypesPrivateMessageResponse
+import it.vercruysse.lemmyapi.datatypes.PrivateMessageView as LemmyapiDatatypesPrivateMessageView
+import it.vercruysse.lemmyapi.datatypes.PrivateMessagesResponse as LemmyapiDatatypesPrivateMessagesResponse
+import it.vercruysse.lemmyapi.datatypes.PurgeComment as LemmyapiDatatypesPurgeComment
+import it.vercruysse.lemmyapi.datatypes.PurgeCommunity as LemmyapiDatatypesPurgeCommunity
+import it.vercruysse.lemmyapi.datatypes.PurgePerson as LemmyapiDatatypesPurgePerson
+import it.vercruysse.lemmyapi.datatypes.PurgePost as LemmyapiDatatypesPurgePost
+import it.vercruysse.lemmyapi.datatypes.ReadableFederationState as LemmyapiDatatypesReadableFederationState
+import it.vercruysse.lemmyapi.datatypes.Register as LemmyapiDatatypesRegister
+import it.vercruysse.lemmyapi.datatypes.RegistrationApplication as LemmyapiDatatypesRegistrationApplication
+import it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse as LemmyapiDatatypesRegistrationApplicationResponse
+import it.vercruysse.lemmyapi.datatypes.RegistrationApplicationView as LemmyapiDatatypesRegistrationApplicationView
+import it.vercruysse.lemmyapi.datatypes.RemoveComment as LemmyapiDatatypesRemoveComment
+import it.vercruysse.lemmyapi.datatypes.RemoveCommunity as LemmyapiDatatypesRemoveCommunity
+import it.vercruysse.lemmyapi.datatypes.RemovePost as LemmyapiDatatypesRemovePost
+import it.vercruysse.lemmyapi.datatypes.ResolveCommentReport as LemmyapiDatatypesResolveCommentReport
+import it.vercruysse.lemmyapi.datatypes.ResolveObject as LemmyapiDatatypesResolveObject
+import it.vercruysse.lemmyapi.datatypes.ResolveObjectResponse as LemmyapiDatatypesResolveObjectResponse
+import it.vercruysse.lemmyapi.datatypes.ResolvePostReport as LemmyapiDatatypesResolvePostReport
+import it.vercruysse.lemmyapi.datatypes.ResolvePrivateMessageReport as LemmyapiDatatypesResolvePrivateMessageReport
+import it.vercruysse.lemmyapi.datatypes.SaveComment as LemmyapiDatatypesSaveComment
+import it.vercruysse.lemmyapi.datatypes.SavePost as LemmyapiDatatypesSavePost
+import it.vercruysse.lemmyapi.datatypes.SaveUserSettings as LemmyapiDatatypesSaveUserSettings
+import it.vercruysse.lemmyapi.datatypes.Search as LemmyapiDatatypesSearch
+import it.vercruysse.lemmyapi.datatypes.SearchResponse as LemmyapiDatatypesSearchResponse
+import it.vercruysse.lemmyapi.datatypes.Site as LemmyapiDatatypesSite
+import it.vercruysse.lemmyapi.datatypes.SiteAggregates as LemmyapiDatatypesSiteAggregates
+import it.vercruysse.lemmyapi.datatypes.SiteResponse as LemmyapiDatatypesSiteResponse
+import it.vercruysse.lemmyapi.datatypes.SiteView as LemmyapiDatatypesSiteView
+import it.vercruysse.lemmyapi.datatypes.Tagline as LemmyapiDatatypesTagline
+import it.vercruysse.lemmyapi.datatypes.TransferCommunity as LemmyapiDatatypesTransferCommunity
+import it.vercruysse.lemmyapi.datatypes.UpdateTotp as LemmyapiDatatypesUpdateTotp
+import it.vercruysse.lemmyapi.datatypes.UpdateTotpResponse as LemmyapiDatatypesUpdateTotpResponse
+import it.vercruysse.lemmyapi.datatypes.VerifyEmail as LemmyapiDatatypesVerifyEmail
+import it.vercruysse.lemmyapi.datatypes.VoteView as LemmyapiDatatypesVoteView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddAdmin as X3DatatypesAddAdmin
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddAdminResponse as X3DatatypesAddAdminResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddModToCommunity as X3DatatypesAddModToCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddModToCommunityResponse as X3DatatypesAddModToCommunityResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgeComment as X3DatatypesAdminPurgeComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgeCommentView as X3DatatypesAdminPurgeCommentView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgeCommunity as X3DatatypesAdminPurgeCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgeCommunityView as X3DatatypesAdminPurgeCommunityView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgePerson as X3DatatypesAdminPurgePerson
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgePersonView as X3DatatypesAdminPurgePersonView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgePost as X3DatatypesAdminPurgePost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgePostView as X3DatatypesAdminPurgePostView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ApproveRegistrationApplication as X3DatatypesApproveRegistrationApplication
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BanFromCommunity as X3DatatypesBanFromCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BanFromCommunityResponse as X3DatatypesBanFromCommunityResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BanPerson as X3DatatypesBanPerson
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BanPersonResponse as X3DatatypesBanPersonResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BannedPersonsResponse as X3DatatypesBannedPersonsResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BlockCommunity as X3DatatypesBlockCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BlockCommunityResponse as X3DatatypesBlockCommunityResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BlockInstance as X3DatatypesBlockInstance
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BlockInstanceResponse as X3DatatypesBlockInstanceResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BlockPerson as X3DatatypesBlockPerson
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BlockPersonResponse as X3DatatypesBlockPersonResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CaptchaResponse as X3DatatypesCaptchaResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ChangePassword as X3DatatypesChangePassword
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Comment as X3DatatypesComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommentAggregates as X3DatatypesCommentAggregates
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommentReply as X3DatatypesCommentReply
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommentReplyResponse as X3DatatypesCommentReplyResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommentReplyView as X3DatatypesCommentReplyView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommentReport as X3DatatypesCommentReport
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommentReportResponse as X3DatatypesCommentReportResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommentReportView as X3DatatypesCommentReportView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommentResponse as X3DatatypesCommentResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommentView as X3DatatypesCommentView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Community as X3DatatypesCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommunityAggregates as X3DatatypesCommunityAggregates
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommunityBlockView as X3DatatypesCommunityBlockView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommunityFollowerView as X3DatatypesCommunityFollowerView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommunityModeratorView as X3DatatypesCommunityModeratorView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommunityResponse as X3DatatypesCommunityResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CommunityView as X3DatatypesCommunityView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreateComment as X3DatatypesCreateComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreateCommentLike as X3DatatypesCreateCommentLike
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreateCommentReport as X3DatatypesCreateCommentReport
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreateCommunity as X3DatatypesCreateCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreateCustomEmoji as X3DatatypesCreateCustomEmoji
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreatePost as X3DatatypesCreatePost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreatePostLike as X3DatatypesCreatePostLike
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreatePostReport as X3DatatypesCreatePostReport
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreatePrivateMessage as X3DatatypesCreatePrivateMessage
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreatePrivateMessageReport as X3DatatypesCreatePrivateMessageReport
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CreateSite as X3DatatypesCreateSite
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CustomEmoji as X3DatatypesCustomEmoji
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CustomEmojiKeyword as X3DatatypesCustomEmojiKeyword
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CustomEmojiResponse as X3DatatypesCustomEmojiResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.CustomEmojiView as X3DatatypesCustomEmojiView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.DeleteAccount as X3DatatypesDeleteAccount
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.DeleteComment as X3DatatypesDeleteComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.DeleteCommunity as X3DatatypesDeleteCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.DeleteCustomEmoji as X3DatatypesDeleteCustomEmoji
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.DeletePost as X3DatatypesDeletePost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.DeletePrivateMessage as X3DatatypesDeletePrivateMessage
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.DistinguishComment as X3DatatypesDistinguishComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.EditComment as X3DatatypesEditComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.EditCommunity as X3DatatypesEditCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.EditCustomEmoji as X3DatatypesEditCustomEmoji
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.EditPost as X3DatatypesEditPost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.EditPrivateMessage as X3DatatypesEditPrivateMessage
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.EditSite as X3DatatypesEditSite
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.FeaturePost as X3DatatypesFeaturePost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.FederatedInstances as X3DatatypesFederatedInstances
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.FollowCommunity as X3DatatypesFollowCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GenerateTotpSecretResponse as X3DatatypesGenerateTotpSecretResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetCaptchaResponse as X3DatatypesGetCaptchaResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetComment as X3DatatypesGetComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetComments as X3DatatypesGetComments
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetCommentsResponse as X3DatatypesGetCommentsResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetCommunity as X3DatatypesGetCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetCommunityResponse as X3DatatypesGetCommunityResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetFederatedInstancesResponse as X3DatatypesGetFederatedInstancesResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetModlog as X3DatatypesGetModlog
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetModlogResponse as X3DatatypesGetModlogResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPersonDetails as X3DatatypesGetPersonDetails
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPersonDetailsResponse as X3DatatypesGetPersonDetailsResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPersonMentions as X3DatatypesGetPersonMentions
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPersonMentionsResponse as X3DatatypesGetPersonMentionsResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPost as X3DatatypesGetPost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPostResponse as X3DatatypesGetPostResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPosts as X3DatatypesGetPosts
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPostsResponse as X3DatatypesGetPostsResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPrivateMessages as X3DatatypesGetPrivateMessages
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetReplies as X3DatatypesGetReplies
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetRepliesResponse as X3DatatypesGetRepliesResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetReportCount as X3DatatypesGetReportCount
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetReportCountResponse as X3DatatypesGetReportCountResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetSiteMetadata as X3DatatypesGetSiteMetadata
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetSiteMetadataResponse as X3DatatypesGetSiteMetadataResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetSiteResponse as X3DatatypesGetSiteResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetUnreadCountResponse as X3DatatypesGetUnreadCountResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetUnreadRegistrationApplicationCountResponse as X3DatatypesGetUnreadRegistrationApplicationCountResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.HideCommunity as X3DatatypesHideCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Instance as X3DatatypesInstance
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.InstanceBlockView as X3DatatypesInstanceBlockView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.InstanceWithFederationState as X3DatatypesInstanceWithFederationState
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Language as X3DatatypesLanguage
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListCommentLikes as X3DatatypesListCommentLikes
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListCommentLikesResponse as X3DatatypesListCommentLikesResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListCommentReports as X3DatatypesListCommentReports
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListCommentReportsResponse as X3DatatypesListCommentReportsResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListCommunities as X3DatatypesListCommunities
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListCommunitiesResponse as X3DatatypesListCommunitiesResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListPostLikes as X3DatatypesListPostLikes
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListPostLikesResponse as X3DatatypesListPostLikesResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListPostReports as X3DatatypesListPostReports
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListPostReportsResponse as X3DatatypesListPostReportsResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListPrivateMessageReports as X3DatatypesListPrivateMessageReports
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListPrivateMessageReportsResponse as X3DatatypesListPrivateMessageReportsResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListRegistrationApplications as X3DatatypesListRegistrationApplications
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListRegistrationApplicationsResponse as X3DatatypesListRegistrationApplicationsResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.LocalSite as X3DatatypesLocalSite
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.LocalSiteRateLimit as X3DatatypesLocalSiteRateLimit
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.LocalUser as X3DatatypesLocalUser
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.LocalUserView as X3DatatypesLocalUserView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.LockPost as X3DatatypesLockPost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Login as X3DatatypesLogin
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.LoginResponse as X3DatatypesLoginResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.LoginToken as X3DatatypesLoginToken
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MarkCommentReplyAsRead as X3DatatypesMarkCommentReplyAsRead
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MarkPersonMentionAsRead as X3DatatypesMarkPersonMentionAsRead
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MarkPostAsRead as X3DatatypesMarkPostAsRead
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MarkPrivateMessageAsRead as X3DatatypesMarkPrivateMessageAsRead
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModAdd as X3DatatypesModAdd
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModAddCommunity as X3DatatypesModAddCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModAddCommunityView as X3DatatypesModAddCommunityView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModAddView as X3DatatypesModAddView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModBan as X3DatatypesModBan
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModBanFromCommunity as X3DatatypesModBanFromCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModBanFromCommunityView as X3DatatypesModBanFromCommunityView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModBanView as X3DatatypesModBanView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModFeaturePost as X3DatatypesModFeaturePost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModFeaturePostView as X3DatatypesModFeaturePostView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModHideCommunity as X3DatatypesModHideCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModHideCommunityView as X3DatatypesModHideCommunityView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModLockPost as X3DatatypesModLockPost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModLockPostView as X3DatatypesModLockPostView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemoveComment as X3DatatypesModRemoveComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemoveCommentView as X3DatatypesModRemoveCommentView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemoveCommunity as X3DatatypesModRemoveCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemoveCommunityView as X3DatatypesModRemoveCommunityView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemovePost as X3DatatypesModRemovePost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemovePostView as X3DatatypesModRemovePostView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModTransferCommunity as X3DatatypesModTransferCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModTransferCommunityView as X3DatatypesModTransferCommunityView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModlogListParams as X3DatatypesModlogListParams
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MyUserInfo as X3DatatypesMyUserInfo
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PasswordChangeAfterReset as X3DatatypesPasswordChangeAfterReset
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PasswordReset as X3DatatypesPasswordReset
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Person as X3DatatypesPerson
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PersonAggregates as X3DatatypesPersonAggregates
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PersonBlockView as X3DatatypesPersonBlockView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PersonMention as X3DatatypesPersonMention
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PersonMentionResponse as X3DatatypesPersonMentionResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PersonMentionView as X3DatatypesPersonMentionView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PersonView as X3DatatypesPersonView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Post as X3DatatypesPost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PostAggregates as X3DatatypesPostAggregates
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PostReport as X3DatatypesPostReport
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PostReportResponse as X3DatatypesPostReportResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PostReportView as X3DatatypesPostReportView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PostResponse as X3DatatypesPostResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PostView as X3DatatypesPostView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PrivateMessage as X3DatatypesPrivateMessage
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PrivateMessageReport as X3DatatypesPrivateMessageReport
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PrivateMessageReportResponse as X3DatatypesPrivateMessageReportResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PrivateMessageReportView as X3DatatypesPrivateMessageReportView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PrivateMessageResponse as X3DatatypesPrivateMessageResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PrivateMessageView as X3DatatypesPrivateMessageView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PrivateMessagesResponse as X3DatatypesPrivateMessagesResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PurgeComment as X3DatatypesPurgeComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PurgeCommunity as X3DatatypesPurgeCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PurgePerson as X3DatatypesPurgePerson
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PurgePost as X3DatatypesPurgePost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ReadableFederationState as X3DatatypesReadableFederationState
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Register as X3DatatypesRegister
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.RegistrationApplication as X3DatatypesRegistrationApplication
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.RegistrationApplicationResponse as X3DatatypesRegistrationApplicationResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.RegistrationApplicationView as X3DatatypesRegistrationApplicationView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.RemoveComment as X3DatatypesRemoveComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.RemoveCommunity as X3DatatypesRemoveCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.RemovePost as X3DatatypesRemovePost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ResolveCommentReport as X3DatatypesResolveCommentReport
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ResolveObject as X3DatatypesResolveObject
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ResolveObjectResponse as X3DatatypesResolveObjectResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ResolvePostReport as X3DatatypesResolvePostReport
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ResolvePrivateMessageReport as X3DatatypesResolvePrivateMessageReport
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SaveComment as X3DatatypesSaveComment
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SavePost as X3DatatypesSavePost
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SaveUserSettings as X3DatatypesSaveUserSettings
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Search as X3DatatypesSearch
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SearchResponse as X3DatatypesSearchResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Site as X3DatatypesSite
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SiteAggregates as X3DatatypesSiteAggregates
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SiteResponse as X3DatatypesSiteResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SiteView as X3DatatypesSiteView
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Tagline as X3DatatypesTagline
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.TransferCommunity as X3DatatypesTransferCommunity
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.UpdateTotp as X3DatatypesUpdateTotp
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.UpdateTotpResponse as X3DatatypesUpdateTotpResponse
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.VerifyEmail as X3DatatypesVerifyEmail
+import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.VoteView as X3DatatypesVoteView
+
+internal class Transformer : MapperGenerator {
+    override fun toUni(d: X3DatatypesCommentReplyView): LemmyapiDatatypesCommentReplyView =
+        LemmyapiDatatypesCommentReplyView(
+            comment_reply = this.toUni(d = d.comment_reply),
+            comment = this.toUni(d = d.comment),
+            creator = this.toUni(d = d.creator),
+            post = this.toUni(d = d.post),
+            community = this.toUni(d = d.community),
+            recipient = this.toUni(d = d.recipient),
+            counts = this.toUni(d = d.counts),
+            creator_banned_from_community = d.creator_banned_from_community,
+            banned_from_community = false,
+            creator_is_moderator = d.creator_is_moderator,
+            creator_is_admin = d.creator_is_admin,
+            subscribed = d.subscribed,
+            saved = d.saved,
+            creator_blocked = d.creator_blocked,
+            my_vote = d.my_vote,
+        )
+
+    override fun toUni(d: X3DatatypesCommentReportView): LemmyapiDatatypesCommentReportView =
+        LemmyapiDatatypesCommentReportView(
+            comment_report = this.toUni(d = d.comment_report),
+            comment = this.toUni(d = d.comment),
+            post = this.toUni(d = d.post),
+            community = this.toUni(d = d.community),
+            creator = this.toUni(d = d.creator),
+            comment_creator = this.toUni(d = d.comment_creator),
+            counts = this.toUni(d = d.counts),
+            creator_banned_from_community = d.creator_banned_from_community,
+            creator_is_moderator = false,
+            creator_is_admin = false,
+            creator_blocked = false,
+            subscribed = SubscribedType.NotSubscribed,
+            saved = false,
+            my_vote = d.my_vote,
+            resolver = d.resolver?.let { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesCommentView): LemmyapiDatatypesCommentView =
+        LemmyapiDatatypesCommentView(
+            comment = this.toUni(d = d.comment),
+            creator = this.toUni(d = d.creator),
+            post = this.toUni(d = d.post),
+            community = this.toUni(d = d.community),
+            counts = this.toUni(d = d.counts),
+            creator_banned_from_community = d.creator_banned_from_community,
+            banned_from_community = false,
+            creator_is_moderator = d.creator_is_moderator,
+            creator_is_admin = d.creator_is_admin,
+            subscribed = d.subscribed,
+            saved = d.saved,
+            creator_blocked = d.creator_blocked,
+            my_vote = d.my_vote,
+        )
+
+    override fun toUni(d: X3DatatypesCommunity): LemmyapiDatatypesCommunity =
+        LemmyapiDatatypesCommunity(
+            id = d.id,
+            name = d.name,
+            title = d.title,
+            description = d.description,
+            removed = d.removed,
+            published = d.published,
+            updated = d.updated,
+            deleted = d.deleted,
+            nsfw = d.nsfw,
+            actor_id = d.actor_id,
+            local = d.local,
+            icon = d.icon,
+            banner = d.banner,
+            hidden = d.hidden,
+            posting_restricted_to_mods = d.posting_restricted_to_mods,
+            instance_id = d.instance_id,
+            visibility = CommunityVisibility.Public,
+        )
+
+    override fun toUni(d: X3DatatypesCommunityAggregates): LemmyapiDatatypesCommunityAggregates =
+        LemmyapiDatatypesCommunityAggregates(
+            community_id = d.community_id,
+            subscribers = d.subscribers,
+            posts = d.posts,
+            comments = d.comments,
+            published = d.published,
+            users_active_day = d.users_active_day,
+            users_active_week = d.users_active_week,
+            users_active_month = d.users_active_month,
+            users_active_half_year = d.users_active_half_year,
+            subscribers_local = -1,
+        )
+
+    override fun toUni(d: X3DatatypesCommunityView): LemmyapiDatatypesCommunityView =
+        LemmyapiDatatypesCommunityView(
+            community = this.toUni(d = d.community),
+            subscribed = d.subscribed,
+            blocked = d.blocked,
+            counts = this.toUni(d = d.counts),
+            banned_from_community = false,
+        )
+
+    override fun toUni(d: SiteMetadata): LinkMetadata = LinkMetadata(
+        title = d.title,
+        description = d.description,
+        image = d.image,
+        embed_video_url = d.embed_video_url,
+    )
+
+    override fun toUni(d: X3DatatypesGetSiteResponse): LemmyapiDatatypesGetSiteResponse =
+        LemmyapiDatatypesGetSiteResponse(
+            site_view = this.toUni(d = d.site_view),
+            admins = d.admins.map { this.toUni(d = it) },
+            version = d.version,
+            my_user = d.my_user?.let { this.toUni(d = it) },
+            all_languages = d.all_languages.map { this.toUni(d = it) },
+            discussion_languages = d.discussion_languages,
+            taglines = d.taglines.map { this.toUni(d = it) },
+            custom_emojis = d.custom_emojis.map { this.toUni(d = it) },
+            blocked_urls = listOf(),
+        )
+
+    override fun toUni(d: X3DatatypesLocalSite): LemmyapiDatatypesLocalSite =
+        LemmyapiDatatypesLocalSite(
+            id = d.id,
+            site_id = d.site_id,
+            site_setup = d.site_setup,
+            enable_downvotes = d.enable_downvotes,
+            enable_nsfw = d.enable_nsfw,
+            community_creation_admin_only = d.community_creation_admin_only,
+            require_email_verification = d.require_email_verification,
+            application_question = d.application_question,
+            private_instance = d.private_instance,
+            default_theme = d.default_theme,
+            default_post_listing_type = d.default_post_listing_type,
+            legal_information = d.legal_information,
+            hide_modlog_mod_names = d.hide_modlog_mod_names,
+            application_email_admins = d.application_email_admins,
+            slur_filter_regex = d.slur_filter_regex,
+            actor_name_max_length = d.actor_name_max_length,
+            federation_enabled = d.federation_enabled,
+            captcha_enabled = d.captcha_enabled,
+            captcha_difficulty = d.captcha_difficulty,
+            published = d.published,
+            updated = d.updated,
+            registration_mode = d.registration_mode,
+            reports_email_admins = d.reports_email_admins,
+            federation_signed_fetch = d.federation_signed_fetch,
+            default_post_listing_mode = PostListingMode.Card,
+            default_sort_type = SortType.Active,
+        )
+
+    override fun toUni(d: X3DatatypesPersonMentionView): LemmyapiDatatypesPersonMentionView =
+        LemmyapiDatatypesPersonMentionView(
+            person_mention = this.toUni(d = d.person_mention),
+            comment = this.toUni(d = d.comment),
+            creator = this.toUni(d = d.creator),
+            post = this.toUni(d = d.post),
+            community = this.toUni(d = d.community),
+            recipient = this.toUni(d = d.recipient),
+            counts = this.toUni(d = d.counts),
+            creator_banned_from_community = d.creator_banned_from_community,
+            banned_from_community = false,
+            creator_is_moderator = d.creator_is_moderator,
+            creator_is_admin = d.creator_is_admin,
+            subscribed = d.subscribed,
+            saved = d.saved,
+            creator_blocked = d.creator_blocked,
+            my_vote = d.my_vote,
+        )
+
+    override fun toUni(d: X3DatatypesPostReportView): LemmyapiDatatypesPostReportView =
+        LemmyapiDatatypesPostReportView(
+            post_report = this.toUni(d = d.post_report),
+            post = this.toUni(d = d.post),
+            community = this.toUni(d = d.community),
+            creator = this.toUni(d = d.creator),
+            post_creator = this.toUni(d = d.post_creator),
+            creator_banned_from_community = d.creator_banned_from_community,
+            creator_is_moderator = false,
+            creator_is_admin = false,
+            subscribed = SubscribedType.NotSubscribed,
+            saved = false,
+            read = false,
+            hidden = false,
+            creator_blocked = false,
+            my_vote = d.my_vote,
+            unread_comments = 0,
+            counts = this.toUni(d = d.counts),
+            resolver = d.resolver?.let { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesPostView): LemmyapiDatatypesPostView = LemmyapiDatatypesPostView(
+        post = this.toUni(d = d.post),
+        creator = this.toUni(d = d.creator),
+        community = this.toUni(d = d.community),
+        creator_banned_from_community = d.creator_banned_from_community,
+        banned_from_community = false,
+        creator_is_moderator = d.creator_is_moderator,
+        creator_is_admin = d.creator_is_admin,
+        counts = this.toUni(d = d.counts),
+        subscribed = d.subscribed,
+        saved = d.saved,
+        read = d.read,
+        hidden = false,
+        creator_blocked = d.creator_blocked,
+        my_vote = d.my_vote,
+        unread_comments = d.unread_comments,
+    )
+
+    override fun toUni(d: X3DatatypesVoteView): LemmyapiDatatypesVoteView = LemmyapiDatatypesVoteView(
+        creator = this.toUni(d = d.creator),
+        creator_banned_from_community = false,
+        score = d.score,
+    )
+
+    override fun toUni(d: X3DatatypesAddAdminResponse): LemmyapiDatatypesAddAdminResponse =
+        LemmyapiDatatypesAddAdminResponse(
+            admins = d.admins.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesAddModToCommunityResponse):
+        LemmyapiDatatypesAddModToCommunityResponse = LemmyapiDatatypesAddModToCommunityResponse(
+        moderators = d.moderators.map { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesAdminPurgeComment): LemmyapiDatatypesAdminPurgeComment =
+        LemmyapiDatatypesAdminPurgeComment(
+            id = d.id,
+            admin_person_id = d.admin_person_id,
+            post_id = d.post_id,
+            reason = d.reason,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesAdminPurgeCommentView): LemmyapiDatatypesAdminPurgeCommentView =
+        LemmyapiDatatypesAdminPurgeCommentView(
+            admin_purge_comment = this.toUni(d = d.admin_purge_comment),
+            admin = d.admin?.let { this.toUni(d = it) },
+            post = this.toUni(d = d.post),
+        )
+
+    override fun toUni(d: X3DatatypesAdminPurgeCommunity): LemmyapiDatatypesAdminPurgeCommunity =
+        LemmyapiDatatypesAdminPurgeCommunity(
+            id = d.id,
+            admin_person_id = d.admin_person_id,
+            reason = d.reason,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesAdminPurgeCommunityView):
+        LemmyapiDatatypesAdminPurgeCommunityView = LemmyapiDatatypesAdminPurgeCommunityView(
+        admin_purge_community = this.toUni(d = d.admin_purge_community),
+        admin = d.admin?.let { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesAdminPurgePerson): LemmyapiDatatypesAdminPurgePerson =
+        LemmyapiDatatypesAdminPurgePerson(
+            id = d.id,
+            admin_person_id = d.admin_person_id,
+            reason = d.reason,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesAdminPurgePersonView): LemmyapiDatatypesAdminPurgePersonView =
+        LemmyapiDatatypesAdminPurgePersonView(
+            admin_purge_person = this.toUni(d = d.admin_purge_person),
+            admin = d.admin?.let { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesAdminPurgePost): LemmyapiDatatypesAdminPurgePost =
+        LemmyapiDatatypesAdminPurgePost(
+            id = d.id,
+            admin_person_id = d.admin_person_id,
+            community_id = d.community_id,
+            reason = d.reason,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesAdminPurgePostView): LemmyapiDatatypesAdminPurgePostView =
+        LemmyapiDatatypesAdminPurgePostView(
+            admin_purge_post = this.toUni(d = d.admin_purge_post),
+            admin = d.admin?.let { this.toUni(d = it) },
+            community = this.toUni(d = d.community),
+        )
+
+    override fun toUni(d: X3DatatypesBanFromCommunityResponse):
+        LemmyapiDatatypesBanFromCommunityResponse = LemmyapiDatatypesBanFromCommunityResponse(
+        person_view = this.toUni(d = d.person_view),
+        banned = d.banned,
+    )
+
+    override fun toUni(d: X3DatatypesBannedPersonsResponse): LemmyapiDatatypesBannedPersonsResponse =
+        LemmyapiDatatypesBannedPersonsResponse(
+            banned = d.banned.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesBanPersonResponse): LemmyapiDatatypesBanPersonResponse =
+        LemmyapiDatatypesBanPersonResponse(
+            person_view = this.toUni(d = d.person_view),
+            banned = d.banned,
+        )
+
+    override fun toUni(d: X3DatatypesBlockCommunityResponse): LemmyapiDatatypesBlockCommunityResponse = LemmyapiDatatypesBlockCommunityResponse(
+        community_view = this.toUni(d = d.community_view),
+        blocked = d.blocked,
+    )
+
+    override fun toUni(d: X3DatatypesBlockInstanceResponse): LemmyapiDatatypesBlockInstanceResponse =
+        LemmyapiDatatypesBlockInstanceResponse(
+            blocked = d.blocked,
+        )
+
+    override fun toUni(d: X3DatatypesBlockPersonResponse): LemmyapiDatatypesBlockPersonResponse =
+        LemmyapiDatatypesBlockPersonResponse(
+            person_view = this.toUni(d = d.person_view),
+            blocked = d.blocked,
+        )
+
+    override fun toUni(d: X3DatatypesCaptchaResponse): LemmyapiDatatypesCaptchaResponse =
+        LemmyapiDatatypesCaptchaResponse(
+            png = d.png,
+            wav = d.wav,
+            uuid = d.uuid,
+        )
+
+    override fun toUni(d: X3DatatypesComment): LemmyapiDatatypesComment = LemmyapiDatatypesComment(
+        id = d.id,
+        creator_id = d.creator_id,
+        post_id = d.post_id,
+        content = d.content,
+        removed = d.removed,
+        published = d.published,
+        updated = d.updated,
+        deleted = d.deleted,
+        ap_id = d.ap_id,
+        local = d.local,
+        path = d.path,
+        distinguished = d.distinguished,
+        language_id = d.language_id,
+    )
+
+    override fun toUni(d: X3DatatypesCommentAggregates): LemmyapiDatatypesCommentAggregates =
+        LemmyapiDatatypesCommentAggregates(
+            comment_id = d.comment_id,
+            score = d.score,
+            upvotes = d.upvotes,
+            downvotes = d.downvotes,
+            published = d.published,
+            child_count = d.child_count,
+        )
+
+    override fun toUni(d: X3DatatypesCommentReply): LemmyapiDatatypesCommentReply =
+        LemmyapiDatatypesCommentReply(
+            id = d.id,
+            recipient_id = d.recipient_id,
+            comment_id = d.comment_id,
+            read = d.read,
+            published = d.published,
+        )
+
+    override fun toUni(d: X3DatatypesCommentReplyResponse): LemmyapiDatatypesCommentReplyResponse =
+        LemmyapiDatatypesCommentReplyResponse(
+            comment_reply_view = this.toUni(d = d.comment_reply_view),
+        )
+
+    override fun toUni(d: X3DatatypesCommentReport): LemmyapiDatatypesCommentReport =
+        LemmyapiDatatypesCommentReport(
+            id = d.id,
+            creator_id = d.creator_id,
+            comment_id = d.comment_id,
+            original_comment_text = d.original_comment_text,
+            reason = d.reason,
+            resolved = d.resolved,
+            resolver_id = d.resolver_id,
+            published = d.published,
+            updated = d.updated,
+        )
+
+    override fun toUni(d: X3DatatypesCommentReportResponse): LemmyapiDatatypesCommentReportResponse =
+        LemmyapiDatatypesCommentReportResponse(
+            comment_report_view = this.toUni(d = d.comment_report_view),
+        )
+
+    override fun toUni(d: X3DatatypesCommentResponse): LemmyapiDatatypesCommentResponse =
+        LemmyapiDatatypesCommentResponse(
+            comment_view = this.toUni(d = d.comment_view),
+            recipient_ids = d.recipient_ids,
+        )
+
+    override fun toUni(d: X3DatatypesCommunityBlockView): LemmyapiDatatypesCommunityBlockView =
+        LemmyapiDatatypesCommunityBlockView(
+            person = this.toUni(d = d.person),
+            community = this.toUni(d = d.community),
+        )
+
+    override fun toUni(d: X3DatatypesCommunityFollowerView): LemmyapiDatatypesCommunityFollowerView =
+        LemmyapiDatatypesCommunityFollowerView(
+            community = this.toUni(d = d.community),
+            follower = this.toUni(d = d.follower),
+        )
+
+    override fun toUni(d: X3DatatypesCommunityModeratorView): LemmyapiDatatypesCommunityModeratorView = LemmyapiDatatypesCommunityModeratorView(
+        community = this.toUni(d = d.community),
+        moderator = this.toUni(d = d.moderator),
+    )
+
+    override fun toUni(d: X3DatatypesCommunityResponse): LemmyapiDatatypesCommunityResponse =
+        LemmyapiDatatypesCommunityResponse(
+            community_view = this.toUni(d = d.community_view),
+            discussion_languages = d.discussion_languages,
+        )
+
+    override fun toUni(d: X3DatatypesCustomEmoji): LemmyapiDatatypesCustomEmoji =
+        LemmyapiDatatypesCustomEmoji(
+            id = d.id,
+            local_site_id = d.local_site_id,
+            shortcode = d.shortcode,
+            image_url = d.image_url,
+            alt_text = d.alt_text,
+            category = d.category,
+            published = d.published,
+            updated = d.updated,
+        )
+
+    override fun toUni(d: X3DatatypesCustomEmojiKeyword): LemmyapiDatatypesCustomEmojiKeyword =
+        LemmyapiDatatypesCustomEmojiKeyword(
+            custom_emoji_id = d.custom_emoji_id,
+            keyword = d.keyword,
+        )
+
+    override fun toUni(d: X3DatatypesCustomEmojiResponse): LemmyapiDatatypesCustomEmojiResponse =
+        LemmyapiDatatypesCustomEmojiResponse(
+            custom_emoji = this.toUni(d = d.custom_emoji),
+        )
+
+    override fun toUni(d: X3DatatypesCustomEmojiView): LemmyapiDatatypesCustomEmojiView =
+        LemmyapiDatatypesCustomEmojiView(
+            custom_emoji = this.toUni(d = d.custom_emoji),
+            keywords = d.keywords.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesFederatedInstances): LemmyapiDatatypesFederatedInstances =
+        LemmyapiDatatypesFederatedInstances(
+            linked = d.linked.map { this.toUni(d = it) },
+            allowed = d.allowed.map { this.toUni(d = it) },
+            blocked = d.blocked.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesGenerateTotpSecretResponse):
+        LemmyapiDatatypesGenerateTotpSecretResponse = LemmyapiDatatypesGenerateTotpSecretResponse(
+        totp_secret_url = d.totp_secret_url,
+    )
+
+    override fun toUni(d: X3DatatypesGetCaptchaResponse): LemmyapiDatatypesGetCaptchaResponse =
+        LemmyapiDatatypesGetCaptchaResponse(
+            ok = d.ok?.let { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesGetCommentsResponse): LemmyapiDatatypesGetCommentsResponse =
+        LemmyapiDatatypesGetCommentsResponse(
+            comments = d.comments.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesGetCommunityResponse): LemmyapiDatatypesGetCommunityResponse =
+        LemmyapiDatatypesGetCommunityResponse(
+            community_view = this.toUni(d = d.community_view),
+            site = d.site?.let { this.toUni(d = it) },
+            moderators = d.moderators.map { this.toUni(d = it) },
+            discussion_languages = d.discussion_languages,
+        )
+
+    override fun toUni(d: X3DatatypesGetFederatedInstancesResponse): LemmyapiDatatypesGetFederatedInstancesResponse =
+        LemmyapiDatatypesGetFederatedInstancesResponse(
+            federated_instances = d.federated_instances?.let { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesGetModlogResponse): LemmyapiDatatypesGetModlogResponse =
+        LemmyapiDatatypesGetModlogResponse(
+            removed_posts = d.removed_posts.map { this.toUni(d = it) },
+            locked_posts = d.locked_posts.map { this.toUni(d = it) },
+            featured_posts = d.featured_posts.map { this.toUni(d = it) },
+            removed_comments = d.removed_comments.map { this.toUni(d = it) },
+            removed_communities = d.removed_communities.map { this.toUni(d = it) },
+            banned_from_community = d.banned_from_community.map { this.toUni(d = it) },
+            banned = d.banned.map { this.toUni(d = it) },
+            added_to_community = d.added_to_community.map { this.toUni(d = it) },
+            transferred_to_community = d.transferred_to_community.map { this.toUni(d = it) },
+            added = d.added.map { this.toUni(d = it) },
+            admin_purged_persons = d.admin_purged_persons.map { this.toUni(d = it) },
+            admin_purged_communities = d.admin_purged_communities.map { this.toUni(d = it) },
+            admin_purged_posts = d.admin_purged_posts.map { this.toUni(d = it) },
+            admin_purged_comments = d.admin_purged_comments.map { this.toUni(d = it) },
+            hidden_communities = d.hidden_communities.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesGetPersonDetailsResponse):
+        LemmyapiDatatypesGetPersonDetailsResponse = LemmyapiDatatypesGetPersonDetailsResponse(
+        person_view = this.toUni(d = d.person_view),
+        site = d.site?.let { this.toUni(d = it) },
+        comments = d.comments.map { this.toUni(d = it) },
+        posts = d.posts.map { this.toUni(d = it) },
+        moderates = d.moderates.map { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesGetPersonMentionsResponse):
+        LemmyapiDatatypesGetPersonMentionsResponse = LemmyapiDatatypesGetPersonMentionsResponse(
+        mentions = d.mentions.map { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesGetPostResponse): LemmyapiDatatypesGetPostResponse =
+        LemmyapiDatatypesGetPostResponse(
+            post_view = this.toUni(d = d.post_view),
+            community_view = this.toUni(d = d.community_view),
+            moderators = d.moderators.map { this.toUni(d = it) },
+            cross_posts = d.cross_posts.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesGetPostsResponse): LemmyapiDatatypesGetPostsResponse =
+        LemmyapiDatatypesGetPostsResponse(
+            posts = d.posts.map { this.toUni(d = it) },
+            next_page = d.next_page,
+        )
+
+    override fun toUni(d: X3DatatypesGetRepliesResponse): LemmyapiDatatypesGetRepliesResponse =
+        LemmyapiDatatypesGetRepliesResponse(
+            replies = d.replies.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesGetReportCountResponse): LemmyapiDatatypesGetReportCountResponse = LemmyapiDatatypesGetReportCountResponse(
+        community_id = d.community_id,
+        comment_reports = d.comment_reports,
+        post_reports = d.post_reports,
+        private_message_reports = d.private_message_reports,
+    )
+
+    override fun toUni(d: X3DatatypesGetSiteMetadataResponse):
+        LemmyapiDatatypesGetSiteMetadataResponse = LemmyapiDatatypesGetSiteMetadataResponse(
+        metadata = this.toUni(d = d.metadata),
+    )
+
+    override fun toUni(d: X3DatatypesGetUnreadCountResponse): LemmyapiDatatypesGetUnreadCountResponse = LemmyapiDatatypesGetUnreadCountResponse(
+        replies = d.replies,
+        mentions = d.mentions,
+        private_messages = d.private_messages,
+    )
+
+    override fun toUni(d: X3DatatypesGetUnreadRegistrationApplicationCountResponse):
+        LemmyapiDatatypesGetUnreadRegistrationApplicationCountResponse =
+        LemmyapiDatatypesGetUnreadRegistrationApplicationCountResponse(
+            registration_applications = d.registration_applications,
+        )
+
+    override fun toUni(d: X3DatatypesInstance): LemmyapiDatatypesInstance = LemmyapiDatatypesInstance(
+        id = d.id,
+        domain = d.domain,
+        published = d.published,
+        updated = d.updated,
+        software = d.software,
+        version = d.version,
+    )
+
+    override fun toUni(d: X3DatatypesInstanceBlockView): LemmyapiDatatypesInstanceBlockView =
+        LemmyapiDatatypesInstanceBlockView(
+            person = this.toUni(d = d.person),
+            instance = this.toUni(d = d.instance),
+            site = d.site?.let { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesInstanceWithFederationState):
+        LemmyapiDatatypesInstanceWithFederationState = LemmyapiDatatypesInstanceWithFederationState(
+        id = d.id,
+        domain = d.domain,
+        published = d.published,
+        updated = d.updated,
+        software = d.software,
+        version = d.version,
+        federation_state = d.federation_state?.let { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesLanguage): LemmyapiDatatypesLanguage = LemmyapiDatatypesLanguage(
+        id = d.id,
+        code = d.code,
+        name = d.name,
+    )
+
+    override fun toUni(d: X3DatatypesListCommentLikesResponse):
+        LemmyapiDatatypesListCommentLikesResponse = LemmyapiDatatypesListCommentLikesResponse(
+        comment_likes = d.comment_likes.map { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesListCommentReportsResponse):
+        LemmyapiDatatypesListCommentReportsResponse = LemmyapiDatatypesListCommentReportsResponse(
+        comment_reports = d.comment_reports.map { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesListCommunitiesResponse):
+        LemmyapiDatatypesListCommunitiesResponse = LemmyapiDatatypesListCommunitiesResponse(
+        communities = d.communities.map { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesListPostLikesResponse): LemmyapiDatatypesListPostLikesResponse =
+        LemmyapiDatatypesListPostLikesResponse(
+            post_likes = d.post_likes.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesListPostReportsResponse):
+        LemmyapiDatatypesListPostReportsResponse = LemmyapiDatatypesListPostReportsResponse(
+        post_reports = d.post_reports.map { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesListPrivateMessageReportsResponse): LemmyapiDatatypesListPrivateMessageReportsResponse =
+        LemmyapiDatatypesListPrivateMessageReportsResponse(
+            private_message_reports = d.private_message_reports.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesListRegistrationApplicationsResponse): LemmyapiDatatypesListRegistrationApplicationsResponse =
+        LemmyapiDatatypesListRegistrationApplicationsResponse(
+            registration_applications = d.registration_applications.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesLocalSiteRateLimit): LemmyapiDatatypesLocalSiteRateLimit =
+        LemmyapiDatatypesLocalSiteRateLimit(
+            local_site_id = d.local_site_id,
+            message = d.message,
+            message_per_second = d.message_per_second,
+            post = d.post,
+            post_per_second = d.post_per_second,
+            register = d.register,
+            register_per_second = d.register_per_second,
+            image = d.image,
+            image_per_second = d.image_per_second,
+            comment = d.comment,
+            comment_per_second = d.comment_per_second,
+            search = d.search,
+            search_per_second = d.search_per_second,
+            published = d.published,
+            updated = d.updated,
+            import_user_settings = d.import_user_settings,
+            import_user_settings_per_second = d.import_user_settings_per_second,
+        )
+
+    override fun toUni(d: X3DatatypesLocalUser): LemmyapiDatatypesLocalUser =
+        LemmyapiDatatypesLocalUser(
+            id = d.id,
+            person_id = d.person_id,
+            email = d.email,
+            show_nsfw = d.show_nsfw,
+            theme = d.theme,
+            default_sort_type = d.default_sort_type,
+            default_listing_type = d.default_listing_type,
+            interface_language = d.interface_language,
+            show_avatars = d.show_avatars,
+            send_notifications_to_email = d.send_notifications_to_email,
+            show_scores = d.show_scores,
+            show_bot_accounts = d.show_bot_accounts,
+            show_read_posts = d.show_read_posts,
+            email_verified = d.email_verified,
+            accepted_application = d.accepted_application,
+            open_links_in_new_tab = d.open_links_in_new_tab,
+            blur_nsfw = d.blur_nsfw,
+            auto_expand = d.auto_expand,
+            infinite_scroll_enabled = d.infinite_scroll_enabled,
+            admin = d.admin,
+            post_listing_mode = d.post_listing_mode,
+            totp_2fa_enabled = d.totp_2fa_enabled,
+            enable_keyboard_navigation = d.enable_keyboard_navigation,
+            enable_animated_images = d.enable_animated_images,
+            collapse_bot_comments = d.collapse_bot_comments,
+        )
+
+    override fun toUni(d: X3DatatypesLocalUserView): LemmyapiDatatypesLocalUserView =
+        LemmyapiDatatypesLocalUserView(
+            local_user = this.toUni(d = d.local_user),
+            person = this.toUni(d = d.person),
+            counts = this.toUni(d = d.counts),
+        )
+
+    override fun toUni(d: X3DatatypesLoginResponse): LemmyapiDatatypesLoginResponse =
+        LemmyapiDatatypesLoginResponse(
+            jwt = d.jwt,
+            registration_created = d.registration_created,
+            verify_email_sent = d.verify_email_sent,
+        )
+
+    override fun toUni(d: X3DatatypesLoginToken): LemmyapiDatatypesLoginToken =
+        LemmyapiDatatypesLoginToken(
+            user_id = d.user_id,
+            published = d.published,
+            ip = d.ip,
+            user_agent = d.user_agent,
+        )
+
+    override fun toUni(d: X3DatatypesModAdd): LemmyapiDatatypesModAdd = LemmyapiDatatypesModAdd(
+        id = d.id,
+        mod_person_id = d.mod_person_id,
+        other_person_id = d.other_person_id,
+        removed = d.removed,
+        when_ = d.when_,
+    )
+
+    override fun toUni(d: X3DatatypesModAddCommunity): LemmyapiDatatypesModAddCommunity =
+        LemmyapiDatatypesModAddCommunity(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            other_person_id = d.other_person_id,
+            community_id = d.community_id,
+            removed = d.removed,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesModAddCommunityView): LemmyapiDatatypesModAddCommunityView =
+        LemmyapiDatatypesModAddCommunityView(
+            mod_add_community = this.toUni(d = d.mod_add_community),
+            moderator = d.moderator?.let { this.toUni(d = it) },
+            community = this.toUni(d = d.community),
+            modded_person = this.toUni(d = d.modded_person),
+        )
+
+    override fun toUni(d: X3DatatypesModAddView): LemmyapiDatatypesModAddView =
+        LemmyapiDatatypesModAddView(
+            mod_add = this.toUni(d = d.mod_add),
+            moderator = d.moderator?.let { this.toUni(d = it) },
+            modded_person = this.toUni(d = d.modded_person),
+        )
+
+    override fun toUni(d: X3DatatypesModBan): LemmyapiDatatypesModBan = LemmyapiDatatypesModBan(
+        id = d.id,
+        mod_person_id = d.mod_person_id,
+        other_person_id = d.other_person_id,
+        reason = d.reason,
+        banned = d.banned,
+        expires = d.expires,
+        when_ = d.when_,
+    )
+
+    override fun toUni(d: X3DatatypesModBanFromCommunity): LemmyapiDatatypesModBanFromCommunity =
+        LemmyapiDatatypesModBanFromCommunity(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            other_person_id = d.other_person_id,
+            community_id = d.community_id,
+            reason = d.reason,
+            banned = d.banned,
+            expires = d.expires,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesModBanFromCommunityView):
+        LemmyapiDatatypesModBanFromCommunityView = LemmyapiDatatypesModBanFromCommunityView(
+        mod_ban_from_community = this.toUni(d = d.mod_ban_from_community),
+        moderator = d.moderator?.let { this.toUni(d = it) },
+        community = this.toUni(d = d.community),
+        banned_person = this.toUni(d = d.banned_person),
+    )
+
+    override fun toUni(d: X3DatatypesModBanView): LemmyapiDatatypesModBanView =
+        LemmyapiDatatypesModBanView(
+            mod_ban = this.toUni(d = d.mod_ban),
+            moderator = d.moderator?.let { this.toUni(d = it) },
+            banned_person = this.toUni(d = d.banned_person),
+        )
+
+    override fun toUni(d: X3DatatypesModFeaturePost): LemmyapiDatatypesModFeaturePost =
+        LemmyapiDatatypesModFeaturePost(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            post_id = d.post_id,
+            featured = d.featured,
+            when_ = d.when_,
+            is_featured_community = d.is_featured_community,
+        )
+
+    override fun toUni(d: X3DatatypesModFeaturePostView): LemmyapiDatatypesModFeaturePostView =
+        LemmyapiDatatypesModFeaturePostView(
+            mod_feature_post = this.toUni(d = d.mod_feature_post),
+            moderator = d.moderator?.let { this.toUni(d = it) },
+            post = this.toUni(d = d.post),
+            community = this.toUni(d = d.community),
+        )
+
+    override fun toUni(d: X3DatatypesModHideCommunity): LemmyapiDatatypesModHideCommunity =
+        LemmyapiDatatypesModHideCommunity(
+            id = d.id,
+            community_id = d.community_id,
+            mod_person_id = d.mod_person_id,
+            when_ = d.when_,
+            reason = d.reason,
+            hidden = d.hidden,
+        )
+
+    override fun toUni(d: X3DatatypesModHideCommunityView): LemmyapiDatatypesModHideCommunityView =
+        LemmyapiDatatypesModHideCommunityView(
+            mod_hide_community = this.toUni(d = d.mod_hide_community),
+            admin = d.admin?.let { this.toUni(d = it) },
+            community = this.toUni(d = d.community),
+        )
+
+    override fun toUni(d: X3DatatypesModLockPost): LemmyapiDatatypesModLockPost =
+        LemmyapiDatatypesModLockPost(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            post_id = d.post_id,
+            locked = d.locked,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesModLockPostView): LemmyapiDatatypesModLockPostView =
+        LemmyapiDatatypesModLockPostView(
+            mod_lock_post = this.toUni(d = d.mod_lock_post),
+            moderator = d.moderator?.let { this.toUni(d = it) },
+            post = this.toUni(d = d.post),
+            community = this.toUni(d = d.community),
+        )
+
+    override fun toUni(d: X3DatatypesModlogListParams): LemmyapiDatatypesModlogListParams =
+        LemmyapiDatatypesModlogListParams(
+            community_id = d.community_id,
+            mod_person_id = d.mod_person_id,
+            other_person_id = d.other_person_id,
+            page = d.page,
+            limit = d.limit,
+            hide_modlog_names = d.hide_modlog_names,
+        )
+
+    override fun toUni(d: X3DatatypesModRemoveComment): LemmyapiDatatypesModRemoveComment =
+        LemmyapiDatatypesModRemoveComment(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            comment_id = d.comment_id,
+            reason = d.reason,
+            removed = d.removed,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesModRemoveCommentView): LemmyapiDatatypesModRemoveCommentView =
+        LemmyapiDatatypesModRemoveCommentView(
+            mod_remove_comment = this.toUni(d = d.mod_remove_comment),
+            moderator = d.moderator?.let { this.toUni(d = it) },
+            comment = this.toUni(d = d.comment),
+            commenter = this.toUni(d = d.commenter),
+            post = this.toUni(d = d.post),
+            community = this.toUni(d = d.community),
+        )
+
+    override fun toUni(d: X3DatatypesModRemoveCommunity): LemmyapiDatatypesModRemoveCommunity =
+        LemmyapiDatatypesModRemoveCommunity(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            community_id = d.community_id,
+            reason = d.reason,
+            removed = d.removed,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesModRemoveCommunityView): LemmyapiDatatypesModRemoveCommunityView = LemmyapiDatatypesModRemoveCommunityView(
+        mod_remove_community = this.toUni(d = d.mod_remove_community),
+        moderator = d.moderator?.let { this.toUni(d = it) },
+        community = this.toUni(d = d.community),
+    )
+
+    override fun toUni(d: X3DatatypesModRemovePost): LemmyapiDatatypesModRemovePost =
+        LemmyapiDatatypesModRemovePost(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            post_id = d.post_id,
+            reason = d.reason,
+            removed = d.removed,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesModRemovePostView): LemmyapiDatatypesModRemovePostView =
+        LemmyapiDatatypesModRemovePostView(
+            mod_remove_post = this.toUni(d = d.mod_remove_post),
+            moderator = d.moderator?.let { this.toUni(d = it) },
+            post = this.toUni(d = d.post),
+            community = this.toUni(d = d.community),
+        )
+
+    override fun toUni(d: X3DatatypesModTransferCommunity): LemmyapiDatatypesModTransferCommunity =
+        LemmyapiDatatypesModTransferCommunity(
+            id = d.id,
+            mod_person_id = d.mod_person_id,
+            other_person_id = d.other_person_id,
+            community_id = d.community_id,
+            when_ = d.when_,
+        )
+
+    override fun toUni(d: X3DatatypesModTransferCommunityView):
+        LemmyapiDatatypesModTransferCommunityView = LemmyapiDatatypesModTransferCommunityView(
+        mod_transfer_community = this.toUni(d = d.mod_transfer_community),
+        moderator = d.moderator?.let { this.toUni(d = it) },
+        community = this.toUni(d = d.community),
+        modded_person = this.toUni(d = d.modded_person),
+    )
+
+    override fun toUni(d: X3DatatypesMyUserInfo): LemmyapiDatatypesMyUserInfo =
+        LemmyapiDatatypesMyUserInfo(
+            local_user_view = this.toUni(d = d.local_user_view),
+            follows = d.follows.map { this.toUni(d = it) },
+            moderates = d.moderates.map { this.toUni(d = it) },
+            community_blocks = d.community_blocks.map { this.toUni(d = it) },
+            instance_blocks = d.instance_blocks.map { this.toUni(d = it) },
+            person_blocks = d.person_blocks.map { this.toUni(d = it) },
+            discussion_languages = d.discussion_languages,
+        )
+
+    override fun toUni(d: X3DatatypesPerson): LemmyapiDatatypesPerson = LemmyapiDatatypesPerson(
+        id = d.id,
+        name = d.name,
+        display_name = d.display_name,
+        avatar = d.avatar,
+        banned = d.banned,
+        published = d.published,
+        updated = d.updated,
+        actor_id = d.actor_id,
+        bio = d.bio,
+        local = d.local,
+        banner = d.banner,
+        deleted = d.deleted,
+        matrix_user_id = d.matrix_user_id,
+        bot_account = d.bot_account,
+        ban_expires = d.ban_expires,
+        instance_id = d.instance_id,
+    )
+
+    override fun toUni(d: X3DatatypesPersonAggregates): LemmyapiDatatypesPersonAggregates =
+        LemmyapiDatatypesPersonAggregates(
+            person_id = d.person_id,
+            post_count = d.post_count,
+            comment_count = d.comment_count,
+        )
+
+    override fun toUni(d: X3DatatypesPersonBlockView): LemmyapiDatatypesPersonBlockView =
+        LemmyapiDatatypesPersonBlockView(
+            person = this.toUni(d = d.person),
+            target = this.toUni(d = d.target),
+        )
+
+    override fun toUni(d: X3DatatypesPersonMention): LemmyapiDatatypesPersonMention =
+        LemmyapiDatatypesPersonMention(
+            id = d.id,
+            recipient_id = d.recipient_id,
+            comment_id = d.comment_id,
+            read = d.read,
+            published = d.published,
+        )
+
+    override fun toUni(d: X3DatatypesPersonMentionResponse): LemmyapiDatatypesPersonMentionResponse =
+        LemmyapiDatatypesPersonMentionResponse(
+            person_mention_view = this.toUni(d = d.person_mention_view),
+        )
+
+    override fun toUni(d: X3DatatypesPersonView): LemmyapiDatatypesPersonView =
+        LemmyapiDatatypesPersonView(
+            person = this.toUni(d = d.person),
+            counts = this.toUni(d = d.counts),
+            is_admin = d.is_admin,
+        )
+
+    override fun toUni(d: X3DatatypesPost): LemmyapiDatatypesPost = LemmyapiDatatypesPost(
+        id = d.id,
+        name = d.name,
+        url = d.url,
+        body = d.body,
+        creator_id = d.creator_id,
+        community_id = d.community_id,
+        removed = d.removed,
+        locked = d.locked,
+        published = d.published,
+        updated = d.updated,
+        deleted = d.deleted,
+        nsfw = d.nsfw,
+        embed_title = d.embed_title,
+        embed_description = d.embed_description,
+        thumbnail_url = d.thumbnail_url,
+        ap_id = d.ap_id,
+        local = d.local,
+        embed_video_url = d.embed_video_url,
+        language_id = d.language_id,
+        featured_community = d.featured_community,
+        featured_local = d.featured_local,
+    )
+
+    override fun toUni(d: X3DatatypesPostAggregates): LemmyapiDatatypesPostAggregates =
+        LemmyapiDatatypesPostAggregates(
+            post_id = d.post_id,
+            comments = d.comments,
+            score = d.score,
+            upvotes = d.upvotes,
+            downvotes = d.downvotes,
+            published = d.published,
+            newest_comment_time = d.newest_comment_time,
+        )
+
+    override fun toUni(d: X3DatatypesPostReport): LemmyapiDatatypesPostReport =
+        LemmyapiDatatypesPostReport(
+            id = d.id,
+            creator_id = d.creator_id,
+            post_id = d.post_id,
+            original_post_name = d.original_post_name,
+            original_post_url = d.original_post_url,
+            original_post_body = d.original_post_body,
+            reason = d.reason,
+            resolved = d.resolved,
+            resolver_id = d.resolver_id,
+            published = d.published,
+            updated = d.updated,
+        )
+
+    override fun toUni(d: X3DatatypesPostReportResponse): LemmyapiDatatypesPostReportResponse =
+        LemmyapiDatatypesPostReportResponse(
+            post_report_view = this.toUni(d = d.post_report_view),
+        )
+
+    override fun toUni(d: X3DatatypesPostResponse): LemmyapiDatatypesPostResponse =
+        LemmyapiDatatypesPostResponse(
+            post_view = this.toUni(d = d.post_view),
+        )
+
+    override fun toUni(d: X3DatatypesPrivateMessage): LemmyapiDatatypesPrivateMessage =
+        LemmyapiDatatypesPrivateMessage(
+            id = d.id,
+            creator_id = d.creator_id,
+            recipient_id = d.recipient_id,
+            content = d.content,
+            deleted = d.deleted,
+            read = d.read,
+            published = d.published,
+            updated = d.updated,
+            ap_id = d.ap_id,
+            local = d.local,
+        )
+
+    override fun toUni(d: X3DatatypesPrivateMessageReport): LemmyapiDatatypesPrivateMessageReport =
+        LemmyapiDatatypesPrivateMessageReport(
+            id = d.id,
+            creator_id = d.creator_id,
+            private_message_id = d.private_message_id,
+            original_pm_text = d.original_pm_text,
+            reason = d.reason,
+            resolved = d.resolved,
+            resolver_id = d.resolver_id,
+            published = d.published,
+            updated = d.updated,
+        )
+
+    override fun toUni(d: X3DatatypesPrivateMessageReportResponse):
+        LemmyapiDatatypesPrivateMessageReportResponse = LemmyapiDatatypesPrivateMessageReportResponse(
+        private_message_report_view = this.toUni(d = d.private_message_report_view),
+    )
+
+    override fun toUni(d: X3DatatypesPrivateMessageReportView):
+        LemmyapiDatatypesPrivateMessageReportView = LemmyapiDatatypesPrivateMessageReportView(
+        private_message_report = this.toUni(d = d.private_message_report),
+        private_message = this.toUni(d = d.private_message),
+        private_message_creator = this.toUni(d = d.private_message_creator),
+        creator = this.toUni(d = d.creator),
+        resolver = d.resolver?.let { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesPrivateMessageResponse): LemmyapiDatatypesPrivateMessageResponse = LemmyapiDatatypesPrivateMessageResponse(
+        private_message_view = this.toUni(d = d.private_message_view),
+    )
+
+    override fun toUni(d: X3DatatypesPrivateMessagesResponse):
+        LemmyapiDatatypesPrivateMessagesResponse = LemmyapiDatatypesPrivateMessagesResponse(
+        private_messages = d.private_messages.map { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesPrivateMessageView): LemmyapiDatatypesPrivateMessageView =
+        LemmyapiDatatypesPrivateMessageView(
+            private_message = this.toUni(d = d.private_message),
+            creator = this.toUni(d = d.creator),
+            recipient = this.toUni(d = d.recipient),
+        )
+
+    override fun toUni(d: X3DatatypesReadableFederationState):
+        LemmyapiDatatypesReadableFederationState = LemmyapiDatatypesReadableFederationState(
+        instance_id = d.instance_id,
+        last_successful_id = d.last_successful_id,
+        last_successful_published_time = d.last_successful_published_time,
+        fail_count = d.fail_count,
+        last_retry = d.last_retry,
+        next_retry = d.next_retry,
+    )
+
+    override fun toUni(d: X3DatatypesRegistrationApplication):
+        LemmyapiDatatypesRegistrationApplication = LemmyapiDatatypesRegistrationApplication(
+        id = d.id,
+        local_user_id = d.local_user_id,
+        answer = d.answer,
+        admin_id = d.admin_id,
+        deny_reason = d.deny_reason,
+        published = d.published,
+    )
+
+    override fun toUni(d: X3DatatypesRegistrationApplicationResponse): LemmyapiDatatypesRegistrationApplicationResponse =
+        LemmyapiDatatypesRegistrationApplicationResponse(
+            registration_application = this.toUni(d = d.registration_application),
+        )
+
+    override fun toUni(d: X3DatatypesRegistrationApplicationView):
+        LemmyapiDatatypesRegistrationApplicationView = LemmyapiDatatypesRegistrationApplicationView(
+        registration_application = this.toUni(d = d.registration_application),
+        creator_local_user = this.toUni(d = d.creator_local_user),
+        creator = this.toUni(d = d.creator),
+        admin = d.admin?.let { this.toUni(d = it) },
+    )
+
+    override fun toUni(d: X3DatatypesResolveObjectResponse): LemmyapiDatatypesResolveObjectResponse =
+        LemmyapiDatatypesResolveObjectResponse(
+            comment = d.comment?.let { this.toUni(d = it) },
+            post = d.post?.let { this.toUni(d = it) },
+            community = d.community?.let { this.toUni(d = it) },
+            person = d.person?.let { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesSearchResponse): LemmyapiDatatypesSearchResponse =
+        LemmyapiDatatypesSearchResponse(
+            type_ = d.type_,
+            comments = d.comments.map { this.toUni(d = it) },
+            posts = d.posts.map { this.toUni(d = it) },
+            communities = d.communities.map { this.toUni(d = it) },
+            users = d.users.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesSite): LemmyapiDatatypesSite = LemmyapiDatatypesSite(
+        id = d.id,
+        name = d.name,
+        sidebar = d.sidebar,
+        published = d.published,
+        updated = d.updated,
+        icon = d.icon,
+        banner = d.banner,
+        description = d.description,
+        actor_id = d.actor_id,
+        last_refreshed_at = d.last_refreshed_at,
+        inbox_url = d.inbox_url,
+        instance_id = d.instance_id,
+    )
+
+    override fun toUni(d: X3DatatypesSiteAggregates): LemmyapiDatatypesSiteAggregates =
+        LemmyapiDatatypesSiteAggregates(
+            site_id = d.site_id,
+            users = d.users,
+            posts = d.posts,
+            comments = d.comments,
+            communities = d.communities,
+            users_active_day = d.users_active_day,
+            users_active_week = d.users_active_week,
+            users_active_month = d.users_active_month,
+            users_active_half_year = d.users_active_half_year,
+        )
+
+    override fun toUni(d: X3DatatypesSiteResponse): LemmyapiDatatypesSiteResponse =
+        LemmyapiDatatypesSiteResponse(
+            site_view = this.toUni(d = d.site_view),
+            taglines = d.taglines.map { this.toUni(d = it) },
+        )
+
+    override fun toUni(d: X3DatatypesSiteView): LemmyapiDatatypesSiteView = LemmyapiDatatypesSiteView(
+        site = this.toUni(d = d.site),
+        local_site = this.toUni(d = d.local_site),
+        local_site_rate_limit = this.toUni(d = d.local_site_rate_limit),
+        counts = this.toUni(d = d.counts),
+    )
+
+    override fun toUni(d: X3DatatypesTagline): LemmyapiDatatypesTagline = LemmyapiDatatypesTagline(
+        id = d.id,
+        local_site_id = d.local_site_id,
+        content = d.content,
+        published = d.published,
+        updated = d.updated,
+    )
+
+    override fun toUni(d: X3DatatypesUpdateTotpResponse): LemmyapiDatatypesUpdateTotpResponse =
+        LemmyapiDatatypesUpdateTotpResponse(
+            enabled = d.enabled,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesAddAdmin): X3DatatypesAddAdmin = X3DatatypesAddAdmin(
+        person_id = d.person_id,
+        added = d.added,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesAddModToCommunity): X3DatatypesAddModToCommunity =
+        X3DatatypesAddModToCommunity(
+            community_id = d.community_id,
+            person_id = d.person_id,
+            added = d.added,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesApproveRegistrationApplication):
+        X3DatatypesApproveRegistrationApplication = X3DatatypesApproveRegistrationApplication(
+        id = d.id,
+        approve = d.approve,
+        deny_reason = d.deny_reason,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesBanFromCommunity): X3DatatypesBanFromCommunity =
+        X3DatatypesBanFromCommunity(
+            community_id = d.community_id,
+            person_id = d.person_id,
+            ban = d.ban,
+            remove_data = d.remove_data,
+            reason = d.reason,
+            expires = d.expires,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesBanPerson): X3DatatypesBanPerson = X3DatatypesBanPerson(
+        person_id = d.person_id,
+        ban = d.ban,
+        remove_data = d.remove_data,
+        reason = d.reason,
+        expires = d.expires,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesBlockCommunity): X3DatatypesBlockCommunity =
+        X3DatatypesBlockCommunity(
+            community_id = d.community_id,
+            block = d.block,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesBlockInstance): X3DatatypesBlockInstance =
+        X3DatatypesBlockInstance(
+            instance_id = d.instance_id,
+            block = d.block,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesBlockPerson): X3DatatypesBlockPerson =
+        X3DatatypesBlockPerson(
+            person_id = d.person_id,
+            block = d.block,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesChangePassword): X3DatatypesChangePassword =
+        X3DatatypesChangePassword(
+            new_password = d.new_password,
+            new_password_verify = d.new_password_verify,
+            old_password = d.old_password,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreateComment): X3DatatypesCreateComment =
+        X3DatatypesCreateComment(
+            content = d.content,
+            post_id = d.post_id,
+            parent_id = d.parent_id,
+            language_id = d.language_id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreateCommentLike): X3DatatypesCreateCommentLike =
+        X3DatatypesCreateCommentLike(
+            comment_id = d.comment_id,
+            score = d.score.toLong(),
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreateCommentReport): X3DatatypesCreateCommentReport =
+        X3DatatypesCreateCommentReport(
+            comment_id = d.comment_id,
+            reason = d.reason,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreateCommunity): X3DatatypesCreateCommunity =
+        X3DatatypesCreateCommunity(
+            name = d.name,
+            title = d.title,
+            description = d.description,
+            icon = d.icon,
+            banner = d.banner,
+            nsfw = d.nsfw,
+            posting_restricted_to_mods = d.posting_restricted_to_mods,
+            discussion_languages = d.discussion_languages,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreateCustomEmoji): X3DatatypesCreateCustomEmoji =
+        X3DatatypesCreateCustomEmoji(
+            category = d.category,
+            shortcode = d.shortcode,
+            image_url = d.image_url,
+            alt_text = d.alt_text,
+            keywords = d.keywords,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreatePost): X3DatatypesCreatePost =
+        X3DatatypesCreatePost(
+            name = d.name,
+            community_id = d.community_id,
+            url = d.url,
+            body = d.body,
+            honeypot = d.honeypot,
+            nsfw = d.nsfw,
+            language_id = d.language_id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreatePostLike): X3DatatypesCreatePostLike =
+        X3DatatypesCreatePostLike(
+            post_id = d.post_id,
+            score = d.score.toLong(),
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreatePostReport): X3DatatypesCreatePostReport =
+        X3DatatypesCreatePostReport(
+            post_id = d.post_id,
+            reason = d.reason,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreatePrivateMessage): X3DatatypesCreatePrivateMessage =
+        X3DatatypesCreatePrivateMessage(
+            content = d.content,
+            recipient_id = d.recipient_id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesCreatePrivateMessageReport):
+        X3DatatypesCreatePrivateMessageReport = X3DatatypesCreatePrivateMessageReport(
+        private_message_id = d.private_message_id,
+        reason = d.reason,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesCreateSite): X3DatatypesCreateSite =
+        X3DatatypesCreateSite(
+            name = d.name,
+            sidebar = d.sidebar,
+            description = d.description,
+            icon = d.icon,
+            banner = d.banner,
+            enable_downvotes = d.enable_downvotes,
+            enable_nsfw = d.enable_nsfw,
+            community_creation_admin_only = d.community_creation_admin_only,
+            require_email_verification = d.require_email_verification,
+            application_question = d.application_question,
+            private_instance = d.private_instance,
+            default_theme = d.default_theme,
+            default_post_listing_type = d.default_post_listing_type,
+            legal_information = d.legal_information,
+            application_email_admins = d.application_email_admins,
+            hide_modlog_mod_names = d.hide_modlog_mod_names,
+            discussion_languages = d.discussion_languages,
+            slur_filter_regex = d.slur_filter_regex,
+            actor_name_max_length = d.actor_name_max_length,
+            rate_limit_message = d.rate_limit_message,
+            rate_limit_message_per_second = d.rate_limit_message_per_second,
+            rate_limit_post = d.rate_limit_post,
+            rate_limit_post_per_second = d.rate_limit_post_per_second,
+            rate_limit_register = d.rate_limit_register,
+            rate_limit_register_per_second = d.rate_limit_register_per_second,
+            rate_limit_image = d.rate_limit_image,
+            rate_limit_image_per_second = d.rate_limit_image_per_second,
+            rate_limit_comment = d.rate_limit_comment,
+            rate_limit_comment_per_second = d.rate_limit_comment_per_second,
+            rate_limit_search = d.rate_limit_search,
+            rate_limit_search_per_second = d.rate_limit_search_per_second,
+            federation_enabled = d.federation_enabled,
+            federation_debug = d.federation_debug,
+            captcha_enabled = d.captcha_enabled,
+            captcha_difficulty = d.captcha_difficulty,
+            allowed_instances = d.allowed_instances,
+            blocked_instances = d.blocked_instances,
+            taglines = d.taglines,
+            registration_mode = d.registration_mode,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesDeleteAccount): X3DatatypesDeleteAccount =
+        X3DatatypesDeleteAccount(
+            password = d.password,
+            delete_content = d.delete_content,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesDeleteComment): X3DatatypesDeleteComment =
+        X3DatatypesDeleteComment(
+            comment_id = d.comment_id,
+            deleted = d.deleted,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesDeleteCommunity): X3DatatypesDeleteCommunity =
+        X3DatatypesDeleteCommunity(
+            community_id = d.community_id,
+            deleted = d.deleted,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesDeleteCustomEmoji): X3DatatypesDeleteCustomEmoji =
+        X3DatatypesDeleteCustomEmoji(
+            id = d.id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesDeletePost): X3DatatypesDeletePost =
+        X3DatatypesDeletePost(
+            post_id = d.post_id,
+            deleted = d.deleted,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesDeletePrivateMessage): X3DatatypesDeletePrivateMessage =
+        X3DatatypesDeletePrivateMessage(
+            private_message_id = d.private_message_id,
+            deleted = d.deleted,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesDistinguishComment): X3DatatypesDistinguishComment =
+        X3DatatypesDistinguishComment(
+            comment_id = d.comment_id,
+            distinguished = d.distinguished,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesEditComment): X3DatatypesEditComment =
+        X3DatatypesEditComment(
+            comment_id = d.comment_id,
+            content = d.content,
+            language_id = d.language_id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesEditCommunity): X3DatatypesEditCommunity =
+        X3DatatypesEditCommunity(
+            community_id = d.community_id,
+            title = d.title,
+            description = d.description,
+            icon = d.icon,
+            banner = d.banner,
+            nsfw = d.nsfw,
+            posting_restricted_to_mods = d.posting_restricted_to_mods,
+            discussion_languages = d.discussion_languages,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesEditCustomEmoji): X3DatatypesEditCustomEmoji =
+        X3DatatypesEditCustomEmoji(
+            id = d.id,
+            category = d.category,
+            image_url = d.image_url,
+            alt_text = d.alt_text,
+            keywords = d.keywords,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesEditPost): X3DatatypesEditPost = X3DatatypesEditPost(
+        post_id = d.post_id,
+        name = d.name,
+        url = d.url,
+        body = d.body,
+        nsfw = d.nsfw,
+        language_id = d.language_id,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesEditPrivateMessage): X3DatatypesEditPrivateMessage =
+        X3DatatypesEditPrivateMessage(
+            private_message_id = d.private_message_id,
+            content = d.content,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesEditSite): X3DatatypesEditSite = X3DatatypesEditSite(
+        name = d.name,
+        sidebar = d.sidebar,
+        description = d.description,
+        icon = d.icon,
+        banner = d.banner,
+        enable_downvotes = d.enable_downvotes,
+        enable_nsfw = d.enable_nsfw,
+        community_creation_admin_only = d.community_creation_admin_only,
+        require_email_verification = d.require_email_verification,
+        application_question = d.application_question,
+        private_instance = d.private_instance,
+        default_theme = d.default_theme,
+        default_post_listing_type = d.default_post_listing_type,
+        legal_information = d.legal_information,
+        application_email_admins = d.application_email_admins,
+        hide_modlog_mod_names = d.hide_modlog_mod_names,
+        discussion_languages = d.discussion_languages,
+        slur_filter_regex = d.slur_filter_regex,
+        actor_name_max_length = d.actor_name_max_length,
+        rate_limit_message = d.rate_limit_message,
+        rate_limit_message_per_second = d.rate_limit_message_per_second,
+        rate_limit_post = d.rate_limit_post,
+        rate_limit_post_per_second = d.rate_limit_post_per_second,
+        rate_limit_register = d.rate_limit_register,
+        rate_limit_register_per_second = d.rate_limit_register_per_second,
+        rate_limit_image = d.rate_limit_image,
+        rate_limit_image_per_second = d.rate_limit_image_per_second,
+        rate_limit_comment = d.rate_limit_comment,
+        rate_limit_comment_per_second = d.rate_limit_comment_per_second,
+        rate_limit_search = d.rate_limit_search,
+        rate_limit_search_per_second = d.rate_limit_search_per_second,
+        federation_enabled = d.federation_enabled,
+        federation_debug = d.federation_debug,
+        captcha_enabled = d.captcha_enabled,
+        captcha_difficulty = d.captcha_difficulty,
+        allowed_instances = d.allowed_instances,
+        blocked_instances = d.blocked_instances,
+        taglines = d.taglines,
+        registration_mode = d.registration_mode,
+        reports_email_admins = d.reports_email_admins,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesFeaturePost): X3DatatypesFeaturePost =
+        X3DatatypesFeaturePost(
+            post_id = d.post_id,
+            featured = d.featured,
+            feature_type = d.feature_type,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesFollowCommunity): X3DatatypesFollowCommunity =
+        X3DatatypesFollowCommunity(
+            community_id = d.community_id,
+            follow = d.follow,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesGetComment): X3DatatypesGetComment =
+        X3DatatypesGetComment(
+            id = d.id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesGetComments): X3DatatypesGetComments =
+        X3DatatypesGetComments(
+            type_ = d.type_,
+            sort = d.sort,
+            max_depth = d.max_depth,
+            page = d.page,
+            limit = d.limit,
+            community_id = d.community_id,
+            community_name = d.community_name,
+            post_id = d.post_id,
+            parent_id = d.parent_id,
+            saved_only = d.saved_only,
+            liked_only = d.liked_only,
+            disliked_only = d.disliked_only,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesGetCommunity): X3DatatypesGetCommunity =
+        X3DatatypesGetCommunity(
+            id = d.id,
+            name = d.name,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesGetModlog): X3DatatypesGetModlog = X3DatatypesGetModlog(
+        mod_person_id = d.mod_person_id,
+        community_id = d.community_id,
+        page = d.page,
+        limit = d.limit,
+        type_ = d.type_,
+        other_person_id = d.other_person_id,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesGetPersonDetails): X3DatatypesGetPersonDetails =
+        X3DatatypesGetPersonDetails(
+            person_id = d.person_id,
+            username = d.username,
+            sort = d.sort,
+            page = d.page,
+            limit = d.limit,
+            community_id = d.community_id,
+            saved_only = d.saved_only,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesGetPersonMentions): X3DatatypesGetPersonMentions =
+        X3DatatypesGetPersonMentions(
+            sort = d.sort,
+            page = d.page,
+            limit = d.limit,
+            unread_only = d.unread_only,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesGetPost): X3DatatypesGetPost = X3DatatypesGetPost(
+        id = d.id,
+        comment_id = d.comment_id,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesGetPosts): X3DatatypesGetPosts = X3DatatypesGetPosts(
+        type_ = d.type_,
+        sort = d.sort,
+        page = d.page,
+        limit = d.limit,
+        community_id = d.community_id,
+        community_name = d.community_name,
+        saved_only = d.saved_only,
+        liked_only = d.liked_only,
+        disliked_only = d.disliked_only,
+        page_cursor = d.page_cursor,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesGetPrivateMessages): X3DatatypesGetPrivateMessages =
+        X3DatatypesGetPrivateMessages(
+            unread_only = d.unread_only,
+            page = d.page,
+            limit = d.limit,
+            creator_id = d.creator_id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesGetReplies): X3DatatypesGetReplies =
+        X3DatatypesGetReplies(
+            sort = d.sort,
+            page = d.page,
+            limit = d.limit,
+            unread_only = d.unread_only,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesGetReportCount): X3DatatypesGetReportCount =
+        X3DatatypesGetReportCount(
+            community_id = d.community_id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X3DatatypesGetSiteMetadata =
+        X3DatatypesGetSiteMetadata(
+            url = d.url,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesHideCommunity): X3DatatypesHideCommunity =
+        X3DatatypesHideCommunity(
+            community_id = d.community_id,
+            hidden = d.hidden,
+            reason = d.reason,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesListCommentLikes): X3DatatypesListCommentLikes =
+        X3DatatypesListCommentLikes(
+            comment_id = d.comment_id,
+            page = d.page,
+            limit = d.limit,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesListCommentReports): X3DatatypesListCommentReports =
+        X3DatatypesListCommentReports(
+            page = d.page,
+            limit = d.limit,
+            unresolved_only = d.unresolved_only,
+            community_id = d.community_id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesListCommunities): X3DatatypesListCommunities =
+        X3DatatypesListCommunities(
+            type_ = d.type_,
+            sort = d.sort,
+            show_nsfw = d.show_nsfw,
+            page = d.page,
+            limit = d.limit,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesListPostLikes): X3DatatypesListPostLikes =
+        X3DatatypesListPostLikes(
+            post_id = d.post_id,
+            page = d.page,
+            limit = d.limit,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesListPostReports): X3DatatypesListPostReports =
+        X3DatatypesListPostReports(
+            page = d.page,
+            limit = d.limit,
+            unresolved_only = d.unresolved_only,
+            community_id = d.community_id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesListPrivateMessageReports):
+        X3DatatypesListPrivateMessageReports = X3DatatypesListPrivateMessageReports(
+        page = d.page,
+        limit = d.limit,
+        unresolved_only = d.unresolved_only,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesListRegistrationApplications):
+        X3DatatypesListRegistrationApplications = X3DatatypesListRegistrationApplications(
+        unread_only = d.unread_only,
+        page = d.page,
+        limit = d.limit,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesLockPost): X3DatatypesLockPost = X3DatatypesLockPost(
+        post_id = d.post_id,
+        locked = d.locked,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesLogin): X3DatatypesLogin = X3DatatypesLogin(
+        username_or_email = d.username_or_email,
+        password = d.password,
+        totp_2fa_token = d.totp_2fa_token,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesMarkCommentReplyAsRead): X3DatatypesMarkCommentReplyAsRead = X3DatatypesMarkCommentReplyAsRead(
+        comment_reply_id = d.comment_reply_id,
+        read = d.read,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesMarkPersonMentionAsRead): X3DatatypesMarkPersonMentionAsRead = X3DatatypesMarkPersonMentionAsRead(
+        person_mention_id = d.person_mention_id,
+        read = d.read,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesMarkPostAsRead): X3DatatypesMarkPostAsRead =
+        X3DatatypesMarkPostAsRead(
+            post_ids = d.post_ids,
+            read = d.read,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesMarkPrivateMessageAsRead):
+        X3DatatypesMarkPrivateMessageAsRead = X3DatatypesMarkPrivateMessageAsRead(
+        private_message_id = d.private_message_id,
+        read = d.read,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesPasswordChangeAfterReset):
+        X3DatatypesPasswordChangeAfterReset = X3DatatypesPasswordChangeAfterReset(
+        token = d.token,
+        password = d.password,
+        password_verify = d.password_verify,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesPasswordReset): X3DatatypesPasswordReset =
+        X3DatatypesPasswordReset(
+            email = d.email,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesPurgeComment): X3DatatypesPurgeComment =
+        X3DatatypesPurgeComment(
+            comment_id = d.comment_id,
+            reason = d.reason,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesPurgeCommunity): X3DatatypesPurgeCommunity =
+        X3DatatypesPurgeCommunity(
+            community_id = d.community_id,
+            reason = d.reason,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesPurgePerson): X3DatatypesPurgePerson =
+        X3DatatypesPurgePerson(
+            person_id = d.person_id,
+            reason = d.reason,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesPurgePost): X3DatatypesPurgePost = X3DatatypesPurgePost(
+        post_id = d.post_id,
+        reason = d.reason,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesRegister): X3DatatypesRegister = X3DatatypesRegister(
+        username = d.username,
+        password = d.password,
+        password_verify = d.password_verify,
+        show_nsfw = d.show_nsfw,
+        email = d.email,
+        captcha_uuid = d.captcha_uuid,
+        captcha_answer = d.captcha_answer,
+        honeypot = d.honeypot,
+        answer = d.answer,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesRemoveComment): X3DatatypesRemoveComment =
+        X3DatatypesRemoveComment(
+            comment_id = d.comment_id,
+            removed = d.removed,
+            reason = d.reason,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesRemoveCommunity): X3DatatypesRemoveCommunity =
+        X3DatatypesRemoveCommunity(
+            community_id = d.community_id,
+            removed = d.removed,
+            reason = d.reason,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesRemovePost): X3DatatypesRemovePost =
+        X3DatatypesRemovePost(
+            post_id = d.post_id,
+            removed = d.removed,
+            reason = d.reason,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesResolveCommentReport): X3DatatypesResolveCommentReport =
+        X3DatatypesResolveCommentReport(
+            report_id = d.report_id,
+            resolved = d.resolved,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesResolveObject): X3DatatypesResolveObject =
+        X3DatatypesResolveObject(
+            q = d.q,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesResolvePostReport): X3DatatypesResolvePostReport =
+        X3DatatypesResolvePostReport(
+            report_id = d.report_id,
+            resolved = d.resolved,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesResolvePrivateMessageReport):
+        X3DatatypesResolvePrivateMessageReport = X3DatatypesResolvePrivateMessageReport(
+        report_id = d.report_id,
+        resolved = d.resolved,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesSaveComment): X3DatatypesSaveComment =
+        X3DatatypesSaveComment(
+            comment_id = d.comment_id,
+            save = d.save,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesSavePost): X3DatatypesSavePost = X3DatatypesSavePost(
+        post_id = d.post_id,
+        save = d.save,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesSaveUserSettings): X3DatatypesSaveUserSettings =
+        X3DatatypesSaveUserSettings(
+            show_nsfw = d.show_nsfw,
+            blur_nsfw = d.blur_nsfw,
+            auto_expand = d.auto_expand,
+            show_scores = d.show_scores,
+            theme = d.theme,
+            default_sort_type = d.default_sort_type,
+            default_listing_type = d.default_listing_type,
+            interface_language = d.interface_language,
+            avatar = d.avatar,
+            banner = d.banner,
+            display_name = d.display_name,
+            email = d.email,
+            bio = d.bio,
+            matrix_user_id = d.matrix_user_id,
+            show_avatars = d.show_avatars,
+            send_notifications_to_email = d.send_notifications_to_email,
+            bot_account = d.bot_account,
+            show_bot_accounts = d.show_bot_accounts,
+            show_read_posts = d.show_read_posts,
+            discussion_languages = d.discussion_languages,
+            open_links_in_new_tab = d.open_links_in_new_tab,
+            infinite_scroll_enabled = d.infinite_scroll_enabled,
+            post_listing_mode = d.post_listing_mode,
+            enable_keyboard_navigation = d.enable_keyboard_navigation,
+            enable_animated_images = d.enable_animated_images,
+            collapse_bot_comments = d.collapse_bot_comments,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesSearch): X3DatatypesSearch = X3DatatypesSearch(
+        q = d.q,
+        community_id = d.community_id,
+        community_name = d.community_name,
+        creator_id = d.creator_id,
+        type_ = d.type_,
+        sort = d.sort,
+        listing_type = d.listing_type,
+        page = d.page,
+        limit = d.limit,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesTransferCommunity): X3DatatypesTransferCommunity =
+        X3DatatypesTransferCommunity(
+            community_id = d.community_id,
+            person_id = d.person_id,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesUpdateTotp): X3DatatypesUpdateTotp =
+        X3DatatypesUpdateTotp(
+            totp_token = d.totp_token,
+            enabled = d.enabled,
+        )
+
+    override fun fromUni(d: LemmyapiDatatypesVerifyEmail): X3DatatypesVerifyEmail =
+        X3DatatypesVerifyEmail(
+            token = d.token,
+        )
+}

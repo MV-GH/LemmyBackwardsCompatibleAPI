@@ -42,8 +42,8 @@ ${summary?.lines()?.joinToString("\n") { "         * ${it.trim()}" } ?: ""}
 
 fun RouteInfo.toImpl(): String {
     return this.toInterface()
-        .replace("suspend fun", "override suspend fun")
-        .plus(" =\n        ktor.${method.name.lowercase()}Result(\"$path\"${if (paramsOrBody != null) ", form" else ""})")
+        .replace("abstract suspend fun", "override suspend fun")
+        .plus(" =\n        client.${method.name.lowercase()}Result(\"$path\"${if (paramsOrBody != null) ", form" else ""})")
 }
 
 suspend fun getRoutes(): List<RouteInfo> {
@@ -75,6 +75,7 @@ suspend fun getRoutes(): List<RouteInfo> {
 
             val responses = route.get<YamlMap>("responses")!!
 
+            // Doesn't work for arrays of items (listLogins)
             val responseName =
                 (responses.get<YamlMap>("200") ?: responses.get<YamlMap>("201"))!!
                     .get<YamlMap>("content") // Not all responses have content
@@ -125,10 +126,10 @@ suspend fun getRoutes(): List<RouteInfo> {
  * This is used as a template for the actual Lemmy API interface
  */
 fun genRouteAbstractInterface(routes: List<RouteInfo>) {
-    val fileInterface = File("temp", "LemmyApi.kt")
+    val fileInterface = File("temp", "LemmyApiRouter.kt")
     fileInterface.createNewFile()
 
-    fileInterface.writeText("\nabstract class LemmyApi : LemmyApiBase {\n\n")
+    fileInterface.writeText("\nabstract class LemmyApiRouter : LemmyApiBase {\n\n")
 
     for (route in routes) {
         fileInterface.appendText(route.toInterface() + "\n\n")
@@ -143,10 +144,10 @@ fun genRouteAbstractInterface(routes: List<RouteInfo>) {
  * This is used as a template for the actual Lemmy API Implementation
  */
 fun genRouteImpl(routes: List<RouteInfo>) {
-    val fileInterface = File("temp", "LemmyApiService.kt")
+    val fileInterface = File("temp", "LemmyApiController.kt")
     fileInterface.createNewFile()
 
-    fileInterface.writeText("\nclass LemmyApiService(private val Ktor: HttpClient) : LemmyApi {\n\n")
+    fileInterface.writeText("\nclass LemmyApiController(private val client: HttpClient) : LemmyApiRouter {\n\n")
 
     for (route in routes) {
         fileInterface.appendText(route.toImpl() + "\n\n")
@@ -158,5 +159,7 @@ fun genRouteImpl(routes: List<RouteInfo>) {
 suspend fun main() {
     val routes = getRoutes()
     genRouteAbstractInterface(routes)
+    println("Generated LemmyApiRouter.kt")
     genRouteImpl(routes)
+    println("Generated LemmyApiController.kt")
 }
