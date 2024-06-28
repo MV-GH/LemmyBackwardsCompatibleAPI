@@ -1,11 +1,12 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.Identity
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Comment(
-    val id: CommentId,
+    override val id: CommentId,
     val creator_id: PersonId,
     val post_id: PostId,
     val content: String,
@@ -18,4 +19,4 @@ data class Comment(
     val path: String,
     val distinguished: Boolean,
     val language_id: LanguageId,
-) : DatatypeRoot
+) : DatatypeRoot, Identity

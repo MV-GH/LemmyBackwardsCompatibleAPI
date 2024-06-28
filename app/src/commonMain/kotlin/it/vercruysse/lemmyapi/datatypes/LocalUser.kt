@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.Identity
 import it.vercruysse.lemmyapi.dto.PostListingMode
 import it.vercruysse.lemmyapi.dto.ListingType
 import it.vercruysse.lemmyapi.dto.SortType
@@ -8,7 +9,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LocalUser(
-    val id: LocalUserId,
+    override val id: LocalUserId,
     val person_id: PersonId,
     val email: String? = null,
     val show_nsfw: Boolean,
@@ -33,4 +34,4 @@ data class LocalUser(
     val enable_keyboard_navigation: Boolean,
     val enable_animated_images: Boolean,
     val collapse_bot_comments: Boolean,
-) : DatatypeRoot
+) : DatatypeRoot, Identity

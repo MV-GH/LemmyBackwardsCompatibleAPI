@@ -1,11 +1,12 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.Identity
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class PostReport(
-    val id: PostReportId,
+    override val id: PostReportId,
     val creator_id: PersonId,
     val post_id: PostId,
     val original_post_name: String,
@@ -16,4 +17,4 @@ data class PostReport(
     val resolver_id: PersonId? = null,
     val published: String,
     val updated: String? = null,
-) : DatatypeRoot
+) : DatatypeRoot, Identity

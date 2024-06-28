@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.Identity
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,4 +10,7 @@ data class RegistrationApplicationView(
     val creator_local_user: LocalUser,
     val creator: Person,
     val admin: Person? = null,
-) : DatatypeRoot
+) : DatatypeRoot, Identity {
+    override val id: Long
+        get() = registration_application.id
+}

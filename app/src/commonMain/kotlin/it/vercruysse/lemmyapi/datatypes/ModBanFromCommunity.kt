@@ -1,11 +1,12 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.Identity
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ModBanFromCommunity(
-    val id: Long,
+    override val id: Long,
     val mod_person_id: PersonId,
     val other_person_id: PersonId,
     val community_id: CommunityId,
@@ -13,4 +14,4 @@ data class ModBanFromCommunity(
     val banned: Boolean,
     val expires: String? = null,
     val when_: String,
-) : DatatypeRoot
+) : DatatypeRoot, Identity
