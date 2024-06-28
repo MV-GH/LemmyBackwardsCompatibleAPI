@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.CommunityVisibility
 import kotlinx.serialization.Serializable
 
@@ -14,4 +15,4 @@ data class EditCommunity(
     val posting_restricted_to_mods: Boolean? = null,
     val discussion_languages: List<LanguageId>? = null,
     val visibility: CommunityVisibility? /* "Public" | "LocalOnly" */ = null,
-)
+) : DatatypeRoot

@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.ListingType
 import kotlinx.serialization.Serializable
@@ -17,4 +18,4 @@ data class GetPosts(
     val disliked_only: Boolean? = null,
     val show_hidden: Boolean? = null,
     val page_cursor: PaginationCursor? = null,
-)
+) : DatatypeRoot

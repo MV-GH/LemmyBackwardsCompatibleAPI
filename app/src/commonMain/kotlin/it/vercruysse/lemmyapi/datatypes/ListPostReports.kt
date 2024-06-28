@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,4 +10,4 @@ data class ListPostReports(
     val unresolved_only: Boolean? = null,
     val community_id: CommunityId? = null,
     val post_id: PostId? = null,
-)
+) : DatatypeRoot

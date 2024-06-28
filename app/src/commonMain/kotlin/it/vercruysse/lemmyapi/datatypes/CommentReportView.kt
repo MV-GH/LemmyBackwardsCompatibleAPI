@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.SubscribedType
 import kotlinx.serialization.Serializable
 
@@ -20,4 +21,4 @@ data class CommentReportView(
     val saved: Boolean,
     val my_vote: Int = 0,
     val resolver: Person? = null,
-)
+) : DatatypeRoot

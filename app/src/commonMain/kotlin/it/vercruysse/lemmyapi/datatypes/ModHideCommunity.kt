@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,4 +11,4 @@ data class ModHideCommunity(
     val when_: String,
     val reason: String? = null,
     val hidden: Boolean,
-)
+) : DatatypeRoot

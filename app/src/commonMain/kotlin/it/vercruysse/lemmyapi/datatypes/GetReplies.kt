@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.CommentSortType
 import kotlinx.serialization.Serializable
 
@@ -9,4 +10,4 @@ data class GetReplies(
     val page: Long? = null,
     val limit: Long? = null,
     val unread_only: Boolean? = null,
-)
+) : DatatypeRoot

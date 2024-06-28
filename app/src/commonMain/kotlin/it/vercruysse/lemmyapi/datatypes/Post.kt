@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -27,4 +28,4 @@ data class Post(
     val featured_local: Boolean,
     val url_content_type: String? = null,
     val alt_text: String? = null,
-)
+) : DatatypeRoot

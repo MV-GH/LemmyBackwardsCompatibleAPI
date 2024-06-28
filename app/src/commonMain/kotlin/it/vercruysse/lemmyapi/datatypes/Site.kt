@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,4 +18,4 @@ data class Site(
     val inbox_url: String,
     val instance_id: InstanceId,
     val content_warning: String? = null,
-)
+) : DatatypeRoot

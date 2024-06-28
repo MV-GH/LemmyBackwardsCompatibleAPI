@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,4 +10,4 @@ data class AdminPurgeComment(
     val post_id: PostId,
     val reason: String? = null,
     val when_: String,
-)
+) : DatatypeRoot

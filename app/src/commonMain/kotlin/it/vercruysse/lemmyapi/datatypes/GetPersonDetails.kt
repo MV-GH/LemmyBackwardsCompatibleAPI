@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.SortType
 import kotlinx.serialization.Serializable
 
@@ -12,4 +13,4 @@ data class GetPersonDetails(
     val limit: Long? = null,
     val community_id: CommunityId? = null,
     val saved_only: Boolean? = null,
-)
+) : DatatypeRoot

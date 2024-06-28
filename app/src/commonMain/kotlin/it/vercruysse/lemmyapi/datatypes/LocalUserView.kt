@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,4 +11,4 @@ data class LocalUserView(
     val local_user_vote_display_mode: LocalUserVoteDisplayMode? = null,
     val person: Person,
     val counts: PersonAggregates,
-)
+) : DatatypeRoot

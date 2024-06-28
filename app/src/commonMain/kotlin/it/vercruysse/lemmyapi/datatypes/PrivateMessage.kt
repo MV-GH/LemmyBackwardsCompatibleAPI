@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,4 +15,4 @@ data class PrivateMessage(
     val updated: String? = null,
     val ap_id: String,
     val local: Boolean,
-)
+) : DatatypeRoot

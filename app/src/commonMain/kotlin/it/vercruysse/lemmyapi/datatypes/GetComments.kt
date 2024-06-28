@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.CommentSortType
 import it.vercruysse.lemmyapi.dto.ListingType
 import kotlinx.serialization.Serializable
@@ -18,4 +19,4 @@ data class GetComments(
     val saved_only: Boolean? = null,
     val liked_only: Boolean? = null,
     val disliked_only: Boolean? = null,
-)
+) : DatatypeRoot

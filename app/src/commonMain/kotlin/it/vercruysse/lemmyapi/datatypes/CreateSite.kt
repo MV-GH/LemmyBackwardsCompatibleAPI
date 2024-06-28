@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.PostListingMode
 import it.vercruysse.lemmyapi.dto.RegistrationMode
 import it.vercruysse.lemmyapi.dto.SortType
@@ -50,4 +51,4 @@ data class CreateSite(
     val registration_mode: RegistrationMode? /* "Closed" | "RequireApplication" | "Open" */ = null,
     val content_warning: String? = null,
     val default_post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
-)
+) : DatatypeRoot

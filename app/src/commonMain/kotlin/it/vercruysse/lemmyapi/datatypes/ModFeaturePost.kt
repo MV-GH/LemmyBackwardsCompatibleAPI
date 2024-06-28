@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,4 +11,4 @@ data class ModFeaturePost(
     val featured: Boolean,
     val when_: String,
     val is_featured_community: Boolean,
-)
+) : DatatypeRoot

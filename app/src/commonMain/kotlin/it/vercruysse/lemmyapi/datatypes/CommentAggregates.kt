@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,4 +11,4 @@ data class CommentAggregates(
     val downvotes: Long,
     val published: String,
     val child_count: Long,
-)
+) : DatatypeRoot

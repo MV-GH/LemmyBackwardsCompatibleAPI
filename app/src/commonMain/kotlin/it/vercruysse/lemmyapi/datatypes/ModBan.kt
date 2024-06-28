@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,4 +12,4 @@ data class ModBan(
     val banned: Boolean,
     val expires: String? = null,
     val when_: String,
-)
+) : DatatypeRoot

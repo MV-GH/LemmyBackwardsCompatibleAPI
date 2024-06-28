@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,4 +11,4 @@ data class ReadableFederationState(
     val fail_count: Long,
     val last_retry: String? = null,
     val next_retry: String? = null,
-)
+) : DatatypeRoot

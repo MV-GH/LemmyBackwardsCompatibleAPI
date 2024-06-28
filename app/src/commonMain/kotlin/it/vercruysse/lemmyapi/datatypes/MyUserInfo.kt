@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,4 +12,4 @@ data class MyUserInfo(
     val instance_blocks: List<InstanceBlockView>,
     val person_blocks: List<PersonBlockView>,
     val discussion_languages: List<LanguageId>,
-)
+) : DatatypeRoot
