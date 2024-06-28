@@ -10,11 +10,22 @@ plugins {
     id("com.google.devtools.ksp") version ("2.0.0-1.0.22")
     id("com.vanniktech.maven.publish") version "0.29.0"
     id("com.github.ben-manes.versions") version "0.51.0"
+    id("com.android.library")
+    id("kotlin-parcelize")
 }
 
 repositories {
     mavenCentral()
     gradlePluginPortal()
+    google()
+}
+
+android {
+    namespace = "it.vercruysse.lemmyapi"
+    compileSdk = 34
+    defaultConfig {
+        minSdk = 21
+    }
 }
 
 kotlin {
@@ -25,6 +36,12 @@ kotlin {
             executionTask.configure {
                 useJUnitPlatform()
             }
+        }
+    }
+
+    androidTarget {
+        compilerOptions {
+            freeCompilerArgs.addAll("-P", "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=it.vercruysse.lemmyapi.CommonParcelize")
         }
     }
 
@@ -53,7 +70,7 @@ kotlin {
 
         commonMain.dependencies {
             implementation("io.ktor:ktor-client-core:$ktorVersion")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
@@ -97,9 +114,12 @@ kotlin {
             api("io.ktor:ktor-client-cio:$ktorVersion")
         }
 
+        androidMain.dependencies {
+            api("io.ktor:ktor-client-okhttp:$ktorVersion")
+        }
     }
 
-    val publicationsFromMainHost = listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+    val publicationsFromMainHost = listOf(jvm(), js(), androidTarget()).map { it.name } + "kotlinMultiplatform"
 
     publishing {
         publications {

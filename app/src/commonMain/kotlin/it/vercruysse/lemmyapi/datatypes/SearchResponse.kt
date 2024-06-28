@@ -4,6 +4,9 @@ import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.SearchType
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class SearchResponse(
     val type_: SearchType /* "All" | "Comments" | "Posts" | "Communities" | "Users" | "Url" */,

@@ -5,6 +5,9 @@ import it.vercruysse.lemmyapi.dto.CommentSortType
 import it.vercruysse.lemmyapi.dto.ListingType
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class GetComments(
     val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,

@@ -7,6 +7,9 @@ import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.ListingType
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class EditSite(
     val name: String? = null,

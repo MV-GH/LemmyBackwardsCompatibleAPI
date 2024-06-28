@@ -1,4 +1,4 @@
 package it.vercruysse.lemmyapi
 
-// The sole purpose is to be defined by another platform
+// Enables platform-specific implementation of all the datatypes
 expect interface DatatypeRoot
