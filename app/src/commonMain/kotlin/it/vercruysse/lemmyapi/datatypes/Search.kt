@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.ListingType
 import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.SearchType
@@ -16,4 +17,4 @@ data class Search(
     val listing_type: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
     val page: Long? = null,
     val limit: Long? = null,
-)
+) : DatatypeRoot

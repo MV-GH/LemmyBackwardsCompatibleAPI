@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.SearchType
 import kotlinx.serialization.Serializable
 
@@ -10,4 +11,4 @@ data class SearchResponse(
     val posts: List<PostView>,
     val communities: List<CommunityView>,
     val users: List<PersonView>,
-)
+) : DatatypeRoot

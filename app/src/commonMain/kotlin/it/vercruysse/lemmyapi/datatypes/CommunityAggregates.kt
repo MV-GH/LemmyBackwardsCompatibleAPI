@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,4 +15,4 @@ data class CommunityAggregates(
     val users_active_month: Long,
     val users_active_half_year: Long,
     val subscribers_local: Long,
-)
+) : DatatypeRoot

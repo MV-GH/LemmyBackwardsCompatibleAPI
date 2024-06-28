@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,4 +13,4 @@ data class ModlogListParams(
     val page: Long? = null,
     val limit: Long? = null,
     val hide_modlog_names: Boolean,
-)
+) : DatatypeRoot

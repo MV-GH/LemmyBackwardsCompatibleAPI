@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.ListingType
 import kotlinx.serialization.Serializable
@@ -11,4 +12,4 @@ data class ListCommunities(
     val show_nsfw: Boolean? = null,
     val page: Long? = null,
     val limit: Long? = null,
-)
+) : DatatypeRoot

@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,4 +15,4 @@ data class Register(
     val captcha_answer: String? = null,
     val honeypot: String? = null,
     val answer: String? = null,
-)
+) : DatatypeRoot

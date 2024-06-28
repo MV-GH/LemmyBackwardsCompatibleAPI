@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,4 +11,4 @@ data class RegistrationApplication(
     val admin_id: PersonId? = null,
     val deny_reason: String? = null,
     val published: String,
-)
+) : DatatypeRoot

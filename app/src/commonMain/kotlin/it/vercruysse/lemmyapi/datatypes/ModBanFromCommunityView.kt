@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -8,4 +9,4 @@ data class ModBanFromCommunityView(
     val moderator: Person? = null,
     val community: Community,
     val banned_person: Person,
-)
+) : DatatypeRoot

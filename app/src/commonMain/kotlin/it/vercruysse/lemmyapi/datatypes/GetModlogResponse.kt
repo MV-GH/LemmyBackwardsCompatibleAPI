@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -19,4 +20,4 @@ data class GetModlogResponse(
     val admin_purged_posts: List<AdminPurgePostView>,
     val admin_purged_comments: List<AdminPurgeCommentView>,
     val hidden_communities: List<ModHideCommunityView>,
-)
+) : DatatypeRoot

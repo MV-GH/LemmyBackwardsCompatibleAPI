@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,4 +10,4 @@ data class ModLockPost(
     val post_id: PostId,
     val locked: Boolean,
     val when_: String,
-)
+) : DatatypeRoot

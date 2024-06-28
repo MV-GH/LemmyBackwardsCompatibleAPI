@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,4 +13,4 @@ data class EditPost(
     val nsfw: Boolean? = null,
     val language_id: LanguageId? = null,
     val custom_thumbnail: String? = null,
-)
+) : DatatypeRoot

@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -21,4 +22,4 @@ data class LocalSiteRateLimit(
     val updated: String? = null,
     val import_user_settings: Long,
     val import_user_settings_per_second: Long,
-)
+) : DatatypeRoot

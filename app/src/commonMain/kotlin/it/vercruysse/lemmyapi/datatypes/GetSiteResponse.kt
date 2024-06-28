@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,4 +14,4 @@ data class GetSiteResponse(
     val taglines: List<Tagline>,
     val custom_emojis: List<CustomEmojiView>,
     val blocked_urls: List<LocalSiteUrlBlocklist>,
-)
+) : DatatypeRoot

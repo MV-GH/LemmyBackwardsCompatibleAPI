@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.SubscribedType
 import kotlinx.serialization.Serializable
 
@@ -10,4 +11,4 @@ data class CommunityView(
     val blocked: Boolean,
     val counts: CommunityAggregates,
     val banned_from_community: Boolean,
-)
+) : DatatypeRoot

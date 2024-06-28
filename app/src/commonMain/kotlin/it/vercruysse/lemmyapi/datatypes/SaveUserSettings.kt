@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.PostListingMode
 import it.vercruysse.lemmyapi.dto.ListingType
 import it.vercruysse.lemmyapi.dto.SortType
@@ -36,4 +37,4 @@ data class SaveUserSettings(
     val show_upvotes: Boolean? = null,
     val show_downvotes: Boolean? = null,
     val show_upvote_percentage: Boolean? = null,
-)
+) : DatatypeRoot

@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -8,4 +9,4 @@ data class GetPostResponse(
     val community_view: CommunityView,
     val moderators: List<CommunityModeratorView>,
     val cross_posts: List<PostView>,
-)
+) : DatatypeRoot

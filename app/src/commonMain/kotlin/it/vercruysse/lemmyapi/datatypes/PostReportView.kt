@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.SubscribedType
 import kotlinx.serialization.Serializable
 
@@ -22,4 +23,4 @@ data class PostReportView(
     val unread_comments: Long,
     val counts: PostAggregates,
     val resolver: Person? = null,
-)
+) : DatatypeRoot

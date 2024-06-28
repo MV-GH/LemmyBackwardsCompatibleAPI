@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.CommunityVisibility
 import kotlinx.serialization.Serializable
 
@@ -22,4 +23,4 @@ data class Community(
     val posting_restricted_to_mods: Boolean,
     val instance_id: InstanceId,
     val visibility: CommunityVisibility /* "Public" | "LocalOnly" */,
-)
+) : DatatypeRoot

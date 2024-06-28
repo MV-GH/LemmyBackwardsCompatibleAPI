@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.ModlogActionType
 import kotlinx.serialization.Serializable
 
@@ -13,4 +14,4 @@ data class GetModlog(
     val other_person_id: PersonId? = null,
     val post_id: PostId? = null,
     val comment_id: CommentId? = null,
-)
+) : DatatypeRoot
