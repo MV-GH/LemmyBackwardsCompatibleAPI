@@ -7,8 +7,7 @@ class JavaSerializableTest {
 
     @Test
     fun `verify that datatype is java serializable`() {
-
-        val post  = Post(
+        val post = Post(
             id = 1,
             name = "name",
             creator_id = 1,
@@ -22,7 +21,7 @@ class JavaSerializableTest {
             local = false,
             language_id = 1,
             featured_community = false,
-            featured_local = false
+            featured_local = false,
         )
 
         assertInstanceOf(Serializable::class.java, post)
