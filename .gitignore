@@ -44,6 +44,8 @@ bin/
 .DS_Store
 
 temp
+/local.properties
+local.properties
 
 # TODO temp
 **/Secrets.kt

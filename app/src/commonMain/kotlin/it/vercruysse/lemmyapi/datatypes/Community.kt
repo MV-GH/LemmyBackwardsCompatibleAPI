@@ -5,6 +5,9 @@ import it.vercruysse.lemmyapi.Identity
 import it.vercruysse.lemmyapi.dto.CommunityVisibility
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class Community(
     override val id: CommunityId,

@@ -7,6 +7,9 @@ import it.vercruysse.lemmyapi.dto.ListingType
 import it.vercruysse.lemmyapi.dto.SortType
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class LocalUser(
     override val id: LocalUserId,

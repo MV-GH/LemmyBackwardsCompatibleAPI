@@ -4,6 +4,9 @@ import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.ModlogActionType
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class GetModlog(
     val mod_person_id: PersonId? = null,

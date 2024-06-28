@@ -6,6 +6,9 @@ import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.SearchType
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class Search(
     val q: String,

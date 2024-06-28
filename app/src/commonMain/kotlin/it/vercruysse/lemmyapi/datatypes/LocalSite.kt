@@ -8,6 +8,9 @@ import it.vercruysse.lemmyapi.dto.RegistrationMode
 import it.vercruysse.lemmyapi.dto.ListingType
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class LocalSite(
     override val id: LocalSiteId,

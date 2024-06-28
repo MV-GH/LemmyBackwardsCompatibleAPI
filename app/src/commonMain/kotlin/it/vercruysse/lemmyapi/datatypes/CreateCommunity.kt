@@ -4,6 +4,9 @@ import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.CommunityVisibility
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class CreateCommunity(
     val name: String,

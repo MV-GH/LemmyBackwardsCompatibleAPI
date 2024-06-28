@@ -5,6 +5,9 @@ import it.vercruysse.lemmyapi.Identity
 import it.vercruysse.lemmyapi.dto.SubscribedType
 import kotlinx.serialization.Serializable
 
+import it.vercruysse.lemmyapi.CommonParcelize
+
+@CommonParcelize
 @Serializable
 data class CommentReportView(
     val comment_report: CommentReport,
