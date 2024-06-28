@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.Identity
 import it.vercruysse.lemmyapi.dto.SubscribedType
 import kotlinx.serialization.Serializable
 
@@ -19,4 +20,7 @@ data class CommentView(
     val saved: Boolean,
     val creator_blocked: Boolean,
     val my_vote: Int = 0,
-) : DatatypeRoot
+) : DatatypeRoot, Identity {
+    override val id: Long
+        get() = comment.id
+}

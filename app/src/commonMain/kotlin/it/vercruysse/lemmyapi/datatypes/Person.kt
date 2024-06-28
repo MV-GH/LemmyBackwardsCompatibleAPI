@@ -1,11 +1,12 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.Identity
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Person(
-    val id: PersonId,
+    override val id: PersonId,
     val name: String,
     val display_name: String? = null,
     val avatar: String? = null,
@@ -21,4 +22,4 @@ data class Person(
     val bot_account: Boolean,
     val ban_expires: String? = null,
     val instance_id: InstanceId,
-) : DatatypeRoot
+) : DatatypeRoot, Identity

@@ -1,11 +1,12 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.Identity
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Language(
-    val id: LanguageId,
+    override val id: LanguageId,
     val code: String,
     val name: String,
-) : DatatypeRoot
+) : DatatypeRoot, Identity
