@@ -6,6 +6,7 @@ import it.vercruysse.lemmyapi.dto.ListingType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
 
 @CommonParcelize
 @Serializable
@@ -20,5 +21,5 @@ data class GetPosts(
     val liked_only: Boolean? = null,
     val disliked_only: Boolean? = null,
     val show_hidden: Boolean? = null,
-    val page_cursor: PaginationCursor? = null,
+    val page_cursor: PaginationCursor? = PAGE_CURSOR_GUARD,
 ) : DatatypeRoot
