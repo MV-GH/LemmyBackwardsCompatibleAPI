@@ -5,6 +5,7 @@ import it.vercruysse.lemmyapi.dto.SubscribedType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.Identity
 
 @CommonParcelize
 @Serializable
@@ -24,4 +25,7 @@ data class PostView(
     val creator_blocked: Boolean,
     val my_vote: Int = 0,
     val unread_comments: Long,
-) : DatatypeRoot
+) : DatatypeRoot, Identity {
+    override val id: Long
+        get() = post.id
+}
