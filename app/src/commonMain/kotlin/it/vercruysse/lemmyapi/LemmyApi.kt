@@ -135,12 +135,12 @@ object LemmyApi {
 
         return when (semverV.major) {
             0 -> when (semverV.minor) {
-                18 -> it.vercruysse.lemmyapi.v0.x18.x5.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+                18 -> it.vercruysse.lemmyapi.v0.x18.x5.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
                 19 -> when (semverV.patch) {
-                    0, 1 -> it.vercruysse.lemmyapi.v0.x19.x0.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
-                    2, 3 -> it.vercruysse.lemmyapi.v0.x19.x3.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
-                    4, 5 -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
-                    else -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, version.toVersion(false), baseUrlInstance, auth)
+                    0, 1 -> it.vercruysse.lemmyapi.v0.x19.x0.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
+                    2, 3 -> it.vercruysse.lemmyapi.v0.x19.x3.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
+                    4, 5 -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
+                    else -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
                 }
 
                 else -> throw NotSupportedException("Unsupported Lemmy minor version: $version")

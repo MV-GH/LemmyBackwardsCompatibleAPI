@@ -5,9 +5,9 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "2.0.0"
+    kotlin("plugin.serialization") version "2.0.21"
     id("org.jmailen.kotlinter") version "4.4.0"
-    id("com.google.devtools.ksp") version ("2.0.0-1.0.22")
+    id("com.google.devtools.ksp") version ("2.0.20-1.0.25")
     id("com.vanniktech.maven.publish") version "0.29.0"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.android.library")
@@ -65,13 +65,13 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "2.3.12"
+        val ktorVersion = "3.0.0"
 
 
         commonMain.dependencies {
             implementation("io.ktor:ktor-client-core:$ktorVersion")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
@@ -80,7 +80,7 @@ kotlin {
 
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
             implementation("io.ktor:ktor-client-logging:$ktorVersion")
         }
 
