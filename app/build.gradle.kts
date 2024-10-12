@@ -7,7 +7,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "2.0.21"
     id("org.jmailen.kotlinter") version "4.4.0"
-    id("com.google.devtools.ksp") version ("2.0.20-1.0.25")
+    id("com.google.devtools.ksp") version ("2.0.21-1.0.25")
     id("com.vanniktech.maven.publish") version "0.29.0"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.android.library")
