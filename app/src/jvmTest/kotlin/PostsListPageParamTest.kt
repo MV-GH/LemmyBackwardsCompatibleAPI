@@ -36,40 +36,35 @@ class PostsListPageParamTest {
             LemmyApi.defaultClient = coreHttpClient
         }
 
+        private fun getValidationMocKEngine(): MockEngine = MockEngine { request ->
+            val url = request.url
 
-        private fun getValidationMocKEngine(): MockEngine {
-            return MockEngine { request ->
-                val url = request.url
+            var success = true
 
-                var success = true
+            // Rules:
+            // never send both page and page_cursor,
+            // page_cursor takes priority
+            // never send pagination_guard
+            // work with null and value
+            if (url.encodedPath != "/api/v3/post/list") {
+                success = false
+            } else if (url.parameters.contains("page_cursor") && url.parameters.contains("page")) {
+                success = false
+            } else if (url.parameters["page_cursor"] == PAGE_CURSOR_GUARD) {
+                success = false
+            }
 
-
-                // Rules:
-                // never send both page and page_cursor,
-                // page_cursor takes priority
-                // never send pagination_guard
-                // work with null and value
-                if (url.encodedPath != "/api/v3/post/list") {
-                    success = false
-                } else if (url.parameters.contains("page_cursor") && url.parameters.contains("page")) {
-                    success = false
-                } else if (url.parameters["page_cursor"] == PAGE_CURSOR_GUARD) {
-                    success = false
-                }
-
-                if (success) {
-                    respond(
-                        content = ByteReadChannel("""{"posts": [], "next_page": null}"""),
-                        status = HttpStatusCode.OK,
-                        headers = headersOf(HttpHeaders.ContentType, "application/json")
-                    )
-                } else {
-                    respond(
-                        content = ByteReadChannel("Failed validation"),
-                        status = HttpStatusCode.BadRequest,
-                        headers = headersOf(HttpHeaders.ContentType, "application/json")
-                    )
-                }
+            if (success) {
+                respond(
+                    content = ByteReadChannel("""{"posts": [], "next_page": null}"""),
+                    status = HttpStatusCode.OK,
+                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                )
+            } else {
+                respond(
+                    content = ByteReadChannel("Failed validation"),
+                    status = HttpStatusCode.BadRequest,
+                )
             }
         }
 
@@ -93,7 +88,6 @@ class PostsListPageParamTest {
         }
     }
 
-
     @Test
     fun `default form`() {
         controllerVersions.forEach {
@@ -115,7 +109,6 @@ class PostsListPageParamTest {
             }
         }
     }
-
 
     @Test
     fun `just cursor`() {
@@ -160,5 +153,4 @@ class PostsListPageParamTest {
             }
         }
     }
-
 }
