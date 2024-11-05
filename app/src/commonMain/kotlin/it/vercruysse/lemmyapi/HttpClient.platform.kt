@@ -41,7 +41,7 @@ val coreHttpClient = baseClient.config {
     }
 
     HttpResponseValidator {
-        // If a 4XX is returned we try to parse it as a "Lemmy Error"
+        // If a 4XX is returned, we try to parse it as a "Lemmy Error"
         // If it is a "Lemmy Error" we throw it as a LemmyBadRequestException
         handleResponseExceptionWithRequest { exception, _ ->
             val clientException = exception as? ClientRequestException ?: return@handleResponseExceptionWithRequest

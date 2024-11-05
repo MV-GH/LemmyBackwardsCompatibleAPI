@@ -30,11 +30,11 @@ class DatatypesValidation {
         val classes: MutableList<Class<*>> = ArrayList()
         val upackage = cl.getResource(pack)
 
-        val dis = BufferedReader(InputStreamReader(upackage?.getContent() as InputStream))
+        val dis = BufferedReader(InputStreamReader(upackage?.content as InputStream))
         var line: String?
         while ((dis.readLine().also { line = it }) != null) {
             if (line!!.endsWith(".class")) {
-                classes.add(Class.forName(dottedPackage + "." + line!!.substring(0, line!!.lastIndexOf('.'))))
+                classes.add(Class.forName(dottedPackage + "." + line.substring(0, line.lastIndexOf('.'))))
             }
         }
         return classes

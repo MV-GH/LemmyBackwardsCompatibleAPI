@@ -13,6 +13,7 @@ import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
 data class GetPosts(
     val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
     val sort: SortType? /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */ = null,
+    /* starts from 1, null is considered not set, deprecated 0.19+, set to support 0.18 */
     val page: Long? = null,
     val limit: Long? = null,
     val community_id: CommunityId? = null,
@@ -21,5 +22,22 @@ data class GetPosts(
     val liked_only: Boolean? = null,
     val disliked_only: Boolean? = null,
     val show_hidden: Boolean? = null,
-    val page_cursor: PaginationCursor? = PAGE_CURSOR_GUARD,
-) : DatatypeRoot
+    /** The page cursor to the next list, null is valid and considered first list */
+    val page_cursor: PaginationCursor? = PAGE_CURSOR_GUARD, // Guard is used to detect when null is set
+) : DatatypeRoot {
+
+    internal fun toPostsForm(): GetPosts {
+        return this.copy(page_cursor = null, page = this.page)
+    }
+
+    internal fun toValidatedForm(): GetPosts {
+        val pageCursorSet = this.page_cursor != PAGE_CURSOR_GUARD
+
+        return if (pageCursorSet) {
+            this.copy(page_cursor = this.page_cursor, page = null)
+        } else {
+            this.copy(page_cursor = null, page = this.page)
+        }
+
+    }
+}

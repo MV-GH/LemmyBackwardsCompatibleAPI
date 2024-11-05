@@ -230,7 +230,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun getPosts(
         form: it.vercruysse.lemmyapi.datatypes.GetPosts,
     ): Result<it.vercruysse.lemmyapi.datatypes.GetPostsResponse> =
-        api.getPosts(transformer.fromUni(form)).map(transformer::toUni)
+        api.getPosts(transformer.fromUni(form.toValidatedForm())).map(transformer::toUni)
 
     /**
      * Delete a post.

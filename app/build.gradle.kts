@@ -95,6 +95,7 @@ kotlin {
             implementation("org.wiremock:wiremock:3.9.2")
             implementation("com.marcinziolo:kotlin-wiremock:2.1.1")
             implementation("ch.qos.logback:logback-classic:1.5.6")
+            implementation("io.ktor:ktor-client-mock:$ktorVersion")
         }
 
         jsMain.dependencies {
