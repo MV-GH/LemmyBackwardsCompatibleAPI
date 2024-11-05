@@ -65,7 +65,7 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "3.0.0"
+        val ktorVersion = "3.0.1"
 
 
         commonMain.dependencies {
@@ -91,8 +91,8 @@ kotlin {
 
         jvmTest.dependencies {
             implementation(kotlin("reflect"))
-            implementation("io.mockk:mockk:1.13.11")
-            implementation("org.wiremock:wiremock:3.7.0")
+            implementation("io.mockk:mockk:1.13.13")
+            implementation("org.wiremock:wiremock:3.9.2")
             implementation("com.marcinziolo:kotlin-wiremock:2.1.1")
             implementation("ch.qos.logback:logback-classic:1.5.6")
         }
