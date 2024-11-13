@@ -941,4 +941,13 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun hidePost(form: it.vercruysse.lemmyapi.datatypes.HidePost): Result<Unit> =
         notSupported()
+
+    /**
+     * Get the application a user submitted when they first registered their account
+     *
+     * @GET("admin/registration_application")
+     */
+    override suspend fun getRegistrationApplication(
+        form: it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication,
+    ): Result<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse> = notSupported()
 }

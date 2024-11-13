@@ -8,7 +8,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @CommonParcelize
 @Serializable
 data class ApproveRegistrationApplication(
-    val id: Long,
+    val id: RegistrationApplicationId,
     val approve: Boolean,
     val deny_reason: String? = null,
 ) : DatatypeRoot

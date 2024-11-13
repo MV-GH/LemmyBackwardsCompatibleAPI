@@ -3,4 +3,5 @@ val controllerVersions = arrayOf(
     "0.19.0",
     "0.19.3",
     "0.19.4",
+    "0.19.6",
 )

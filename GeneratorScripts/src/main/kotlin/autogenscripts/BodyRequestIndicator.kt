@@ -1,4 +1,4 @@
-package org.example.autogenscripts
+package autogenscripts
 
 // We decide if a DTO is a request body by checking if it starts with any of these indicators and does not end with 'Response'
 val bodyRequestIndicators =

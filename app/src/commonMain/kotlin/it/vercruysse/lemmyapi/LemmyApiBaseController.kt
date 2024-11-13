@@ -712,4 +712,11 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      * @POST("post/hide")
      */
     abstract suspend fun hidePost(form: HidePost): Result<Unit>
+
+    /**
+     * Get the application a user submitted when they first registered their account
+     *
+     * @GET("admin/registration_application")
+     */
+    abstract suspend fun getRegistrationApplication(form: GetRegistrationApplication): Result<RegistrationApplicationResponse>
 }

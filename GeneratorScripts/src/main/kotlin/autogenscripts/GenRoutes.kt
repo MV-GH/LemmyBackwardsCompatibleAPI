@@ -1,4 +1,4 @@
-package org.example.autogenscripts
+package autogenscripts
 
 import com.charleskorn.kaml.*
 import io.ktor.client.*

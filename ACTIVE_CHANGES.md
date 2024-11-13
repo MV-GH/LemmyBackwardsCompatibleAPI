@@ -3,6 +3,13 @@
 This document lists the changes that you will need to actively handle, through feature flags.
 
 
+## 0.19.6
+
+- ImageDetails
+- Post Query Params: show_read, show_nsfw
+- Title Search Query Param
+- Registration Application Endpoint
+
 
 ## 0.19.4
 - Hide post support 
@@ -18,6 +25,3 @@ But each has different behaviour. The old behaviour is to hide all voting types 
 - Instance block support
 - 2FA rework, one must now provide a valid 2FA code to enable 2FA. Added routes to support this.
 
-
-
-  

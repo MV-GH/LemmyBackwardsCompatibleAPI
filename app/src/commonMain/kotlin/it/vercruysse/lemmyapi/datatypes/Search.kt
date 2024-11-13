@@ -20,4 +20,6 @@ data class Search(
     val listing_type: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
     val page: Long? = null,
     val limit: Long? = null,
+    /** Added in 0.19.6 */
+    val post_title_only: Boolean? = null,
 ) : DatatypeRoot
