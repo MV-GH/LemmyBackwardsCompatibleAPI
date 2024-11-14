@@ -25,6 +25,8 @@ data class PostView(
     val creator_blocked: Boolean,
     val my_vote: Int = 0,
     val unread_comments: Long,
+    /** Added in 0.19.6 */
+    val image_details: ImageDetails? = null,
 ) : DatatypeRoot, Identity {
     override val id: Long
         get() = post.id

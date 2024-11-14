@@ -81,7 +81,6 @@ internal interface MapperGenerator0x19x4 {
     fun toUni(d: ListPostReportsResponse): it.vercruysse.lemmyapi.datatypes.ListPostReportsResponse
     fun toUni(d: ListPrivateMessageReportsResponse): it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReportsResponse
     fun toUni(d: ListRegistrationApplicationsResponse): it.vercruysse.lemmyapi.datatypes.ListRegistrationApplicationsResponse
-    fun toUni(d: LoginToken): it.vercruysse.lemmyapi.datatypes.LoginToken
     fun toUni(d: LocalImage): it.vercruysse.lemmyapi.datatypes.LocalImage
     fun toUni(d: LocalImageView): it.vercruysse.lemmyapi.datatypes.LocalImageView
     fun toUni(d: LocalSite): it.vercruysse.lemmyapi.datatypes.LocalSite
@@ -91,6 +90,7 @@ internal interface MapperGenerator0x19x4 {
     fun toUni(d: LocalUserView): it.vercruysse.lemmyapi.datatypes.LocalUserView
     fun toUni(d: LocalUserVoteDisplayMode): it.vercruysse.lemmyapi.datatypes.LocalUserVoteDisplayMode
     fun toUni(d: LoginResponse): it.vercruysse.lemmyapi.datatypes.LoginResponse
+    fun toUni(d: LoginToken): it.vercruysse.lemmyapi.datatypes.LoginToken
     fun toUni(d: ModAdd): it.vercruysse.lemmyapi.datatypes.ModAdd
     fun toUni(d: ModAddCommunity): it.vercruysse.lemmyapi.datatypes.ModAddCommunity
     fun toUni(d: ModAddCommunityView): it.vercruysse.lemmyapi.datatypes.ModAddCommunityView

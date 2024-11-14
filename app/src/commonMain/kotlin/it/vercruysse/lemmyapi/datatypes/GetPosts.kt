@@ -24,6 +24,10 @@ data class GetPosts(
     val show_hidden: Boolean? = null,
     /** The page cursor to the next list, null is valid and considered first list */
     val page_cursor: PaginationCursor? = PAGE_CURSOR_GUARD, // Guard is used to detect when null is set
+    /** Added in 0.19.6 */
+    val show_read: Boolean? = null,
+    /** Added in 0.19.6 */
+    val show_nsfw: Boolean? = null,
 ) : DatatypeRoot {
 
     internal fun toPostsForm(): GetPosts {

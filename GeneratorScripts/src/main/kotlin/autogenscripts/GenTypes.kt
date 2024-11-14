@@ -1,4 +1,4 @@
-package org.example.autogenscripts
+package autogenscripts
 
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -230,5 +230,5 @@ suspend fun downloadTypes(
 }
 
 suspend fun main() {
-    downloadTypes("0.19.3-alpha.6", "v0/x19/x3")
+    downloadTypes("0.19.6", "v0/x19/x6")
 }

@@ -1,4 +1,4 @@
-package org.example.autogenscripts
+package autogenscripts
 
 import java.io.File
 
@@ -6,7 +6,7 @@ const val SRC = "app/src/commonMain/kotlin/it/vercruysse/lemmyapi/"
 
 const val HEADER = """
 @Konverter
-interface DatatypesMapper {
+internal interface MapperGenerator {
 """
 
 
@@ -28,7 +28,7 @@ fun genMapRoutes(
     val targetFile = File("${SRC}datatypes")
     val targetQualifier = "it.vercruysse.lemmyapi.datatypes."
 
-    val sourceMap = sourceFile.listFiles()!!.map { it.name to it }.toMap()
+    val sourceMap = sourceFile.listFiles()!!.associate { it.name to it }
     var toSourceMappings = "// body mappings\n"
 
 
@@ -79,5 +79,5 @@ fun main() {
     val exclusionTarget = setOf<String>(
 //        "LocalUser", "MyUserInfo", "LocalSiteRateLimit"
     )
-    genMapRoutes("v0/x19/x3", exclusionSrc, exclusionTarget)
+    genMapRoutes("v0/x19/x6", exclusionSrc, exclusionTarget)
 }

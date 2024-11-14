@@ -12,6 +12,7 @@ class FeatureFlags(val version: Version) {
     private val v0x19Plus = version.withoutSuffixes() >= "0.19.0".toVersion()
     private val v0x19x2Plus = version.withoutSuffixes() >= "0.19.2".toVersion()
     private val v0x19x4Plus = version.withoutSuffixes() >= "0.19.4".toVersion()
+    private val v0x19x6Plus = version.withoutSuffixes() >= "0.19.6".toVersion()
 
     /**
      * InstanceBlock Feature added in 0.19
@@ -72,4 +73,29 @@ class FeatureFlags(val version: Version) {
      * Alt text field for images, feature added in 0.19.4
      */
     fun altText(): Boolean = v0x19x4Plus
+
+    /**
+     * Image details, feature added in 0.19.6
+     */
+    fun imageDetails(): Boolean = v0x19x6Plus
+
+    /**
+     * Get Registration application endpoint, feature added in 0.19.6
+     */
+    fun getRegistrationApplication(): Boolean = v0x19x6Plus
+
+    /**
+     * List Posts using query show_read, feature added in 0.19.6
+     */
+    fun postListQueryShowRead(): Boolean = v0x19x6Plus
+
+    /**
+     * List Posts using query show_nsfw feature added in 0.19.6
+     */
+    fun postListQueryShowNsfw(): Boolean = v0x19x6Plus
+
+    /**
+     * Search posts on title, feature added in 0.19.6
+     */
+    fun searchPostsOnTitle(): Boolean = v0x19x6Plus
 }

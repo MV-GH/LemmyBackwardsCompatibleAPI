@@ -3,10 +3,11 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import kotlin.reflect.full.primaryConstructor
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.fail
 
 class DatatypesValidation {
-    private val versions = listOf("v0/x18/x5", "v0/x19/x0", "v0/x19/x3", "v0/x19/x4")
+    private val versions = controllerVersions.map(::mapVersionToPathVersion)
 
     @Test
     fun `all datatypes that are nullable should also be optional`() {
@@ -38,5 +39,15 @@ class DatatypesValidation {
             }
         }
         return classes
+    }
+
+    @Test
+    fun `test version to path version`() {
+        assertEquals("v0/x19/x4", mapVersionToPathVersion("0.19.4"))
+    }
+
+    private fun mapVersionToPathVersion(version: String): String {
+        val (major, minor, patch) = version.split(".").map { it.toInt() }
+        return "v$major/x$minor/x$patch"
     }
 }
