@@ -5,9 +5,9 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "2.0.21"
+    kotlin("plugin.serialization") version "2.1.10"
     id("org.jmailen.kotlinter") version "4.4.0"
-    id("com.google.devtools.ksp") version ("2.0.21-1.0.25")
+    id("com.google.devtools.ksp") version ("2.1.10-1.0.30")
     id("com.vanniktech.maven.publish") version "0.29.0"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.android.library")
@@ -22,7 +22,7 @@ repositories {
 
 android {
     namespace = "it.vercruysse.lemmyapi"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         minSdk = 21
     }
@@ -65,13 +65,13 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "3.0.1"
+        val ktorVersion = "3.1.0"
 
 
         commonMain.dependencies {
             implementation("io.ktor:ktor-client-core:$ktorVersion")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
@@ -80,7 +80,7 @@ kotlin {
 
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
             implementation("io.ktor:ktor-client-logging:$ktorVersion")
         }
 
