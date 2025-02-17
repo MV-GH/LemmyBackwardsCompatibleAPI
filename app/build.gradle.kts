@@ -6,7 +6,7 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "2.1.10"
-    id("org.jmailen.kotlinter") version "4.4.0"
+    id("org.jmailen.kotlinter") version "5.0.1"
     id("com.google.devtools.ksp") version ("2.1.10-1.0.30")
     id("com.vanniktech.maven.publish") version "0.29.0"
     id("com.github.ben-manes.versions") version "0.51.0"
@@ -63,6 +63,9 @@ kotlin {
             }
         }
     }
+
+
+
 
     sourceSets {
         val ktorVersion = "3.1.0"
