@@ -1,8 +1,17 @@
-package it.vercruysse.lemmyapi.v0.x19.x6
+@file:Suppress("unused", "INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 
-import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.*
+import io.mcarle.konvert.api.Konfig
+import io.mcarle.konvert.api.Konverter
+import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.*
 
-internal interface MapperGenerator {
+@Konverter(
+    options = [
+        Konfig(key = "konvert.konverter.generate-class", value = "true"),
+        Konfig(key = "konvert.enable-converters", value = "FloatToIntConverter"),
+        Konfig(key = "konvert.add-generated-konverter-annotation", value = "false"),
+    ],
+)
+internal interface MapperGenerator0x19x11 {
 
     fun toUni(d: AddAdminResponse): it.vercruysse.lemmyapi.datatypes.AddAdminResponse
     fun toUni(d: AddModToCommunityResponse): it.vercruysse.lemmyapi.datatypes.AddModToCommunityResponse
@@ -58,9 +67,7 @@ internal interface MapperGenerator {
     fun toUni(d: GetSiteMetadataResponse): it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse
     fun toUni(d: GetSiteResponse): it.vercruysse.lemmyapi.datatypes.GetSiteResponse
     fun toUni(d: GetUnreadCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadCountResponse
-    fun toUni(
-        d: GetUnreadRegistrationApplicationCountResponse,
-    ): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
+    fun toUni(d: GetUnreadRegistrationApplicationCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
     fun toUni(d: ImageDetails): it.vercruysse.lemmyapi.datatypes.ImageDetails
     fun toUni(d: Instance): it.vercruysse.lemmyapi.datatypes.Instance
     fun toUni(d: InstanceBlockView): it.vercruysse.lemmyapi.datatypes.InstanceBlockView
@@ -109,6 +116,7 @@ internal interface MapperGenerator {
     fun toUni(d: ModTransferCommunity): it.vercruysse.lemmyapi.datatypes.ModTransferCommunity
     fun toUni(d: ModTransferCommunityView): it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView
     fun toUni(d: MyUserInfo): it.vercruysse.lemmyapi.datatypes.MyUserInfo
+    fun toUni(d: PaginationCursor): it.vercruysse.lemmyapi.datatypes.PaginationCursor
     fun toUni(d: Person): it.vercruysse.lemmyapi.datatypes.Person
     fun toUni(d: PersonAggregates): it.vercruysse.lemmyapi.datatypes.PersonAggregates
     fun toUni(d: PersonBlockView): it.vercruysse.lemmyapi.datatypes.PersonBlockView
@@ -143,8 +151,7 @@ internal interface MapperGenerator {
     fun toUni(d: Tagline): it.vercruysse.lemmyapi.datatypes.Tagline
     fun toUni(d: UpdateTotpResponse): it.vercruysse.lemmyapi.datatypes.UpdateTotpResponse
     fun toUni(d: VoteView): it.vercruysse.lemmyapi.datatypes.VoteView
-
-    // body mappings
+// body mappings
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddAdmin): AddAdmin
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddModToCommunity): AddModToCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ApproveRegistrationApplication): ApproveRegistrationApplication

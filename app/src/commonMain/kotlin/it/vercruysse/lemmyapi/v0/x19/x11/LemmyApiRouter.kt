@@ -1,19 +1,13 @@
-package it.vercruysse.lemmyapi
+package it.vercruysse.lemmyapi.v0.x19.x11
 
-import io.github.z4kn4fein.semver.Version
-import io.ktor.client.*
-import it.vercruysse.lemmyapi.datatypes.*
+import io.ktor.client.HttpClient
+import it.vercruysse.lemmyapi.AuthBaseClient
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
-import it.vercruysse.lemmyapi.utils.postResult
+import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.*
 
-abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String?) :
-    LemmyApiBase(
-        client,
-        actualVersion,
-        baseUrl,
-        auth,
-    ) {
+internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : AuthBaseClient(client, auth) {
+
     /**
      * Gets the site, and your user data.
      *
@@ -632,7 +626,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
 
     /**
      * Generate a TOTP / two-factor secret.
-     *
+     * 
      * Afterwards you need to call `/user/totp/update` with a valid token to enable it.
      *
      * @POST("user/totp/generate")
@@ -641,9 +635,9 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
 
     /**
      * Enable / Disable TOTP / two-factor authentication.
-     *
+     * 
      * To enable, you need to first call `/user/totp/generate` and then pass a valid token to this.
-     *
+     * 
      * Disabling is only possible if 2FA was previously enabled. Again it is necessary to pass a valid token.
      *
      * @POST("user/totp/update")
@@ -670,7 +664,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("user/list_logins")
      */
-    abstract suspend fun listLogins(): Result<List<LoginToken>>
+    abstract suspend fun listLogins(): Result<Unit>
 
     /**
      * Returns an error message if your auth token is invalid
@@ -680,7 +674,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun validateAuth(): Result<Unit>
 
     /**
-     * Logout your user
+     * Invalidate the currently used auth token.
      *
      * @POST("user/logout")
      */
@@ -727,4 +721,5 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      * @GET("admin/registration_application")
      */
     abstract suspend fun getRegistrationApplication(form: GetRegistrationApplication): Result<RegistrationApplicationResponse>
+
 }

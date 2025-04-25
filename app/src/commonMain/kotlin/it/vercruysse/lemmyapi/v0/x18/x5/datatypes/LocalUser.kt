@@ -26,4 +26,6 @@ internal data class LocalUser(
     val totp_2fa_url: String? = null,
     val open_links_in_new_tab: Boolean,
     val infinite_scroll_enabled: Boolean = true, // 0.18.3
+    /** Added in 0.19.11 */
+    val last_donation_notification: String,
 )
