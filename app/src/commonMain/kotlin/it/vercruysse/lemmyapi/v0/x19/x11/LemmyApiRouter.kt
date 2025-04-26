@@ -538,7 +538,7 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
      *
      * @POST("user/donation_dialog_shown")
      */
-    abstract suspend fun donationDialogShown(): Result<Unit>
+    abstract suspend fun markDonationDialogShown(): Result<Unit>
 
     /**
      * Add an admin to your site.

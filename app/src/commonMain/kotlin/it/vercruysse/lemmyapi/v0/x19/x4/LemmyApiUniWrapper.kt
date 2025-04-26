@@ -727,7 +727,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("user/donation_dialog_shown")
      */
-    override suspend fun donationDialogShown(): Result<Unit> = notSupported()
+    override suspend fun markDonationDialogShown(): Result<Unit> = notSupported()
 
     /**
      * Add an admin to your site.

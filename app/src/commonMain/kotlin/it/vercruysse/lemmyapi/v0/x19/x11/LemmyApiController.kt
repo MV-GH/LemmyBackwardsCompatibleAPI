@@ -619,7 +619,7 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
      *
      * @POST("user/donation_dialog_shown")
      */
-    override suspend fun donationDialogShown(): Result<Unit> =
+    override suspend fun markDonationDialogShown(): Result<Unit> =
         client.postResult("user/donation_dialog_shown")
 
     /**
