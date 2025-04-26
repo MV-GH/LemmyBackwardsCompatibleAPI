@@ -539,6 +539,13 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun leaveAdmin(): Result<GetSiteResponse>
 
     /**
+     * Mark donation dialog as shown.
+     *
+     * @POST("user/donation_dialog_shown")
+     */
+    abstract suspend fun markDonationDialogShown(): Result<Unit>
+
+    /**
      * Add an admin to your site.
      *
      * @POST("admin/add")

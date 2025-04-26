@@ -20,5 +20,8 @@ class GetCorrectControllerTest {
 
         val controller5 = LemmyApi.getLemmyApi(instance = "lemmy.world", version = "0.19.2-alpha")
         assertInstanceOf(it.vercruysse.lemmyapi.v0.x19.x3.LemmyApiUniWrapper::class.java, controller5)
+
+        val controller6 = LemmyApi.getLemmyApi(instance = "lemmy.world", version = "0.19.11")
+        assertInstanceOf(it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper::class.java, controller6)
     }
 }

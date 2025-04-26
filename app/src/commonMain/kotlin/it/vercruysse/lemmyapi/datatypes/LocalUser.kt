@@ -37,4 +37,6 @@ data class LocalUser(
     val enable_keyboard_navigation: Boolean,
     val enable_animated_images: Boolean,
     val collapse_bot_comments: Boolean,
+    /** Added in 0.19.11 */
+    val last_donation_notification: String = "",
 ) : DatatypeRoot, Identity

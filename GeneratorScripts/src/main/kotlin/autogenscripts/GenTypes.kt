@@ -84,9 +84,11 @@ suspend fun downloadTypes(
         println(String(proc.inputStream.readAllBytes()))
 
         for (typeFile in datatypes.listFiles()!!) {
-            if (typeFile.name.startsWith("lib") || !typeFile.name.contains("module")) {
+            if (typeFile.name.startsWith("lib")) {
                 typeFile.delete()
             } else if (typeFile.name.endsWith(".kt") && typeFile.isFile()) {
+                val originalTypeFile = typeFile.readText()
+
                 val fileName = typeFile.name.substringBefore(".")
                 val f = File(datatypes, "$fileName.kt")
                 f.createNewFile()
@@ -102,12 +104,12 @@ suspend fun downloadTypes(
                 var imports = ""
 
                 // typealiases are not serializable
-                if (!typeFile.readText().contains("typealias")) {
+                if (!originalTypeFile.contains("typealias")) {
                     imports += "import kotlinx.serialization.Serializable\n\n@Serializable"
                 }
 
                 val lines =
-                    typeFile.readText()
+                    originalTypeFile
                         .split(Regex("\r?\n"))
                         .drop(15) // Remove weird dukat imports
                         .filter { !it.contains("definedExternally") } // Remove these weird getters and setters
@@ -219,8 +221,6 @@ suspend fun downloadTypes(
                 if (lines.last() != "" && lines.last() != "\r") {
                     f.appendText("\n")
                 }
-
-                typeFile.delete()
             }
         }
 
@@ -230,5 +230,5 @@ suspend fun downloadTypes(
 }
 
 suspend fun main() {
-    downloadTypes("0.19.6", "v0/x19/x6")
+    downloadTypes("0.19.11-donation-dialog.1", "v0/x19/x11")
 }

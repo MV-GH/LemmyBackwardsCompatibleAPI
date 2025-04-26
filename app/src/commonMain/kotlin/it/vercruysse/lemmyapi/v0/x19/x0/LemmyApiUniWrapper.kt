@@ -723,6 +723,13 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         api.leaveAdmin().map(transformer::toUni)
 
     /**
+     * Mark donation dialog as shown.
+     *
+     * @POST("user/donation_dialog_shown")
+     */
+    override suspend fun markDonationDialogShown(): Result<Unit> = notSupported()
+
+    /**
      * Add an admin to your site.
      *
      * @POST("admin/add")
