@@ -1754,7 +1754,7 @@ internal class Transformer : MapperGenerator {
             nsfw = d.nsfw,
             posting_restricted_to_mods = d.posting_restricted_to_mods,
             discussion_languages = d.discussion_languages,
-            visibility = d.visibility?.name,
+            visibility = d.visibility,
         )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCustomEmoji): X11DatatypesCreateCustomEmoji =
