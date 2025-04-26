@@ -1,16 +1,14 @@
 @file:Suppress("unused", "INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 
-import io.mcarle.konvert.api.Konfig
-import io.mcarle.konvert.api.Konverter
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.*
 
-//@Konverter(
+// @Konverter(
 //    options = [
 //        Konfig(key = "konvert.konverter.generate-class", value = "true"),
 //        Konfig(key = "konvert.enable-converters", value = "FloatToIntConverter"),
 //        Konfig(key = "konvert.add-generated-konverter-annotation", value = "false"),
 //    ],
-//)
+// )
 internal interface MapperGenerator0x19x11 {
 
     fun toUni(d: AddAdminResponse): it.vercruysse.lemmyapi.datatypes.AddAdminResponse
@@ -150,6 +148,7 @@ internal interface MapperGenerator0x19x11 {
     fun toUni(d: Tagline): it.vercruysse.lemmyapi.datatypes.Tagline
     fun toUni(d: UpdateTotpResponse): it.vercruysse.lemmyapi.datatypes.UpdateTotpResponse
     fun toUni(d: VoteView): it.vercruysse.lemmyapi.datatypes.VoteView
+
 // body mappings
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddAdmin): AddAdmin
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddModToCommunity): AddModToCommunity

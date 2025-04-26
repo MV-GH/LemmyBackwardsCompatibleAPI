@@ -619,7 +619,7 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
      *
      * @POST("user/donation_dialog_shown")
      */
-    override suspend fun donation_dialog_shown(): Result<Unit> =
+    override suspend fun donationDialogShown(): Result<Unit> =
         client.postResult("user/donation_dialog_shown")
 
     /**
@@ -720,7 +720,7 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
 
     /**
      * Generate a TOTP / two-factor secret.
-     * 
+     *
      * Afterwards you need to call `/user/totp/update` with a valid token to enable it.
      *
      * @POST("user/totp/generate")
@@ -730,9 +730,9 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
 
     /**
      * Enable / Disable TOTP / two-factor authentication.
-     * 
+     *
      * To enable, you need to first call `/user/totp/generate` and then pass a valid token to this.
-     * 
+     *
      * Disabling is only possible if 2FA was previously enabled. Again it is necessary to pass a valid token.
      *
      * @POST("user/totp/update")
@@ -828,5 +828,4 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
      */
     override suspend fun getRegistrationApplication(form: GetRegistrationApplication): Result<RegistrationApplicationResponse> =
         client.getResult("admin/registration_application", form)
-
 }

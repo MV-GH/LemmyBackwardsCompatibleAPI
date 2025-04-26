@@ -141,6 +141,7 @@ internal interface MapperGenerator {
     fun toUni(d: Tagline): it.vercruysse.lemmyapi.datatypes.Tagline
     fun toUni(d: UpdateTotpResponse): it.vercruysse.lemmyapi.datatypes.UpdateTotpResponse
     fun toUni(d: VoteView): it.vercruysse.lemmyapi.datatypes.VoteView
+
 // body mappings
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddAdmin): AddAdmin
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddModToCommunity): AddModToCommunity

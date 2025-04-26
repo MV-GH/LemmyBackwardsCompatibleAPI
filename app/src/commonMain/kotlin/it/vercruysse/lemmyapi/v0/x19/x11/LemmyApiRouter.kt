@@ -538,7 +538,7 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
      *
      * @POST("user/donation_dialog_shown")
      */
-    abstract suspend fun donation_dialog_shown(): Result<Unit>
+    abstract suspend fun donationDialogShown(): Result<Unit>
 
     /**
      * Add an admin to your site.
@@ -626,7 +626,7 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
 
     /**
      * Generate a TOTP / two-factor secret.
-     * 
+     *
      * Afterwards you need to call `/user/totp/update` with a valid token to enable it.
      *
      * @POST("user/totp/generate")
@@ -635,9 +635,9 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
 
     /**
      * Enable / Disable TOTP / two-factor authentication.
-     * 
+     *
      * To enable, you need to first call `/user/totp/generate` and then pass a valid token to this.
-     * 
+     *
      * Disabling is only possible if 2FA was previously enabled. Again it is necessary to pass a valid token.
      *
      * @POST("user/totp/update")
@@ -721,5 +721,4 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
      * @GET("admin/registration_application")
      */
     abstract suspend fun getRegistrationApplication(form: GetRegistrationApplication): Result<RegistrationApplicationResponse>
-
 }

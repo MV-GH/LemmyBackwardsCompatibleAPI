@@ -543,7 +543,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("user/donation_dialog_shown")
      */
-    abstract suspend fun donation_dialog_shown(): Result<Unit>
+    abstract suspend fun donationDialogShown(): Result<Unit>
 
     /**
      * Add an admin to your site.
