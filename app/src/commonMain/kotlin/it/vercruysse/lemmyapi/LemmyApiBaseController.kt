@@ -5,7 +5,6 @@ import io.ktor.client.*
 import it.vercruysse.lemmyapi.datatypes.*
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
-import it.vercruysse.lemmyapi.utils.postResult
 
 abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String?) :
     LemmyApiBase(

@@ -13,6 +13,7 @@ class FeatureFlags(val version: Version) {
     private val v0x19x2Plus = version.withoutSuffixes() >= "0.19.2".toVersion()
     private val v0x19x4Plus = version.withoutSuffixes() >= "0.19.4".toVersion()
     private val v0x19x6Plus = version.withoutSuffixes() >= "0.19.6".toVersion()
+    private val v0x19x11Plus = version.withoutSuffixes() >= "0.19.11".toVersion()
 
     /**
      * InstanceBlock Feature added in 0.19
@@ -98,4 +99,9 @@ class FeatureFlags(val version: Version) {
      * Search posts on title, feature added in 0.19.6
      */
     fun searchPostsOnTitle(): Boolean = v0x19x6Plus
+
+    /**
+     * Mark donation dialog as shown, feature added in 0.19.11
+     */
+    fun donation_dialog_shown(): Boolean = v0x19x11Plus
 }

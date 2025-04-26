@@ -3,6 +3,11 @@
 This document lists the changes that you will need to actively handle, through feature flags.
 
 
+## 0.19.11
+
+- Added `last_donation_notification` field to LocalUser
+- Donation Dialog Shown Endpoint
+
 ## 0.19.6
 
 - ImageDetails

@@ -1,3 +1,4 @@
+package it.vercruysse.lemmyapi.v0.x19.x11
 
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
@@ -5,7 +6,6 @@ import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
-import it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiRouter
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.*
 
 internal class LemmyApiController(client: HttpClient, auth: String?) :
@@ -762,7 +762,7 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
      *
      * @GET("user/list_logins")
      */
-    override suspend fun listLogins(): Result<Unit> =
+    override suspend fun listLogins(): Result<List<LoginToken>> =
         client.getResult("user/list_logins")
 
     /**

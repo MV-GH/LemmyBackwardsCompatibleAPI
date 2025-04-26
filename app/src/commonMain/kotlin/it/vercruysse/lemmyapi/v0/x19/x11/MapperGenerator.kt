@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi.v0.x19.x11
 
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.*
 
-//@Konverter
 internal interface MapperGenerator {
 
     fun toUni(d: AddAdminResponse): it.vercruysse.lemmyapi.datatypes.AddAdminResponse
@@ -108,7 +107,6 @@ internal interface MapperGenerator {
     fun toUni(d: ModTransferCommunity): it.vercruysse.lemmyapi.datatypes.ModTransferCommunity
     fun toUni(d: ModTransferCommunityView): it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView
     fun toUni(d: MyUserInfo): it.vercruysse.lemmyapi.datatypes.MyUserInfo
-    fun toUni(d: PaginationCursor): it.vercruysse.lemmyapi.datatypes.PaginationCursor
     fun toUni(d: Person): it.vercruysse.lemmyapi.datatypes.Person
     fun toUni(d: PersonAggregates): it.vercruysse.lemmyapi.datatypes.PersonAggregates
     fun toUni(d: PersonBlockView): it.vercruysse.lemmyapi.datatypes.PersonBlockView

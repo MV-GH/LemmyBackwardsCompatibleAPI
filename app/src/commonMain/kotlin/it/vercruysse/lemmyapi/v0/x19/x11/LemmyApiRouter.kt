@@ -664,7 +664,7 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
      *
      * @GET("user/list_logins")
      */
-    abstract suspend fun listLogins(): Result<Unit>
+    abstract suspend fun listLogins(): Result<List<LoginToken>>
 
     /**
      * Returns an error message if your auth token is invalid

@@ -4,13 +4,13 @@ import io.mcarle.konvert.api.Konfig
 import io.mcarle.konvert.api.Konverter
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.*
 
-@Konverter(
-    options = [
-        Konfig(key = "konvert.konverter.generate-class", value = "true"),
-        Konfig(key = "konvert.enable-converters", value = "FloatToIntConverter"),
-        Konfig(key = "konvert.add-generated-konverter-annotation", value = "false"),
-    ],
-)
+//@Konverter(
+//    options = [
+//        Konfig(key = "konvert.konverter.generate-class", value = "true"),
+//        Konfig(key = "konvert.enable-converters", value = "FloatToIntConverter"),
+//        Konfig(key = "konvert.add-generated-konverter-annotation", value = "false"),
+//    ],
+//)
 internal interface MapperGenerator0x19x11 {
 
     fun toUni(d: AddAdminResponse): it.vercruysse.lemmyapi.datatypes.AddAdminResponse
@@ -116,7 +116,6 @@ internal interface MapperGenerator0x19x11 {
     fun toUni(d: ModTransferCommunity): it.vercruysse.lemmyapi.datatypes.ModTransferCommunity
     fun toUni(d: ModTransferCommunityView): it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView
     fun toUni(d: MyUserInfo): it.vercruysse.lemmyapi.datatypes.MyUserInfo
-    fun toUni(d: PaginationCursor): it.vercruysse.lemmyapi.datatypes.PaginationCursor
     fun toUni(d: Person): it.vercruysse.lemmyapi.datatypes.Person
     fun toUni(d: PersonAggregates): it.vercruysse.lemmyapi.datatypes.PersonAggregates
     fun toUni(d: PersonBlockView): it.vercruysse.lemmyapi.datatypes.PersonBlockView
