@@ -142,7 +142,7 @@ object LemmyApi {
                     4, 5 -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
                     6, 7, 8, 9, 10 -> it.vercruysse.lemmyapi.v0.x19.x6.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
                     11 -> it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
-                    else -> it.vercruysse.lemmyapi.v0.x19.x6.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
+                    else -> it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
                 }
 
                 else -> throw NotSupportedException("Unsupported Lemmy minor version: $version")
