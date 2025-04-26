@@ -1085,6 +1085,7 @@ internal class Transformer : MapperGenerator {
             enable_keyboard_navigation = d.enable_keyboard_navigation,
             enable_animated_images = d.enable_animated_images,
             collapse_bot_comments = d.collapse_bot_comments,
+            last_donation_notification = "",
         )
 
     override fun toUni(d: X3DatatypesLocalUserView): LemmyapiDatatypesLocalUserView =
