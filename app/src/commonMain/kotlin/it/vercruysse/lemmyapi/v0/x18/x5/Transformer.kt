@@ -438,7 +438,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
             enable_keyboard_navigation = false,
             enable_animated_images = true,
             collapse_bot_comments = false,
-            last_donation_notification = d.last_donation_notification,
         )
 
     override fun toUni(d: X5DatatypesMyUserInfo): LemmyapiDatatypesMyUserInfo =
