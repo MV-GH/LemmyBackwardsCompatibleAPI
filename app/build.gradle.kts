@@ -68,13 +68,13 @@ kotlin {
 
 
     sourceSets {
-        val ktorVersion = "3.1.0"
+        val ktorVersion = "3.1.2"
 
 
         commonMain.dependencies {
             implementation("io.ktor:ktor-client-core:$ktorVersion")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
@@ -83,7 +83,7 @@ kotlin {
 
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
             implementation("io.ktor:ktor-client-logging:$ktorVersion")
         }
 
@@ -97,7 +97,7 @@ kotlin {
             implementation("io.mockk:mockk:1.13.13")
             implementation("org.wiremock:wiremock:3.9.2")
             implementation("com.marcinziolo:kotlin-wiremock:2.1.1")
-            implementation("ch.qos.logback:logback-classic:1.5.6")
+            implementation("ch.qos.logback:logback-classic:1.5.15")
             implementation("io.ktor:ktor-client-mock:$ktorVersion")
         }
 
