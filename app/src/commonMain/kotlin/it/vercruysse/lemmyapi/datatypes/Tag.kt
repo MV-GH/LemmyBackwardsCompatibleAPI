@@ -4,8 +4,6 @@ import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
-// TODO: ap_id
-
 @CommonParcelize
 @Serializable
 data class Tag(

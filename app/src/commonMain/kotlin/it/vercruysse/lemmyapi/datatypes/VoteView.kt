@@ -13,7 +13,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class VoteView(
     val creator: Person,
     val creator_banned_from_community: Boolean,
-    val score: Long,
+    val score: Int,
 ) : DatatypeRoot, Identity {
     override val id: Long
         get() = creator.id
