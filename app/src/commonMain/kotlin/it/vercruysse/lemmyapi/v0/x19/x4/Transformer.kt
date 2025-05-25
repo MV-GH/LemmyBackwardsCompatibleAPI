@@ -722,7 +722,6 @@ internal class Transformer : MapperGenerator {
     override fun toUni(d: X4DatatypesCustomEmoji): LemmyapiDatatypesCustomEmoji =
         LemmyapiDatatypesCustomEmoji(
             id = d.id,
-            local_site_id = d.local_site_id,
             shortcode = d.shortcode,
             image_url = d.image_url,
             alt_text = d.alt_text,
@@ -1405,6 +1404,7 @@ internal class Transformer : MapperGenerator {
             resolver_id = d.resolver_id,
             published = d.published,
             updated = d.updated,
+            violates_instance_rules = false,
         )
 
     override fun toUni(d: X4DatatypesPostReportResponse): LemmyapiDatatypesPostReportResponse =
@@ -1468,6 +1468,7 @@ internal class Transformer : MapperGenerator {
             updated = d.updated,
             ap_id = d.ap_id,
             local = d.local,
+            removed = false,
         )
 
     override fun toUni(d: X4DatatypesPrivateMessageReport): LemmyapiDatatypesPrivateMessageReport =
@@ -1602,7 +1603,6 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X4DatatypesTagline): LemmyapiDatatypesTagline = LemmyapiDatatypesTagline(
         id = d.id,
-        local_site_id = d.local_site_id,
         content = d.content,
         published = d.published,
         updated = d.updated,

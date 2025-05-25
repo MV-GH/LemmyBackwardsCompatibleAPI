@@ -5,13 +5,12 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: moderators removed
-
 @CommonParcelize
 @Serializable
 data class GetPostResponse(
     val post_view: PostView,
     val community_view: CommunityView,
-    val moderators: List<CommunityModeratorView>,
+    /** Removed in Lemmy 1.0.0 */
+    val moderators: List<CommunityModeratorView> = emptyList(),
     val cross_posts: List<PostView>,
 ) : DatatypeRoot
