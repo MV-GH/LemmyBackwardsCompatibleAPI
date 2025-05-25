@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class SiteResponse(
     val site_view: SiteView,
-    val taglines: List<Nothing?> = null,
+//    val taglines: List<Nothing?> = null,
 )

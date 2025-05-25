@@ -148,10 +148,10 @@ import it.vercruysse.lemmyapi.datatypes.ModBan as LemmyapiDatatypesModBan
 import it.vercruysse.lemmyapi.datatypes.ModBanFromCommunity as LemmyapiDatatypesModBanFromCommunity
 import it.vercruysse.lemmyapi.datatypes.ModBanFromCommunityView as LemmyapiDatatypesModBanFromCommunityView
 import it.vercruysse.lemmyapi.datatypes.ModBanView as LemmyapiDatatypesModBanView
+import it.vercruysse.lemmyapi.datatypes.ModChangeCommunityVisibility as LemmyapiDatatypesModChangeCommunityVisibility
+import it.vercruysse.lemmyapi.datatypes.ModChangeCommunityVisibilityView as LemmyapiDatatypesModChangeCommunityVisibilityView
 import it.vercruysse.lemmyapi.datatypes.ModFeaturePost as LemmyapiDatatypesModFeaturePost
 import it.vercruysse.lemmyapi.datatypes.ModFeaturePostView as LemmyapiDatatypesModFeaturePostView
-import it.vercruysse.lemmyapi.datatypes.ModHideCommunity as LemmyapiDatatypesModHideCommunity
-import it.vercruysse.lemmyapi.datatypes.ModHideCommunityView as LemmyapiDatatypesModHideCommunityView
 import it.vercruysse.lemmyapi.datatypes.ModLockPost as LemmyapiDatatypesModLockPost
 import it.vercruysse.lemmyapi.datatypes.ModLockPostView as LemmyapiDatatypesModLockPostView
 import it.vercruysse.lemmyapi.datatypes.ModRemoveComment as LemmyapiDatatypesModRemoveComment
@@ -783,24 +783,90 @@ internal class Transformer : MapperGenerator {
             federated_instances = d.federated_instances?.let { this.toUni(d = it) },
         )
 
-    override fun toUni(d: X6DatatypesGetModlogResponse): LemmyapiDatatypesGetModlogResponse =
-        LemmyapiDatatypesGetModlogResponse(
-            removed_posts = d.removed_posts.map { this.toUni(d = it) },
-            locked_posts = d.locked_posts.map { this.toUni(d = it) },
-            featured_posts = d.featured_posts.map { this.toUni(d = it) },
-            removed_comments = d.removed_comments.map { this.toUni(d = it) },
-            removed_communities = d.removed_communities.map { this.toUni(d = it) },
-            banned_from_community = d.banned_from_community.map { this.toUni(d = it) },
-            banned = d.banned.map { this.toUni(d = it) },
-            added_to_community = d.added_to_community.map { this.toUni(d = it) },
-            transferred_to_community = d.transferred_to_community.map { this.toUni(d = it) },
-            added = d.added.map { this.toUni(d = it) },
-            admin_purged_persons = d.admin_purged_persons.map { this.toUni(d = it) },
-            admin_purged_communities = d.admin_purged_communities.map { this.toUni(d = it) },
-            admin_purged_posts = d.admin_purged_posts.map { this.toUni(d = it) },
-            admin_purged_comments = d.admin_purged_comments.map { this.toUni(d = it) },
-            hidden_communities = d.hidden_communities.map { this.toUni(d = it) },
+    override fun toUni(d: X6DatatypesGetModlogResponse): LemmyapiDatatypesGetModlogResponse {
+        val modlogList = mutableListOf<it.vercruysse.lemmyapi.datatypes.ModlogCombinedView>()
+
+        // Add ModRemovePost entries
+        modlogList.addAll(d.removed_posts.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModRemovePost(mod_remove_post = this.toUni(d = view))
+        })
+
+        // Add ModLockPost entries
+        modlogList.addAll(d.locked_posts.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModLockPost(mod_lock_post = this.toUni(d = view))
+        })
+
+        // Add ModFeaturePost entries
+        modlogList.addAll(d.featured_posts.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModFeaturePost(mod_feature_post = this.toUni(d = view))
+        })
+
+        // Add ModRemoveComment entries
+        modlogList.addAll(d.removed_comments.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModRemoveComment(mod_remove_comment = this.toUni(d = view))
+        })
+
+        // Add ModRemoveCommunity entries
+        modlogList.addAll(d.removed_communities.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModRemoveCommunity(mod_remove_community = this.toUni(d = view))
+        })
+
+        // Add ModBanFromCommunity entries
+        modlogList.addAll(d.banned_from_community.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModBanFromCommunity(mod_ban_from_community = this.toUni(d = view))
+        })
+
+        // Add ModBan entries
+        modlogList.addAll(d.banned.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModBan(mod_ban = this.toUni(d = view))
+        })
+
+        // Add ModAddCommunity entries
+        modlogList.addAll(d.added_to_community.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModAddCommunity(mod_add_community = this.toUni(d = view))
+        })
+
+        // Add ModTransferCommunity entries
+        modlogList.addAll(d.transferred_to_community.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModTransferCommunity(mod_transfer_community = this.toUni(d = view))
+        })
+
+        // Add ModAdd entries
+        modlogList.addAll(d.added.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModAdd(mod_add = this.toUni(d = view))
+        })
+
+        // Add AdminPurgePerson entries
+        modlogList.addAll(d.admin_purged_persons.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.AdminPurgePerson(admin_purge_person = this.toUni(d = view))
+        })
+
+        // Add AdminPurgeCommunity entries
+        modlogList.addAll(d.admin_purged_communities.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.AdminPurgeCommunity(admin_purge_community = this.toUni(d = view))
+        })
+
+        // Add AdminPurgePost entries
+        modlogList.addAll(d.admin_purged_posts.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.AdminPurgePost(admin_purge_post = this.toUni(d = view))
+        })
+
+        // Add AdminPurgeComment entries
+        modlogList.addAll(d.admin_purged_comments.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.AdminPurgeComment(admin_purge_comment = this.toUni(d = view))
+        })
+
+        // Add ModHideCommunity entries (mapped to ModChangeCommunityVisibility)
+        modlogList.addAll(d.hidden_communities.map { view ->
+            it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModChangeCommunityVisibility(mod_change_community_visibility = this.toUni(d = view))
+        })
+
+        return it.vercruysse.lemmyapi.datatypes.GetModlogResponse(
+            modlog = modlogList,
+            next_page = null,
+            prev_page = null
         )
+    }
 
     override fun toUni(d: X6DatatypesGetPersonDetailsResponse): LemmyapiDatatypesGetPersonDetailsResponse = LemmyapiDatatypesGetPersonDetailsResponse(
         person_view = this.toUni(d = d.person_view),
@@ -1168,20 +1234,24 @@ internal class Transformer : MapperGenerator {
             community = this.toUni(d = d.community),
         )
 
-    override fun toUni(d: X6DatatypesModHideCommunity): LemmyapiDatatypesModHideCommunity =
-        LemmyapiDatatypesModHideCommunity(
+    override fun toUni(d: X6DatatypesModHideCommunity): LemmyapiDatatypesModChangeCommunityVisibility =
+        LemmyapiDatatypesModChangeCommunityVisibility(
             id = d.id,
             community_id = d.community_id,
             mod_person_id = d.mod_person_id,
-            when_ = d.when_,
+            published = d.when_,
             reason = d.reason,
-            hidden = d.hidden,
+            visibility = if (d.hidden) {
+                it.vercruysse.lemmyapi.dto.CommunityVisibility.Unlisted
+            } else {
+                it.vercruysse.lemmyapi.dto.CommunityVisibility.Public
+            },
         )
 
-    override fun toUni(d: X6DatatypesModHideCommunityView): LemmyapiDatatypesModHideCommunityView =
-        LemmyapiDatatypesModHideCommunityView(
-            mod_hide_community = this.toUni(d = d.mod_hide_community),
-            admin = d.admin?.let { this.toUni(d = it) },
+    override fun toUni(d: X6DatatypesModHideCommunityView): LemmyapiDatatypesModChangeCommunityVisibilityView =
+        LemmyapiDatatypesModChangeCommunityVisibilityView(
+            mod_change_community_visibility = this.toUni(d = d.mod_hide_community),
+            moderator = d.admin?.let { this.toUni(d = it) },
             community = this.toUni(d = d.community),
         )
 

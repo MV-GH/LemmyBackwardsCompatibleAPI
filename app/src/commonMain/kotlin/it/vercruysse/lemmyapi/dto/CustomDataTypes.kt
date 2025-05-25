@@ -82,11 +82,14 @@ enum class ModlogActionType(override val minimumVersion: Version = MINIMUM_API_V
     ModTransferCommunity,
     ModAdd,
     ModBan,
-    ModHideCommunity,
+    ModHideCommunity(MINIMUM_API_VERSION, V1_0_0),
+    ModChangeCommunityVisibility(V1_0_0),
     AdminPurgePerson,
     AdminPurgeCommunity,
     AdminPurgePost,
     AdminPurgeComment,
+    AdminBlockInstance(V1_0_0),
+    AdminAllowInstance(V1_0_0),
 }
 
 @Serializable
