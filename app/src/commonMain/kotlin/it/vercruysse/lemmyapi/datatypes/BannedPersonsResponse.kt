@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: 1.0.0 lemmy types are outdated Banned renamed to Hidden
 @CommonParcelize
 @Serializable
 data class BannedPersonsResponse(

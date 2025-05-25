@@ -9,9 +9,9 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @CommonParcelize
 @Serializable
 data class AdminPurgePost(
-    override val id: Long,
+    override val id: AdminPurgePostId,
     val admin_person_id: PersonId,
     val community_id: CommunityId,
     val reason: String? = null,
-    val when_: String,
+    val published: String,
 ) : DatatypeRoot, Identity

@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO research delete token removal
+
 @CommonParcelize
 @Serializable
 data class LocalImage(

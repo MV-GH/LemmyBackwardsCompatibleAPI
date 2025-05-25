@@ -8,5 +8,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @CommonParcelize
 @Serializable
 data class GenerateTotpSecretResponse(
-    val totp_secret_url: String,
+    val totp_secret_url: SensitiveString,
 ) : DatatypeRoot

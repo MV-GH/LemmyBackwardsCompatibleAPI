@@ -16,7 +16,7 @@ const val ROOT_PACKAGE_PATH = "it/vercruysse/lemmyapi/"
 const val ROOT_PACKAGE = "it.vercruysse.lemmyapi."
 const val CUSTOM_DATATYPES_PACKAGE = "dto."
 
-val filesThatShouldNotBeAdded = setOf("others.ts", "DeleteAccountResponse.ts", "PasswordResetResponse.ts", "VerifyEmailResponse.ts", "SuccessResponse.ts")
+val filesThatShouldNotBeAdded = setOf("SuccessResponse.ts", "OpenGraphData.ts")
 val propsThatShouldBeInt = setOf("my_vote")
 
 fun getTypesPath(
@@ -60,6 +60,11 @@ fun downloadTypes(
         if (entry.name.startsWith(path) && !entry.isDirectory) {
             val name = entry.name.substring(path.length)
             val f = File(dest, name)
+
+            if(filesThatShouldNotBeAdded.contains(name)) {
+               continue
+            }
+
             f.createNewFile()
             f.writeBytes(zip.getInputStream(entry).readAllBytes())
         }
@@ -76,13 +81,6 @@ fun downloadTypes(
             "dukat temp/*.ts",
             "exit"
         )
-
-    // Adds all the ts files to the command, "*.ts" does not work and causes an error
-//        for (f in dest.listFiles()!!) {
-//            if (f.name.endsWith(".ts") && f.isFile() && filesThatShouldNotBeAdded.contains(f.name).not()) {
-//                command.add("temp/${f.name}")
-//            }
-//        }
 
     println("Starting Dukat process...")
     val proc = ProcessBuilder(command)
@@ -119,7 +117,7 @@ fun downloadTypes(
             var imports = ""
 
             // typealiases are not serializable
-            if (!originalTypeFile.contains("typealias")) {
+            if (!originalTypeFile.contains("internal typealias")) {
                 imports += "import kotlinx.serialization.Serializable\n\n@Serializable"
             }
 

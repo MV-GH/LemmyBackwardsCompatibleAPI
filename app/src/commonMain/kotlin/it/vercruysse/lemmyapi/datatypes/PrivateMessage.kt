@@ -19,4 +19,6 @@ data class PrivateMessage(
     val updated: String? = null,
     val ap_id: String,
     val local: Boolean,
+    /** Added in Lemmy 1.0.0 */
+    val removed: Boolean,
 ) : DatatypeRoot, Identity

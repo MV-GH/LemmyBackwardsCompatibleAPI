@@ -16,4 +16,8 @@ data class EditPost(
     val nsfw: Boolean? = null,
     val language_id: LanguageId? = null,
     val custom_thumbnail: String? = null,
+    /** Added in Lemmy 1.0.0 */
+    val scheduled_publish_time: Long? = null,
+    /** Added in Lemmy 1.0.0 */
+    val tags: List<TagId>? = null,
 ) : DatatypeRoot

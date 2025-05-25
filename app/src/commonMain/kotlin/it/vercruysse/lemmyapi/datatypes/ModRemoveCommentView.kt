@@ -11,7 +11,7 @@ data class ModRemoveCommentView(
     val mod_remove_comment: ModRemoveComment,
     val moderator: Person? = null,
     val comment: Comment,
-    val commenter: Person,
+    val other_person: Person,
     val post: Post,
     val community: Community,
 ) : DatatypeRoot

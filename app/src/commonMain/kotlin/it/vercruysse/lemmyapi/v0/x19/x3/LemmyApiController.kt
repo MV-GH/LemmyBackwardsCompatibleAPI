@@ -707,7 +707,7 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
      *
      * @POST("site/block")
      */
-    override suspend fun blockInstance(form: BlockInstance): Result<BlockInstanceResponse> =
+    override suspend fun blockInstance(form: BlockInstance): Result<Unit> =
         client.postResult("site/block", form)
 
     /**

@@ -9,6 +9,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: changes
+
 @CommonParcelize
 @Serializable
 data class LocalUser(

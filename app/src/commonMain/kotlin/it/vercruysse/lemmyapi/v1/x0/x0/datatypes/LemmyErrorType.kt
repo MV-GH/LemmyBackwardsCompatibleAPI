@@ -2,6 +2,8 @@ package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
 import kotlinx.serialization.Serializable
 
+//TODO: decided with this
+
 @Serializable
 external internal data class `T$130`(
     val reason: String? = null,

@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: many removal
+
 @CommonParcelize
 @Serializable
 data class GetReportCountResponse(

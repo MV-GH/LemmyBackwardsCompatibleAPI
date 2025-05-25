@@ -622,7 +622,7 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
      *
      * @POST("site/block")
      */
-    abstract suspend fun blockInstance(form: BlockInstance): Result<BlockInstanceResponse>
+    abstract suspend fun blockInstance(form: BlockInstance): Result<Unit>
 
     /**
      * Generate a TOTP / two-factor secret.

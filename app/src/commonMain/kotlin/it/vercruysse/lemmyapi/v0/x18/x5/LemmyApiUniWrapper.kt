@@ -852,7 +852,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun blockInstance(
         form: it.vercruysse.lemmyapi.datatypes.BlockInstance,
-    ): Result<it.vercruysse.lemmyapi.datatypes.BlockInstanceResponse> = notSupported()
+    ): Result<Unit> = notSupported()
 
     // TODO possible supported by using old logic, might not be worth the effort
 

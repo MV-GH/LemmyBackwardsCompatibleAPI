@@ -2,6 +2,8 @@ package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
 import kotlinx.serialization.Serializable
 
+// TODO: changes
+
 @Serializable
 internal data class Site(
     val id: SiteId,

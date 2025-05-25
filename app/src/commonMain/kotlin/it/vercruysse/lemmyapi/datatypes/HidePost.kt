@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO changes again
+
 @CommonParcelize
 @Serializable
 data class HidePost(
