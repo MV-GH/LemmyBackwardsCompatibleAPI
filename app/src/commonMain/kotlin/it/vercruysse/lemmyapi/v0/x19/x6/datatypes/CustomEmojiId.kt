@@ -1,3 +1,3 @@
 package it.vercruysse.lemmyapi.v0.x19.x6.datatypes
 
-typealias CustomEmojiId = Long
+internal typealias CustomEmojiId = Long

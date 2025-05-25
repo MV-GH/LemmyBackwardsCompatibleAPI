@@ -1,3 +1,3 @@
 package it.vercruysse.lemmyapi.v0.x19.x0.datatypes
 
-typealias LocalUserId = Long
+internal typealias LocalUserId = Long

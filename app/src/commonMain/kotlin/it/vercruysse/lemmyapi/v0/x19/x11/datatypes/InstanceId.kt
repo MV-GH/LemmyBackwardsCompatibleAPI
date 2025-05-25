@@ -1,3 +1,3 @@
 package it.vercruysse.lemmyapi.v0.x19.x11.datatypes
 
-typealias InstanceId = Long
+internal typealias InstanceId = Long
