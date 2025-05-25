@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: seems to be flat pressed into Comment
+
 @CommonParcelize
 @Serializable
 data class CommentAggregates(

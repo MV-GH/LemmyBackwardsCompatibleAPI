@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: Changes
+
 @CommonParcelize
 @Serializable
 data class SearchResponse(

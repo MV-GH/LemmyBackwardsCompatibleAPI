@@ -10,4 +10,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class GetPostsResponse(
     val posts: List<PostView>,
     val next_page: PaginationCursor? = null,
+    val prev_page: PaginationCursor? = null,
 ) : DatatypeRoot

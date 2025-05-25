@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: removed, possibly renamed to MarkPersonCommentMentionAsRead
+
 @CommonParcelize
 @Serializable
 data class MarkPersonMentionAsRead(

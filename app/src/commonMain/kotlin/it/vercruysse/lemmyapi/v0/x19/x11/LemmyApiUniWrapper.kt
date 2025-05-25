@@ -835,8 +835,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun blockInstance(
         form: it.vercruysse.lemmyapi.datatypes.BlockInstance,
-    ): Result<it.vercruysse.lemmyapi.datatypes.BlockInstanceResponse> =
-        api.blockInstance(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<Unit> =
+        api.blockInstance(transformer.fromUni(form))
 
     /**
      * Generate a TOTP / two-factor secret.

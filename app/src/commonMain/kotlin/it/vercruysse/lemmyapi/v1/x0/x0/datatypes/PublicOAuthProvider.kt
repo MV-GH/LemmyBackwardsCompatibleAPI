@@ -1,3 +1,3 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
-typealias PublicOAuthProvider = OAuthProvider
+internal typealias PublicOAuthProvider = OAuthProvider

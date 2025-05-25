@@ -8,7 +8,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @CommonParcelize
 @Serializable
 data class ChangePassword(
-    val new_password: String,
-    val new_password_verify: String,
-    val old_password: String,
+    val new_password: SensitiveString,
+    val new_password_verify: SensitiveString,
+    val old_password: SensitiveString,
 ) : DatatypeRoot

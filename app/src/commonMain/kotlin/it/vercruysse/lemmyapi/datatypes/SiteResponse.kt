@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: research taglines changes
+
 @CommonParcelize
 @Serializable
 data class SiteResponse(

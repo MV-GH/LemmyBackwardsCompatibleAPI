@@ -13,5 +13,5 @@ data class ModRemovePost(
     val post_id: PostId,
     val reason: String? = null,
     val removed: Boolean,
-    val when_: String,
+    val published: String,
 ) : DatatypeRoot

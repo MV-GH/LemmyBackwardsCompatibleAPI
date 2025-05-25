@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ModRemovePost(
-    val id: ModRemovePostId,
+    val id: Long,
     val mod_person_id: PersonId,
     val post_id: PostId,
     val reason: String? = null,

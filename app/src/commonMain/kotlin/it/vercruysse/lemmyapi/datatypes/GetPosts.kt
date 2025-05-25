@@ -8,6 +8,8 @@ import kotlinx.serialization.Serializable
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
 
+// TODO: many changes
+
 @CommonParcelize
 @Serializable
 data class GetPosts(
