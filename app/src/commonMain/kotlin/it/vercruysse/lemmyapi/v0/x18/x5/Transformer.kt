@@ -864,7 +864,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
     override fun toUni(d: X5DatatypesCustomEmoji): LemmyapiDatatypesCustomEmoji =
         LemmyapiDatatypesCustomEmoji(
             id = d.id,
-            local_site_id = d.local_site_id,
             shortcode = d.shortcode,
             image_url = d.image_url,
             alt_text = d.alt_text,
@@ -1331,6 +1330,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             resolver_id = d.resolver_id,
             published = addTimezoneOffset(d.published),
             updated = d.updated,
+            violates_instance_rules = false,
         )
 
     override fun toUni(d: X5DatatypesPostReportResponse): LemmyapiDatatypesPostReportResponse =
@@ -1355,6 +1355,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             updated = addTimezoneOffsetNullable(d.updated),
             ap_id = d.ap_id,
             local = d.local,
+            removed = false,
         )
 
     override fun toUni(d: X5DatatypesPrivateMessageReport): LemmyapiDatatypesPrivateMessageReport =
@@ -1478,7 +1479,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     override fun toUni(d: X5DatatypesTagline): LemmyapiDatatypesTagline = LemmyapiDatatypesTagline(
         id = d.id,
-        local_site_id = d.local_site_id,
         content = d.content,
         published = addTimezoneOffset(d.published),
         updated = d.updated,

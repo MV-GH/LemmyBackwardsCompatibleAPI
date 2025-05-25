@@ -255,7 +255,6 @@ import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.CommentResponse as X11Datatyp
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.CommentView as X11DatatypesCommentView
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.Community as X11DatatypesCommunity
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.CommunityAggregates as X11DatatypesCommunityAggregates
-import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.CommunityBlockView as X11DatatypesCommunityBlockView
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.CommunityFollowerView as X11DatatypesCommunityFollowerView
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.CommunityModeratorView as X11DatatypesCommunityModeratorView
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.CommunityResponse as X11DatatypesCommunityResponse
@@ -725,7 +724,6 @@ internal class Transformer : MapperGenerator {
     override fun toUni(d: X11DatatypesCustomEmoji): LemmyapiDatatypesCustomEmoji =
         LemmyapiDatatypesCustomEmoji(
             id = d.id,
-            local_site_id = d.local_site_id,
             shortcode = d.shortcode,
             image_url = d.image_url,
             alt_text = d.alt_text,
@@ -1415,6 +1413,7 @@ internal class Transformer : MapperGenerator {
             resolver_id = d.resolver_id,
             published = d.published,
             updated = d.updated,
+            violates_instance_rules = false,
         )
 
     override fun toUni(d: X11DatatypesPostReportResponse): LemmyapiDatatypesPostReportResponse =
@@ -1480,6 +1479,7 @@ internal class Transformer : MapperGenerator {
             updated = d.updated,
             ap_id = d.ap_id,
             local = d.local,
+            removed = false,
         )
 
     override fun toUni(d: X11DatatypesPrivateMessageReport): LemmyapiDatatypesPrivateMessageReport =
@@ -1614,7 +1614,6 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X11DatatypesTagline): LemmyapiDatatypesTagline = LemmyapiDatatypesTagline(
         id = d.id,
-        local_site_id = d.local_site_id,
         content = d.content,
         published = d.published,
         updated = d.updated,
