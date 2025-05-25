@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ListPersonSavedResponse(
-    val saved: List<dynamic /* `T$199` & PostView | `T$200` & CommentView */>,
+    val saved: List<PersonSavedCombinedView>,
     val next_page: PaginationCursor? = null,
     val prev_page: PaginationCursor? = null,
 )
