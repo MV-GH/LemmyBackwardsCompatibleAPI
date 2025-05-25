@@ -10,9 +10,6 @@ import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 
 object LemmyApi {
-    const val MAX_SUPPORTED_VERSION = "0.19"
-    const val MIN_SUPPORTED_VERSION = "0.18"
-    const val API_VERSION = "v3"
     var defaultClient = coreHttpClient
 
     /**
@@ -130,8 +127,9 @@ object LemmyApi {
         auth: String? = null,
     ): LemmyApiBaseController {
         val baseUrlInstance = constructBaseUrl(instance) // TODO duplicate constructBaseURL see NodeINFO
-        val client = getKtorClient("$baseUrlInstance/api/$API_VERSION/")
         val semverV = version.toVersion(false)
+        val apiVersion = getApiVersion(semverV)
+        val client = getKtorClient("$baseUrlInstance/api/$apiVersion/")
 
         return when (semverV.major) {
             0 -> when (semverV.minor) {
@@ -151,4 +149,9 @@ object LemmyApi {
             else -> throw NotSupportedException("Unsupported Lemmy major version: $version")
         }
     }
+}
+
+// Good enough approximation for now
+private fun getApiVersion(version: io.github.z4kn4fein.semver.Version): String {
+    return if (version.major == 0) "V3" else "V4"
 }
