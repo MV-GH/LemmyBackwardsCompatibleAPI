@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
-internal data class PostActions(
+data class PostActions(
     val post_id: PostId,
     val person_id: PersonId,
     val read: String? = null,
