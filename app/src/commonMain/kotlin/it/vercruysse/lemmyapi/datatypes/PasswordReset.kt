@@ -8,5 +8,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @CommonParcelize
 @Serializable
 data class PasswordReset(
-    val email: String,
+    val email: SensitiveString,
 ) : DatatypeRoot

@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: many removed, research
+
 @CommonParcelize
 @Serializable
 data class GetPersonDetails(

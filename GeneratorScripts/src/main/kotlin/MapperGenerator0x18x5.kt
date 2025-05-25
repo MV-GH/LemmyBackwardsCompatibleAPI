@@ -191,7 +191,6 @@ internal interface MapperGenerator0x18x5 {
     fun toUni(d: CommentResponse): it.vercruysse.lemmyapi.datatypes.CommentResponse
 
 
-    fun toUni(d: CommunityBlockView): it.vercruysse.lemmyapi.datatypes.CommunityBlockView
     fun toUni(d: CommunityFollowerView): it.vercruysse.lemmyapi.datatypes.CommunityFollowerView
     fun toUni(d: CommunityModeratorView): it.vercruysse.lemmyapi.datatypes.CommunityModeratorView
     fun toUni(d: CommunityResponse): it.vercruysse.lemmyapi.datatypes.CommunityResponse
@@ -251,7 +250,6 @@ internal interface MapperGenerator0x18x5 {
     fun toUni(d: ModTransferCommunityView): it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView
     fun toUni(d: Person): it.vercruysse.lemmyapi.datatypes.Person
     fun toUni(d: PersonAggregates): it.vercruysse.lemmyapi.datatypes.PersonAggregates
-    fun toUni(d: PersonBlockView): it.vercruysse.lemmyapi.datatypes.PersonBlockView
     fun toUni(d: PersonMention): it.vercruysse.lemmyapi.datatypes.PersonMention
     fun toUni(d: PersonMentionResponse): it.vercruysse.lemmyapi.datatypes.PersonMentionResponse
 

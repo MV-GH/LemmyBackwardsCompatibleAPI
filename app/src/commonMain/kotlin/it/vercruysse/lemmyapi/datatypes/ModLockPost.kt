@@ -12,5 +12,5 @@ data class ModLockPost(
     val mod_person_id: PersonId,
     val post_id: PostId,
     val locked: Boolean,
-    val when_: String,
+    val published: String,
 ) : DatatypeRoot

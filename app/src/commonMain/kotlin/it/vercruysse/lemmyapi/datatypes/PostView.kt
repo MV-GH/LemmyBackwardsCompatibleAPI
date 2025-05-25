@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.Identity
 
+// TODO: changes
+
 @CommonParcelize
 @Serializable
 data class PostView(

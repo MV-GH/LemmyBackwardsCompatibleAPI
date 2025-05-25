@@ -8,7 +8,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @CommonParcelize
 @Serializable
 data class LoginResponse(
-    val jwt: String? = null,
+    val jwt: SensitiveString? = null,
     val registration_created: Boolean,
     val verify_email_sent: Boolean,
 ) : DatatypeRoot

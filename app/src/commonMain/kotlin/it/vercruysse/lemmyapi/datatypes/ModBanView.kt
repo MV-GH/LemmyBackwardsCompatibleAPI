@@ -11,7 +11,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class ModBanView(
     val mod_ban: ModBan,
     val moderator: Person? = null,
-    val banned_person: Person,
+    val other_person: Person,
 ) : DatatypeRoot, Identity {
     override val id: Long
         get() = mod_ban.id

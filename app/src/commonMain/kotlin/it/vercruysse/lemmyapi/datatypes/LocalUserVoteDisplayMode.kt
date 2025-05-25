@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO seems removed
+
 @CommonParcelize
 @Serializable
 data class LocalUserVoteDisplayMode(

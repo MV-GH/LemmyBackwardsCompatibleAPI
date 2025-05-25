@@ -37,3 +37,5 @@ tasks.test {
 kotlin {
     jvmToolchain(17)
 }
+
+//TODO: make all typealias internal in sub datatypes

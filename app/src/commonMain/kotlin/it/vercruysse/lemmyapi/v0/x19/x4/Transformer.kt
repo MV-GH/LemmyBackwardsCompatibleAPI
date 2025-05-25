@@ -21,7 +21,6 @@ import it.vercruysse.lemmyapi.datatypes.BannedPersonsResponse as LemmyapiDatatyp
 import it.vercruysse.lemmyapi.datatypes.BlockCommunity as LemmyapiDatatypesBlockCommunity
 import it.vercruysse.lemmyapi.datatypes.BlockCommunityResponse as LemmyapiDatatypesBlockCommunityResponse
 import it.vercruysse.lemmyapi.datatypes.BlockInstance as LemmyapiDatatypesBlockInstance
-import it.vercruysse.lemmyapi.datatypes.BlockInstanceResponse as LemmyapiDatatypesBlockInstanceResponse
 import it.vercruysse.lemmyapi.datatypes.BlockPerson as LemmyapiDatatypesBlockPerson
 import it.vercruysse.lemmyapi.datatypes.BlockPersonResponse as LemmyapiDatatypesBlockPersonResponse
 import it.vercruysse.lemmyapi.datatypes.CaptchaResponse as LemmyapiDatatypesCaptchaResponse
@@ -38,7 +37,6 @@ import it.vercruysse.lemmyapi.datatypes.CommentResponse as LemmyapiDatatypesComm
 import it.vercruysse.lemmyapi.datatypes.CommentView as LemmyapiDatatypesCommentView
 import it.vercruysse.lemmyapi.datatypes.Community as LemmyapiDatatypesCommunity
 import it.vercruysse.lemmyapi.datatypes.CommunityAggregates as LemmyapiDatatypesCommunityAggregates
-import it.vercruysse.lemmyapi.datatypes.CommunityBlockView as LemmyapiDatatypesCommunityBlockView
 import it.vercruysse.lemmyapi.datatypes.CommunityFollowerView as LemmyapiDatatypesCommunityFollowerView
 import it.vercruysse.lemmyapi.datatypes.CommunityModeratorView as LemmyapiDatatypesCommunityModeratorView
 import it.vercruysse.lemmyapi.datatypes.CommunityResponse as LemmyapiDatatypesCommunityResponse
@@ -105,7 +103,6 @@ import it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountRes
 import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
 import it.vercruysse.lemmyapi.datatypes.HidePost as LemmyapiDatatypesHidePost
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
-import it.vercruysse.lemmyapi.datatypes.InstanceBlockView as LemmyapiDatatypesInstanceBlockView
 import it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState as LemmyapiDatatypesInstanceWithFederationState
 import it.vercruysse.lemmyapi.datatypes.Language as LemmyapiDatatypesLanguage
 import it.vercruysse.lemmyapi.datatypes.LinkMetadata as LemmyapiDatatypesLinkMetadata
@@ -169,7 +166,6 @@ import it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset as LemmyapiData
 import it.vercruysse.lemmyapi.datatypes.PasswordReset as LemmyapiDatatypesPasswordReset
 import it.vercruysse.lemmyapi.datatypes.Person as LemmyapiDatatypesPerson
 import it.vercruysse.lemmyapi.datatypes.PersonAggregates as LemmyapiDatatypesPersonAggregates
-import it.vercruysse.lemmyapi.datatypes.PersonBlockView as LemmyapiDatatypesPersonBlockView
 import it.vercruysse.lemmyapi.datatypes.PersonMention as LemmyapiDatatypesPersonMention
 import it.vercruysse.lemmyapi.datatypes.PersonMentionResponse as LemmyapiDatatypesPersonMentionResponse
 import it.vercruysse.lemmyapi.datatypes.PersonMentionView as LemmyapiDatatypesPersonMentionView
@@ -241,7 +237,6 @@ import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.BannedPersonsResponse as X4Dat
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.BlockCommunity as X4DatatypesBlockCommunity
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.BlockCommunityResponse as X4DatatypesBlockCommunityResponse
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.BlockInstance as X4DatatypesBlockInstance
-import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.BlockInstanceResponse as X4DatatypesBlockInstanceResponse
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.BlockPerson as X4DatatypesBlockPerson
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.BlockPersonResponse as X4DatatypesBlockPersonResponse
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CaptchaResponse as X4DatatypesCaptchaResponse
@@ -258,7 +253,6 @@ import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CommentResponse as X4Datatypes
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CommentView as X4DatatypesCommentView
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.Community as X4DatatypesCommunity
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CommunityAggregates as X4DatatypesCommunityAggregates
-import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CommunityBlockView as X4DatatypesCommunityBlockView
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CommunityFollowerView as X4DatatypesCommunityFollowerView
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CommunityModeratorView as X4DatatypesCommunityModeratorView
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CommunityResponse as X4DatatypesCommunityResponse
@@ -325,7 +319,6 @@ import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.GetUnreadRegistrationApplicati
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.HideCommunity as X4DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.HidePost as X4DatatypesHidePost
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.Instance as X4DatatypesInstance
-import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.InstanceBlockView as X4DatatypesInstanceBlockView
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.InstanceWithFederationState as X4DatatypesInstanceWithFederationState
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.Language as X4DatatypesLanguage
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.LinkMetadata as X4DatatypesLinkMetadata
@@ -389,7 +382,6 @@ import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.PasswordChangeAfterReset as X4
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.PasswordReset as X4DatatypesPasswordReset
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.Person as X4DatatypesPerson
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.PersonAggregates as X4DatatypesPersonAggregates
-import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.PersonBlockView as X4DatatypesPersonBlockView
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.PersonMention as X4DatatypesPersonMention
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.PersonMentionResponse as X4DatatypesPersonMentionResponse
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.PersonMentionView as X4DatatypesPersonMentionView
@@ -458,7 +450,7 @@ internal class Transformer : MapperGenerator {
             admin_person_id = d.admin_person_id,
             post_id = d.post_id,
             reason = d.reason,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesAdminPurgeCommentView): LemmyapiDatatypesAdminPurgeCommentView =
@@ -473,7 +465,7 @@ internal class Transformer : MapperGenerator {
             id = d.id,
             admin_person_id = d.admin_person_id,
             reason = d.reason,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesAdminPurgeCommunityView): LemmyapiDatatypesAdminPurgeCommunityView = LemmyapiDatatypesAdminPurgeCommunityView(
@@ -486,7 +478,7 @@ internal class Transformer : MapperGenerator {
             id = d.id,
             admin_person_id = d.admin_person_id,
             reason = d.reason,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesAdminPurgePersonView): LemmyapiDatatypesAdminPurgePersonView =
@@ -501,7 +493,7 @@ internal class Transformer : MapperGenerator {
             admin_person_id = d.admin_person_id,
             community_id = d.community_id,
             reason = d.reason,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesAdminPurgePostView): LemmyapiDatatypesAdminPurgePostView =
@@ -530,11 +522,6 @@ internal class Transformer : MapperGenerator {
     override fun toUni(d: X4DatatypesBlockCommunityResponse): LemmyapiDatatypesBlockCommunityResponse =
         LemmyapiDatatypesBlockCommunityResponse(
             community_view = this.toUni(d = d.community_view),
-            blocked = d.blocked,
-        )
-
-    override fun toUni(d: X4DatatypesBlockInstanceResponse): LemmyapiDatatypesBlockInstanceResponse =
-        LemmyapiDatatypesBlockInstanceResponse(
             blocked = d.blocked,
         )
 
@@ -703,12 +690,6 @@ internal class Transformer : MapperGenerator {
             users_active_month = d.users_active_month,
             users_active_half_year = d.users_active_half_year,
             subscribers_local = d.subscribers_local,
-        )
-
-    override fun toUni(d: X4DatatypesCommunityBlockView): LemmyapiDatatypesCommunityBlockView =
-        LemmyapiDatatypesCommunityBlockView(
-            person = this.toUni(d = d.person),
-            community = this.toUni(d = d.community),
         )
 
     override fun toUni(d: X4DatatypesCommunityFollowerView): LemmyapiDatatypesCommunityFollowerView =
@@ -896,13 +877,6 @@ internal class Transformer : MapperGenerator {
         software = d.software,
         version = d.version,
     )
-
-    override fun toUni(d: X4DatatypesInstanceBlockView): LemmyapiDatatypesInstanceBlockView =
-        LemmyapiDatatypesInstanceBlockView(
-            person = this.toUni(d = d.person),
-            instance = this.toUni(d = d.instance),
-            site = d.site?.let { this.toUni(d = it) },
-        )
 
     override fun toUni(d: X4DatatypesInstanceWithFederationState): LemmyapiDatatypesInstanceWithFederationState = LemmyapiDatatypesInstanceWithFederationState(
         id = d.id,
@@ -1104,7 +1078,7 @@ internal class Transformer : MapperGenerator {
         mod_person_id = d.mod_person_id,
         other_person_id = d.other_person_id,
         removed = d.removed,
-        when_ = d.when_,
+        published = d.when_,
     )
 
     override fun toUni(d: X4DatatypesModAddCommunity): LemmyapiDatatypesModAddCommunity =
@@ -1114,7 +1088,7 @@ internal class Transformer : MapperGenerator {
             other_person_id = d.other_person_id,
             community_id = d.community_id,
             removed = d.removed,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesModAddCommunityView): LemmyapiDatatypesModAddCommunityView =
@@ -1122,14 +1096,14 @@ internal class Transformer : MapperGenerator {
             mod_add_community = this.toUni(d = d.mod_add_community),
             moderator = d.moderator?.let { this.toUni(d = it) },
             community = this.toUni(d = d.community),
-            modded_person = this.toUni(d = d.modded_person),
+            other_person = this.toUni(d = d.modded_person),
         )
 
     override fun toUni(d: X4DatatypesModAddView): LemmyapiDatatypesModAddView =
         LemmyapiDatatypesModAddView(
             mod_add = this.toUni(d = d.mod_add),
             moderator = d.moderator?.let { this.toUni(d = it) },
-            modded_person = this.toUni(d = d.modded_person),
+            other_person = this.toUni(d = d.modded_person),
         )
 
     override fun toUni(d: X4DatatypesModBan): LemmyapiDatatypesModBan = LemmyapiDatatypesModBan(
@@ -1139,7 +1113,8 @@ internal class Transformer : MapperGenerator {
         reason = d.reason,
         banned = d.banned,
         expires = d.expires,
-        when_ = d.when_,
+        published = d.when_,
+        instance_id = -1,
     )
 
     override fun toUni(d: X4DatatypesModBanFromCommunity): LemmyapiDatatypesModBanFromCommunity =
@@ -1151,21 +1126,21 @@ internal class Transformer : MapperGenerator {
             reason = d.reason,
             banned = d.banned,
             expires = d.expires,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesModBanFromCommunityView): LemmyapiDatatypesModBanFromCommunityView = LemmyapiDatatypesModBanFromCommunityView(
         mod_ban_from_community = this.toUni(d = d.mod_ban_from_community),
         moderator = d.moderator?.let { this.toUni(d = it) },
         community = this.toUni(d = d.community),
-        banned_person = this.toUni(d = d.banned_person),
+        other_person = this.toUni(d = d.banned_person),
     )
 
     override fun toUni(d: X4DatatypesModBanView): LemmyapiDatatypesModBanView =
         LemmyapiDatatypesModBanView(
             mod_ban = this.toUni(d = d.mod_ban),
             moderator = d.moderator?.let { this.toUni(d = it) },
-            banned_person = this.toUni(d = d.banned_person),
+            other_person = this.toUni(d = d.banned_person),
         )
 
     override fun toUni(d: X4DatatypesModFeaturePost): LemmyapiDatatypesModFeaturePost =
@@ -1174,7 +1149,7 @@ internal class Transformer : MapperGenerator {
             mod_person_id = d.mod_person_id,
             post_id = d.post_id,
             featured = d.featured,
-            when_ = d.when_,
+            published = d.when_,
             is_featured_community = d.is_featured_community,
         )
 
@@ -1209,7 +1184,7 @@ internal class Transformer : MapperGenerator {
             mod_person_id = d.mod_person_id,
             post_id = d.post_id,
             locked = d.locked,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesModLockPostView): LemmyapiDatatypesModLockPostView =
@@ -1239,7 +1214,7 @@ internal class Transformer : MapperGenerator {
             comment_id = d.comment_id,
             reason = d.reason,
             removed = d.removed,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesModRemoveCommentView): LemmyapiDatatypesModRemoveCommentView =
@@ -1247,7 +1222,7 @@ internal class Transformer : MapperGenerator {
             mod_remove_comment = this.toUni(d = d.mod_remove_comment),
             moderator = d.moderator?.let { this.toUni(d = it) },
             comment = this.toUni(d = d.comment),
-            commenter = this.toUni(d = d.commenter),
+            other_person = this.toUni(d = d.commenter),
             post = this.toUni(d = d.post),
             community = this.toUni(d = d.community),
         )
@@ -1259,7 +1234,7 @@ internal class Transformer : MapperGenerator {
             community_id = d.community_id,
             reason = d.reason,
             removed = d.removed,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesModRemoveCommunityView): LemmyapiDatatypesModRemoveCommunityView =
@@ -1276,7 +1251,7 @@ internal class Transformer : MapperGenerator {
             post_id = d.post_id,
             reason = d.reason,
             removed = d.removed,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesModRemovePostView): LemmyapiDatatypesModRemovePostView =
@@ -1293,14 +1268,14 @@ internal class Transformer : MapperGenerator {
             mod_person_id = d.mod_person_id,
             other_person_id = d.other_person_id,
             community_id = d.community_id,
-            when_ = d.when_,
+            published = d.when_,
         )
 
     override fun toUni(d: X4DatatypesModTransferCommunityView): LemmyapiDatatypesModTransferCommunityView = LemmyapiDatatypesModTransferCommunityView(
         mod_transfer_community = this.toUni(d = d.mod_transfer_community),
         moderator = d.moderator?.let { this.toUni(d = it) },
         community = this.toUni(d = d.community),
-        modded_person = this.toUni(d = d.modded_person),
+        other_person = this.toUni(d = d.modded_person),
     )
 
     override fun toUni(d: X4DatatypesMyUserInfo): LemmyapiDatatypesMyUserInfo =
@@ -1308,9 +1283,9 @@ internal class Transformer : MapperGenerator {
             local_user_view = this.toUni(d = d.local_user_view),
             follows = d.follows.map { this.toUni(d = it) },
             moderates = d.moderates.map { this.toUni(d = it) },
-            community_blocks = d.community_blocks.map { this.toUni(d = it) },
-            instance_blocks = d.instance_blocks.map { this.toUni(d = it) },
-            person_blocks = d.person_blocks.map { this.toUni(d = it) },
+            community_blocks = d.community_blocks.map { this.toUni(d = it.community) },
+            instance_blocks = d.instance_blocks.map { this.toUni(d = it.instance) },
+            person_blocks = d.person_blocks.map { this.toUni(d = it.target) },
             discussion_languages = d.discussion_languages,
         )
 
@@ -1338,12 +1313,6 @@ internal class Transformer : MapperGenerator {
             person_id = d.person_id,
             post_count = d.post_count,
             comment_count = d.comment_count,
-        )
-
-    override fun toUni(d: X4DatatypesPersonBlockView): LemmyapiDatatypesPersonBlockView =
-        LemmyapiDatatypesPersonBlockView(
-            person = this.toUni(d = d.person),
-            target = this.toUni(d = d.target),
         )
 
     override fun toUni(d: X4DatatypesPersonMention): LemmyapiDatatypesPersonMention =
@@ -1673,7 +1642,7 @@ internal class Transformer : MapperGenerator {
             community_id = d.community_id,
             person_id = d.person_id,
             ban = d.ban,
-            remove_data = d.remove_data,
+            remove_data = d.remove_or_restore_data,
             reason = d.reason,
             expires = d.expires,
         )
@@ -1681,7 +1650,7 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesBanPerson): X4DatatypesBanPerson = X4DatatypesBanPerson(
         person_id = d.person_id,
         ban = d.ban,
-        remove_data = d.remove_data,
+        remove_data = d.remove_or_restore_data,
         reason = d.reason,
         expires = d.expires,
     )

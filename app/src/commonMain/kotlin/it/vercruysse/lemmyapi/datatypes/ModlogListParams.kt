@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: removed in Lemmy 1.0.0
+
 @CommonParcelize
 @Serializable
 data class ModlogListParams(

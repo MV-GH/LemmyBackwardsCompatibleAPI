@@ -10,6 +10,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: lots of changes
+
 @CommonParcelize
 @Serializable
 data class LocalSite(

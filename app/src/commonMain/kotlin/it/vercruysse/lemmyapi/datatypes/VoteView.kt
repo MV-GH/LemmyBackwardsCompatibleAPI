@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: added item_id
+
 @CommonParcelize
 @Serializable
 data class VoteView(

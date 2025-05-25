@@ -51,7 +51,6 @@ internal interface MapperGenerator {
     fun toUni(d: BannedPersonsResponse): it.vercruysse.lemmyapi.datatypes.BannedPersonsResponse
     fun toUni(d: BanPersonResponse): it.vercruysse.lemmyapi.datatypes.BanPersonResponse
     fun toUni(d: BlockCommunityResponse): it.vercruysse.lemmyapi.datatypes.BlockCommunityResponse
-    fun toUni(d: BlockInstanceResponse): it.vercruysse.lemmyapi.datatypes.BlockInstanceResponse
     fun toUni(d: BlockPersonResponse): it.vercruysse.lemmyapi.datatypes.BlockPersonResponse
     fun toUni(d: CaptchaResponse): it.vercruysse.lemmyapi.datatypes.CaptchaResponse
     fun toUni(d: Comment): it.vercruysse.lemmyapi.datatypes.Comment
@@ -64,7 +63,6 @@ internal interface MapperGenerator {
 
     fun toUni(d: CommentResponse): it.vercruysse.lemmyapi.datatypes.CommentResponse
 
-    fun toUni(d: CommunityBlockView): it.vercruysse.lemmyapi.datatypes.CommunityBlockView
     fun toUni(d: CommunityFollowerView): it.vercruysse.lemmyapi.datatypes.CommunityFollowerView
     fun toUni(d: CommunityModeratorView): it.vercruysse.lemmyapi.datatypes.CommunityModeratorView
     fun toUni(d: CommunityResponse): it.vercruysse.lemmyapi.datatypes.CommunityResponse
@@ -93,7 +91,6 @@ internal interface MapperGenerator {
         d: GetUnreadRegistrationApplicationCountResponse,
     ): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
     fun toUni(d: Instance): it.vercruysse.lemmyapi.datatypes.Instance
-    fun toUni(d: InstanceBlockView): it.vercruysse.lemmyapi.datatypes.InstanceBlockView
     fun toUni(d: InstanceWithFederationState): it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState
     fun toUni(d: Language): it.vercruysse.lemmyapi.datatypes.Language
     fun toUni(d: ListCommentReportsResponse): it.vercruysse.lemmyapi.datatypes.ListCommentReportsResponse
@@ -133,7 +130,6 @@ internal interface MapperGenerator {
     fun toUni(d: MyUserInfo): it.vercruysse.lemmyapi.datatypes.MyUserInfo
     fun toUni(d: Person): it.vercruysse.lemmyapi.datatypes.Person
     fun toUni(d: PersonAggregates): it.vercruysse.lemmyapi.datatypes.PersonAggregates
-    fun toUni(d: PersonBlockView): it.vercruysse.lemmyapi.datatypes.PersonBlockView
     fun toUni(d: PersonMention): it.vercruysse.lemmyapi.datatypes.PersonMention
     fun toUni(d: PersonMentionResponse): it.vercruysse.lemmyapi.datatypes.PersonMentionResponse
 

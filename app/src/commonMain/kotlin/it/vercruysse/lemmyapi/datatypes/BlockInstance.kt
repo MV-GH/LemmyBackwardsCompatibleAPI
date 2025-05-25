@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: renamed to UserBlockInstanceParams
+
 @CommonParcelize
 @Serializable
 data class BlockInstance(

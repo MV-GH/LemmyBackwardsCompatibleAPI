@@ -9,11 +9,11 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @Serializable
 data class Register(
     val username: String,
-    val password: String,
-    val password_verify: String,
+    val password: SensitiveString,
+    val password_verify: SensitiveString,
 // TODO    val show_nsfw: Boolean? = null,
     val show_nsfw: Boolean,
-    val email: String? = null,
+    val email: SensitiveString? = null,
     val captcha_uuid: String? = null,
     val captcha_answer: String? = null,
     val honeypot: String? = null,

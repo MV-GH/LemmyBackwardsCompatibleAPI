@@ -10,5 +10,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class ModAddView(
     val mod_add: ModAdd,
     val moderator: Person? = null,
-    val modded_person: Person,
+    val other_person: Person,
 ) : DatatypeRoot

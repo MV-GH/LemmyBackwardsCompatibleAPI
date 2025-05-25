@@ -8,7 +8,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @CommonParcelize
 @Serializable
 data class PasswordChangeAfterReset(
-    val token: String,
-    val password: String,
-    val password_verify: String,
+    val token: SensitiveString,
+    val password: SensitiveString,
+    val password_verify: SensitiveString,
 ) : DatatypeRoot

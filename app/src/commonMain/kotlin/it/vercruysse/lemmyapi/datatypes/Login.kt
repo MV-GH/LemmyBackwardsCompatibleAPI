@@ -8,7 +8,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @CommonParcelize
 @Serializable
 data class Login(
-    val username_or_email: String,
-    val password: String,
+    val username_or_email: SensitiveString,
+    val password: SensitiveString,
     val totp_2fa_token: String? = null,
 ) : DatatypeRoot

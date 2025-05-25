@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: local_site_id is removed look into
+
 @CommonParcelize
 @Serializable
 data class CustomEmoji(

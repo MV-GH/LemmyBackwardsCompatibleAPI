@@ -20,4 +20,6 @@ data class PostReport(
     val resolver_id: PersonId? = null,
     val published: String,
     val updated: String? = null,
+    /** Added in Lemmy 1.0.0 */
+    val violates_instance_rules: Boolean,
 ) : DatatypeRoot, Identity

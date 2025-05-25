@@ -13,5 +13,5 @@ data class ModRemoveComment(
     val comment_id: CommentId,
     val reason: String? = null,
     val removed: Boolean,
-    val when_: String,
+    val published: String,
 ) : DatatypeRoot

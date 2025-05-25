@@ -8,6 +8,6 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @CommonParcelize
 @Serializable
 data class DeleteAccount(
-    val password: String,
+    val password: SensitiveString,
     val delete_content: Boolean,
 ) : DatatypeRoot

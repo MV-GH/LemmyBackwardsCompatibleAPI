@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: changed look into it
+
 @CommonParcelize
 @Serializable
 data class CommentReplyView(

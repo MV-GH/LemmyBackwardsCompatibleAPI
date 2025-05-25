@@ -11,8 +11,12 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class EditCommunity(
     val community_id: CommunityId,
     val title: String? = null,
+    /** Added in Lemmy 1.0.0 */
+    val sidebar: String? = null,
     val description: String? = null,
+    /** Removed in Lemmy 1.0.0 */
     val icon: String? = null,
+    /** Removed in Lemmy 1.0.0 */
     val banner: String? = null,
     val nsfw: Boolean? = null,
     val posting_restricted_to_mods: Boolean? = null,

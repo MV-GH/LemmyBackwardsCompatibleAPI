@@ -9,6 +9,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: has changed
+
 @CommonParcelize
 @Serializable
 data class CreateSite(

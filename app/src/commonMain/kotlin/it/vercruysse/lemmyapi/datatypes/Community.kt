@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// Changed
+
 @CommonParcelize
 @Serializable
 data class Community(

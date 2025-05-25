@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: many changes look into it
+
 @CommonParcelize
 @Serializable
 data class Comment(

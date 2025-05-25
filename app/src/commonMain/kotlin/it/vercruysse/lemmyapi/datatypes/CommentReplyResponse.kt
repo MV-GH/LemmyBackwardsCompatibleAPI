@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: Inbox endpoints merged
+
 @CommonParcelize
 @Serializable
 data class CommentReplyResponse(

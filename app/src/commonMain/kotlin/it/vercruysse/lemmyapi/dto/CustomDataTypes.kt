@@ -129,6 +129,8 @@ enum class PostListingMode(override val minimumVersion: Version = V0_19_0, overr
     SmallCard,
 }
 
+// TODO: more options: "Public" | "Unlisted" | "LocalOnlyPublic" | "LocalOnlyPrivate" | "Private"
+
 @Serializable
 enum class CommunityVisibility(override val minimumVersion: Version = V0_19_4, override val maximumVersion: Version? = null) :
     VersionTracker {

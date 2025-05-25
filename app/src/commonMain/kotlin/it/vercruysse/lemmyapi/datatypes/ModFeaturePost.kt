@@ -12,6 +12,6 @@ data class ModFeaturePost(
     val mod_person_id: PersonId,
     val post_id: PostId,
     val featured: Boolean,
-    val when_: String,
+    val published: String,
     val is_featured_community: Boolean,
 ) : DatatypeRoot
