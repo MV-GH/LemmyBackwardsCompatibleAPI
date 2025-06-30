@@ -7,7 +7,5 @@ import kotlinx.serialization.Serializable
 @CommonParcelize
 @Serializable
 data class PersonActions(
-    val target_id: PersonId,
-    val person_id: PersonId,
     val blocked: String? = null,
 ): DatatypeRoot

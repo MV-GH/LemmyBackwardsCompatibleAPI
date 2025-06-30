@@ -26,7 +26,6 @@ import it.vercruysse.lemmyapi.datatypes.BlockPersonResponse as LemmyapiDatatypes
 import it.vercruysse.lemmyapi.datatypes.CaptchaResponse as LemmyapiDatatypesCaptchaResponse
 import it.vercruysse.lemmyapi.datatypes.ChangePassword as LemmyapiDatatypesChangePassword
 import it.vercruysse.lemmyapi.datatypes.Comment as LemmyapiDatatypesComment
-import it.vercruysse.lemmyapi.datatypes.CommentAggregates as LemmyapiDatatypesCommentAggregates
 import it.vercruysse.lemmyapi.datatypes.CommentReply as LemmyapiDatatypesCommentReply
 import it.vercruysse.lemmyapi.datatypes.CommentReplyResponse as LemmyapiDatatypesCommentReplyResponse
 import it.vercruysse.lemmyapi.datatypes.CommentReplyView as LemmyapiDatatypesCommentReplyView
@@ -541,7 +540,7 @@ internal class Transformer : MapperGenerator {
             uuid = d.uuid,
         )
 
-    override fun toUni(d: X11DatatypesComment): LemmyapiDatatypesComment = LemmyapiDatatypesComment(
+    override fun toUni(d: X11DatatypesComment, agg: X11DatatypesCommentAggregates): LemmyapiDatatypesComment = LemmyapiDatatypesComment(
         id = d.id,
         creator_id = d.creator_id,
         post_id = d.post_id,
@@ -555,17 +554,14 @@ internal class Transformer : MapperGenerator {
         path = d.path,
         distinguished = d.distinguished,
         language_id = d.language_id,
+        score = agg.score,
+        upvotes = agg.upvotes,
+        downvotes = agg.downvotes,
+        child_count = agg.child_count,
+        report_count = -1,
+        unresolved_report_count = -1,
+        federation_pending = false,
     )
-
-    override fun toUni(d: X11DatatypesCommentAggregates): LemmyapiDatatypesCommentAggregates =
-        LemmyapiDatatypesCommentAggregates(
-            comment_id = d.comment_id,
-            score = d.score,
-            upvotes = d.upvotes,
-            downvotes = d.downvotes,
-            published = d.published,
-            child_count = d.child_count,
-        )
 
     override fun toUni(d: X11DatatypesCommentReply): LemmyapiDatatypesCommentReply =
         LemmyapiDatatypesCommentReply(
@@ -645,19 +641,21 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X11DatatypesCommentView): LemmyapiDatatypesCommentView =
         LemmyapiDatatypesCommentView(
-            comment = this.toUni(d = d.comment),
+            comment = this.toUni(d = d.comment, d.counts),
             creator = this.toUni(d = d.creator),
             post = this.toUni(d = d.post),
             community = this.toUni(d = d.community),
-            counts = this.toUni(d = d.counts),
             creator_banned_from_community = d.creator_banned_from_community,
             banned_from_community = d.banned_from_community,
             creator_is_moderator = d.creator_is_moderator,
-            creator_is_admin = d.creator_is_admin,
+
+
             subscribed = d.subscribed,
             saved = d.saved,
             creator_blocked = d.creator_blocked,
             my_vote = d.my_vote,
+            creator_is_admin = d.creator_is_admin,
+            post_tags = emptyList(),
         )
 
     override fun toUni(d: X11DatatypesCommunity): LemmyapiDatatypesCommunity =
