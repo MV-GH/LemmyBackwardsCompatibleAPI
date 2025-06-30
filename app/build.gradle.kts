@@ -1,5 +1,4 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import com.vanniktech.maven.publish.SonatypeHost
 import org.jmailen.gradle.kotlinter.tasks.FormatTask
 import org.jmailen.gradle.kotlinter.tasks.LintTask
 
@@ -8,7 +7,7 @@ plugins {
     kotlin("plugin.serialization") version "2.1.10"
     id("org.jmailen.kotlinter") version "5.0.1"
     id("com.google.devtools.ksp") version ("2.1.10-1.0.30")
-    id("com.vanniktech.maven.publish") version "0.29.0"
+    id("com.vanniktech.maven.publish") version "0.33.0"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.android.library")
     id("kotlin-parcelize")
@@ -176,7 +175,7 @@ fun getHostOsName(): OS =
     }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.S01, true)
+    publishToMavenCentral( true)
     signAllPublications()
 }
 
