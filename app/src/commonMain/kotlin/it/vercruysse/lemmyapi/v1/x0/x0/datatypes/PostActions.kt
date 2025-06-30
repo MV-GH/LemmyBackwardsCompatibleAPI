@@ -4,8 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class PostActions(
-    val post_id: PostId,
-    val person_id: PersonId,
     val read: String? = null,
     val read_comments: String? = null,
     val read_comments_amount: Long? = null,

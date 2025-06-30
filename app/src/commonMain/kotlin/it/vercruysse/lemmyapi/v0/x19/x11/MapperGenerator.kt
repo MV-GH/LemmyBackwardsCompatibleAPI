@@ -20,8 +20,7 @@ internal interface MapperGenerator {
     fun toUni(d: BlockCommunityResponse): it.vercruysse.lemmyapi.datatypes.BlockCommunityResponse
     fun toUni(d: BlockPersonResponse): it.vercruysse.lemmyapi.datatypes.BlockPersonResponse
     fun toUni(d: CaptchaResponse): it.vercruysse.lemmyapi.datatypes.CaptchaResponse
-    fun toUni(d: Comment): it.vercruysse.lemmyapi.datatypes.Comment
-    fun toUni(d: CommentAggregates): it.vercruysse.lemmyapi.datatypes.CommentAggregates
+    fun toUni(d: Comment, agg: CommentAggregates): it.vercruysse.lemmyapi.datatypes.Comment
     fun toUni(d: CommentReply): it.vercruysse.lemmyapi.datatypes.CommentReply
     fun toUni(d: CommentReplyResponse): it.vercruysse.lemmyapi.datatypes.CommentReplyResponse
     fun toUni(d: CommentReplyView): it.vercruysse.lemmyapi.datatypes.CommentReplyView

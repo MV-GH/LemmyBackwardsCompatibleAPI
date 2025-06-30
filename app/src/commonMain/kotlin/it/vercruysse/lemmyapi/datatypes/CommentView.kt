@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
-import it.vercruysse.lemmyapi.dto.SubscribedType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
@@ -16,15 +15,18 @@ data class CommentView(
     val creator: Person,
     val post: Post,
     val community: Community,
-    val counts: CommentAggregates,
-    val creator_banned_from_community: Boolean,
-    val banned_from_community: Boolean,
-    val creator_is_moderator: Boolean,
+    val community_actions: CommunityActions? = null,
+    val comment_actions: CommentActions? = null,
+    val person_actions: PersonActions? = null,
+    val instance_actions: InstanceActions? = null,
+    val creator_home_instance_actions: InstanceActions? = null,
+    val creator_local_instance_actions: InstanceActions? = null,
+    val creator_community_actions: CommunityActions? = null,
     val creator_is_admin: Boolean,
-    val subscribed: SubscribedType /* "Subscribed" | "NotSubscribed" | "Pending" */,
-    val saved: Boolean,
-    val creator_blocked: Boolean,
-    val my_vote: Int = 0,
+    /** Added in Lemmy 1.0.0 */
+    val post_tags: TagsView,
+    val can_mod: Boolean,
+    val creator_banned: Boolean,
 ) : DatatypeRoot, Identity {
     override val id: Long
         get() = comment.id

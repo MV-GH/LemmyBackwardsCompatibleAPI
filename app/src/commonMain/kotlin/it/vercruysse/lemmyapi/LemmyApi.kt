@@ -149,9 +149,9 @@ object LemmyApi {
             else -> throw NotSupportedException("Unsupported Lemmy major version: $version")
         }
     }
-}
 
-// Good enough approximation for now
-private fun getApiVersion(version: io.github.z4kn4fein.semver.Version): String {
-    return if (version.major == 0) "V3" else "V4"
+    // Good enough approximation for now
+    private fun getApiVersion(version: io.github.z4kn4fein.semver.Version): String {
+        return if (version.major == 0) "V3" else "V4"
+    }
 }

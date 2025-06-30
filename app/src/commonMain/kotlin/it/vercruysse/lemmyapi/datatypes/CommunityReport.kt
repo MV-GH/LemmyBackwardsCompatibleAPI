@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CommunityReport(
     override val id: CommunityReportId,
-    val creator_id: it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PersonId,
+    val creator_id: PersonId,
     val community_id: CommunityId,
     val original_community_name: String,
     val original_community_title: String,
