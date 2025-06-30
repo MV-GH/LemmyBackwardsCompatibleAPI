@@ -1,7 +1,7 @@
 <!--suppress HtmlDeprecatedAttribute -->
 <div align="center">
 
-![MavenCentral (Snapshots)](https://img.shields.io/maven-central/v/it.vercruysse.lemmyapi/lemmy-api)
+![MavenCentral](https://img.shields.io/maven-central/v/it.vercruysse.lemmyapi/lemmy-api)
 ![badge][badge-js]
 ![badge][badge-jvm]
 ![badge][badge-android]
@@ -43,7 +43,7 @@ api.getSupportedEntries<SortType>()
 ```kts
 implementation("it.vercruysse.lemmyapi:lemmy-api:VERSION")
 ```
-It is currently in beta, so only snapshots are available.
+It is currently in beta.
 
 ## Goals
 
