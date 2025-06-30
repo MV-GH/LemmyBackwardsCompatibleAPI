@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class CommentActions(
     val person_id: PersonId,
     val comment_id: CommentId,
-    val like_score: Long? = null,
+    val like_score: Int = 0,
     val liked: String? = null,
     val saved: String? = null,
 ): DatatypeRoot
