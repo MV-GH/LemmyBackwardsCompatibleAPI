@@ -1,7 +1,7 @@
 <!--suppress HtmlDeprecatedAttribute -->
 <div align="center">
 
-![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/it.vercruysse.lemmyapi/lemmy-api?server=https%3A%2F%2Fs01.oss.sonatype.org)
+![MavenCentral](https://img.shields.io/maven-central/v/it.vercruysse.lemmyapi/lemmy-api)
 ![badge][badge-js]
 ![badge][badge-jvm]
 ![badge][badge-android]
@@ -43,12 +43,7 @@ api.getSupportedEntries<SortType>()
 ```kts
 implementation("it.vercruysse.lemmyapi:lemmy-api:VERSION")
 ```
-It is currently in beta, so only snapshots are available.
-
-Add the following repository
-```kts
-maven { url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots") }
-```
+It is currently in beta.
 
 ## Goals
 
