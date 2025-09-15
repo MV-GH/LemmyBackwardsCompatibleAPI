@@ -10,6 +10,6 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class Tagline(
     val id: TaglineId,
     val content: String,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
 ) : DatatypeRoot

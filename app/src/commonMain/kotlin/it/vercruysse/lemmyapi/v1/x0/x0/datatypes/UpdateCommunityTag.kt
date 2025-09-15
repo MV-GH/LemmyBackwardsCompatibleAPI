@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class UpdateCommunityTag(
     val tag_id: TagId,
-    val display_name: String,
+    val display_name: String? = null,
+    val description: String? = null,
 )

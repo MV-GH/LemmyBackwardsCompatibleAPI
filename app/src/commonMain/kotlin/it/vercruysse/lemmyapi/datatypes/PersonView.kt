@@ -5,12 +5,11 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: changed
-
 @CommonParcelize
 @Serializable
 data class PersonView(
     val person: Person,
-    val counts: PersonAggregates,
     val is_admin: Boolean,
-) : DatatypeRoot
+    val person_actions: PersonActions? = null,
+    val creator_banned: Boolean,
+    ) : DatatypeRoot

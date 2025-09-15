@@ -18,7 +18,7 @@ data class CommentReplyView(
     val post: Post,
     val community: Community,
     val recipient: Person,
-    val counts: CommentAggregates,
+//    val counts: CommentAggregates,
     val creator_banned_from_community: Boolean,
     val banned_from_community: Boolean,
     val creator_is_moderator: Boolean,

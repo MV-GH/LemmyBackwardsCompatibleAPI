@@ -1,12 +1,10 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.SubscribedType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: changes
 
 @CommonParcelize
 @Serializable
@@ -16,16 +14,12 @@ data class PostReportView(
     val community: Community,
     val creator: Person,
     val post_creator: Person,
-    val creator_banned_from_community: Boolean,
-    val creator_is_moderator: Boolean,
-    val creator_is_admin: Boolean,
-    val subscribed: SubscribedType /* "Subscribed" | "NotSubscribed" | "Pending" */,
-    val saved: Boolean,
-    val read: Boolean,
-    val hidden: Boolean,
-    val creator_blocked: Boolean,
-    val my_vote: Int = 0,
-    val unread_comments: Long,
-    val counts: PostAggregates,
+    val community_actions: CommunityActions? = null,
+    val post_actions: PostActions? = null,
+    val person_actions: PersonActions? = null,
     val resolver: Person? = null,
+    val creator_is_admin: Boolean,
+    val creator_is_moderator: Boolean,
+    val creator_banned: Boolean,
+    val creator_banned_from_community: Boolean,
 ) : DatatypeRoot

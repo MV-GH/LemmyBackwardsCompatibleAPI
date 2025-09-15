@@ -1,0 +1,10 @@
+package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
+
+import it.vercruysse.lemmyapi.v1.x0.x0.combinedtypes.NotificationData
+import kotlinx.serialization.Serializable
+
+@Serializable
+internal data class NotificationView(
+    val notification: Notification,
+    val data: NotificationData,
+)

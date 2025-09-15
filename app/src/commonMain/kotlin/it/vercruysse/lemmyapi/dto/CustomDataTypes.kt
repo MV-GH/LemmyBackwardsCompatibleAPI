@@ -33,6 +33,23 @@ enum class SubscribedType {
 }
 
 @Serializable
+enum class CommunityFollowerState {
+    Accepted,
+    Pending,
+    ApprovalRequired,
+    ;
+
+    companion object {
+        fun from(d: SubscribedType): CommunityFollowerState? =
+            when (d) {
+                SubscribedType.Subscribed -> CommunityFollowerState.Accepted
+                SubscribedType.NotSubscribed -> null
+                SubscribedType.Pending -> CommunityFollowerState.Pending
+            }
+    }
+}
+
+@Serializable
 enum class PostFeatureType {
     Local,
     Community,
@@ -47,6 +64,7 @@ enum class ListingType(override val minimumVersion: Version = MINIMUM_API_VERSIO
     Local,
     Subscribed,
     ModeratorView(V0_19_0),
+    Suggested(V1_0_0),
 }
 
 @Serializable
@@ -142,6 +160,50 @@ enum class CommunityVisibility(override val minimumVersion: Version = V0_19_4, o
     LocalOnlyPublic(V1_0_0),
     LocalOnlyPrivate(V1_0_0),
     Private(V1_0_0),
+}
+
+@Serializable
+enum class CommunityNotificationsMode(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+    AllPostsAndComments,
+    AllPosts,
+    RepliesAndMentions,
+    Mute,
+}
+
+@Serializable
+enum class PostNotificationsMode(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+    AllComments,
+    RepliesAndMentions,
+    Mute,
+}
+
+@Serializable
+enum class VoteShow(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+    Show,
+    ShowForOthers,
+    Hide,
+}
+
+@Serializable
+enum class LikeType(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+    All,
+    LikedOnly,
+    DislikedOnly,
+}
+
+@Serializable
+enum class FederationMode(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+    All,
+    Local,
+    Disable,
+}
+
+@Serializable
+enum class NotificationType(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+    Mention,
+    Reply,
+    Subscribed,
+    PrivateMessage,
 }
 
 /**

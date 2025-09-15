@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 internal data class LocalUserView(
     val local_user: LocalUser,
     val person: Person,
-    val instance_actions: InstanceActions? = null,
+    val banned: Boolean,
 )

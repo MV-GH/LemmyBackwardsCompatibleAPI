@@ -9,10 +9,12 @@ internal data class PostReportView(
     val community: Community,
     val creator: Person,
     val post_creator: Person,
-    val creator_community_actions: CommunityActions? = null,
     val community_actions: CommunityActions? = null,
     val post_actions: PostActions? = null,
     val person_actions: PersonActions? = null,
     val resolver: Person? = null,
     val creator_is_admin: Boolean,
+    val creator_is_moderator: Boolean,
+    val creator_banned: Boolean,
+    val creator_banned_from_community: Boolean,
 )

@@ -9,5 +9,5 @@ internal data class AdminAllowInstance(
     val admin_person_id: PersonId,
     val allowed: Boolean,
     val reason: String? = null,
-    val published: String,
+    val published_at: String,
 )

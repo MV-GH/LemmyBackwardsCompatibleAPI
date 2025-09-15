@@ -4,12 +4,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ModBanFromCommunity(
-    val id: Long,
+    val id: ModBanFromCommunityId,
     val mod_person_id: PersonId,
     val other_person_id: PersonId,
     val community_id: CommunityId,
     val reason: String? = null,
     val banned: Boolean,
-    val expires: String? = null,
-    val published: String,
+    val expires_at: String? = null,
+    val published_at: String,
 )

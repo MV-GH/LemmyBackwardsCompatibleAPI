@@ -10,4 +10,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class LocalImageView(
     val local_image: LocalImage,
     val person: Person,
+    val post: Post? = null,
 ) : DatatypeRoot

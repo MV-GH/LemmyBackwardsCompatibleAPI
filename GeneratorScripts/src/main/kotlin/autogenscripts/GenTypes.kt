@@ -117,7 +117,7 @@ fun downloadTypes(
             var imports = ""
 
             // typealiases are not serializable
-            if (!originalTypeFile.contains("internal typealias")) {
+            if (!originalTypeFile.contains("typealias")) {
                 imports += "import kotlinx.serialization.Serializable\n\n@Serializable"
             }
 
@@ -130,6 +130,7 @@ fun downloadTypes(
                         // Convert interface to data class
                         var k =
                             line.replace("interface ", "internal data class ")
+                                .replace("typealias ", "internal typealias ")
                                 .replace(" {", "(")
                                 .replace("}", ")")
 
@@ -244,6 +245,6 @@ fun downloadTypes(
 }
 
 fun main() {
-    downloadTypes("1.0.0-community-reports.0", "v1/x0/x0")
+    downloadTypes("1.0.0-community-post-notifs.0", "v1/x0/x0")
     exitProcess(0)
 }

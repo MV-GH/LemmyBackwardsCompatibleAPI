@@ -9,7 +9,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @Serializable
 data class LoginToken(
     val user_id: LocalUserId,
-    val published: String,
+    val published_at: String,
     val ip: String? = null,
     val user_agent: String? = null,
 ) : DatatypeRoot

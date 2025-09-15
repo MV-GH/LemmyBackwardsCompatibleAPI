@@ -2,15 +2,13 @@ package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
 import kotlinx.serialization.Serializable
 
-// TODO: changes
-
 @Serializable
 internal data class Site(
     val id: SiteId,
     val name: String,
     val sidebar: String? = null,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val icon: DbUrl? = null,
     val banner: DbUrl? = null,
     val description: String? = null,

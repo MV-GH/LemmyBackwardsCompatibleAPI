@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import it.vercruysse.lemmyapi.dto.FederationMode
 import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.PostListingMode
 import it.vercruysse.lemmyapi.dto.RegistrationMode
@@ -16,17 +17,16 @@ internal data class LocalSite(
     val application_question: String? = null,
     val private_instance: Boolean,
     val default_theme: String,
-    val default_post_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" */,
+    val default_post_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */,
     val legal_information: String? = null,
-    val hide_modlog_mod_names: Boolean,
     val application_email_admins: Boolean,
     val slur_filter_regex: String? = null,
     val actor_name_max_length: Long,
     val federation_enabled: Boolean,
     val captcha_enabled: Boolean,
     val captcha_difficulty: String,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val registration_mode: RegistrationMode /* "Closed" | "RequireApplication" | "Open" */,
     val reports_email_admins: Boolean,
     val federation_signed_fetch: Boolean,
@@ -34,10 +34,10 @@ internal data class LocalSite(
     val default_post_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "Top" | "MostComments" | "NewComments" | "Controversial" | "Scaled" */,
     val default_comment_sort_type: SortType /* "Hot" | "Top" | "New" | "Old" | "Controversial" */,
     val oauth_registration: Boolean,
-    val post_upvotes: String /* "All" | "Local" | "Disable" */,
-    val post_downvotes: String /* "All" | "Local" | "Disable" */,
-    val comment_upvotes: String /* "All" | "Local" | "Disable" */,
-    val comment_downvotes: String /* "All" | "Local" | "Disable" */,
+    val post_upvotes: FederationMode /* "All" | "Local" | "Disable" */,
+    val post_downvotes: FederationMode /* "All" | "Local" | "Disable" */,
+    val comment_upvotes: FederationMode /* "All" | "Local" | "Disable" */,
+    val comment_downvotes: FederationMode /* "All" | "Local" | "Disable" */,
     val default_post_time_range_seconds: Long? = null,
     val disallow_nsfw_content: Boolean,
     val users: Long,
@@ -49,4 +49,6 @@ internal data class LocalSite(
     val users_active_month: Long,
     val users_active_half_year: Long,
     val disable_email_notifications: Boolean,
+    val suggested_communities: MultiCommunityId? = null,
+    val multi_comm_follower: PersonId,
 )

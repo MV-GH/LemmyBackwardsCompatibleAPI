@@ -5,5 +5,4 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class CommentResponse(
     val comment_view: CommentView,
-    val recipient_ids: List<LocalUserId>,
 )

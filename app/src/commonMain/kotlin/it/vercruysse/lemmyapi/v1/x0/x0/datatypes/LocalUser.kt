@@ -1,8 +1,8 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
-import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.PostListingMode
 import it.vercruysse.lemmyapi.dto.ListingType
+import it.vercruysse.lemmyapi.dto.SortType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,7 +13,7 @@ internal data class LocalUser(
     val show_nsfw: Boolean,
     val theme: String,
     val default_post_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "Top" | "MostComments" | "NewComments" | "Controversial" | "Scaled" */,
-    val default_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" */,
+    val default_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */,
     val interface_language: String,
     val show_avatars: Boolean,
     val send_notifications_to_email: Boolean,
@@ -33,11 +33,12 @@ internal data class LocalUser(
     val collapse_bot_comments: Boolean,
     val default_comment_sort_type: SortType /* "Hot" | "Top" | "New" | "Old" | "Controversial" */,
     val auto_mark_fetched_posts_as_read: Boolean,
-    val last_donation_notification: String,
+    val last_donation_notification_at: String,
     val hide_media: Boolean,
     val default_post_time_range_seconds: Long? = null,
     val show_score: Boolean,
     val show_upvotes: Boolean,
-    val show_downvotes: Boolean,
+    val show_downvotes: String /* "Show" | "ShowForOthers" | "Hide" */,
     val show_upvote_percentage: Boolean,
+    val show_person_votes: Boolean,
 )

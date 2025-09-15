@@ -14,9 +14,10 @@ data class PrivateMessage(
     val recipient_id: PersonId,
     val content: String,
     val deleted: Boolean,
+    /** Removed in 1.0.0 */
     val read: Boolean,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val ap_id: String,
     val local: Boolean,
     /** Added in Lemmy 1.0.0 */

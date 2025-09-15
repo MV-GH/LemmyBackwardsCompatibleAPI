@@ -854,7 +854,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         form: it.vercruysse.lemmyapi.datatypes.BlockInstance,
     ): Result<Unit> = notSupported()
 
-    // TODO possible supported by using old logic, might not be worth the effort
+    // possible supported by using old logic, but not be worth the effort
 
     /**
      * Generate a TOTP / two-factor secret.

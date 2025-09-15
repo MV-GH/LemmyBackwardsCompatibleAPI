@@ -8,6 +8,6 @@ import kotlinx.serialization.Serializable
 @CommonParcelize
 @Serializable
 data class GetRandomCommunity(
-    val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
+    val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */ = null,
     val show_nsfw: Boolean? = null,
 ): DatatypeRoot

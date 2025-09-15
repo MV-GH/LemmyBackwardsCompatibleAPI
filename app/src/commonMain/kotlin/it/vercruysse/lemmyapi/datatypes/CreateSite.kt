@@ -8,6 +8,7 @@ import it.vercruysse.lemmyapi.dto.ListingType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.MultiCommunityId
 
 // TODO: has changed
 
@@ -34,18 +35,20 @@ data class CreateSite(
     val discussion_languages: List<LanguageId>? = null,
     val slur_filter_regex: String? = null,
     val actor_name_max_length: Long? = null,
-    val rate_limit_message: Long? = null,
-    val rate_limit_message_per_second: Long? = null,
-    val rate_limit_post: Long? = null,
-    val rate_limit_post_per_second: Long? = null,
-    val rate_limit_register: Long? = null,
-    val rate_limit_register_per_second: Long? = null,
-    val rate_limit_image: Long? = null,
-    val rate_limit_image_per_second: Long? = null,
-    val rate_limit_comment: Long? = null,
-    val rate_limit_comment_per_second: Long? = null,
-    val rate_limit_search: Long? = null,
-    val rate_limit_search_per_second: Long? = null,
+    val rate_limit_message_max_requests: Long? = null,
+    val rate_limit_message_interval_seconds: Long? = null,
+    val rate_limit_post_max_requests: Long? = null,
+    val rate_limit_post_interval_seconds: Long? = null,
+    val rate_limit_register_max_requests: Long? = null,
+    val rate_limit_register_interval_seconds: Long? = null,
+    val rate_limit_image_max_requests: Long? = null,
+    val rate_limit_image_interval_seconds: Long? = null,
+    val rate_limit_comment_max_requests: Long? = null,
+    val rate_limit_comment_interval_seconds: Long? = null,
+    val rate_limit_search_max_requests: Long? = null,
+    val rate_limit_search_interval_seconds: Long? = null,
+    val rate_limit_import_user_settings_max_requests: Long? = null,
+    val rate_limit_import_user_settings_interval_seconds: Long? = null,
     val federation_enabled: Boolean? = null,
     val federation_debug: Boolean? = null,
     val captcha_enabled: Boolean? = null,
@@ -56,4 +59,6 @@ data class CreateSite(
     val registration_mode: RegistrationMode? /* "Closed" | "RequireApplication" | "Open" */ = null,
     val content_warning: String? = null,
     val default_post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
+    /* Added in 1.0.0 */
+    val suggested_communities: MultiCommunityId? = null,
 ) : DatatypeRoot

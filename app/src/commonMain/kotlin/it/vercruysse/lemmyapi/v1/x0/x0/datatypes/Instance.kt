@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 internal data class Instance(
     val id: InstanceId,
     val domain: String,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val software: String? = null,
     val version: String? = null,
 )

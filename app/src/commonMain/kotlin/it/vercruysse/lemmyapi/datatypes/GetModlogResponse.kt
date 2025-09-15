@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: mapping changes
-
 @CommonParcelize
 @Serializable
 data class GetModlogResponse(

@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 internal data class CommunityView(
     val community: Community,
     val community_actions: CommunityActions? = null,
-    val instance_actions: InstanceActions? = null,
     val can_mod: Boolean,
     val post_tags: TagsView,
 )

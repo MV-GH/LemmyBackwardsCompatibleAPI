@@ -6,8 +6,6 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: many changes look into it
-
 @CommonParcelize
 @Serializable
 data class Comment(
@@ -16,8 +14,8 @@ data class Comment(
     val post_id: PostId,
     val content: String,
     val removed: Boolean,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val deleted: Boolean,
     val ap_id: String,
     val local: Boolean,

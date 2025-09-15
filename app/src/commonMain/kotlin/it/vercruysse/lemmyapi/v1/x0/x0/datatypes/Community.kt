@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import it.vercruysse.lemmyapi.dto.CommunityVisibility
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,8 +10,8 @@ internal data class Community(
     val title: String,
     val sidebar: String? = null,
     val removed: Boolean,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val deleted: Boolean,
     val nsfw: Boolean,
     val ap_id: DbUrl,
@@ -19,7 +20,7 @@ internal data class Community(
     val banner: DbUrl? = null,
     val posting_restricted_to_mods: Boolean,
     val instance_id: InstanceId,
-    val visibility: String /* "Public" | "Unlisted" | "LocalOnlyPublic" | "LocalOnlyPrivate" | "Private" */,
+    val visibility: CommunityVisibility /* "Public" | "Unlisted" | "LocalOnlyPublic" | "LocalOnlyPrivate" | "Private" */,
     val description: String? = null,
     val subscribers: Long,
     val posts: Long,

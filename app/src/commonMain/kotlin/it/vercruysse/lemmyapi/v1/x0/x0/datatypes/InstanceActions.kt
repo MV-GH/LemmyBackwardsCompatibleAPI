@@ -4,7 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class InstanceActions(
-    val blocked: String? = null,
-    val received_ban: String? = null,
-    val ban_expires: String? = null,
+    val blocked_communities_at: String? = null,
+    val received_ban_at: String? = null,
+    val ban_expires_at: String? = null,
+    val blocked_persons_at: String? = null,
 )

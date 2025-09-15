@@ -13,8 +13,7 @@ internal data class PostReport(
     val reason: String,
     val resolved: Boolean,
     val resolver_id: PersonId? = null,
-    val published: String,
-    val updated: String? = null,
-    /** Added in Lemmy 1.0.0 */
+    val published_at: String,
+    val updated_at: String? = null,
     val violates_instance_rules: Boolean,
 )

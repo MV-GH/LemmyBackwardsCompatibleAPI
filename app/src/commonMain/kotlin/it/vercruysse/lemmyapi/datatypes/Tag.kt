@@ -9,9 +9,13 @@ import kotlinx.serialization.Serializable
 data class Tag(
     val id: TagId,
     val ap_id: String,
+    /** Added in 1.0.0 */
+    val name: String,
+    /** Added in 1.0.0  */
+    val description: String? = null,
     val display_name: String,
     val community_id: CommunityId,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val deleted: Boolean,
 ): DatatypeRoot

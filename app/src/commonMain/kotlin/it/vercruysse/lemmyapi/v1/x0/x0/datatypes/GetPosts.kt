@@ -6,13 +6,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class GetPosts(
-    val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
+    val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */ = null,
     val sort: SortType? /* "Active" | "Hot" | "New" | "Old" | "Top" | "MostComments" | "NewComments" | "Controversial" | "Scaled" */ = null,
     val time_range_seconds: Long? = null,
     val community_id: CommunityId? = null,
     val community_name: String? = null,
-    val liked_only: Boolean? = null,
-    val disliked_only: Boolean? = null,
+    val multi_community_id: MultiCommunityId? = null,
     val show_hidden: Boolean? = null,
     val show_read: Boolean? = null,
     val show_nsfw: Boolean? = null,

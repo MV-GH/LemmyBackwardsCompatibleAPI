@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 internal data class LocalSiteUrlBlocklist(
     val id: Long,
     val url: String,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
 )

@@ -13,5 +13,5 @@ data class AdminPurgePost(
     val admin_person_id: PersonId,
     val community_id: CommunityId,
     val reason: String? = null,
-    val published: String,
+    val published_at: String,
 ) : DatatypeRoot, Identity
