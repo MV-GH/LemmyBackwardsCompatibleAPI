@@ -52,13 +52,9 @@ data class LocalUser(
     val hide_media: Boolean,
     /** Added in 1.0.0 */
     val default_post_time_range_seconds: Long? = null,
-    /** Added in 1.0.0 */
     val show_score: Boolean,
-    /** Added in 1.0.0 */
     val show_upvotes: Boolean,
-    /** Added in 1.0.0 */
     val show_downvotes: VoteShow /* "Show" | "ShowForOthers" | "Hide" */,
-    /** Added in 1.0.0 */
     val show_upvote_percentage: Boolean,
     /** Added in 1.0.0 */
     val show_person_votes: Boolean,
