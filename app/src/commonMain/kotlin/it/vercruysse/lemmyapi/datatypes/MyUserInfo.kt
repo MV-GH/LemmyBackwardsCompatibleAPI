@@ -13,9 +13,8 @@ data class MyUserInfo(
     val moderates: List<CommunityModeratorView>,
     val community_blocks: List<Community>,
 
-    // TODO add mapping once figured out
-    val instance_blocks: List<Instance>,
-
+    val instance_community_blocks: List<Instance>,
+    val instance_person_blocks: List<Instance>,
     val person_blocks: List<Person>,
     /** Added in Lemmy 1.0.0 */
     val keyword_blocks: List<String> = emptyList(),
