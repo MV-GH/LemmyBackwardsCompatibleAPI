@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ReadableFederationState(
-    val next_retry: String? = null,
+    val next_retry_at: String? = null,
     val instance_id: InstanceId,
     val last_successful_id: ActivityId? = null,
     val last_successful_published_time_at: String? = null,

@@ -1352,7 +1352,8 @@ internal class Transformer : MapperGenerator {
             follows = d.follows.map { this.toUni(d = it) },
             moderates = d.moderates.map { this.toUni(d = it) },
             community_blocks = d.community_blocks.map { this.toUni(d = it.community, counts = X0DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)) },
-            instance_blocks = d.instance_blocks.map { this.toUni(d = it.instance) },
+            instance_community_blocks = d.instance_blocks.map { this.toUni(d = it.instance) },
+            instance_person_blocks = emptyList(),
             person_blocks = d.person_blocks.map { this.toUni(d = it.target) },
             discussion_languages = d.discussion_languages,
         )
