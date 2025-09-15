@@ -4,7 +4,6 @@ import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.TagId
 
 @CommonParcelize
 @Serializable
@@ -21,5 +20,5 @@ data class CreatePost(
     /** Added in Lemmy 1.0.0 */
     val tags: List<TagId>? = null,
     /** Added in Lemmy 1.0.0 */
-    val scheduled_publish_time: Long? = null,
+    val scheduled_publish_time_at: Long? = null,
 ) : DatatypeRoot

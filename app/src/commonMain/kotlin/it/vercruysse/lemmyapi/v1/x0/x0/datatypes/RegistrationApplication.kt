@@ -9,5 +9,5 @@ internal data class RegistrationApplication(
     val answer: String,
     val admin_id: PersonId? = null,
     val deny_reason: String? = null,
-    val published: String,
+    val published_at: String,
 )

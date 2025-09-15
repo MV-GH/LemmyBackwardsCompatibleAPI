@@ -1,8 +1,6 @@
 @file:Suppress("unused", "INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 
-import io.mcarle.konvert.api.Konfig
 import io.mcarle.konvert.api.Konvert
-import io.mcarle.konvert.api.Konverter
 import io.mcarle.konvert.api.Mapping
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.*
 
@@ -50,13 +48,6 @@ internal interface MapperGenerator0x19x0 {
 
     @Konvert(
         mappings = [
-            Mapping(target = "subscribers_local", constant = "-1"),
-        ]
-    )
-    fun toUni(d: CommunityAggregates): it.vercruysse.lemmyapi.datatypes.CommunityAggregates
-
-    @Konvert(
-        mappings = [
             Mapping(target = "banned_from_community", constant = "false"),
         ]
     )
@@ -91,13 +82,6 @@ internal interface MapperGenerator0x19x0 {
         ]
     )
     fun toUni(d: PersonMentionView): it.vercruysse.lemmyapi.datatypes.PersonMentionView
-
-    @Konvert(
-        mappings = [
-            Mapping(target = "newest_comment_time", constant = "\"\""),
-        ]
-    )
-    fun toUni(d: PostAggregates): it.vercruysse.lemmyapi.datatypes.PostAggregates
 
     @Konvert(
         mappings = [
@@ -139,7 +123,6 @@ internal interface MapperGenerator0x19x0 {
     fun toUni(d: BlockPersonResponse): it.vercruysse.lemmyapi.datatypes.BlockPersonResponse
     fun toUni(d: CaptchaResponse): it.vercruysse.lemmyapi.datatypes.CaptchaResponse
     fun toUni(d: Comment): it.vercruysse.lemmyapi.datatypes.Comment
-    fun toUni(d: CommentAggregates): it.vercruysse.lemmyapi.datatypes.CommentAggregates
     fun toUni(d: CommentReply): it.vercruysse.lemmyapi.datatypes.CommentReply
     fun toUni(d: CommentReplyResponse): it.vercruysse.lemmyapi.datatypes.CommentReplyResponse
 
@@ -212,7 +195,6 @@ internal interface MapperGenerator0x19x0 {
     fun toUni(d: ModTransferCommunityView): it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView
     fun toUni(d: MyUserInfo): it.vercruysse.lemmyapi.datatypes.MyUserInfo
     fun toUni(d: Person): it.vercruysse.lemmyapi.datatypes.Person
-    fun toUni(d: PersonAggregates): it.vercruysse.lemmyapi.datatypes.PersonAggregates
     fun toUni(d: PersonMention): it.vercruysse.lemmyapi.datatypes.PersonMention
     fun toUni(d: PersonMentionResponse): it.vercruysse.lemmyapi.datatypes.PersonMentionResponse
 

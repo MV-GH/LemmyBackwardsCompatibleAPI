@@ -9,6 +9,6 @@ internal data class AdminBlockInstance(
     val admin_person_id: PersonId,
     val blocked: Boolean,
     val reason: String? = null,
-    val expires: String? = null,
-    val published: String,
+    val expires_at: String? = null,
+    val published_at: String,
 )

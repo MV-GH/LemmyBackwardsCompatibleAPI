@@ -8,4 +8,8 @@ internal data class CommunityReportView(
     val community: Community,
     val creator: Person,
     val resolver: Person? = null,
+    val creator_is_admin: Boolean,
+    val creator_is_moderator: Boolean,
+    val creator_banned: Boolean,
+    val creator_banned_from_community: Boolean,
 )

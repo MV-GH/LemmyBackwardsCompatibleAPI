@@ -77,3 +77,5 @@ internal fun constructBaseUrl(instance: String): String {
 
     return url.protocolWithAuthority
 }
+
+internal fun toAt(bool: Boolean): String? = if (bool) "" else null

@@ -8,6 +8,7 @@ import it.vercruysse.lemmyapi.dto.SortType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.dto.VoteShow
 
 // TODO: changes
 
@@ -24,13 +25,13 @@ data class LocalUser(
     val interface_language: String,
     val show_avatars: Boolean,
     val send_notifications_to_email: Boolean,
-    val show_scores: Boolean,
     val show_bot_accounts: Boolean,
     val show_read_posts: Boolean,
     val email_verified: Boolean,
     val accepted_application: Boolean,
     val open_links_in_new_tab: Boolean,
     val blur_nsfw: Boolean,
+    /** Removed in 1.0.0 */
     val auto_expand: Boolean,
     val infinite_scroll_enabled: Boolean,
     val admin: Boolean,
@@ -38,7 +39,27 @@ data class LocalUser(
     val totp_2fa_enabled: Boolean,
     val enable_keyboard_navigation: Boolean,
     val enable_animated_images: Boolean,
+    /** Added in 1.0.0 */
+    val enable_private_messages: Boolean,
     val collapse_bot_comments: Boolean,
+    /** Added in 1.0.0 */
+    val default_comment_sort_type: SortType,
+    /** Added in 1.0.0 */
+    val auto_mark_fetched_posts_as_read: Boolean,
     /** Added in 0.19.11 */
-    val last_donation_notification: String,
+    val last_donation_notification_at: String,
+    /** Added in 1.0.0 */
+    val hide_media: Boolean,
+    /** Added in 1.0.0 */
+    val default_post_time_range_seconds: Long? = null,
+    /** Added in 1.0.0 */
+    val show_score: Boolean,
+    /** Added in 1.0.0 */
+    val show_upvotes: Boolean,
+    /** Added in 1.0.0 */
+    val show_downvotes: VoteShow /* "Show" | "ShowForOthers" | "Hide" */,
+    /** Added in 1.0.0 */
+    val show_upvote_percentage: Boolean,
+    /** Added in 1.0.0 */
+    val show_person_votes: Boolean,
 ) : DatatypeRoot, Identity

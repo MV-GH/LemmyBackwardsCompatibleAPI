@@ -13,5 +13,5 @@ data class ModAddCommunity(
     val other_person_id: PersonId,
     val community_id: CommunityId,
     val removed: Boolean,
-    val published: String,
+    val published_at: String,
 ) : DatatypeRoot

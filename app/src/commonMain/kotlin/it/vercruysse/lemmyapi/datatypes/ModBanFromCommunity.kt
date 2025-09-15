@@ -15,6 +15,6 @@ data class ModBanFromCommunity(
     val community_id: CommunityId,
     val reason: String? = null,
     val banned: Boolean,
-    val expires: String? = null,
-    val published: String,
+    val expires_at: String? = null,
+    val published_at: String,
 ) : DatatypeRoot, Identity

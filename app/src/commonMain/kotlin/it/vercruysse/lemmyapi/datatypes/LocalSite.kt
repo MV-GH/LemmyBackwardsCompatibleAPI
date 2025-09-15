@@ -27,6 +27,7 @@ data class LocalSite(
     val default_theme: String,
     val default_post_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" */,
     val legal_information: String? = null,
+    /** Removed in Lemmy 1.0.0 */
     val hide_modlog_mod_names: Boolean,
     val application_email_admins: Boolean,
     val slur_filter_regex: String? = null,
@@ -34,8 +35,8 @@ data class LocalSite(
     val federation_enabled: Boolean,
     val captcha_enabled: Boolean,
     val captcha_difficulty: String,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val registration_mode: RegistrationMode /* "Closed" | "RequireApplication" | "Open" */,
     val reports_email_admins: Boolean,
     val federation_signed_fetch: Boolean,

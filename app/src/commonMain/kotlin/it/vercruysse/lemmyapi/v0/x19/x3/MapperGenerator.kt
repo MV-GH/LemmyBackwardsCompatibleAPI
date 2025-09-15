@@ -10,9 +10,7 @@ internal interface MapperGenerator {
 
     fun toUni(d: CommentView): it.vercruysse.lemmyapi.datatypes.CommentView
 
-    fun toUni(d: Community): it.vercruysse.lemmyapi.datatypes.Community
-
-    fun toUni(d: CommunityAggregates): it.vercruysse.lemmyapi.datatypes.CommunityAggregates
+    fun toUni(d: Community, counts: CommunityAggregates): it.vercruysse.lemmyapi.datatypes.Community
 
     fun toUni(d: CommunityView): it.vercruysse.lemmyapi.datatypes.CommunityView
 
@@ -47,8 +45,7 @@ internal interface MapperGenerator {
     fun toUni(d: BlockCommunityResponse): it.vercruysse.lemmyapi.datatypes.BlockCommunityResponse
     fun toUni(d: BlockPersonResponse): it.vercruysse.lemmyapi.datatypes.BlockPersonResponse
     fun toUni(d: CaptchaResponse): it.vercruysse.lemmyapi.datatypes.CaptchaResponse
-    fun toUni(d: Comment): it.vercruysse.lemmyapi.datatypes.Comment
-    fun toUni(d: CommentAggregates): it.vercruysse.lemmyapi.datatypes.CommentAggregates
+    fun toUni(d: Comment, counts: CommentAggregates): it.vercruysse.lemmyapi.datatypes.Comment
     fun toUni(d: CommentReply): it.vercruysse.lemmyapi.datatypes.CommentReply
     fun toUni(d: CommentReplyResponse): it.vercruysse.lemmyapi.datatypes.CommentReplyResponse
 
@@ -124,14 +121,12 @@ internal interface MapperGenerator {
     fun toUni(d: ModTransferCommunity): it.vercruysse.lemmyapi.datatypes.ModTransferCommunity
     fun toUni(d: ModTransferCommunityView): it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView
     fun toUni(d: MyUserInfo): it.vercruysse.lemmyapi.datatypes.MyUserInfo
-    fun toUni(d: Person): it.vercruysse.lemmyapi.datatypes.Person
-    fun toUni(d: PersonAggregates): it.vercruysse.lemmyapi.datatypes.PersonAggregates
+    fun toUni(d: Person, counts: PersonAggregates): it.vercruysse.lemmyapi.datatypes.Person
     fun toUni(d: PersonMention): it.vercruysse.lemmyapi.datatypes.PersonMention
     fun toUni(d: PersonMentionResponse): it.vercruysse.lemmyapi.datatypes.PersonMentionResponse
 
     fun toUni(d: PersonView): it.vercruysse.lemmyapi.datatypes.PersonView
-    fun toUni(d: Post): it.vercruysse.lemmyapi.datatypes.Post
-    fun toUni(d: PostAggregates): it.vercruysse.lemmyapi.datatypes.PostAggregates
+    fun toUni(d: Post, counts: PostAggregates): it.vercruysse.lemmyapi.datatypes.Post
     fun toUni(d: PostReport): it.vercruysse.lemmyapi.datatypes.PostReport
     fun toUni(d: PostReportResponse): it.vercruysse.lemmyapi.datatypes.PostReportResponse
 

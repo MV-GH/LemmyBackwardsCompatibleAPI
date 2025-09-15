@@ -13,5 +13,5 @@ data class BanFromCommunity(
     val ban: Boolean,
     val remove_or_restore_data: Boolean? = null,
     val reason: String? = null,
-    val expires: Long? = null,
+    val expires_at: Long? = null,
 ) : DatatypeRoot

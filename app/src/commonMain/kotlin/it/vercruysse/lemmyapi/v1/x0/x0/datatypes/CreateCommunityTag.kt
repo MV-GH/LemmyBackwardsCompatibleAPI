@@ -5,5 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class CreateCommunityTag(
     val community_id: CommunityId,
-    val display_name: String,
+    val name: String,
+    val display_name: String? = null,
+    val description: String? = null,
 )
