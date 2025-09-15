@@ -14,8 +14,8 @@ data class ModBan(
     val other_person_id: PersonId,
     val reason: String? = null,
     val banned: Boolean,
-    val expires: String? = null,
-    val published: String,
+    val expires_at: String? = null,
+    val published_at: String,
     /** Added in Lemmy 1.0.0 */
     val instance_id: InstanceId,
 ) : DatatypeRoot, Identity

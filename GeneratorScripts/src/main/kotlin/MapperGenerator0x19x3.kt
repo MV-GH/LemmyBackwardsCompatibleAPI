@@ -1,8 +1,6 @@
 @file:Suppress("unused", "INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 
-import io.mcarle.konvert.api.Konfig
 import io.mcarle.konvert.api.Konvert
-import io.mcarle.konvert.api.Konverter
 import io.mcarle.konvert.api.Mapping
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.*
 
@@ -46,13 +44,6 @@ internal interface MapperGenerator0x19x3 {
         ]
     )
     fun toUni(d: Community): it.vercruysse.lemmyapi.datatypes.Community
-
-    @Konvert(
-        mappings = [
-            Mapping(target = "subscribers_local", constant = "-1"),
-        ]
-    )
-    fun toUni(d: CommunityAggregates): it.vercruysse.lemmyapi.datatypes.CommunityAggregates
 
     @Konvert(
         mappings = [
@@ -132,7 +123,6 @@ internal interface MapperGenerator0x19x3 {
     fun toUni(d: BlockPersonResponse): it.vercruysse.lemmyapi.datatypes.BlockPersonResponse
     fun toUni(d: CaptchaResponse): it.vercruysse.lemmyapi.datatypes.CaptchaResponse
     fun toUni(d: Comment): it.vercruysse.lemmyapi.datatypes.Comment
-    fun toUni(d: CommentAggregates): it.vercruysse.lemmyapi.datatypes.CommentAggregates
     fun toUni(d: CommentReply): it.vercruysse.lemmyapi.datatypes.CommentReply
     fun toUni(d: CommentReplyResponse): it.vercruysse.lemmyapi.datatypes.CommentReplyResponse
 
@@ -207,13 +197,11 @@ internal interface MapperGenerator0x19x3 {
     fun toUni(d: ModTransferCommunityView): it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView
     fun toUni(d: MyUserInfo): it.vercruysse.lemmyapi.datatypes.MyUserInfo
     fun toUni(d: Person): it.vercruysse.lemmyapi.datatypes.Person
-    fun toUni(d: PersonAggregates): it.vercruysse.lemmyapi.datatypes.PersonAggregates
     fun toUni(d: PersonMention): it.vercruysse.lemmyapi.datatypes.PersonMention
     fun toUni(d: PersonMentionResponse): it.vercruysse.lemmyapi.datatypes.PersonMentionResponse
 
     fun toUni(d: PersonView): it.vercruysse.lemmyapi.datatypes.PersonView
     fun toUni(d: Post): it.vercruysse.lemmyapi.datatypes.Post
-    fun toUni(d: PostAggregates): it.vercruysse.lemmyapi.datatypes.PostAggregates
     fun toUni(d: PostReport): it.vercruysse.lemmyapi.datatypes.PostReport
     fun toUni(d: PostReportResponse): it.vercruysse.lemmyapi.datatypes.PostReportResponse
 

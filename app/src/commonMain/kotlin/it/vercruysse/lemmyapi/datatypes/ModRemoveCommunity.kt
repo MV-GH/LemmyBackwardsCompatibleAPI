@@ -13,5 +13,5 @@ data class ModRemoveCommunity(
     val community_id: CommunityId,
     val reason: String? = null,
     val removed: Boolean,
-    val published: String,
+    val published_at: String,
 ) : DatatypeRoot

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class VoteView(
     val creator: Person,
-    val item_id: Long,
+    val creator_banned: Boolean,
     val creator_banned_from_community: Boolean,
-    val score: Long,
+    val score: Int,
 )

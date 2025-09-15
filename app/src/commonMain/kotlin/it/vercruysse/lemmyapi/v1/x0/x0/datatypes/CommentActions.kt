@@ -4,9 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class CommentActions(
-    val person_id: PersonId,
-    val comment_id: CommentId,
     val like_score: Long? = null,
-    val liked: String? = null,
-    val saved: String? = null,
+    val liked_at: String? = null,
+    val saved_at: String? = null,
 )

@@ -16,7 +16,7 @@ internal data class OAuthProvider(
     val auto_verify_email: Boolean,
     val account_linking_enabled: Boolean,
     val enabled: Boolean,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val use_pkce: Boolean,
 )

@@ -9,4 +9,6 @@ internal data class PrivateMessageReportView(
     val creator: Person,
     val private_message_creator: Person,
     val resolver: Person? = null,
+    val creator_is_admin: Boolean,
+    val creator_banned: Boolean,
 )

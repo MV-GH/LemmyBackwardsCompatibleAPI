@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 internal data class LocalImageView(
     val local_image: LocalImage,
     val person: Person,
+    val post: Post? = null,
 )

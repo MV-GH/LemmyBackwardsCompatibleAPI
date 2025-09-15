@@ -10,6 +10,6 @@ data class OAuthAccount(
     val local_user_id: LocalUserId,
     val oauth_provider_id: OAuthProviderId,
     val oauth_user_id: String,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
 ): DatatypeRoot

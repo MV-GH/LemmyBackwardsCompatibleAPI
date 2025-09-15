@@ -4,10 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ModFeaturePost(
-    val id: Long,
+    val id: ModFeaturePostId,
     val mod_person_id: PersonId,
     val post_id: PostId,
     val featured: Boolean,
-    val published: String,
+    val published_at: String,
     val is_featured_community: Boolean,
 )

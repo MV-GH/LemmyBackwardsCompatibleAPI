@@ -6,9 +6,11 @@ import kotlinx.serialization.Serializable
 internal data class Tag(
     val id: TagId,
     val ap_id: DbUrl,
-    val display_name: String,
+    val name: String,
+    val display_name: String? = null,
+    val description: String? = null,
     val community_id: CommunityId,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val deleted: Boolean,
 )

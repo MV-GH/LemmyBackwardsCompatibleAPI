@@ -7,5 +7,5 @@ internal data class AdminBlockInstanceParams(
     val instance: String,
     val block: Boolean,
     val reason: String? = null,
-    val expires: String? = null,
+    val expires_at: String? = null,
 )

@@ -2,16 +2,18 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.dto.PostNotificationsMode
 import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
 data class PostActions(
-    val read: String? = null,
-    val read_comments: String? = null,
+    val read_at: String? = null,
+    val read_comments_at: String? = null,
     val read_comments_amount: Long? = null,
-    val saved: String? = null,
-    val liked: String? = null,
-    val like_score: Long? = null,
-    val hidden: String? = null,
+    val saved_at: String? = null,
+    val liked_at: String? = null,
+    val like_score: Int? = null,
+    val hidden_at: String? = null,
+    val notifications: PostNotificationsMode? /* "AllComments" | "RepliesAndMentions" | "Mute" */ = null,
 ): DatatypeRoot
