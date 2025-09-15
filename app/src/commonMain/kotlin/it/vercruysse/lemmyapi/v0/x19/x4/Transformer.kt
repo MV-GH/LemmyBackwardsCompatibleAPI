@@ -135,7 +135,6 @@ import it.vercruysse.lemmyapi.datatypes.LocalSiteRateLimit as LemmyapiDatatypesL
 import it.vercruysse.lemmyapi.datatypes.LocalSiteUrlBlocklist as LemmyapiDatatypesLocalSiteUrlBlocklist
 import it.vercruysse.lemmyapi.datatypes.LocalUser as LemmyapiDatatypesLocalUser
 import it.vercruysse.lemmyapi.datatypes.LocalUserView as LemmyapiDatatypesLocalUserView
-import it.vercruysse.lemmyapi.datatypes.LocalUserVoteDisplayMode as LemmyapiDatatypesLocalUserVoteDisplayMode
 import it.vercruysse.lemmyapi.datatypes.LockPost as LemmyapiDatatypesLockPost
 import it.vercruysse.lemmyapi.datatypes.Login as LemmyapiDatatypesLogin
 import it.vercruysse.lemmyapi.datatypes.LoginResponse as LemmyapiDatatypesLoginResponse
@@ -1102,7 +1101,7 @@ internal class Transformer : MapperGenerator {
             updated_at = d.updated,
         )
 
-    override fun toUni(d: X4DatatypesLocalUser): LemmyapiDatatypesLocalUser =
+    override fun toUni(d: X4DatatypesLocalUser, e: X4DatatypesLocalUserVoteDisplayMode): LemmyapiDatatypesLocalUser =
         LemmyapiDatatypesLocalUser(
             id = d.id,
             person_id = d.person_id,
@@ -1129,13 +1128,12 @@ internal class Transformer : MapperGenerator {
             enable_animated_images = d.enable_animated_images,
             collapse_bot_comments = d.collapse_bot_comments,
             last_donation_notification_at = "",
-            // TODO: map using local_user_vote_display_mode
-            show_score = d.show_scores,
-            show_upvotes = d.show_scores,
-            show_person_votes = d.show_scores,
-            show_upvote_percentage = d.show_scores,
+            show_score = e.score,
+            show_upvotes = e.upvotes,
+            show_person_votes = e.score,
+            show_upvote_percentage = e.upvote_percentage,
+            show_downvotes = if (e.downvotes) VoteShow.Show else VoteShow.Hide,
             hide_media = false,
-            show_downvotes = VoteShow.Show,
             enable_private_messages = true,
             default_comment_sort_type = SortType.Active,
             auto_mark_fetched_posts_as_read = false,
@@ -1145,19 +1143,10 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X4DatatypesLocalUserView): LemmyapiDatatypesLocalUserView =
         LemmyapiDatatypesLocalUserView(
-            local_user = this.toUni(d = d.local_user),
-            local_user_vote_display_mode = this.toUni(d = d.local_user_vote_display_mode),
+            local_user = this.toUni(d = d.local_user, d.local_user_vote_display_mode),
             person = this.toUni(d = d.person, d.counts),
             banned = d.person.banned,
         )
-
-    override fun toUni(d: X4DatatypesLocalUserVoteDisplayMode): LemmyapiDatatypesLocalUserVoteDisplayMode = LemmyapiDatatypesLocalUserVoteDisplayMode(
-        local_user_id = d.local_user_id,
-        score = d.score,
-        upvotes = d.upvotes,
-        downvotes = d.downvotes,
-        upvote_percentage = d.upvote_percentage,
-    )
 
     override fun toUni(d: X4DatatypesLoginToken): LemmyapiDatatypesLoginToken =
         LemmyapiDatatypesLoginToken(
@@ -1629,7 +1618,7 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X4DatatypesRegistrationApplicationView): LemmyapiDatatypesRegistrationApplicationView = LemmyapiDatatypesRegistrationApplicationView(
         registration_application = this.toUni(d = d.registration_application),
-        creator_local_user = this.toUni(d = d.creator_local_user),
+        creator_local_user = this.toUni(d = d.creator_local_user, e = X4DatatypesLocalUserVoteDisplayMode(-1, true, true, true, true)),
         creator = this.toUni(d = d.creator),
         admin = d.admin?.let { this.toUni(d = it) },
     )

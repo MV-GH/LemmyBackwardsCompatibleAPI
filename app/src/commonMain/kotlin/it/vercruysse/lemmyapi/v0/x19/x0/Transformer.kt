@@ -1122,7 +1122,6 @@ internal class Transformer : MapperGenerator {
             local_user = this.toUni(d = d.local_user),
             person = this.toUni(d = d.person, d.counts),
             banned = d.person.banned,
-            local_user_vote_display_mode = null,
         )
 
     override fun toUni(d: X0DatatypesLoginResponse): LemmyapiDatatypesLoginResponse =

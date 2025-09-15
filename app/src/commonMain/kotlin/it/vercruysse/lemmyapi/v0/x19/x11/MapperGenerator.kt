@@ -73,9 +73,8 @@ internal interface MapperGenerator {
     fun toUni(d: LocalSite): it.vercruysse.lemmyapi.datatypes.LocalSite
     fun toUni(d: LocalSiteRateLimit): it.vercruysse.lemmyapi.datatypes.LocalSiteRateLimit
     fun toUni(d: LocalSiteUrlBlocklist): it.vercruysse.lemmyapi.datatypes.LocalSiteUrlBlocklist
-    fun toUni(d: LocalUser): it.vercruysse.lemmyapi.datatypes.LocalUser
+    fun toUni(d: LocalUser, e: LocalUserVoteDisplayMode): it.vercruysse.lemmyapi.datatypes.LocalUser
     fun toUni(d: LocalUserView): it.vercruysse.lemmyapi.datatypes.LocalUserView
-    fun toUni(d: LocalUserVoteDisplayMode): it.vercruysse.lemmyapi.datatypes.LocalUserVoteDisplayMode
     fun toUni(d: LoginResponse): it.vercruysse.lemmyapi.datatypes.LoginResponse
     fun toUni(d: LoginToken): it.vercruysse.lemmyapi.datatypes.LoginToken
     fun toUni(d: ModAdd): it.vercruysse.lemmyapi.datatypes.ModAdd
