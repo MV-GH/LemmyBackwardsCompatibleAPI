@@ -39,7 +39,7 @@ internal interface MapperGenerator {
 
     fun toUni(d: GetSiteResponse): it.vercruysse.lemmyapi.datatypes.GetSiteResponse
 
-    fun toUni(d: LocalSite): it.vercruysse.lemmyapi.datatypes.LocalSite
+    fun toUni(d: LocalSite, counts: SiteAggregates): it.vercruysse.lemmyapi.datatypes.LocalSite
 
     fun toUni(d: PersonMentionView): it.vercruysse.lemmyapi.datatypes.PersonMentionView
 
@@ -157,7 +157,6 @@ internal interface MapperGenerator {
     fun toUni(d: ResolveObjectResponse): it.vercruysse.lemmyapi.datatypes.ResolveObjectResponse
     fun toUni(d: SearchResponse): it.vercruysse.lemmyapi.datatypes.SearchResponse
     fun toUni(d: Site): it.vercruysse.lemmyapi.datatypes.Site
-    fun toUni(d: SiteAggregates): it.vercruysse.lemmyapi.datatypes.SiteAggregates
     fun toUni(d: SiteResponse): it.vercruysse.lemmyapi.datatypes.SiteResponse
     fun toUni(d: SiteView): it.vercruysse.lemmyapi.datatypes.SiteView
     fun toUni(d: Tagline): it.vercruysse.lemmyapi.datatypes.Tagline

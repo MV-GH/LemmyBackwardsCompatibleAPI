@@ -5,18 +5,28 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: many changes
-
 @CommonParcelize
 @Serializable
 data class GetSiteResponse(
     val site_view: SiteView,
     val admins: List<PersonView>,
     val version: String,
-    val my_user: MyUserInfo? = null,
     val all_languages: List<Language>,
     val discussion_languages: List<LanguageId>,
-    val taglines: List<Tagline>,
-    val custom_emojis: List<CustomEmojiView>,
     val blocked_urls: List<LocalSiteUrlBlocklist>,
-) : DatatypeRoot
+    /** Removed in 1.0.0 */
+    // TODO remove ?
+    val my_user: MyUserInfo? = null,
+    /** Removed in 1.0.0 */
+    // TODO remove
+    val custom_emojis: List<CustomEmojiView>,
+    val tagline: Tagline? = null,
+    /** Added in 1.0.0 */
+    val oauth_providers: List<PublicOAuthProvider>,
+    /** Added in 1.0.0 */
+    val admin_oauth_providers: List<OAuthProvider>,
+    /** Added in 1.0.0 */
+    val image_upload_disabled: Boolean,
+    /** Added in 1.0.0 */
+    val active_plugins: List<PluginMetadata>,
+    ) : DatatypeRoot
