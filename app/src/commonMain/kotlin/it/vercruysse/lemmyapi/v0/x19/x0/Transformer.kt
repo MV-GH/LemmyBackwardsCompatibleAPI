@@ -1598,7 +1598,6 @@ internal class Transformer : MapperGenerator {
     override fun toUni(d: X0DatatypesSiteResponse): LemmyapiDatatypesSiteResponse =
         LemmyapiDatatypesSiteResponse(
             site_view = this.toUni(d = d.site_view),
-            taglines = d.taglines.map { this.toUni(d = it) },
         )
 
     override fun toUni(d: X0DatatypesSiteView): LemmyapiDatatypesSiteView = LemmyapiDatatypesSiteView(
