@@ -6,6 +6,7 @@ import it.vercruysse.lemmyapi.datatypes.PersonActions
 import it.vercruysse.lemmyapi.datatypes.PostActions
 import it.vercruysse.lemmyapi.dto.CommunityFollowerState
 import it.vercruysse.lemmyapi.dto.CommunityVisibility
+import it.vercruysse.lemmyapi.dto.FederationMode
 import it.vercruysse.lemmyapi.dto.PostListingMode
 import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.VoteShow
@@ -201,7 +202,6 @@ import it.vercruysse.lemmyapi.datatypes.SaveUserSettings as LemmyapiDatatypesSav
 import it.vercruysse.lemmyapi.datatypes.Search as LemmyapiDatatypesSearch
 import it.vercruysse.lemmyapi.datatypes.SearchResponse as LemmyapiDatatypesSearchResponse
 import it.vercruysse.lemmyapi.datatypes.Site as LemmyapiDatatypesSite
-import it.vercruysse.lemmyapi.datatypes.SiteAggregates as LemmyapiDatatypesSiteAggregates
 import it.vercruysse.lemmyapi.datatypes.SiteResponse as LemmyapiDatatypesSiteResponse
 import it.vercruysse.lemmyapi.datatypes.SiteView as LemmyapiDatatypesSiteView
 import it.vercruysse.lemmyapi.datatypes.Tagline as LemmyapiDatatypesTagline
@@ -514,18 +514,20 @@ internal class Transformer : MapperGenerator {
             my_user = d.my_user?.let { this.toUni(d = it) },
             all_languages = d.all_languages.map { this.toUni(d = it) },
             discussion_languages = d.discussion_languages,
-            taglines = d.taglines.map { this.toUni(d = it) },
             custom_emojis = d.custom_emojis.map { this.toUni(d = it) },
-            blocked_urls = listOf(),
+            blocked_urls = emptyList(),
+            tagline = if (d.taglines.isEmpty()) null else this.toUni(d = d.taglines.random()),
+            oauth_providers = emptyList(),
+            admin_oauth_providers = emptyList(),
+            image_upload_disabled = false,
+            active_plugins = emptyList(),
         )
 
-    override fun toUni(d: X0DatatypesLocalSite): LemmyapiDatatypesLocalSite =
+    override fun toUni(d: X0DatatypesLocalSite, counts: X0DatatypesSiteAggregates): LemmyapiDatatypesLocalSite =
         LemmyapiDatatypesLocalSite(
             id = d.id,
             site_id = d.site_id,
             site_setup = d.site_setup,
-            enable_downvotes = d.enable_downvotes,
-            enable_nsfw = d.enable_nsfw,
             community_creation_admin_only = d.community_creation_admin_only,
             require_email_verification = d.require_email_verification,
             application_question = d.application_question,
@@ -533,7 +535,6 @@ internal class Transformer : MapperGenerator {
             default_theme = d.default_theme,
             default_post_listing_type = d.default_post_listing_type,
             legal_information = d.legal_information,
-            hide_modlog_mod_names = d.hide_modlog_mod_names,
             application_email_admins = d.application_email_admins,
             slur_filter_regex = d.slur_filter_regex,
             actor_name_max_length = d.actor_name_max_length,
@@ -547,6 +548,24 @@ internal class Transformer : MapperGenerator {
             federation_signed_fetch = d.federation_signed_fetch,
             default_post_listing_mode = PostListingMode.Card,
             default_sort_type = SortType.Active,
+            disallow_nsfw_content = !d.enable_nsfw,
+            oauth_registration = false,
+            disable_email_notifications = false,
+            suggested_communities = null,
+            default_comment_sort_type = SortType.Active,
+            default_post_time_range_seconds = null,
+            post_upvotes = FederationMode.All,
+            post_downvotes = if (d.enable_downvotes) FederationMode.All else FederationMode.Disable,
+            comment_upvotes = FederationMode.All,
+            comment_downvotes = if (d.enable_downvotes) FederationMode.All else FederationMode.Disable,
+            users = counts.users,
+            posts = counts.posts,
+            comments = counts.comments,
+            communities = counts.communities,
+            users_active_day = counts.users_active_day,
+            users_active_week = counts.users_active_week,
+            users_active_month = counts.users_active_month,
+            users_active_half_year = counts.users_active_half_year,
         )
 
     override fun toUni(d: X0DatatypesPersonMentionView): LemmyapiDatatypesPersonMentionView =
@@ -1576,19 +1595,6 @@ internal class Transformer : MapperGenerator {
         instance_id = d.instance_id,
     )
 
-    override fun toUni(d: X0DatatypesSiteAggregates): LemmyapiDatatypesSiteAggregates =
-        LemmyapiDatatypesSiteAggregates(
-            site_id = d.site_id,
-            users = d.users,
-            posts = d.posts,
-            comments = d.comments,
-            communities = d.communities,
-            users_active_day = d.users_active_day,
-            users_active_week = d.users_active_week,
-            users_active_month = d.users_active_month,
-            users_active_half_year = d.users_active_half_year,
-        )
-
     override fun toUni(d: X0DatatypesSiteResponse): LemmyapiDatatypesSiteResponse =
         LemmyapiDatatypesSiteResponse(
             site_view = this.toUni(d = d.site_view),
@@ -1597,9 +1603,9 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X0DatatypesSiteView): LemmyapiDatatypesSiteView = LemmyapiDatatypesSiteView(
         site = this.toUni(d = d.site),
-        local_site = this.toUni(d = d.local_site),
+        local_site = this.toUni(d = d.local_site, counts = d.counts),
         local_site_rate_limit = this.toUni(d = d.local_site_rate_limit),
-        counts = this.toUni(d = d.counts),
+        instance = null,
     )
 
     override fun toUni(d: X0DatatypesTagline): LemmyapiDatatypesTagline = LemmyapiDatatypesTagline(

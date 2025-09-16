@@ -72,7 +72,7 @@ internal interface MapperGenerator {
     fun toUni(d: ListRegistrationApplicationsResponse): it.vercruysse.lemmyapi.datatypes.ListRegistrationApplicationsResponse
     fun toUni(d: LocalImage): it.vercruysse.lemmyapi.datatypes.LocalImage
     fun toUni(d: LocalImageView): it.vercruysse.lemmyapi.datatypes.LocalImageView
-    fun toUni(d: LocalSite): it.vercruysse.lemmyapi.datatypes.LocalSite
+    fun toUni(d: LocalSite, counts: SiteAggregates): it.vercruysse.lemmyapi.datatypes.LocalSite
     fun toUni(d: LocalSiteRateLimit): it.vercruysse.lemmyapi.datatypes.LocalSiteRateLimit
     fun toUni(d: LocalSiteUrlBlocklist): it.vercruysse.lemmyapi.datatypes.LocalSiteUrlBlocklist
     fun toUni(d: LocalUser, e: LocalUserVoteDisplayMode): it.vercruysse.lemmyapi.datatypes.LocalUser
@@ -128,7 +128,6 @@ internal interface MapperGenerator {
     fun toUni(d: ResolveObjectResponse): it.vercruysse.lemmyapi.datatypes.ResolveObjectResponse
     fun toUni(d: SearchResponse): it.vercruysse.lemmyapi.datatypes.SearchResponse
     fun toUni(d: Site): it.vercruysse.lemmyapi.datatypes.Site
-    fun toUni(d: SiteAggregates): it.vercruysse.lemmyapi.datatypes.SiteAggregates
     fun toUni(d: SiteResponse): it.vercruysse.lemmyapi.datatypes.SiteResponse
     fun toUni(d: SiteView): it.vercruysse.lemmyapi.datatypes.SiteView
     fun toUni(d: Tagline): it.vercruysse.lemmyapi.datatypes.Tagline

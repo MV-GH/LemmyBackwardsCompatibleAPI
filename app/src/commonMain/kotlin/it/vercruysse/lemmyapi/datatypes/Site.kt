@@ -6,8 +6,6 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: changes
-
 @CommonParcelize
 @Serializable
 data class Site(
@@ -22,6 +20,7 @@ data class Site(
     val ap_id: String,
     val last_refreshed_at: String,
     val inbox_url: String,
+    val public_key: String? = null,
     val instance_id: InstanceId,
     val content_warning: String? = null,
 ) : DatatypeRoot, Identity
