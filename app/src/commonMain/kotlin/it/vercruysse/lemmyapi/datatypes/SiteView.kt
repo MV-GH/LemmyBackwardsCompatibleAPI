@@ -6,15 +6,14 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: changes
-
 @CommonParcelize
 @Serializable
 data class SiteView(
     val site: Site,
     val local_site: LocalSite,
     val local_site_rate_limit: LocalSiteRateLimit,
-    val counts: SiteAggregates,
+    /** Added in 1.0.0 */
+    val instance: Instance?,
 ) : DatatypeRoot, Identity {
     override val id: Long
         get() = site.id
