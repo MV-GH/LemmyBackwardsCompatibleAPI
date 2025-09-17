@@ -11,8 +11,6 @@ import kotlinx.serialization.Serializable
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.dto.FederationMode
 
-// TODO: lots of changes
-
 @CommonParcelize
 @Serializable
 data class LocalSite(

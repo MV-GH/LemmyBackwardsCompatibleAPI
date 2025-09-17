@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO changes again
+// TODO changes again, single post Id
 
 @CommonParcelize
 @Serializable

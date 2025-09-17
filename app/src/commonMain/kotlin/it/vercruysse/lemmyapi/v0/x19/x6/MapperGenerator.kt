@@ -141,7 +141,7 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BanFromCommunity): BanFromCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BanPerson): BanPerson
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BlockCommunity): BlockCommunity
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BlockInstance): BlockInstance
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.UserBlockInstanceCommunitiesParams): BlockInstance
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BlockPerson): BlockPerson
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ChangePassword): ChangePassword
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateComment): CreateComment

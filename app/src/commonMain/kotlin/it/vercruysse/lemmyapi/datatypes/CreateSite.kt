@@ -59,6 +59,6 @@ data class CreateSite(
     val registration_mode: RegistrationMode? /* "Closed" | "RequireApplication" | "Open" */ = null,
     val content_warning: String? = null,
     val default_post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
-    /* Added in 1.0.0 */
+    /** Added in 1.0.0 */
     val suggested_communities: MultiCommunityId? = null,
 ) : DatatypeRoot

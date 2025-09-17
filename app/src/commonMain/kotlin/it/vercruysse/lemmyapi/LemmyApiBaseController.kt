@@ -627,7 +627,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("site/block")
      */
-    abstract suspend fun blockInstance(form: BlockInstance): Result<Unit>
+    abstract suspend fun blockInstance(form: UserBlockInstanceCommunitiesParams): Result<Unit>
 
     /**
      * Generate a TOTP / two-factor secret.
