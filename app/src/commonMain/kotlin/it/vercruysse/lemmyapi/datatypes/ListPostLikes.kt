@@ -5,12 +5,15 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: cursor changes
-
 @CommonParcelize
 @Serializable
 data class ListPostLikes(
     val post_id: PostId,
+    /** Removed in 1.0.0 */
     val page: Long? = null,
+    /** Added in 1.0.0 */
+    val page_cursor: PaginationCursor? = null,
+    /** Added in 1.0.0 */
+    val page_back: Boolean? = null,
     val limit: Long? = null,
 ) : DatatypeRoot

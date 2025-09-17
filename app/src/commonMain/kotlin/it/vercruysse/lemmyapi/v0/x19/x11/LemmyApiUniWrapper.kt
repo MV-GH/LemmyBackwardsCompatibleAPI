@@ -834,7 +834,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("site/block")
      */
     override suspend fun blockInstance(
-        form: it.vercruysse.lemmyapi.datatypes.BlockInstance,
+        form: it.vercruysse.lemmyapi.datatypes.UserBlockInstanceCommunitiesParams,
     ): Result<Unit> =
         api.blockInstance(transformer.fromUni(form))
 

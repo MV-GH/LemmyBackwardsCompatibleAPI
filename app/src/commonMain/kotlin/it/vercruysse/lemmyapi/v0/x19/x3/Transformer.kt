@@ -33,7 +33,7 @@ import it.vercruysse.lemmyapi.datatypes.BanPersonResponse as LemmyapiDatatypesBa
 import it.vercruysse.lemmyapi.datatypes.BannedPersonsResponse as LemmyapiDatatypesBannedPersonsResponse
 import it.vercruysse.lemmyapi.datatypes.BlockCommunity as LemmyapiDatatypesBlockCommunity
 import it.vercruysse.lemmyapi.datatypes.BlockCommunityResponse as LemmyapiDatatypesBlockCommunityResponse
-import it.vercruysse.lemmyapi.datatypes.BlockInstance as LemmyapiDatatypesBlockInstance
+import it.vercruysse.lemmyapi.datatypes.UserBlockInstanceCommunitiesParams as LemmyapiDatatypesBlockInstance
 import it.vercruysse.lemmyapi.datatypes.BlockPerson as LemmyapiDatatypesBlockPerson
 import it.vercruysse.lemmyapi.datatypes.BlockPersonResponse as LemmyapiDatatypesBlockPersonResponse
 import it.vercruysse.lemmyapi.datatypes.CaptchaResponse as LemmyapiDatatypesCaptchaResponse
@@ -207,6 +207,7 @@ import it.vercruysse.lemmyapi.datatypes.SavePost as LemmyapiDatatypesSavePost
 import it.vercruysse.lemmyapi.datatypes.SaveUserSettings as LemmyapiDatatypesSaveUserSettings
 import it.vercruysse.lemmyapi.datatypes.Search as LemmyapiDatatypesSearch
 import it.vercruysse.lemmyapi.datatypes.SearchResponse as LemmyapiDatatypesSearchResponse
+import it.vercruysse.lemmyapi.datatypes.SearchCombinedView as LemmyapiDatatypesSearchCombinedView
 import it.vercruysse.lemmyapi.datatypes.Site as LemmyapiDatatypesSite
 import it.vercruysse.lemmyapi.datatypes.SiteResponse as LemmyapiDatatypesSiteResponse
 import it.vercruysse.lemmyapi.datatypes.SiteView as LemmyapiDatatypesSiteView
@@ -1603,11 +1604,12 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X3DatatypesSearchResponse): LemmyapiDatatypesSearchResponse =
         LemmyapiDatatypesSearchResponse(
-            type_ = d.type_,
-            comments = d.comments.map { this.toUni(d = it) },
-            posts = d.posts.map { this.toUni(d = it) },
-            communities = d.communities.map { this.toUni(d = it) },
-            users = d.users.map { this.toUni(d = it) },
+            results = buildList {
+                addAll(d.comments.map { LemmyapiDatatypesSearchCombinedView.Comment(comment = this@Transformer.toUni(d = it)) })
+                addAll(d.posts.map { LemmyapiDatatypesSearchCombinedView.Post(post = this@Transformer.toUni(d = it)) })
+                addAll(d.communities.map { LemmyapiDatatypesSearchCombinedView.Community(community = this@Transformer.toUni(d = it)) })
+                addAll(d.users.map { LemmyapiDatatypesSearchCombinedView.Person(person = this@Transformer.toUni(d = it)) })
+            }
         )
 
     override fun toUni(d: X3DatatypesSite): LemmyapiDatatypesSite = LemmyapiDatatypesSite(
