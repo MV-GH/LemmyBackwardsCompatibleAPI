@@ -915,10 +915,7 @@ internal class Transformer : MapperGenerator {
         )
 
     override fun toUni(d: X11DatatypesGetReportCountResponse): LemmyapiDatatypesGetReportCountResponse = LemmyapiDatatypesGetReportCountResponse(
-        community_id = d.community_id,
-        comment_reports = d.comment_reports,
-        post_reports = d.post_reports,
-        private_message_reports = d.private_message_reports,
+        count = d.post_reports + d.comment_reports + (d.private_message_reports ?: 0),
     )
 
     override fun toUni(d: X11DatatypesGetSiteMetadataResponse): LemmyapiDatatypesGetSiteMetadataResponse = LemmyapiDatatypesGetSiteMetadataResponse(
@@ -943,9 +940,7 @@ internal class Transformer : MapperGenerator {
         )
 
     override fun toUni(d: X11DatatypesGetUnreadCountResponse): LemmyapiDatatypesGetUnreadCountResponse = LemmyapiDatatypesGetUnreadCountResponse(
-        replies = d.replies,
-        mentions = d.mentions,
-        private_messages = d.private_messages,
+        count = d.replies + d.mentions + d.private_messages
     )
 
     override fun toUni(d: X11DatatypesGetUnreadRegistrationApplicationCountResponse): LemmyapiDatatypesGetUnreadRegistrationApplicationCountResponse =
