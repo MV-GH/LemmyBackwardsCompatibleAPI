@@ -92,7 +92,6 @@ internal interface MapperGenerator0x19x4 {
     fun toUni(d: ModFeaturePostView): it.vercruysse.lemmyapi.datatypes.ModFeaturePostView
     fun toUni(d: ModLockPost): it.vercruysse.lemmyapi.datatypes.ModLockPost
     fun toUni(d: ModLockPostView): it.vercruysse.lemmyapi.datatypes.ModLockPostView
-    fun toUni(d: ModlogListParams): it.vercruysse.lemmyapi.datatypes.ModlogListParams
     fun toUni(d: ModRemoveComment): it.vercruysse.lemmyapi.datatypes.ModRemoveComment
     fun toUni(d: ModRemoveCommentView): it.vercruysse.lemmyapi.datatypes.ModRemoveCommentView
     fun toUni(d: ModRemoveCommunity): it.vercruysse.lemmyapi.datatypes.ModRemoveCommunity

@@ -156,7 +156,6 @@ import it.vercruysse.lemmyapi.datatypes.ModRemovePost as LemmyapiDatatypesModRem
 import it.vercruysse.lemmyapi.datatypes.ModRemovePostView as LemmyapiDatatypesModRemovePostView
 import it.vercruysse.lemmyapi.datatypes.ModTransferCommunity as LemmyapiDatatypesModTransferCommunity
 import it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView as LemmyapiDatatypesModTransferCommunityView
-import it.vercruysse.lemmyapi.datatypes.ModlogListParams as LemmyapiDatatypesModlogListParams
 import it.vercruysse.lemmyapi.datatypes.MyUserInfo as LemmyapiDatatypesMyUserInfo
 import it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
 import it.vercruysse.lemmyapi.datatypes.PasswordReset as LemmyapiDatatypesPasswordReset
@@ -360,7 +359,6 @@ import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemovePost as X3DatatypesMo
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemovePostView as X3DatatypesModRemovePostView
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModTransferCommunity as X3DatatypesModTransferCommunity
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModTransferCommunityView as X3DatatypesModTransferCommunityView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModlogListParams as X3DatatypesModlogListParams
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MyUserInfo as X3DatatypesMyUserInfo
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PasswordChangeAfterReset as X3DatatypesPasswordChangeAfterReset
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PasswordReset as X3DatatypesPasswordReset
@@ -1287,16 +1285,6 @@ internal class Transformer : MapperGenerator {
             moderator = d.moderator?.let { this.toUni(d = it) },
             post = this.toUni(d = d.post, counts = X3DatatypesPostAggregates(-1, -1, -1, -1, -1, "", "")),
             community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-        )
-
-    override fun toUni(d: X3DatatypesModlogListParams): LemmyapiDatatypesModlogListParams =
-        LemmyapiDatatypesModlogListParams(
-            community_id = d.community_id,
-            mod_person_id = d.mod_person_id,
-            other_person_id = d.other_person_id,
-            page = d.page,
-            limit = d.limit,
-            hide_modlog_names = d.hide_modlog_names,
         )
 
     override fun toUni(d: X3DatatypesModRemoveComment): LemmyapiDatatypesModRemoveComment =
