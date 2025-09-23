@@ -238,11 +238,9 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun resolvePostReport(form: ResolvePostReport): Result<PostReportResponse>
 
     /**
-     * List post reports.
-     *
-     * @GET("post/report/list")
+     * List reports.
      */
-    abstract suspend fun listPostReports(form: ListPostReports): Result<ListPostReportsResponse>
+    abstract suspend fun listReports(form: ListReports): Result<ListReportsResponse>
 
     /**
      * Fetch metadata for any given site.
@@ -336,13 +334,6 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun resolveCommentReport(form: ResolveCommentReport): Result<CommentReportResponse>
 
     /**
-     * List comment reports.
-     *
-     * @GET("comment/report/list")
-     */
-    abstract suspend fun listCommentReports(form: ListCommentReports): Result<ListCommentReportsResponse>
-
-    /**
      * Edit a private message.
      *
      * @PUT("private_message")
@@ -390,13 +381,6 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      * @PUT("private_message/report/resolve")
      */
     abstract suspend fun resolvePrivateMessageReport(form: ResolvePrivateMessageReport): Result<PrivateMessageReportResponse>
-
-    /**
-     * List private message reports.
-     *
-     * @GET("private_message/report/list")
-     */
-    abstract suspend fun listPrivateMessageReports(form: ListPrivateMessageReports): Result<ListPrivateMessageReportsResponse>
 
     /**
      * Get the details for a person.

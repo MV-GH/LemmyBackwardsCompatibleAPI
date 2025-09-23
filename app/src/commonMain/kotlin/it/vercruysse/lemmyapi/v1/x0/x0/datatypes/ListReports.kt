@@ -1,12 +1,12 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
-import it.vercruysse.lemmyapi.dto.ListingType
+import it.vercruysse.lemmyapi.dto.ReportType
 import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ListReports(
     val unresolved_only: Boolean? = null,
-    val type_: ListingType? /* "All" | "Posts" | "Comments" | "PrivateMessages" | "Communities" */ = null,
+    val type_: ReportType? /* "All" | "Posts" | "Comments" | "PrivateMessages" | "Communities" */ = null,
     val post_id: PostId? = null,
     val community_id: CommunityId? = null,
     val page_cursor: PaginationCursor? = null,

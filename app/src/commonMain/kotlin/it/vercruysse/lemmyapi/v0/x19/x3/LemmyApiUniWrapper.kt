@@ -318,14 +318,79 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         api.resolvePostReport(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
-     * List post reports.
-     *
-     * @GET("post/report/list")
+     * List reports.
      */
-    override suspend fun listPostReports(
-        form: it.vercruysse.lemmyapi.datatypes.ListPostReports,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListPostReportsResponse> =
-        api.listPostReports(transformer.fromUni(form)).map(transformer::toUni)
+    override suspend fun listReports(
+        form: it.vercruysse.lemmyapi.datatypes.ListReports,
+    ): Result<it.vercruysse.lemmyapi.datatypes.ListReportsResponse> =
+        when (form.type_) {
+            it.vercruysse.lemmyapi.dto.ReportType.Communities -> notSupported()
+            it.vercruysse.lemmyapi.dto.ReportType.Posts -> {
+                api.listPostReports(transformer.fromUniP(form)).map { resp ->
+                    val items = resp.post_reports.map { r ->
+                        it.vercruysse.lemmyapi.datatypes.ReportCombinedView.Post(
+                            transformer.toUni(r),
+                        )
+                    }
+                    it.vercruysse.lemmyapi.datatypes.ListReportsResponse(items)
+                }
+            }
+            it.vercruysse.lemmyapi.dto.ReportType.Comments -> {
+                api.listCommentReports(transformer.fromUniC(form)).map { resp ->
+                    val items = resp.comment_reports.map { r ->
+                        it.vercruysse.lemmyapi.datatypes.ReportCombinedView.Comment(
+                            transformer.toUni(r),
+                        )
+                    }
+                    it.vercruysse.lemmyapi.datatypes.ListReportsResponse(items)
+                }
+            }
+            it.vercruysse.lemmyapi.dto.ReportType.PrivateMessages -> {
+                api.listPrivateMessageReports(transformer.fromUniPm(form)).map { resp ->
+                    val items = resp.private_message_reports.map { r ->
+                        it.vercruysse.lemmyapi.datatypes.ReportCombinedView.PrivateMessage(
+                            transformer.toUni(r),
+                        )
+                    }
+                    it.vercruysse.lemmyapi.datatypes.ListReportsResponse(items)
+                }
+            }
+            it.vercruysse.lemmyapi.dto.ReportType.All -> {
+                runCatching {
+                    val postsResp = api.listPostReports(transformer.fromUniP(form)).getOrThrow()
+                    val commentsResp = api.listCommentReports(transformer.fromUniC(form)).getOrThrow()
+                    val privateMessagesResp = api.listPrivateMessageReports(transformer.fromUniPm(form)).getOrThrow()
+
+                    val allReports = mutableListOf<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>()
+
+                    allReports.addAll(
+                        postsResp.post_reports.map { r ->
+                            it.vercruysse.lemmyapi.datatypes.ReportCombinedView.Post(
+                                transformer.toUni(r),
+                            )
+                        },
+                    )
+
+                    allReports.addAll(
+                        commentsResp.comment_reports.map { r ->
+                            it.vercruysse.lemmyapi.datatypes.ReportCombinedView.Comment(
+                                transformer.toUni(r),
+                            )
+                        },
+                    )
+
+                    allReports.addAll(
+                        privateMessagesResp.private_message_reports.map { r ->
+                            it.vercruysse.lemmyapi.datatypes.ReportCombinedView.PrivateMessage(
+                                transformer.toUni(r),
+                            )
+                        },
+                    )
+
+                    it.vercruysse.lemmyapi.datatypes.ListReportsResponse(allReports)
+                }
+            }
+        }
 
     /**
      * Fetch metadata for any given site.
@@ -458,16 +523,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         api.resolveCommentReport(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
-     * List comment reports.
-     *
-     * @GET("comment/report/list")
-     */
-    override suspend fun listCommentReports(
-        form: it.vercruysse.lemmyapi.datatypes.ListCommentReports,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListCommentReportsResponse> =
-        api.listCommentReports(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
      * Edit a private message.
      *
      * @PUT("private_message")
@@ -536,16 +591,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         form: it.vercruysse.lemmyapi.datatypes.ResolvePrivateMessageReport,
     ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessageReportResponse> =
         api.resolvePrivateMessageReport(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
-     * List private message reports.
-     *
-     * @GET("private_message/report/list")
-     */
-    override suspend fun listPrivateMessageReports(
-        form: it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReports,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReportsResponse> =
-        api.listPrivateMessageReports(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Get the details for a person.

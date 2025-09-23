@@ -42,9 +42,9 @@ enum class CommunityFollowerState {
     companion object {
         fun from(d: SubscribedType): CommunityFollowerState? =
             when (d) {
-                SubscribedType.Subscribed -> CommunityFollowerState.Accepted
+                SubscribedType.Subscribed -> Accepted
                 SubscribedType.NotSubscribed -> null
-                SubscribedType.Pending -> CommunityFollowerState.Pending
+                SubscribedType.Pending -> Pending
             }
     }
 }
@@ -204,6 +204,16 @@ enum class NotificationType(override val minimumVersion: Version = V1_0_0, overr
     Reply,
     Subscribed,
     PrivateMessage,
+}
+
+@Serializable
+enum class ReportType(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) :
+    VersionTracker {
+    All,
+    Posts,
+    Comments,
+    PrivateMessages,
+    Communities,
 }
 
 /**
