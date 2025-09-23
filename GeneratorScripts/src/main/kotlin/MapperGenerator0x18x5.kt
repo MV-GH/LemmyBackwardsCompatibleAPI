@@ -209,10 +209,7 @@ internal interface MapperGenerator0x18x5 {
     fun toUni(d: GetUnreadRegistrationApplicationCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
     fun toUni(d: Instance): it.vercruysse.lemmyapi.datatypes.Instance
     fun toUni(d: Language): it.vercruysse.lemmyapi.datatypes.Language
-    fun toUni(d: ListCommentReportsResponse): it.vercruysse.lemmyapi.datatypes.ListCommentReportsResponse
     fun toUni(d: ListCommunitiesResponse): it.vercruysse.lemmyapi.datatypes.ListCommunitiesResponse
-    fun toUni(d: ListPostReportsResponse): it.vercruysse.lemmyapi.datatypes.ListPostReportsResponse
-    fun toUni(d: ListPrivateMessageReportsResponse): it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReportsResponse
     fun toUni(d: ListRegistrationApplicationsResponse): it.vercruysse.lemmyapi.datatypes.ListRegistrationApplicationsResponse
 
     fun toUni(d: LocalUserView): it.vercruysse.lemmyapi.datatypes.LocalUserView
@@ -407,16 +404,7 @@ internal interface MapperGenerator0x18x5 {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.HideCommunity): HideCommunity
 
     @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCommentReports): ListCommentReports
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCommunities): ListCommunities
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListPostReports): ListPostReports
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReports): ListPrivateMessageReports
 
     @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListRegistrationApplications): ListRegistrationApplications
