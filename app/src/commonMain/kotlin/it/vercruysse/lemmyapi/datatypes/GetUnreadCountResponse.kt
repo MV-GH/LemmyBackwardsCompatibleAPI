@@ -5,12 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO changes
-
 @CommonParcelize
 @Serializable
 data class GetUnreadCountResponse(
-    val replies: Long,
-    val mentions: Long,
-    val private_messages: Long,
+    val count: Long,
 ) : DatatypeRoot
