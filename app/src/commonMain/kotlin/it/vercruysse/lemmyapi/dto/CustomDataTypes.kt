@@ -5,11 +5,7 @@ package it.vercruysse.lemmyapi.dto
 import io.github.z4kn4fein.semver.Version
 import io.github.z4kn4fein.semver.toVersion
 import io.github.z4kn4fein.semver.withoutSuffixes
-import it.vercruysse.lemmyapi.MINIMUM_API_VERSION
-import it.vercruysse.lemmyapi.V0_18_0
-import it.vercruysse.lemmyapi.V0_19_0
-import it.vercruysse.lemmyapi.V0_19_4
-import it.vercruysse.lemmyapi.V1_0_0
+import it.vercruysse.lemmyapi.*
 import it.vercruysse.lemmyapi.utils.isBetweenVersions
 import kotlinx.serialization.Serializable
 
@@ -199,11 +195,11 @@ enum class FederationMode(override val minimumVersion: Version = V1_0_0, overrid
 }
 
 @Serializable
-enum class NotificationType(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+enum class NotificationType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) : VersionTracker {
     Mention,
     Reply,
-    Subscribed,
     PrivateMessage,
+    Subscribed(V1_0_0),
 }
 
 @Serializable
@@ -214,6 +210,15 @@ enum class ReportType(override val minimumVersion: Version = V1_0_0, override va
     Comments,
     PrivateMessages,
     Communities,
+}
+
+@Serializable
+enum class NotificationDataType(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+    All,
+    Reply,
+    Mention,
+    PrivateMessage,
+    Subscribed,
 }
 
 /**

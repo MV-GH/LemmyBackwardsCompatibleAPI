@@ -2,6 +2,7 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.dto.NotificationType
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.NotificationId
 import kotlinx.serialization.Serializable
 
@@ -10,4 +11,6 @@ import kotlinx.serialization.Serializable
 data class MarkNotificationAsRead(
     val notification_id: NotificationId,
     val read: Boolean,
+    /** Doesn't exist but needed for compatability with before 1.0.0 */
+    val _kind: NotificationType? = null
 ) : DatatypeRoot

@@ -48,15 +48,6 @@ internal interface MapperGenerator0x18x5 {
             Mapping(target = "banned_from_community", constant = "false"),
             Mapping(target = "creator_is_moderator", constant = "false"),
             Mapping(target = "creator_is_admin", constant = "false"),
-        ]
-    )
-    fun toUni(d: CommentReplyView): it.vercruysse.lemmyapi.datatypes.CommentReplyView
-
-    @Konvert(
-        mappings = [
-            Mapping(target = "banned_from_community", constant = "false"),
-            Mapping(target = "creator_is_moderator", constant = "false"),
-            Mapping(target = "creator_is_admin", constant = "false"),
             Mapping(target = "creator_blocked", constant = "false"),
             Mapping(target = "subscribed", constant = "SubscribedType.NotSubscribed"),
             Mapping(target = "saved", constant = "false"),
@@ -121,15 +112,6 @@ internal interface MapperGenerator0x18x5 {
     )
     fun toUni(d: LocalSite): it.vercruysse.lemmyapi.datatypes.LocalSite
 
-    @Konvert(
-        mappings = [
-            Mapping(target = "banned_from_community", constant = "false"),
-            Mapping(target = "creator_is_moderator", constant = "false"),
-            Mapping(target = "creator_is_admin", constant = "false"),
-        ]
-    )
-    fun toUni(d: PersonMentionView): it.vercruysse.lemmyapi.datatypes.PersonMentionView
-
     fun toUni(@Konverter.Source d: PersonView, is_admin: Boolean = false): it.vercruysse.lemmyapi.datatypes.PersonView
 
     @Konvert(
@@ -174,8 +156,6 @@ internal interface MapperGenerator0x18x5 {
     fun toUni(d: BlockPersonResponse): it.vercruysse.lemmyapi.datatypes.BlockPersonResponse
     fun toUni(d: CaptchaResponse): it.vercruysse.lemmyapi.datatypes.CaptchaResponse
     fun toUni(d: Comment): it.vercruysse.lemmyapi.datatypes.Comment
-    fun toUni(d: CommentReply): it.vercruysse.lemmyapi.datatypes.CommentReply
-    fun toUni(d: CommentReplyResponse): it.vercruysse.lemmyapi.datatypes.CommentReplyResponse
 
     fun toUni(d: CommentReport): it.vercruysse.lemmyapi.datatypes.CommentReport
     fun toUni(d: CommentReportResponse): it.vercruysse.lemmyapi.datatypes.CommentReportResponse
@@ -198,10 +178,8 @@ internal interface MapperGenerator0x18x5 {
     fun toUni(d: GetFederatedInstancesResponse): it.vercruysse.lemmyapi.datatypes.GetFederatedInstancesResponse
     fun toUni(d: GetModlogResponse): it.vercruysse.lemmyapi.datatypes.GetModlogResponse
     fun toUni(d: GetPersonDetailsResponse): it.vercruysse.lemmyapi.datatypes.GetPersonDetailsResponse
-    fun toUni(d: GetPersonMentionsResponse): it.vercruysse.lemmyapi.datatypes.GetPersonMentionsResponse
     fun toUni(d: GetPostResponse): it.vercruysse.lemmyapi.datatypes.GetPostResponse
     fun toUni(d: GetPostsResponse): it.vercruysse.lemmyapi.datatypes.GetPostsResponse
-    fun toUni(d: GetRepliesResponse): it.vercruysse.lemmyapi.datatypes.GetRepliesResponse
     fun toUni(d: GetReportCountResponse): it.vercruysse.lemmyapi.datatypes.GetReportCountResponse
     fun toUni(d: GetSiteMetadataResponse): it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse
 
@@ -235,8 +213,6 @@ internal interface MapperGenerator0x18x5 {
     fun toUni(d: ModTransferCommunity): it.vercruysse.lemmyapi.datatypes.ModTransferCommunity
     fun toUni(d: ModTransferCommunityView): it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView
     fun toUni(d: Person): it.vercruysse.lemmyapi.datatypes.Person
-    fun toUni(d: PersonMention): it.vercruysse.lemmyapi.datatypes.PersonMention
-    fun toUni(d: PersonMentionResponse): it.vercruysse.lemmyapi.datatypes.PersonMentionResponse
 
 
     fun toUni(d: Post): it.vercruysse.lemmyapi.datatypes.Post
@@ -250,7 +226,6 @@ internal interface MapperGenerator0x18x5 {
     fun toUni(d: PrivateMessageReportResponse): it.vercruysse.lemmyapi.datatypes.PrivateMessageReportResponse
     fun toUni(d: PrivateMessageReportView): it.vercruysse.lemmyapi.datatypes.PrivateMessageReportView
     fun toUni(d: PrivateMessageResponse): it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse
-    fun toUni(d: PrivateMessagesResponse): it.vercruysse.lemmyapi.datatypes.PrivateMessagesResponse
     fun toUni(d: PrivateMessageView): it.vercruysse.lemmyapi.datatypes.PrivateMessageView
     fun toUni(d: RegistrationApplication): it.vercruysse.lemmyapi.datatypes.RegistrationApplication
     fun toUni(d: RegistrationApplicationResponse): it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse
@@ -381,19 +356,10 @@ internal interface MapperGenerator0x18x5 {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPersonDetails): GetPersonDetails
 
     @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPersonMentions): GetPersonMentions
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPost): GetPost
 
     @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPosts): GetPosts
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPrivateMessages): GetPrivateMessages
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetReplies): GetReplies
 
     @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetReportCount): GetReportCount
@@ -412,14 +378,6 @@ internal interface MapperGenerator0x18x5 {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.LockPost): LockPost
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.Login): Login
 
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkCommentReplyAsRead): MarkCommentReplyAsRead
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkPersonMentionAsRead): MarkPersonMentionAsRead
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkPrivateMessageAsRead): MarkPrivateMessageAsRead
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset): PasswordChangeAfterReset
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordReset): PasswordReset
 
