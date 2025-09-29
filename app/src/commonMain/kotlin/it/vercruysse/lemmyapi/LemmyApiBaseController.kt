@@ -292,13 +292,6 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun removeComment(form: RemoveComment): Result<CommentResponse>
 
     /**
-     * Mark a comment as read.
-     *
-     * @POST("comment/mark_as_read")
-     */
-    abstract suspend fun markCommentReplyAsRead(form: MarkCommentReplyAsRead): Result<CommentReplyResponse>
-
-    /**
      * Distinguishes a comment (speak as moderator)
      *
      * @POST("comment/distinguish")
@@ -348,25 +341,11 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun createPrivateMessage(form: CreatePrivateMessage): Result<PrivateMessageResponse>
 
     /**
-     * Get / fetch private messages.
-     *
-     * @GET("private_message/list")
-     */
-    abstract suspend fun getPrivateMessages(form: GetPrivateMessages): Result<PrivateMessagesResponse>
-
-    /**
      * Delete a private message.
      *
      * @POST("private_message/delete")
      */
     abstract suspend fun deletePrivateMessage(form: DeletePrivateMessage): Result<PrivateMessageResponse>
-
-    /**
-     * Mark a private message as read.
-     *
-     * @POST("private_message/mark_as_read")
-     */
-    abstract suspend fun markPrivateMessageAsRead(form: MarkPrivateMessageAsRead): Result<PrivateMessageResponse>
 
     /**
      * Create a report for a private message.
@@ -404,25 +383,14 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun getCaptcha(): Result<GetCaptchaResponse>
 
     /**
-     * Get mentions for your user.
-     *
-     * @GET("user/mention")
+     * Mark a notification as read
      */
-    abstract suspend fun getPersonMentions(form: GetPersonMentions): Result<GetPersonMentionsResponse>
+    abstract suspend fun markNotificationAsRead(form: MarkNotificationAsRead): Result<Unit>
 
     /**
-     * Mark a person mention as read.
-     *
-     * @POST("user/mention/mark_as_read")
+     * List notifications.
      */
-    abstract suspend fun markPersonMentionAsRead(form: MarkPersonMentionAsRead): Result<PersonMentionResponse>
-
-    /**
-     * Get comment replies.
-     *
-     * @GET("user/replies")
-     */
-    abstract suspend fun getReplies(form: GetReplies): Result<GetRepliesResponse>
+    abstract suspend fun listNotifications(form: ListNotifications): Result<ListNotificationsResponse>
 
     /**
      * Ban a person from your site.
@@ -474,11 +442,11 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun changePasswordAfterReset(form: PasswordChangeAfterReset): Result<Unit>
 
     /**
-     * Mark all replies as read.
+     * Mark all notifications as read.
      *
      * @POST("user/mark_all_as_read")
      */
-    abstract suspend fun markAllAsRead(): Result<GetRepliesResponse>
+    abstract suspend fun markAllNotificationsAsRead(): Result<Unit>
 
     /**
      * Save your user settings.

@@ -3,8 +3,13 @@ package it.vercruysse.lemmyapi.v0.x19.x4
 import io.github.z4kn4fein.semver.Version
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.LemmyApiBaseController
+import it.vercruysse.lemmyapi.datatypes.ListNotifications
+import it.vercruysse.lemmyapi.datatypes.ListNotificationsResponse
+import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
+import it.vercruysse.lemmyapi.dto.NotificationDataType
+import it.vercruysse.lemmyapi.dto.NotificationType
 
 internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
@@ -462,16 +467,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         api.removeComment(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
-     * Mark a comment as read.
-     *
-     * @POST("comment/mark_as_read")
-     */
-    override suspend fun markCommentReplyAsRead(
-        form: it.vercruysse.lemmyapi.datatypes.MarkCommentReplyAsRead,
-    ): Result<it.vercruysse.lemmyapi.datatypes.CommentReplyResponse> =
-        api.markCommentReplyAsRead(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
      * Distinguishes a comment (speak as moderator)
      *
      * @POST("comment/distinguish")
@@ -542,16 +537,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         api.createPrivateMessage(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
-     * Get / fetch private messages.
-     *
-     * @GET("private_message/list")
-     */
-    override suspend fun getPrivateMessages(
-        form: it.vercruysse.lemmyapi.datatypes.GetPrivateMessages,
-    ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessagesResponse> =
-        api.getPrivateMessages(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
      * Delete a private message.
      *
      * @POST("private_message/delete")
@@ -560,16 +545,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         form: it.vercruysse.lemmyapi.datatypes.DeletePrivateMessage,
     ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse> =
         api.deletePrivateMessage(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
-     * Mark a private message as read.
-     *
-     * @POST("private_message/mark_as_read")
-     */
-    override suspend fun markPrivateMessageAsRead(
-        form: it.vercruysse.lemmyapi.datatypes.MarkPrivateMessageAsRead,
-    ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse> =
-        api.markPrivateMessageAsRead(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Create a report for a private message.
@@ -618,34 +593,44 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         api.getCaptcha().map(transformer::toUni)
 
     /**
-     * Get mentions for your user.
-     *
-     * @GET("user/mention")
+     * Mark a notification as read
      */
-    override suspend fun getPersonMentions(
-        form: it.vercruysse.lemmyapi.datatypes.GetPersonMentions,
-    ): Result<it.vercruysse.lemmyapi.datatypes.GetPersonMentionsResponse> =
-        api.getPersonMentions(transformer.fromUni(form)).map(transformer::toUni)
+    override suspend fun markNotificationAsRead(form: MarkNotificationAsRead): Result<Unit> =
+        when (form._kind) {
+            NotificationType.Mention -> api.markPersonMentionAsRead(transformer.fromUniM(form)).map { }
+            NotificationType.Reply -> api.markCommentReplyAsRead(transformer.fromUniR(form)).map { }
+            NotificationType.PrivateMessage -> api.markPrivateMessageAsRead(transformer.fromUniP(form)).map { }
+            NotificationType.Subscribed -> notSupported()
+            null -> notSupported()
+        }
 
     /**
-     * Mark a person mention as read.
-     *
-     * @POST("user/mention/mark_as_read")
+     * List notifications.
      */
-    override suspend fun markPersonMentionAsRead(
-        form: it.vercruysse.lemmyapi.datatypes.MarkPersonMentionAsRead,
-    ): Result<it.vercruysse.lemmyapi.datatypes.PersonMentionResponse> =
-        api.markPersonMentionAsRead(transformer.fromUni(form)).map(transformer::toUni)
+    override suspend fun listNotifications(form: ListNotifications): Result<ListNotificationsResponse> =
+        when (form.type_) {
+            NotificationDataType.All ->
+                runCatching {
+                    val resReplies = api.getReplies(transformer.fromUniR(form)).map(transformer::toUni).getOrThrow()
+                    val mentionReplies = api.getPersonMentions(transformer.fromUniM(form)).map(transformer::toUni).getOrThrow()
+                    val privateMessages = api.getPrivateMessages(transformer.fromUniP(form)).map(transformer::toUni).getOrThrow()
 
-    /**
-     * Get comment replies.
-     *
-     * @GET("user/replies")
-     */
-    override suspend fun getReplies(
-        form: it.vercruysse.lemmyapi.datatypes.GetReplies,
-    ): Result<it.vercruysse.lemmyapi.datatypes.GetRepliesResponse> =
-        api.getReplies(transformer.fromUni(form)).map(transformer::toUni)
+                    ListNotificationsResponse(
+                        buildList {
+                            addAll(resReplies.notifications)
+                            addAll(mentionReplies.notifications)
+                            addAll(privateMessages.notifications)
+                        },
+                    )
+                }
+            NotificationDataType.Reply ->
+                api.getReplies(transformer.fromUniR(form)).map(transformer::toUni)
+            NotificationDataType.Mention ->
+                api.getPersonMentions(transformer.fromUniM(form)).map(transformer::toUni)
+            NotificationDataType.PrivateMessage ->
+                api.getPrivateMessages(transformer.fromUniP(form)).map(transformer::toUni)
+            NotificationDataType.Subscribed -> Result.success(ListNotificationsResponse(emptyList()))
+        }
 
     /**
      * Ban a person from your site.
@@ -712,8 +697,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("user/mark_all_as_read")
      */
-    override suspend fun markAllAsRead(): Result<it.vercruysse.lemmyapi.datatypes.GetRepliesResponse> =
-        api.markAllAsRead().map(transformer::toUni)
+    override suspend fun markAllNotificationsAsRead(): Result<Unit> =
+        api.markAllAsRead().map {}
 
     /**
      * Save your user settings.
