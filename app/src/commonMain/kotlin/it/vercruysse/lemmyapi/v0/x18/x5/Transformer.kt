@@ -4,12 +4,19 @@ import it.vercruysse.lemmyapi.datatypes.CommentActions
 import it.vercruysse.lemmyapi.datatypes.CommunityActions
 import it.vercruysse.lemmyapi.datatypes.GetModlogResponse
 import it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState
+import it.vercruysse.lemmyapi.datatypes.ListNotificationsResponse
+import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
 import it.vercruysse.lemmyapi.datatypes.ModlogCombinedView
+import it.vercruysse.lemmyapi.datatypes.Notification
+import it.vercruysse.lemmyapi.datatypes.NotificationData
+import it.vercruysse.lemmyapi.datatypes.NotificationView
 import it.vercruysse.lemmyapi.datatypes.PersonActions
 import it.vercruysse.lemmyapi.datatypes.PostActions
+import it.vercruysse.lemmyapi.dto.CommentSortType
 import it.vercruysse.lemmyapi.dto.CommunityFollowerState
 import it.vercruysse.lemmyapi.dto.CommunityVisibility
 import it.vercruysse.lemmyapi.dto.FederationMode
+import it.vercruysse.lemmyapi.dto.NotificationType
 import it.vercruysse.lemmyapi.dto.PostListingMode
 import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.VoteShow
@@ -40,9 +47,6 @@ import it.vercruysse.lemmyapi.datatypes.BlockPersonResponse as LemmyapiDatatypes
 import it.vercruysse.lemmyapi.datatypes.CaptchaResponse as LemmyapiDatatypesCaptchaResponse
 import it.vercruysse.lemmyapi.datatypes.ChangePassword as LemmyapiDatatypesChangePassword
 import it.vercruysse.lemmyapi.datatypes.Comment as LemmyapiDatatypesComment
-import it.vercruysse.lemmyapi.datatypes.CommentReply as LemmyapiDatatypesCommentReply
-import it.vercruysse.lemmyapi.datatypes.CommentReplyResponse as LemmyapiDatatypesCommentReplyResponse
-import it.vercruysse.lemmyapi.datatypes.CommentReplyView as LemmyapiDatatypesCommentReplyView
 import it.vercruysse.lemmyapi.datatypes.CommentReport as LemmyapiDatatypesCommentReport
 import it.vercruysse.lemmyapi.datatypes.CommentReportResponse as LemmyapiDatatypesCommentReportResponse
 import it.vercruysse.lemmyapi.datatypes.CommentReportView as LemmyapiDatatypesCommentReportView
@@ -95,15 +99,10 @@ import it.vercruysse.lemmyapi.datatypes.GetModlog as LemmyapiDatatypesGetModlog
 import it.vercruysse.lemmyapi.datatypes.GetModlogResponse as LemmyapiDatatypesGetModlogResponse
 import it.vercruysse.lemmyapi.datatypes.GetPersonDetails as LemmyapiDatatypesGetPersonDetails
 import it.vercruysse.lemmyapi.datatypes.GetPersonDetailsResponse as LemmyapiDatatypesGetPersonDetailsResponse
-import it.vercruysse.lemmyapi.datatypes.GetPersonMentions as LemmyapiDatatypesGetPersonMentions
-import it.vercruysse.lemmyapi.datatypes.GetPersonMentionsResponse as LemmyapiDatatypesGetPersonMentionsResponse
 import it.vercruysse.lemmyapi.datatypes.GetPost as LemmyapiDatatypesGetPost
 import it.vercruysse.lemmyapi.datatypes.GetPostResponse as LemmyapiDatatypesGetPostResponse
 import it.vercruysse.lemmyapi.datatypes.GetPosts as LemmyapiDatatypesGetPosts
 import it.vercruysse.lemmyapi.datatypes.GetPostsResponse as LemmyapiDatatypesGetPostsResponse
-import it.vercruysse.lemmyapi.datatypes.GetPrivateMessages as LemmyapiDatatypesGetPrivateMessages
-import it.vercruysse.lemmyapi.datatypes.GetReplies as LemmyapiDatatypesGetReplies
-import it.vercruysse.lemmyapi.datatypes.GetRepliesResponse as LemmyapiDatatypesGetRepliesResponse
 import it.vercruysse.lemmyapi.datatypes.GetReportCount as LemmyapiDatatypesGetReportCount
 import it.vercruysse.lemmyapi.datatypes.GetReportCountResponse as LemmyapiDatatypesGetReportCountResponse
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetSiteMetadata
@@ -116,6 +115,8 @@ import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
 import it.vercruysse.lemmyapi.datatypes.Language as LemmyapiDatatypesLanguage
 import it.vercruysse.lemmyapi.datatypes.ListCommunities as LemmyapiDatatypesListCommunities
 import it.vercruysse.lemmyapi.datatypes.ListCommunitiesResponse as LemmyapiDatatypesListCommunitiesResponse
+import it.vercruysse.lemmyapi.datatypes.ListNotifications as LemmyapiDatatypesListNotifications
+import it.vercruysse.lemmyapi.datatypes.ListNotificationsResponse as LemmyapiDatatypesListNotificationsResponse
 import it.vercruysse.lemmyapi.datatypes.ListRegistrationApplications as LemmyapiDatatypesListRegistrationApplications
 import it.vercruysse.lemmyapi.datatypes.ListRegistrationApplicationsResponse as LemmyapiDatatypesListRegistrationApplicationsResponse
 import it.vercruysse.lemmyapi.datatypes.ListReports as LemmyapiDatatypesListReports
@@ -126,9 +127,6 @@ import it.vercruysse.lemmyapi.datatypes.LocalUserView as LemmyapiDatatypesLocalU
 import it.vercruysse.lemmyapi.datatypes.LockPost as LemmyapiDatatypesLockPost
 import it.vercruysse.lemmyapi.datatypes.Login as LemmyapiDatatypesLogin
 import it.vercruysse.lemmyapi.datatypes.LoginResponse as LemmyapiDatatypesLoginResponse
-import it.vercruysse.lemmyapi.datatypes.MarkCommentReplyAsRead as LemmyapiDatatypesMarkCommentReplyAsRead
-import it.vercruysse.lemmyapi.datatypes.MarkPersonMentionAsRead as LemmyapiDatatypesMarkPersonMentionAsRead
-import it.vercruysse.lemmyapi.datatypes.MarkPrivateMessageAsRead as LemmyapiDatatypesMarkPrivateMessageAsRead
 import it.vercruysse.lemmyapi.datatypes.ModAdd as LemmyapiDatatypesModAdd
 import it.vercruysse.lemmyapi.datatypes.ModAddCommunity as LemmyapiDatatypesModAddCommunity
 import it.vercruysse.lemmyapi.datatypes.ModAddCommunityView as LemmyapiDatatypesModAddCommunityView
@@ -155,9 +153,6 @@ import it.vercruysse.lemmyapi.datatypes.MyUserInfo as LemmyapiDatatypesMyUserInf
 import it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
 import it.vercruysse.lemmyapi.datatypes.PasswordReset as LemmyapiDatatypesPasswordReset
 import it.vercruysse.lemmyapi.datatypes.Person as LemmyapiDatatypesPerson
-import it.vercruysse.lemmyapi.datatypes.PersonMention as LemmyapiDatatypesPersonMention
-import it.vercruysse.lemmyapi.datatypes.PersonMentionResponse as LemmyapiDatatypesPersonMentionResponse
-import it.vercruysse.lemmyapi.datatypes.PersonMentionView as LemmyapiDatatypesPersonMentionView
 import it.vercruysse.lemmyapi.datatypes.PersonView as LemmyapiDatatypesPersonView
 import it.vercruysse.lemmyapi.datatypes.Post as LemmyapiDatatypesPost
 import it.vercruysse.lemmyapi.datatypes.PostReport as LemmyapiDatatypesPostReport
@@ -171,7 +166,6 @@ import it.vercruysse.lemmyapi.datatypes.PrivateMessageReportResponse as Lemmyapi
 import it.vercruysse.lemmyapi.datatypes.PrivateMessageReportView as LemmyapiDatatypesPrivateMessageReportView
 import it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse as LemmyapiDatatypesPrivateMessageResponse
 import it.vercruysse.lemmyapi.datatypes.PrivateMessageView as LemmyapiDatatypesPrivateMessageView
-import it.vercruysse.lemmyapi.datatypes.PrivateMessagesResponse as LemmyapiDatatypesPrivateMessagesResponse
 import it.vercruysse.lemmyapi.datatypes.PurgeComment as LemmyapiDatatypesPurgeComment
 import it.vercruysse.lemmyapi.datatypes.PurgeCommunity as LemmyapiDatatypesPurgeCommunity
 import it.vercruysse.lemmyapi.datatypes.PurgePerson as LemmyapiDatatypesPurgePerson
@@ -226,8 +220,6 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.CaptchaResponse as X5Datatypes
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.ChangePassword as X5DatatypesChangePassword
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.Comment as X5DatatypesComment
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.CommentAggregates as X5DatatypesCommentAggregates
-import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.CommentReply as X5DatatypesCommentReply
-import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.CommentReplyResponse as X5DatatypesCommentReplyResponse
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.CommentReplyView as X5DatatypesCommentReplyView
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.CommentReport as X5DatatypesCommentReport
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.CommentReportResponse as X5DatatypesCommentReportResponse
@@ -345,8 +337,6 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.PasswordChangeAfterReset as X5
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.PasswordReset as X5DatatypesPasswordReset
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.Person as X5DatatypesPerson
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.PersonAggregates as X5DatatypesPersonAggregates
-import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.PersonMention as X5DatatypesPersonMention
-import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.PersonMentionResponse as X5DatatypesPersonMentionResponse
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.PersonMentionView as X5DatatypesPersonMentionView
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.PersonView as X5DatatypesPersonView
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.Post as X5DatatypesPost
@@ -470,24 +460,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
             updated_at = addTimezoneOffsetNullable(d.updated),
             import_user_settings_max_requests = -1,
             import_user_settings_interval_seconds = -1,
-        )
-
-    override fun toUni(d: X5DatatypesCommentReplyView): LemmyapiDatatypesCommentReplyView =
-        LemmyapiDatatypesCommentReplyView(
-            comment_reply = this.toUni(d = d.comment_reply),
-            comment = this.toUni(d = d.comment, d.counts),
-            creator = this.toUni(d = d.creator),
-            post = this.toUni(d = d.post, counts = X5DatatypesPostAggregates(-1, -1, -1, -1, -1, -1, "", "", "", false, false, -1, -1)),
-            community = this.toUni(d = d.community, counts = X5DatatypesCommunityAggregates(-1, -1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
-            recipient = this.toUni(d = d.recipient),
-            creator_banned_from_community = d.creator_banned_from_community,
-            banned_from_community = false,
-            creator_is_moderator = false,
-            creator_is_admin = false,
-            subscribed = d.subscribed,
-            saved = d.saved,
-            creator_blocked = d.creator_blocked,
-            my_vote = d.my_vote,
         )
 
     override fun toUni(d: X5DatatypesCommentReportView): LemmyapiDatatypesCommentReportView =
@@ -623,24 +595,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
             users_active_week = counts.users_active_week,
             users_active_month = counts.users_active_month,
             users_active_half_year = counts.users_active_half_year,
-        )
-
-    override fun toUni(d: X5DatatypesPersonMentionView): LemmyapiDatatypesPersonMentionView =
-        LemmyapiDatatypesPersonMentionView(
-            person_mention = this.toUni(d = d.person_mention),
-            comment = this.toUni(d = d.comment, d.counts),
-            creator = this.toUni(d = d.creator),
-            post = this.toUni(d = d.post, counts = X5DatatypesPostAggregates(-1, -1, -1, -1, -1, -1, "", "", "", false, false, -1, -1)),
-            community = this.toUni(d = d.community, counts = X5DatatypesCommunityAggregates(-1, -1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
-            recipient = this.toUni(d = d.recipient),
-            creator_banned_from_community = d.creator_banned_from_community,
-            banned_from_community = false,
-            creator_is_moderator = false,
-            creator_is_admin = false,
-            subscribed = d.subscribed,
-            saved = d.saved,
-            creator_blocked = d.creator_blocked,
-            my_vote = d.my_vote,
         )
 
     override fun toUni(d: X5DatatypesPersonView, is_admin: Boolean): LemmyapiDatatypesPersonView =
@@ -808,20 +762,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
         federation_pending = false,
     )
 
-    override fun toUni(d: X5DatatypesCommentReply): LemmyapiDatatypesCommentReply =
-        LemmyapiDatatypesCommentReply(
-            id = d.id,
-            recipient_id = d.recipient_id,
-            comment_id = d.comment_id,
-            read = d.read,
-            published = d.published,
-        )
-
-    override fun toUni(d: X5DatatypesCommentReplyResponse): LemmyapiDatatypesCommentReplyResponse =
-        LemmyapiDatatypesCommentReplyResponse(
-            comment_reply_view = this.toUni(d = d.comment_reply_view),
-        )
-
     override fun toUni(d: X5DatatypesCommentReport): LemmyapiDatatypesCommentReport =
         LemmyapiDatatypesCommentReport(
             id = d.id,
@@ -924,105 +864,90 @@ internal class Transformer(var auth: String) : MapperGenerator {
     override fun toUni(d: X5DatatypesGetModlogResponse): LemmyapiDatatypesGetModlogResponse {
         val modlogList = mutableListOf<ModlogCombinedView>()
 
-        // Add ModRemovePost entries
         modlogList.addAll(
             d.removed_posts.map { view ->
                 ModlogCombinedView.ModRemovePost(mod_remove_post = this.toUni(d = view))
             },
         )
 
-        // Add ModLockPost entries
         modlogList.addAll(
             d.locked_posts.map { view ->
                 ModlogCombinedView.ModLockPost(mod_lock_post = this.toUni(d = view))
             },
         )
 
-        // Add ModFeaturePost entries
         modlogList.addAll(
             d.featured_posts.map { view ->
                 ModlogCombinedView.ModFeaturePost(mod_feature_post = this.toUni(d = view))
             },
         )
 
-        // Add ModRemoveComment entries
         modlogList.addAll(
             d.removed_comments.map { view ->
                 ModlogCombinedView.ModRemoveComment(mod_remove_comment = this.toUni(d = view))
             },
         )
 
-        // Add ModRemoveCommunity entries
         modlogList.addAll(
             d.removed_communities.map { view ->
                 ModlogCombinedView.ModRemoveCommunity(mod_remove_community = this.toUni(d = view))
             },
         )
 
-        // Add ModBanFromCommunity entries
         modlogList.addAll(
             d.banned_from_community.map { view ->
                 ModlogCombinedView.ModBanFromCommunity(mod_ban_from_community = this.toUni(d = view))
             },
         )
 
-        // Add ModBan entries
         modlogList.addAll(
             d.banned.map { view ->
                 ModlogCombinedView.ModBan(mod_ban = this.toUni(d = view))
             },
         )
 
-        // Add ModAddCommunity entries
         modlogList.addAll(
             d.added_to_community.map { view ->
                 ModlogCombinedView.ModAddCommunity(mod_add_community = this.toUni(d = view))
             },
         )
 
-        // Add ModTransferCommunity entries
         modlogList.addAll(
             d.transferred_to_community.map { view ->
                 ModlogCombinedView.ModTransferCommunity(mod_transfer_community = this.toUni(d = view))
             },
         )
 
-        // Add ModAdd entries
         modlogList.addAll(
             d.added.map { view ->
                 ModlogCombinedView.ModAdd(mod_add = this.toUni(d = view))
             },
         )
 
-        // Add AdminPurgePerson entries
         modlogList.addAll(
             d.admin_purged_persons.map { view ->
                 ModlogCombinedView.AdminPurgePerson(admin_purge_person = this.toUni(d = view))
             },
         )
 
-        // Add AdminPurgeCommunity entries
         modlogList.addAll(
             d.admin_purged_communities.map { view ->
                 ModlogCombinedView.AdminPurgeCommunity(admin_purge_community = this.toUni(d = view))
             },
         )
 
-        // Add AdminPurgePost entries
         modlogList.addAll(
             d.admin_purged_posts.map { view ->
                 ModlogCombinedView.AdminPurgePost(admin_purge_post = this.toUni(d = view))
             },
         )
 
-        // Add AdminPurgeComment entries
         modlogList.addAll(
             d.admin_purged_comments.map { view ->
                 ModlogCombinedView.AdminPurgeComment(admin_purge_comment = this.toUni(d = view))
             },
         )
 
-        // Add ModHideCommunity entries (mapped to ModChangeCommunityVisibility)
         modlogList.addAll(
             d.hidden_communities.map { view ->
                 ModlogCombinedView.ModChangeCommunityVisibility(mod_change_community_visibility = this.toUni(d = view))
@@ -1043,10 +968,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
         moderates = d.moderates.map { this.toUni(d = it) },
     )
 
-    override fun toUni(d: X5DatatypesGetPersonMentionsResponse): LemmyapiDatatypesGetPersonMentionsResponse = LemmyapiDatatypesGetPersonMentionsResponse(
-        mentions = d.mentions.map { this.toUni(d = it) },
-    )
-
     override fun toUni(d: X5DatatypesGetPostResponse): LemmyapiDatatypesGetPostResponse =
         LemmyapiDatatypesGetPostResponse(
             post_view = this.toUni(d = d.post_view),
@@ -1060,9 +981,99 @@ internal class Transformer(var auth: String) : MapperGenerator {
             posts = d.posts.map { this.toUni(d = it) },
         )
 
-    override fun toUni(d: X5DatatypesGetRepliesResponse): LemmyapiDatatypesGetRepliesResponse =
-        LemmyapiDatatypesGetRepliesResponse(
-            replies = d.replies.map { this.toUni(d = it) },
+    fun toUni(d: X5DatatypesGetRepliesResponse): LemmyapiDatatypesListNotificationsResponse =
+        ListNotificationsResponse(
+            notifications = d.replies.map { this.toUni(d = it) },
+        )
+
+    fun toUni(d: X5DatatypesCommentReplyView): NotificationView =
+        NotificationView(
+            notification = Notification(
+                id = d.comment_reply.id,
+                recipient_id = d.comment_reply.recipient_id,
+                comment_id = d.comment_reply.comment_id,
+                read = d.comment_reply.read,
+                published_at = addTimezoneOffset(d.comment_reply.published),
+                kind = NotificationType.Reply,
+                post_id = d.post.id,
+            ),
+            data = NotificationData.Comment(
+                comment = this.toUniCV(d),
+            ),
+        )
+
+    fun toUniCV(d: X5DatatypesCommentReplyView): LemmyapiDatatypesCommentView =
+        LemmyapiDatatypesCommentView(
+            comment = this.toUni(d = d.comment, d.counts),
+            creator = this.toUni(d = d.creator),
+            post = this.toUni(d = d.post, counts = X5DatatypesPostAggregates(-1, -1, -1, -1, -1, -1, "", "", "", false, false, -1, -1)),
+            community = this.toUni(d = d.community, counts = X5DatatypesCommunityAggregates(-1, -1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
+            creator_banned_from_community = d.creator_banned_from_community,
+            creator_is_moderator = false,
+            creator_is_admin = false,
+            post_tags = emptyList(),
+            creator_banned = d.creator.banned,
+            can_mod = false,
+            person_actions = PersonActions(if (d.creator_blocked) "" else null),
+            comment_actions = CommentActions(d.my_vote, null, if (d.saved) "" else null),
+            community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
+        )
+
+    fun toUni(d: X5DatatypesGetPersonMentionsResponse): LemmyapiDatatypesListNotificationsResponse =
+        LemmyapiDatatypesListNotificationsResponse(
+            notifications = d.mentions.map { this.toUni(d = it) },
+        )
+
+    fun toUni(d: X5DatatypesPersonMentionView): NotificationView =
+        NotificationView(
+            notification = Notification(
+                id = d.person_mention.id,
+                recipient_id = d.person_mention.recipient_id,
+                comment_id = d.person_mention.comment_id,
+                read = d.person_mention.read,
+                published_at = addTimezoneOffset(d.person_mention.published),
+                kind = NotificationType.Mention,
+                post_id = d.post.id,
+            ),
+            data = NotificationData.Comment(
+                comment = this.toUniPV(d),
+            ),
+        )
+
+    fun toUniPV(d: X5DatatypesPersonMentionView): LemmyapiDatatypesCommentView =
+        LemmyapiDatatypesCommentView(
+            comment = this.toUni(d = d.comment, d.counts),
+            creator = this.toUni(d = d.creator),
+            post = this.toUni(d = d.post, counts = X5DatatypesPostAggregates(-1, -1, -1, -1, -1, -1, "", "", "", false, false, -1, -1)),
+            community = this.toUni(d = d.community, counts = X5DatatypesCommunityAggregates(-1, -1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
+            creator_banned_from_community = d.creator_banned_from_community,
+            creator_is_moderator = false,
+            creator_is_admin = false,
+            post_tags = emptyList(),
+            creator_banned = d.creator.banned,
+            can_mod = false,
+            person_actions = PersonActions(if (d.creator_blocked) "" else null),
+            comment_actions = CommentActions(d.my_vote, null, if (d.saved) "" else null),
+            community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
+        )
+
+    fun toUni(d: X5DatatypesPrivateMessagesResponse): LemmyapiDatatypesListNotificationsResponse =
+        LemmyapiDatatypesListNotificationsResponse(
+            notifications = d.private_messages.map { this.toUniPMV(d = it) },
+        )
+
+    fun toUniPMV(d: X5DatatypesPrivateMessageView): NotificationView =
+        NotificationView(
+            notification = Notification(
+                id = d.private_message.id,
+                recipient_id = d.private_message.recipient_id,
+                read = d.private_message.read,
+                published_at = addTimezoneOffset(d.private_message.published),
+                kind = NotificationType.PrivateMessage,
+            ),
+            data = NotificationData.PrivateMessage(
+                private_message = this.toUni(d),
+            ),
         )
 
     override fun toUni(d: X5DatatypesGetReportCountResponse): LemmyapiDatatypesGetReportCountResponse = LemmyapiDatatypesGetReportCountResponse(
@@ -1074,7 +1085,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
     )
 
     override fun toUni(d: X5DatatypesGetUnreadCountResponse): LemmyapiDatatypesGetUnreadCountResponse = LemmyapiDatatypesGetUnreadCountResponse(
-       count = d.replies + d.mentions + d.private_messages
+        count = d.replies + d.mentions + d.private_messages,
     )
 
     override fun toUni(d: X5DatatypesGetUnreadRegistrationApplicationCountResponse): LemmyapiDatatypesGetUnreadRegistrationApplicationCountResponse =
@@ -1338,20 +1349,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
         comment_count = counts.comment_count,
     )
 
-    override fun toUni(d: X5DatatypesPersonMention): LemmyapiDatatypesPersonMention =
-        LemmyapiDatatypesPersonMention(
-            id = d.id,
-            recipient_id = d.recipient_id,
-            comment_id = d.comment_id,
-            read = d.read,
-            published = d.published,
-        )
-
-    override fun toUni(d: X5DatatypesPersonMentionResponse): LemmyapiDatatypesPersonMentionResponse =
-        LemmyapiDatatypesPersonMentionResponse(
-            person_mention_view = this.toUni(d = d.person_mention_view),
-        )
-
     override fun toUni(d: X5DatatypesPost, counts: X5DatatypesPostAggregates): LemmyapiDatatypesPost = LemmyapiDatatypesPost(
         id = d.id,
         name = d.name,
@@ -1452,10 +1449,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     override fun toUni(d: X5DatatypesPrivateMessageResponse): LemmyapiDatatypesPrivateMessageResponse = LemmyapiDatatypesPrivateMessageResponse(
         private_message_view = this.toUni(d = d.private_message_view),
-    )
-
-    override fun toUni(d: X5DatatypesPrivateMessagesResponse): LemmyapiDatatypesPrivateMessagesResponse = LemmyapiDatatypesPrivateMessagesResponse(
-        private_messages = d.private_messages.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X5DatatypesPrivateMessageView): LemmyapiDatatypesPrivateMessageView =
@@ -1936,15 +1929,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
             auth = auth,
         )
 
-    override fun fromUni(d: LemmyapiDatatypesGetPersonMentions): X5DatatypesGetPersonMentions =
-        X5DatatypesGetPersonMentions(
-            sort = d.sort,
-            page = d.page,
-            limit = d.limit,
-            unread_only = d.unread_only,
-            auth = auth,
-        )
-
     override fun fromUni(d: LemmyapiDatatypesGetPost): X5DatatypesGetPost = X5DatatypesGetPost(
         id = d.id,
         comment_id = d.comment_id,
@@ -1961,17 +1945,26 @@ internal class Transformer(var auth: String) : MapperGenerator {
         auth = auth,
     )
 
-    override fun fromUni(d: LemmyapiDatatypesGetPrivateMessages): X5DatatypesGetPrivateMessages =
-        X5DatatypesGetPrivateMessages(
-            unread_only = d.unread_only,
+    fun fromUniR(d: LemmyapiDatatypesListNotifications): X5DatatypesGetReplies =
+        X5DatatypesGetReplies(
+            sort = CommentSortType.New,
             page = d.page,
             limit = d.limit,
+            unread_only = d.unread_only,
             auth = auth,
         )
 
-    override fun fromUni(d: LemmyapiDatatypesGetReplies): X5DatatypesGetReplies =
-        X5DatatypesGetReplies(
-            sort = d.sort,
+    fun fromUniM(d: LemmyapiDatatypesListNotifications): X5DatatypesGetPersonMentions =
+        X5DatatypesGetPersonMentions(
+            sort = CommentSortType.New,
+            page = d.page,
+            limit = d.limit,
+            unread_only = d.unread_only,
+            auth = auth,
+        )
+
+    fun fromUniP(d: LemmyapiDatatypesListNotifications): X5DatatypesGetPrivateMessages =
+        X5DatatypesGetPrivateMessages(
             page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
@@ -2051,20 +2044,20 @@ internal class Transformer(var auth: String) : MapperGenerator {
         totp_2fa_token = d.totp_2fa_token,
     )
 
-    override fun fromUni(d: LemmyapiDatatypesMarkCommentReplyAsRead): X5DatatypesMarkCommentReplyAsRead = X5DatatypesMarkCommentReplyAsRead(
-        comment_reply_id = d.comment_reply_id,
+    fun fromUniR(d: MarkNotificationAsRead): X5DatatypesMarkCommentReplyAsRead = X5DatatypesMarkCommentReplyAsRead(
+        comment_reply_id = d.notification_id,
         read = d.read,
         auth = auth,
     )
 
-    override fun fromUni(d: LemmyapiDatatypesMarkPersonMentionAsRead): X5DatatypesMarkPersonMentionAsRead = X5DatatypesMarkPersonMentionAsRead(
-        person_mention_id = d.person_mention_id,
+    fun fromUniM(d: MarkNotificationAsRead): X5DatatypesMarkPersonMentionAsRead = X5DatatypesMarkPersonMentionAsRead(
+        person_mention_id = d.notification_id,
         read = d.read,
         auth = auth,
     )
 
-    override fun fromUni(d: LemmyapiDatatypesMarkPrivateMessageAsRead): X5DatatypesMarkPrivateMessageAsRead = X5DatatypesMarkPrivateMessageAsRead(
-        private_message_id = d.private_message_id,
+    fun fromUniP(d: MarkNotificationAsRead): X5DatatypesMarkPrivateMessageAsRead = X5DatatypesMarkPrivateMessageAsRead(
+        private_message_id = d.notification_id,
         read = d.read,
         auth = auth,
     )
