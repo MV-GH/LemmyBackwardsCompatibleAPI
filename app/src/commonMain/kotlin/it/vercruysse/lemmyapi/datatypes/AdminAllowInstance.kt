@@ -11,6 +11,6 @@ data class AdminAllowInstance(
     val instance_id: InstanceId,
     val admin_person_id: PersonId,
     val allowed: Boolean,
-    val reason: String? = null,
+    val reason: String,
     val published_at: String,
 ): DatatypeRoot

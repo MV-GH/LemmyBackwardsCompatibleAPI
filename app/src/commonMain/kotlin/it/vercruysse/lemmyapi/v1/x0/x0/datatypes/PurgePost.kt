@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class PurgePost(
     val post_id: PostId,
-    val reason: String? = null,
+    val reason: String,
 )

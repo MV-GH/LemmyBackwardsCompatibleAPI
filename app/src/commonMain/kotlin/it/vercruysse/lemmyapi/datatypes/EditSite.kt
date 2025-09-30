@@ -46,9 +46,9 @@ data class EditSite(
     val rate_limit_comment_interval_seconds: Long? = null,
     val rate_limit_search_max_requests: Long? = null,
     val rate_limit_search_interval_seconds: Long? = null,
-    /* Added in 1.0.0 */
+    /** Added in 1.0.0 */
     val rate_limit_import_user_settings_max_requests: Long? = null,
-    /* Added in 1.0.0 */
+    /** Added in 1.0.0 */
     val rate_limit_import_user_settings_interval_seconds: Long? = null,
     val federation_enabled: Boolean? = null,
     val federation_debug: Boolean? = null,
@@ -62,6 +62,6 @@ data class EditSite(
     val reports_email_admins: Boolean? = null,
     val content_warning: String? = null,
     val default_post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
-    /* Added in 1.0.0 */
+    /** Added in 1.0.0 */
     val suggested_communities: MultiCommunityId? = null,
 ) : DatatypeRoot

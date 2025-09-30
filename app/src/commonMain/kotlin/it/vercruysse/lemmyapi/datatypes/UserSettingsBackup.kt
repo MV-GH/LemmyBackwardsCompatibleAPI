@@ -19,7 +19,6 @@ data class UserSettingsBackup(
     val saved_comments: List<String>,
     val blocked_communities: List<String>,
     val blocked_users: List<String>,
-    val blocked_instances: List<String>,
     val blocked_instances_communities: List<String>,
     val blocked_instances_persons: List<String>,
 ) : DatatypeRoot
