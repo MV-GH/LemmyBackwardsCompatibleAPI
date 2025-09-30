@@ -7,7 +7,6 @@ import it.vercruysse.lemmyapi.dto.SearchType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PaginationCursor
 
 @CommonParcelize
 @Serializable
