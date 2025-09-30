@@ -13,7 +13,7 @@ data class ModBanFromCommunity(
     val mod_person_id: PersonId,
     val other_person_id: PersonId,
     val community_id: CommunityId,
-    val reason: String? = null,
+    val reason: String,
     val banned: Boolean,
     val expires_at: String? = null,
     val published_at: String,

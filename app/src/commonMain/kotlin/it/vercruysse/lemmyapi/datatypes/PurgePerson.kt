@@ -9,5 +9,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @Serializable
 data class PurgePerson(
     val person_id: PersonId,
-    val reason: String? = null,
+    val reason: String,
 ) : DatatypeRoot

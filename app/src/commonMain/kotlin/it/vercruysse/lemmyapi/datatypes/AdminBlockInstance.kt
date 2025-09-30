@@ -11,7 +11,7 @@ data class AdminBlockInstance(
     val instance_id: InstanceId,
     val admin_person_id: PersonId,
     val blocked: Boolean,
-    val reason: String? = null,
+    val reason: String,
     val expires_at: String? = null,
     val published_at: String,
 ): DatatypeRoot

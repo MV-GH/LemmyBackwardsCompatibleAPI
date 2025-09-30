@@ -11,6 +11,6 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class AdminPurgeCommunity(
     override val id: AdminPurgeCommunityId,
     val admin_person_id: PersonId,
-    val reason: String? = null,
+    val reason: String,
     val published_at: String,
 ) : DatatypeRoot, Identity

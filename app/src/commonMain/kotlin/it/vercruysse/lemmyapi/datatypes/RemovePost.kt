@@ -10,5 +10,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class RemovePost(
     val post_id: PostId,
     val removed: Boolean,
-    val reason: String? = null,
+    val reason: String,
 ) : DatatypeRoot

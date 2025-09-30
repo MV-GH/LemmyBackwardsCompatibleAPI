@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 internal data class AdminBlockInstanceParams(
     val instance: String,
     val block: Boolean,
-    val reason: String? = null,
+    val reason: String,
     val expires_at: String? = null,
 )

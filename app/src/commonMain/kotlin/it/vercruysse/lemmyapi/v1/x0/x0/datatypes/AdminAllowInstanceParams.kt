@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 internal data class AdminAllowInstanceParams(
     val instance: String,
     val allow: Boolean,
-    val reason: String? = null,
+    val reason: String,
 )

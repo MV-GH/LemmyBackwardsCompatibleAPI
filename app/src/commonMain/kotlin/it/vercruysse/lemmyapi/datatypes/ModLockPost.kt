@@ -14,5 +14,5 @@ data class ModLockPost(
     val locked: Boolean,
     val published_at: String,
     /** Added in 1.0.0 */
-    val reason: String? = null,
+    val reason: String,
 ) : DatatypeRoot

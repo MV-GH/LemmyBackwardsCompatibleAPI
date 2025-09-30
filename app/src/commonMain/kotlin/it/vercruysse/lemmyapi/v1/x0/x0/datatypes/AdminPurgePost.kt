@@ -7,6 +7,6 @@ internal data class AdminPurgePost(
     val id: AdminPurgePostId,
     val admin_person_id: PersonId,
     val community_id: CommunityId,
-    val reason: String? = null,
+    val reason: String,
     val published_at: String,
 )

@@ -9,5 +9,5 @@ internal data class ModLockPost(
     val post_id: PostId,
     val locked: Boolean,
     val published_at: String,
-    val reason: String? = null,
+    val reason: String,
 )
