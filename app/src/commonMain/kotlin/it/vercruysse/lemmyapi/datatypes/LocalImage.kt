@@ -4,7 +4,6 @@ import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PostId
 
 @CommonParcelize
 @Serializable
