@@ -10,5 +10,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class LockPost(
     val post_id: PostId,
     val locked: Boolean,
-    val reason: String? = null,
+    val reason: String,
 ) : DatatypeRoot

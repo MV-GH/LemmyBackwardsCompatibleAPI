@@ -9,5 +9,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @Serializable
 data class PurgePost(
     val post_id: PostId,
-    val reason: String? = null,
+    val reason: String,
 ) : DatatypeRoot

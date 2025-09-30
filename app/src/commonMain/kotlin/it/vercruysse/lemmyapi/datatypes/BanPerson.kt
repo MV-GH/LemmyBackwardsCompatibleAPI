@@ -11,6 +11,6 @@ data class BanPerson(
     val person_id: PersonId,
     val ban: Boolean,
     val remove_or_restore_data: Boolean? = null,
-    val reason: String? = null,
+    val reason: String,
     val expires_at: Long? = null,
 ) : DatatypeRoot

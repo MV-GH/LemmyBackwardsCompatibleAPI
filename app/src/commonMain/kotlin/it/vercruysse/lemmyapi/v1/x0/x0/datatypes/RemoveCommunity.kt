@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 internal data class RemoveCommunity(
     val community_id: CommunityId,
     val removed: Boolean,
-    val reason: String? = null,
+    val reason: String,
 )

@@ -7,7 +7,7 @@ internal data class ModRemovePost(
     val id: ModRemovePostId,
     val mod_person_id: PersonId,
     val post_id: PostId,
-    val reason: String? = null,
+    val reason: String,
     val removed: Boolean,
     val published_at: String,
 )

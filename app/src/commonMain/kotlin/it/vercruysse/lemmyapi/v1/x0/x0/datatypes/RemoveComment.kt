@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 internal data class RemoveComment(
     val comment_id: CommentId,
     val removed: Boolean,
-    val reason: String? = null,
+    val reason: String,
 )
