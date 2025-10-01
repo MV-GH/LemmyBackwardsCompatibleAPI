@@ -651,7 +651,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             id = d.id,
             admin_person_id = d.admin_person_id,
             post_id = d.post_id,
-            reason = d.reason,
+            reason = d.reason ?: "",
             published_at = addTimezoneOffset(d.when_),
         )
 
@@ -666,7 +666,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         LemmyapiDatatypesAdminPurgeCommunity(
             id = d.id,
             admin_person_id = d.admin_person_id,
-            reason = d.reason,
+            reason = d.reason ?: "",
             published_at = addTimezoneOffset(d.when_),
         )
 
@@ -679,7 +679,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         LemmyapiDatatypesAdminPurgePerson(
             id = d.id,
             admin_person_id = d.admin_person_id,
-            reason = d.reason,
+            reason = d.reason ?: "",
             published_at = addTimezoneOffset(d.when_),
         )
 
@@ -694,7 +694,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             id = d.id,
             admin_person_id = d.admin_person_id,
             community_id = d.community_id,
-            reason = d.reason,
+            reason = d.reason ?: "",
             published_at = addTimezoneOffset(d.when_),
         )
 
@@ -760,6 +760,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         report_count = -1,
         unresolved_report_count = -1,
         federation_pending = false,
+        locked = false,
     )
 
     override fun toUni(d: X5DatatypesCommentReport): LemmyapiDatatypesCommentReport =
@@ -1181,7 +1182,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             mod_person_id = d.mod_person_id,
             other_person_id = d.other_person_id,
             community_id = d.community_id,
-            reason = d.reason,
+            reason = d.reason ?: "",
             banned = d.banned,
             expires_at = addTimezoneOffsetNullable(d.expires),
             published_at = addTimezoneOffset(d.when_),
@@ -1246,6 +1247,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             mod_person_id = d.mod_person_id,
             post_id = d.post_id,
             locked = d.locked,
+            reason = "",
             published_at = addTimezoneOffset(d.when_),
         )
 
@@ -1262,7 +1264,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             id = d.id,
             mod_person_id = d.mod_person_id,
             comment_id = d.comment_id,
-            reason = d.reason,
+            reason = d.reason ?: "",
             removed = d.removed,
             published_at = addTimezoneOffset(d.when_),
         )
@@ -1298,7 +1300,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             id = d.id,
             mod_person_id = d.mod_person_id,
             post_id = d.post_id,
-            reason = d.reason,
+            reason = d.reason ?: "",
             removed = d.removed,
             published_at = addTimezoneOffset(d.when_),
         )

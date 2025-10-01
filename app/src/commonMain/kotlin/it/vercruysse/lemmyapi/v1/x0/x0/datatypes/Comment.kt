@@ -24,4 +24,5 @@ internal data class Comment(
     val report_count: Long,
     val unresolved_report_count: Long,
     val federation_pending: Boolean,
+    val locked: Boolean,
 )
