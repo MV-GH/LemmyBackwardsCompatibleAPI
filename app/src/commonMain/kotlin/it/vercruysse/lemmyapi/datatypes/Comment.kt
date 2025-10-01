@@ -32,4 +32,6 @@ data class Comment(
     val unresolved_report_count: Long,
     /** Added in Lemmy 1.0.0 */
     val federation_pending: Boolean,
+    /** Added in Lemmy 1.0.0 */
+    val locked: Boolean,
 ) : DatatypeRoot, Identity
