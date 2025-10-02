@@ -12,6 +12,7 @@ data class LocalUserView(
     val local_user: LocalUser,
     val person: Person,
     val banned: Boolean,
+    val ban_expires_at: String? = null,
 ) : DatatypeRoot, Identity {
     override val id: Long
         get() = local_user.id

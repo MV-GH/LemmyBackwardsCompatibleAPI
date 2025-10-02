@@ -602,7 +602,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
             person = this.toUni(d = d.person, d.counts),
             is_admin = is_admin,
             person_actions = null,
-            creator_banned = d.person.banned,
+            banned = d.person.banned,
+            ban_expires_at = addTimezoneOffsetNullable(d.person.ban_expires),
         )
 
     override fun toUni(d: X5DatatypesPostReportView): LemmyapiDatatypesPostReportView =
@@ -1123,6 +1124,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             local_user = this.toUni(d = d.local_user),
             person = this.toUni(d = d.person, d.counts),
             banned = d.person.banned,
+            ban_expires_at = addTimezoneOffsetNullable(d.person.ban_expires),
         )
 
     override fun toUni(d: X5DatatypesLoginResponse): LemmyapiDatatypesLoginResponse =
