@@ -574,6 +574,7 @@ internal class Transformer : MapperGenerator {
         tags = emptyList(),
         creator_banned_from_community = d.creator_banned_from_community,
         creator_banned = d.creator.banned,
+        creator_ban_expires_at = d.creator.ban_expires,
         creator_is_moderator = d.creator_is_moderator,
         creator_is_admin = d.creator_is_admin,
     )

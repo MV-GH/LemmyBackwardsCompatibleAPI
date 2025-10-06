@@ -634,6 +634,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         tags = emptyList(),
         can_mod = false,
         creator_banned = d.creator.banned,
+        creator_ban_expires_at = addTimezoneOffsetNullable(d.creator.ban_expires),
         creator_is_admin = false,
         creator_is_moderator = false,
         creator_banned_from_community = d.creator_banned_from_community,
