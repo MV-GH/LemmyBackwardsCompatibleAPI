@@ -58,4 +58,6 @@ data class LocalUser(
     val show_upvote_percentage: Boolean,
     /** Added in 1.0.0 */
     val show_person_votes: Boolean,
+    /** Added in 1.0.0 */
+    val default_items_per_page: Long,
 ) : DatatypeRoot, Identity

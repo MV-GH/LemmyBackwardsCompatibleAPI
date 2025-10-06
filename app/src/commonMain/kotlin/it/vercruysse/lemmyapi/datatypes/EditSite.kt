@@ -9,8 +9,6 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: many changes
-
 @CommonParcelize
 @Serializable
 data class EditSite(
@@ -33,7 +31,6 @@ data class EditSite(
     val hide_modlog_mod_names: Boolean? = null,
     val discussion_languages: List<LanguageId>? = null,
     val slur_filter_regex: String? = null,
-    val actor_name_max_length: Long? = null,
     val rate_limit_message_max_requests: Long? = null,
     val rate_limit_message_interval_seconds: Long? = null,
     val rate_limit_post_max_requests: Long? = null,
@@ -64,4 +61,5 @@ data class EditSite(
     val default_post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
     /** Added in 1.0.0 */
     val suggested_communities: MultiCommunityId? = null,
+    val default_items_per_page: Long,
 ) : DatatypeRoot

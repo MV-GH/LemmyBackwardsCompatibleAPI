@@ -1077,7 +1077,6 @@ internal class Transformer : MapperGenerator {
             legal_information = d.legal_information,
             application_email_admins = d.application_email_admins,
             slur_filter_regex = d.slur_filter_regex,
-            actor_name_max_length = d.actor_name_max_length,
             federation_enabled = d.federation_enabled,
             captcha_enabled = d.captcha_enabled,
             captcha_difficulty = d.captcha_difficulty,
@@ -1106,6 +1105,7 @@ internal class Transformer : MapperGenerator {
             users_active_week = counts.users_active_week,
             users_active_month = counts.users_active_month,
             users_active_half_year = counts.users_active_half_year,
+            default_items_per_page = 20,
         )
 
     override fun toUni(d: X4DatatypesLocalSiteRateLimit): LemmyapiDatatypesLocalSiteRateLimit =
@@ -1174,6 +1174,7 @@ internal class Transformer : MapperGenerator {
             default_comment_sort_type = SortType.Active,
             auto_mark_fetched_posts_as_read = false,
             default_post_time_range_seconds = null,
+            default_items_per_page = 20,
 
         )
 
@@ -1825,21 +1826,23 @@ internal class Transformer : MapperGenerator {
             description = d.description,
             icon = d.icon,
             banner = d.banner,
-            enable_downvotes = d.enable_downvotes,
-            enable_nsfw = d.enable_nsfw,
+            enable_downvotes = when(d.post_downvotes) {
+                FederationMode.Local, FederationMode.All -> true
+                FederationMode.Disable -> false
+                null -> null
+            },
+            enable_nsfw = if (d.disallow_nsfw_content == null) null else !d.disallow_nsfw_content,
             community_creation_admin_only = d.community_creation_admin_only,
             require_email_verification = d.require_email_verification,
             application_question = d.application_question,
             private_instance = d.private_instance,
             default_theme = d.default_theme,
             default_post_listing_type = d.default_post_listing_type,
-            default_sort_type = d.default_sort_type,
+            default_sort_type = d.default_post_sort_type,
             legal_information = d.legal_information,
             application_email_admins = d.application_email_admins,
-            hide_modlog_mod_names = d.hide_modlog_mod_names,
             discussion_languages = d.discussion_languages,
             slur_filter_regex = d.slur_filter_regex,
-            actor_name_max_length = d.actor_name_max_length,
             rate_limit_message = d.rate_limit_message_max_requests,
             rate_limit_message_per_second = d.rate_limit_message_interval_seconds,
             rate_limit_post = d.rate_limit_post_max_requests,
@@ -1853,7 +1856,6 @@ internal class Transformer : MapperGenerator {
             rate_limit_search = d.rate_limit_search_max_requests,
             rate_limit_search_per_second = d.rate_limit_search_interval_seconds,
             federation_enabled = d.federation_enabled,
-            federation_debug = d.federation_debug,
             captcha_enabled = d.captcha_enabled,
             captcha_difficulty = d.captcha_difficulty,
             allowed_instances = d.allowed_instances,
@@ -1971,7 +1973,6 @@ internal class Transformer : MapperGenerator {
         hide_modlog_mod_names = d.hide_modlog_mod_names,
         discussion_languages = d.discussion_languages,
         slur_filter_regex = d.slur_filter_regex,
-        actor_name_max_length = d.actor_name_max_length,
         rate_limit_message = d.rate_limit_message_max_requests,
         rate_limit_message_per_second = d.rate_limit_message_interval_seconds,
         rate_limit_post = d.rate_limit_post_max_requests,
@@ -2314,9 +2315,8 @@ internal class Transformer : MapperGenerator {
         X4DatatypesSaveUserSettings(
             show_nsfw = d.show_nsfw,
             blur_nsfw = d.blur_nsfw,
-            auto_expand = d.auto_expand,
             theme = d.theme,
-            default_sort_type = d.default_sort_type,
+            default_sort_type = d.default_post_sort_type,
             default_listing_type = d.default_listing_type,
             interface_language = d.interface_language,
             avatar = d.avatar,
@@ -2337,9 +2337,13 @@ internal class Transformer : MapperGenerator {
             enable_keyboard_navigation = d.enable_keyboard_navigation,
             enable_animated_images = d.enable_animated_images,
             collapse_bot_comments = d.collapse_bot_comments,
-            show_scores = d.show_scores,
+            show_scores = d.show_score,
             show_upvotes = d.show_upvotes,
-            show_downvotes = d.show_downvotes,
+            show_downvotes = when(d.show_downvotes) {
+                VoteShow.ShowForOthers, VoteShow.Show -> true
+                VoteShow.Hide -> false
+                null -> null
+            },
             show_upvote_percentage = d.show_upvote_percentage,
         )
 
