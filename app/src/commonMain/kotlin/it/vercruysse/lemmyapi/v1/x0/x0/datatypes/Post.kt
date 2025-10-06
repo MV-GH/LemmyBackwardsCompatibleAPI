@@ -36,4 +36,6 @@ internal data class Post(
     val report_count: Long,
     val unresolved_report_count: Long,
     val federation_pending: Boolean,
+    val embed_video_width: Long? = null,
+    val embed_video_height: Long? = null,
 )

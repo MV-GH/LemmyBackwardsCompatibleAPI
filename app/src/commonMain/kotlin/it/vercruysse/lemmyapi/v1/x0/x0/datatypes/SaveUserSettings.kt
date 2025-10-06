@@ -3,6 +3,7 @@ package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 import it.vercruysse.lemmyapi.dto.SortType
 import it.vercruysse.lemmyapi.dto.PostListingMode
 import it.vercruysse.lemmyapi.dto.ListingType
+import it.vercruysse.lemmyapi.dto.VoteShow
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,6 +15,7 @@ internal data class SaveUserSettings(
     val post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
     val default_post_sort_type: SortType? /* "Active" | "Hot" | "New" | "Old" | "Top" | "MostComments" | "NewComments" | "Controversial" | "Scaled" */ = null,
     val default_post_time_range_seconds: Long? = null,
+    val default_items_per_page: Long? = null,
     val default_comment_sort_type: SortType? /* "Hot" | "Top" | "New" | "Old" | "Controversial" */ = null,
     val interface_language: String? = null,
     val display_name: String? = null,
@@ -33,9 +35,9 @@ internal data class SaveUserSettings(
     val enable_animated_images: Boolean? = null,
     val enable_private_messages: Boolean? = null,
     val collapse_bot_comments: Boolean? = null,
-    val show_scores: Boolean? = null,
+    val show_score: Boolean? = null,
     val show_upvotes: Boolean? = null,
-    val show_downvotes: String? /* "Show" | "ShowForOthers" | "Hide" */ = null,
+    val show_downvotes: VoteShow? /* "Show" | "ShowForOthers" | "Hide" */ = null,
     val show_upvote_percentage: Boolean? = null,
     val auto_mark_fetched_posts_as_read: Boolean? = null,
     val hide_media: Boolean? = null,

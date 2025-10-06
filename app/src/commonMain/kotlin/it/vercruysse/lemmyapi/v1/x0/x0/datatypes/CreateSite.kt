@@ -26,7 +26,6 @@ internal data class CreateSite(
     val application_email_admins: Boolean? = null,
     val discussion_languages: List<LanguageId>? = null,
     val slur_filter_regex: String? = null,
-    val actor_name_max_length: Long? = null,
     val rate_limit_message_max_requests: Long? = null,
     val rate_limit_message_interval_seconds: Long? = null,
     val rate_limit_post_max_requests: Long? = null,
