@@ -26,7 +26,6 @@ data class LocalSite(
     val legal_information: String? = null,
     val application_email_admins: Boolean,
     val slur_filter_regex: String? = null,
-    val actor_name_max_length: Long,
     val federation_enabled: Boolean,
     val captcha_enabled: Boolean,
     val captcha_difficulty: String,
@@ -55,4 +54,5 @@ data class LocalSite(
     val users_active_half_year: Long,
     val disable_email_notifications: Boolean,
     val suggested_communities: MultiCommunityId? = null,
+    val default_items_per_page: Long,
     ) : DatatypeRoot, Identity

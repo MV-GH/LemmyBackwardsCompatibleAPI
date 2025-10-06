@@ -174,10 +174,10 @@ enum class PostNotificationsMode(override val minimumVersion: Version = V1_0_0, 
 }
 
 @Serializable
-enum class VoteShow(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+enum class VoteShow(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) : VersionTracker {
     Show,
-    ShowForOthers,
-    Hide,
+    ShowForOthers(V1_0_0),
+    Hide(V0_19_4),
 }
 
 @Serializable

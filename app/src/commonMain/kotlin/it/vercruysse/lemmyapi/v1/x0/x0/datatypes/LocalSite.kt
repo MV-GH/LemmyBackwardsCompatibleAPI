@@ -19,10 +19,8 @@ internal data class LocalSite(
     val default_theme: String,
     val default_post_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */,
     val legal_information: String? = null,
-
     val application_email_admins: Boolean,
     val slur_filter_regex: String? = null,
-    val actor_name_max_length: Long,
     val federation_enabled: Boolean,
     val captcha_enabled: Boolean,
     val captcha_difficulty: String,
@@ -33,7 +31,6 @@ internal data class LocalSite(
     val federation_signed_fetch: Boolean,
     val default_post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
     val default_post_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "Top" | "MostComments" | "NewComments" | "Controversial" | "Scaled" */,
-
     val default_comment_sort_type: SortType /* "Hot" | "Top" | "New" | "Old" | "Controversial" */,
     val oauth_registration: Boolean,
     val post_upvotes: FederationMode /* "All" | "Local" | "Disable" */,
@@ -52,4 +49,5 @@ internal data class LocalSite(
     val users_active_half_year: Long,
     val disable_email_notifications: Boolean,
     val suggested_communities: MultiCommunityId? = null,
+    val default_items_per_page: Long,
 )
