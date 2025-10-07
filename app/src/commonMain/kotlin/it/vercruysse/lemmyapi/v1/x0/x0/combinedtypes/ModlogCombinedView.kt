@@ -1,20 +1,21 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.combinedtypes
 
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AdminAddView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AdminAllowInstanceView
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AdminBanView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AdminBlockInstanceView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AdminPurgeCommentView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AdminPurgeCommunityView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AdminPurgePersonView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AdminPurgePostView
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModAddCommunityView
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModAddView
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AdminRemoveCommunityView
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModAddToCommunityView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModBanFromCommunityView
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModBanView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModChangeCommunityVisibilityView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModFeaturePostView
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModLockCommentView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModLockPostView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModRemoveCommentView
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModRemoveCommunityView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModRemovePostView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ModTransferCommunityView
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -63,21 +64,21 @@ internal sealed class ModlogCombinedView {
     ) : ModlogCombinedView()
 
     @Serializable
-    @SerialName("ModAdd")
-    internal data class ModAdd(
-        val mod_add: ModAddView,
+    @SerialName("AdminAdd")
+    internal data class AdminAdd(
+        val admin_add: AdminAddView,
     ) : ModlogCombinedView()
 
     @Serializable
-    @SerialName("ModAddCommunity")
-    internal data class ModAddCommunity(
-        val mod_add_community: ModAddCommunityView,
+    @SerialName("ModAddToCommunity")
+    internal data class ModAddToCommunity(
+        val mod_add_to_community: ModAddToCommunityView,
     ) : ModlogCombinedView()
 
     @Serializable
-    @SerialName("ModBan")
-    internal data class ModBan(
-        val mod_ban: ModBanView,
+    @SerialName("AdminBan")
+    internal data class AdminBan(
+        val admin_ban: AdminBanView,
     ) : ModlogCombinedView()
 
     @Serializable
@@ -111,9 +112,9 @@ internal sealed class ModlogCombinedView {
     ) : ModlogCombinedView()
 
     @Serializable
-    @SerialName("ModRemoveCommunity")
-    internal data class ModRemoveCommunity(
-        val mod_remove_community: ModRemoveCommunityView,
+    @SerialName("AdminRemoveCommunity")
+    internal data class AdminRemoveCommunity(
+        val admin_remove_community: AdminRemoveCommunityView,
     ) : ModlogCombinedView()
 
     @Serializable
@@ -126,5 +127,11 @@ internal sealed class ModlogCombinedView {
     @SerialName("ModTransferCommunity")
     internal data class ModTransferCommunity(
         val mod_transfer_community: ModTransferCommunityView,
+    ) : ModlogCombinedView()
+
+    @Serializable
+    @SerialName("ModLockComment")
+    internal data class ModLockComment(
+        val mod_lock_comment: ModLockCommentView,
     ) : ModlogCombinedView()
 }
