@@ -12,7 +12,7 @@ import it.vercruysse.lemmyapi.dto.ListingType
 data class GetModlog(
     val mod_person_id: PersonId? = null,
     val community_id: CommunityId? = null,
-    val type_: ModlogActionType? /* "All" | "ModRemovePost" | "ModLockPost" | "ModFeaturePost" | "ModRemoveComment" | "ModRemoveCommunity" | "ModBanFromCommunity" | "ModAddCommunity" | "ModTransferCommunity" | "ModAdd" | "ModBan" | "ModChangeCommunityVisibility" | "AdminPurgePerson" | "AdminPurgeCommunity" | "AdminPurgePost" | "AdminPurgeComment" | "AdminBlockInstance" | "AdminAllowInstance" */ = null,
+    val type_: ModlogActionType? /* "All" | "ModRemovePost" | "ModLockPost" | "ModFeaturePost" | "ModRemoveComment" | "ModLockComment" | "AdminRemoveCommunity" | "ModBanFromCommunity" | "ModAddToCommunity" | "ModTransferCommunity" | "AdminAdd" | "AdminBan" | "ModChangeCommunityVisibility" | "AdminPurgePerson" | "AdminPurgeCommunity" | "AdminPurgePost" | "AdminPurgeComment" | "AdminBlockInstance" | "AdminAllowInstance" */ = null,
     /** Added in 1.0.0 */
     val listing_type: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */ = null,
     val other_person_id: PersonId? = null,

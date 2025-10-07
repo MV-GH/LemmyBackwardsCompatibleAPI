@@ -24,6 +24,10 @@ import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
 import it.vercruysse.lemmyapi.datatypes.AddAdminResponse as LemmyapiDatatypesAddAdminResponse
 import it.vercruysse.lemmyapi.datatypes.AddModToCommunity as LemmyapiDatatypesAddModToCommunity
 import it.vercruysse.lemmyapi.datatypes.AddModToCommunityResponse as LemmyapiDatatypesAddModToCommunityResponse
+import it.vercruysse.lemmyapi.datatypes.AdminAdd as LemmyapiDatatypesModAdd
+import it.vercruysse.lemmyapi.datatypes.AdminAddView as LemmyapiDatatypesModAddView
+import it.vercruysse.lemmyapi.datatypes.AdminBan as LemmyapiDatatypesModBan
+import it.vercruysse.lemmyapi.datatypes.AdminBanView as LemmyapiDatatypesModBanView
 import it.vercruysse.lemmyapi.datatypes.AdminPurgeComment as LemmyapiDatatypesAdminPurgeComment
 import it.vercruysse.lemmyapi.datatypes.AdminPurgeCommentView as LemmyapiDatatypesAdminPurgeCommentView
 import it.vercruysse.lemmyapi.datatypes.AdminPurgeCommunity as LemmyapiDatatypesAdminPurgeCommunity
@@ -32,6 +36,8 @@ import it.vercruysse.lemmyapi.datatypes.AdminPurgePerson as LemmyapiDatatypesAdm
 import it.vercruysse.lemmyapi.datatypes.AdminPurgePersonView as LemmyapiDatatypesAdminPurgePersonView
 import it.vercruysse.lemmyapi.datatypes.AdminPurgePost as LemmyapiDatatypesAdminPurgePost
 import it.vercruysse.lemmyapi.datatypes.AdminPurgePostView as LemmyapiDatatypesAdminPurgePostView
+import it.vercruysse.lemmyapi.datatypes.AdminRemoveCommunity as LemmyapiDatatypesModRemoveCommunity
+import it.vercruysse.lemmyapi.datatypes.AdminRemoveCommunityView as LemmyapiDatatypesModRemoveCommunityView
 import it.vercruysse.lemmyapi.datatypes.ApproveRegistrationApplication as LemmyapiDatatypesApproveRegistrationApplication
 import it.vercruysse.lemmyapi.datatypes.BanFromCommunity as LemmyapiDatatypesBanFromCommunity
 import it.vercruysse.lemmyapi.datatypes.BanFromCommunityResponse as LemmyapiDatatypesBanFromCommunityResponse
@@ -132,14 +138,10 @@ import it.vercruysse.lemmyapi.datatypes.Login as LemmyapiDatatypesLogin
 import it.vercruysse.lemmyapi.datatypes.LoginResponse as LemmyapiDatatypesLoginResponse
 import it.vercruysse.lemmyapi.datatypes.LoginToken as LemmyapiDatatypesLoginToken
 import it.vercruysse.lemmyapi.datatypes.MarkPostAsRead as LemmyapiDatatypesMarkPostAsRead
-import it.vercruysse.lemmyapi.datatypes.ModAdd as LemmyapiDatatypesModAdd
-import it.vercruysse.lemmyapi.datatypes.ModAddCommunity as LemmyapiDatatypesModAddCommunity
-import it.vercruysse.lemmyapi.datatypes.ModAddCommunityView as LemmyapiDatatypesModAddCommunityView
-import it.vercruysse.lemmyapi.datatypes.ModAddView as LemmyapiDatatypesModAddView
-import it.vercruysse.lemmyapi.datatypes.ModBan as LemmyapiDatatypesModBan
+import it.vercruysse.lemmyapi.datatypes.ModAddToCommunity as LemmyapiDatatypesModAddCommunity
+import it.vercruysse.lemmyapi.datatypes.ModAddToCommunityView as LemmyapiDatatypesModAddCommunityView
 import it.vercruysse.lemmyapi.datatypes.ModBanFromCommunity as LemmyapiDatatypesModBanFromCommunity
 import it.vercruysse.lemmyapi.datatypes.ModBanFromCommunityView as LemmyapiDatatypesModBanFromCommunityView
-import it.vercruysse.lemmyapi.datatypes.ModBanView as LemmyapiDatatypesModBanView
 import it.vercruysse.lemmyapi.datatypes.ModChangeCommunityVisibility as LemmyapiDatatypesModChangeCommunityVisibility
 import it.vercruysse.lemmyapi.datatypes.ModChangeCommunityVisibilityView as LemmyapiDatatypesModChangeCommunityVisibilityView
 import it.vercruysse.lemmyapi.datatypes.ModFeaturePost as LemmyapiDatatypesModFeaturePost
@@ -148,8 +150,6 @@ import it.vercruysse.lemmyapi.datatypes.ModLockPost as LemmyapiDatatypesModLockP
 import it.vercruysse.lemmyapi.datatypes.ModLockPostView as LemmyapiDatatypesModLockPostView
 import it.vercruysse.lemmyapi.datatypes.ModRemoveComment as LemmyapiDatatypesModRemoveComment
 import it.vercruysse.lemmyapi.datatypes.ModRemoveCommentView as LemmyapiDatatypesModRemoveCommentView
-import it.vercruysse.lemmyapi.datatypes.ModRemoveCommunity as LemmyapiDatatypesModRemoveCommunity
-import it.vercruysse.lemmyapi.datatypes.ModRemoveCommunityView as LemmyapiDatatypesModRemoveCommunityView
 import it.vercruysse.lemmyapi.datatypes.ModRemovePost as LemmyapiDatatypesModRemovePost
 import it.vercruysse.lemmyapi.datatypes.ModRemovePostView as LemmyapiDatatypesModRemovePostView
 import it.vercruysse.lemmyapi.datatypes.ModTransferCommunity as LemmyapiDatatypesModTransferCommunity
@@ -850,7 +850,7 @@ internal class Transformer : MapperGenerator {
         // Add ModRemoveCommunity entries
         modlogList.addAll(
             d.removed_communities.map { view ->
-                it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModRemoveCommunity(mod_remove_community = this.toUni(d = view))
+                it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.AdminRemoveCommunity(admin_remove_community = this.toUni(d = view))
             },
         )
 
@@ -864,14 +864,14 @@ internal class Transformer : MapperGenerator {
         // Add ModBan entries
         modlogList.addAll(
             d.banned.map { view ->
-                it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModBan(mod_ban = this.toUni(d = view))
+                it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.AdminBan(admin_ban = this.toUni(d = view))
             },
         )
 
         // Add ModAddCommunity entries
         modlogList.addAll(
             d.added_to_community.map { view ->
-                it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModAddCommunity(mod_add_community = this.toUni(d = view))
+                it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModAddToCommunity(mod_add_to_community = this.toUni(d = view))
             },
         )
 
@@ -885,7 +885,7 @@ internal class Transformer : MapperGenerator {
         // Add ModAdd entries
         modlogList.addAll(
             d.added.map { view ->
-                it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.ModAdd(mod_add = this.toUni(d = view))
+                it.vercruysse.lemmyapi.datatypes.ModlogCombinedView.AdminAdd(admin_add = this.toUni(d = view))
             },
         )
 
@@ -1214,7 +1214,7 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X3DatatypesModAddCommunityView): LemmyapiDatatypesModAddCommunityView =
         LemmyapiDatatypesModAddCommunityView(
-            mod_add_community = this.toUni(d = d.mod_add_community),
+            mod_add_to_community = this.toUni(d = d.mod_add_community),
             moderator = d.moderator?.let { this.toUni(d = it) },
             community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
             other_person = this.toUni(d = d.modded_person),
@@ -1222,7 +1222,7 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X3DatatypesModAddView): LemmyapiDatatypesModAddView =
         LemmyapiDatatypesModAddView(
-            mod_add = this.toUni(d = d.mod_add),
+            admin_add = this.toUni(d = d.mod_add),
             moderator = d.moderator?.let { this.toUni(d = it) },
             other_person = this.toUni(d = d.modded_person),
         )
@@ -1259,7 +1259,7 @@ internal class Transformer : MapperGenerator {
 
     override fun toUni(d: X3DatatypesModBanView): LemmyapiDatatypesModBanView =
         LemmyapiDatatypesModBanView(
-            mod_ban = this.toUni(d = d.mod_ban),
+            admin_ban = this.toUni(d = d.mod_ban),
             moderator = d.moderator?.let { this.toUni(d = it) },
             other_person = this.toUni(d = d.banned_person),
         )
@@ -1352,7 +1352,7 @@ internal class Transformer : MapperGenerator {
         )
 
     override fun toUni(d: X3DatatypesModRemoveCommunityView): LemmyapiDatatypesModRemoveCommunityView = LemmyapiDatatypesModRemoveCommunityView(
-        mod_remove_community = this.toUni(d = d.mod_remove_community),
+        admin_remove_community = this.toUni(d = d.mod_remove_community),
         moderator = d.moderator?.let { this.toUni(d = it) },
         community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
     )
@@ -1772,7 +1772,7 @@ internal class Transformer : MapperGenerator {
             description = d.description,
             icon = d.icon,
             banner = d.banner,
-            enable_downvotes = when(d.post_downvotes) {
+            enable_downvotes = when (d.post_downvotes) {
                 FederationMode.Local, FederationMode.All -> true
                 FederationMode.Disable -> false
                 null -> null

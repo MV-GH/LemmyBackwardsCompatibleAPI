@@ -4,9 +4,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.zip.ZipFile
 import kotlin.system.exitProcess
@@ -245,6 +243,6 @@ fun downloadTypes(
 }
 
 fun main() {
-    downloadTypes("1.0.0-community-post-notifs.0", "v1/x0/x0")
+    downloadTypes("1.0.0-error-status-code.0", "v1/x0/x0")
     exitProcess(0)
 }

@@ -56,23 +56,23 @@ sealed class ModlogCombinedView: DatatypeRoot {
 
     @CommonParcelize
     @Serializable
-    @SerialName("ModAdd")
-    data class ModAdd(
-        val mod_add: ModAddView
+    @SerialName("AdminAdd")
+    internal data class AdminAdd(
+        val admin_add: AdminAddView,
     ) : ModlogCombinedView()
 
     @CommonParcelize
     @Serializable
-    @SerialName("ModAddCommunity")
-    data class ModAddCommunity(
-        val mod_add_community: ModAddCommunityView
+    @SerialName("ModAddToCommunity")
+    internal data class ModAddToCommunity(
+        val mod_add_to_community: ModAddToCommunityView,
     ) : ModlogCombinedView()
 
     @CommonParcelize
     @Serializable
-    @SerialName("ModBan")
-    data class ModBan(
-        val mod_ban: ModBanView
+    @SerialName("AdminBan")
+    internal data class AdminBan(
+        val admin_ban: AdminBanView,
     ) : ModlogCombinedView()
 
     @CommonParcelize
@@ -112,9 +112,9 @@ sealed class ModlogCombinedView: DatatypeRoot {
 
     @CommonParcelize
     @Serializable
-    @SerialName("ModRemoveCommunity")
-    data class ModRemoveCommunity(
-        val mod_remove_community: ModRemoveCommunityView
+    @SerialName("AdminRemoveCommunity")
+    internal data class AdminRemoveCommunity(
+        val admin_remove_community: AdminRemoveCommunityView,
     ) : ModlogCombinedView()
 
     @CommonParcelize
@@ -130,4 +130,11 @@ sealed class ModlogCombinedView: DatatypeRoot {
     data class ModTransferCommunity(
         val mod_transfer_community: ModTransferCommunityView
     ) : ModlogCombinedView()
+
+    @CommonParcelize
+    @Serializable
+    @SerialName("ModLockComment")
+    internal data class ModLockComment(
+        val mod_lock_comment: ModLockCommentView,
+    ): ModlogCombinedView()
 }
