@@ -7,11 +7,8 @@ import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
-data class ModRemoveCommunity(
-    val id: Long,
-    val mod_person_id: PersonId,
-    val community_id: CommunityId,
-    val reason: String? = null,
-    val removed: Boolean,
-    val published_at: String,
+data class AdminRemoveCommunityView(
+    val admin_remove_community: AdminRemoveCommunity,
+    val moderator: Person? = null,
+    val community: Community,
 ) : DatatypeRoot
