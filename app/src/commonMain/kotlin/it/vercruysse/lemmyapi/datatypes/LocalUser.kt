@@ -20,7 +20,7 @@ data class LocalUser(
     val email: String? = null,
     val show_nsfw: Boolean,
     val theme: String,
-    val default_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */,
+    val default_post_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */,
     val default_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" */,
     val interface_language: String,
     val show_avatars: Boolean,
@@ -31,8 +31,6 @@ data class LocalUser(
     val accepted_application: Boolean,
     val open_links_in_new_tab: Boolean,
     val blur_nsfw: Boolean,
-    /** Removed in 1.0.0 */
-    val auto_expand: Boolean,
     val infinite_scroll_enabled: Boolean,
     val admin: Boolean,
     val post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
