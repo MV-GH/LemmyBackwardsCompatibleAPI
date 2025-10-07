@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
 import kotlinx.serialization.Serializable
 
-// TODO changed
 
 @Serializable
 internal data class CommentReportView(
