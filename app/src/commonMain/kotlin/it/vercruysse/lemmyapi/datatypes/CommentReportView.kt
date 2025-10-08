@@ -23,8 +23,7 @@ data class CommentReportView(
     val creator_is_moderator: Boolean,
     val creator_banned: Boolean,
     val creator_banned_from_community: Boolean,
-
-    ) : DatatypeRoot, Identity {
+) : DatatypeRoot, Identity {
     override val id: Long
         get() = comment_report.id
 }

@@ -10,8 +10,6 @@ import kotlinx.serialization.Serializable
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.dto.VoteShow
 
-// TODO: changes
-
 @CommonParcelize
 @Serializable
 data class LocalUser(
