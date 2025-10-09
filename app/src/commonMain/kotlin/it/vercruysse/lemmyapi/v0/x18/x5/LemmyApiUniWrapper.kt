@@ -8,6 +8,7 @@ import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
 import it.vercruysse.lemmyapi.datatypes.ListNotifications
 import it.vercruysse.lemmyapi.datatypes.ListNotificationsResponse
 import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
+import it.vercruysse.lemmyapi.datatypes.MyUserInfo
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.dto.NotificationDataType
@@ -956,6 +957,16 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun validateAuth(): Result<Unit> =
         // This request can only fail if the auth token is invalid
         apiV18.getPersonMentions(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetPersonMentions(auth = auth ?: "")).map { }
+
+    /**
+     * Get data of current user
+     *
+     * @GET("/account")
+     */
+    override suspend fun getMyUser(): Result<MyUserInfo> =
+        apiV18.getSite(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSite(auth))
+            .mapCatching { it.my_user ?: throw IllegalStateException("Auth invalid") }
+            .map { transformer.toUni(it) }
 
     /**
      * Logout your user

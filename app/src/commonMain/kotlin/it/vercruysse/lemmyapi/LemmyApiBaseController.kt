@@ -638,6 +638,13 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun validateAuth(): Result<Unit>
 
     /**
+     * Get data of current user
+     *
+     * @GET("/account")
+     */
+    abstract suspend fun getMyUser(): Result<MyUserInfo>
+
+    /**
      * Logout your user
      *
      * @POST("user/logout")
