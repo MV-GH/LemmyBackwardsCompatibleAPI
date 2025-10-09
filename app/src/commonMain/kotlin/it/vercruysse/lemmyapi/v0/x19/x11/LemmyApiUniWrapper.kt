@@ -8,6 +8,7 @@ import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
 import it.vercruysse.lemmyapi.datatypes.ListNotifications
 import it.vercruysse.lemmyapi.datatypes.ListNotificationsResponse
 import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
+import it.vercruysse.lemmyapi.datatypes.MyUserInfo
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.dto.NotificationDataType
@@ -1000,4 +1001,14 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         form: it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication,
     ): Result<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse> =
         api.getRegistrationApplication(transformer.fromUni(form)).map(transformer::toUni)
+
+    /**
+     * Get data of current user
+     *
+     * @GET("/account")
+     */
+    override suspend fun getMyUser(): Result<MyUserInfo> =
+        api.getSite()
+            .mapCatching { it.my_user ?: throw IllegalStateException("Auth invalid") }
+            .map { transformer.toUni(it) }
 }

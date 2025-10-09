@@ -14,9 +14,6 @@ data class GetSiteResponse(
     val all_languages: List<Language>,
     val discussion_languages: List<LanguageId>,
     val blocked_urls: List<LocalSiteUrlBlocklist>,
-    /** Removed in 1.0.0 */
-    // TODO remove ?
-    val my_user: MyUserInfo? = null,
     val tagline: Tagline? = null,
     /** Added in 1.0.0 */
     val oauth_providers: List<PublicOAuthProvider>,

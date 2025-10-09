@@ -492,7 +492,6 @@ internal class Transformer : MapperGenerator {
             site_view = this.toUni(d = d.site_view),
             admins = d.admins.map { this.toUni(d = it) },
             version = d.version,
-            my_user = d.my_user?.let { this.toUni(d = it) },
             all_languages = d.all_languages.map { this.toUni(d = it) },
             discussion_languages = d.discussion_languages,
             blocked_urls = emptyList(),
