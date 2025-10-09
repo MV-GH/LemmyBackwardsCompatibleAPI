@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
-internal data class ListCustomEmojisResponse(
+data class ListCustomEmojisResponse(
     val custom_emojis: List<CustomEmojiView>,
 ): DatatypeRoot

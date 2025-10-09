@@ -3,6 +3,8 @@ package it.vercruysse.lemmyapi.v0.x19.x3
 import io.github.z4kn4fein.semver.Version
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.LemmyApiBaseController
+import it.vercruysse.lemmyapi.datatypes.ListCustomEmojis
+import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
 import it.vercruysse.lemmyapi.datatypes.ListNotifications
 import it.vercruysse.lemmyapi.datatypes.ListNotificationsResponse
 import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
@@ -857,6 +859,16 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun deleteCustomEmoji(form: it.vercruysse.lemmyapi.datatypes.DeleteCustomEmoji): Result<Unit> =
         api.deleteCustomEmoji(transformer.fromUni(form))
+
+    /**
+     * List custom emojis
+     *
+     * @GET("custom_emoji/list")
+     */
+    override suspend fun listCustomEmojis(form: ListCustomEmojis): Result<ListCustomEmojisResponse> =
+        api.getSite().map {
+            ListCustomEmojisResponse(it.custom_emojis.map(transformer::toUni))
+        }
 
     /**
      * Block an instance.

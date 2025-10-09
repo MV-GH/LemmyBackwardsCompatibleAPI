@@ -575,6 +575,13 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit>
 
     /**
+     * List custom emojis
+     *
+     * @GET("custom_emoji/list")
+     */
+    abstract suspend fun listCustomEmojis(form: ListCustomEmojis): Result<ListCustomEmojisResponse>
+
+    /**
      * Block an instance.
      *
      * @POST("site/block")

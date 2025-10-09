@@ -477,7 +477,6 @@ internal class Transformer : MapperGenerator {
             my_user = d.my_user?.let { this.toUni(d = it) },
             all_languages = d.all_languages.map { this.toUni(d = it) },
             discussion_languages = d.discussion_languages,
-            custom_emojis = d.custom_emojis.map { this.toUni(d = it) },
             blocked_urls = emptyList(),
             tagline = if (d.taglines.isEmpty()) null else this.toUni(d = d.taglines.random()),
             oauth_providers = emptyList(),
