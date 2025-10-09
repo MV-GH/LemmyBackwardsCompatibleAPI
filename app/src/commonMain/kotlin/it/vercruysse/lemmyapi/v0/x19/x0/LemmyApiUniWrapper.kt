@@ -8,6 +8,7 @@ import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
 import it.vercruysse.lemmyapi.datatypes.ListNotifications
 import it.vercruysse.lemmyapi.datatypes.ListNotificationsResponse
 import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
+import it.vercruysse.lemmyapi.datatypes.MyUserInfo
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.dto.NotificationDataType
@@ -341,6 +342,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
                     it.vercruysse.lemmyapi.datatypes.ListReportsResponse(items)
                 }
             }
+
             it.vercruysse.lemmyapi.dto.ReportType.Comments -> {
                 api.listCommentReports(transformer.fromUniC(form)).map { resp ->
                     val items = resp.comment_reports.map { r ->
@@ -351,6 +353,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
                     it.vercruysse.lemmyapi.datatypes.ListReportsResponse(items)
                 }
             }
+
             it.vercruysse.lemmyapi.dto.ReportType.PrivateMessages -> {
                 api.listPrivateMessageReports(transformer.fromUniPm(form)).map { resp ->
                     val items = resp.private_message_reports.map { r ->
@@ -361,6 +364,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
                     it.vercruysse.lemmyapi.datatypes.ListReportsResponse(items)
                 }
             }
+
             it.vercruysse.lemmyapi.dto.ReportType.All -> {
                 runCatching {
                     val postsResp = api.listPostReports(transformer.fromUniP(form)).getOrThrow()
@@ -625,12 +629,16 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
                         },
                     )
                 }
+
             NotificationDataType.Reply ->
                 api.getReplies(transformer.fromUniR(form)).map(transformer::toUni)
+
             NotificationDataType.Mention ->
                 api.getPersonMentions(transformer.fromUniM(form)).map(transformer::toUni)
+
             NotificationDataType.PrivateMessage ->
                 api.getPrivateMessages(transformer.fromUniP(form)).map(transformer::toUni)
+
             NotificationDataType.Subscribed -> Result.success(ListNotificationsResponse(emptyList()))
         }
 
@@ -998,4 +1006,14 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun getRegistrationApplication(
         form: it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication,
     ): Result<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse> = notSupported()
+
+    /**
+     * Get data of current user
+     *
+     * @GET("/account")
+     */
+    override suspend fun getMyUser(): Result<MyUserInfo> =
+        api.getSite()
+            .mapCatching { it.my_user ?: throw IllegalStateException("Auth invalid") }
+            .map { transformer.toUni(it) }
 }
