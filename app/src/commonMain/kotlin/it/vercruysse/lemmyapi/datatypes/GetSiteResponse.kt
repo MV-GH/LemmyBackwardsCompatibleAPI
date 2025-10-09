@@ -17,9 +17,6 @@ data class GetSiteResponse(
     /** Removed in 1.0.0 */
     // TODO remove ?
     val my_user: MyUserInfo? = null,
-    /** Removed in 1.0.0 */
-    // TODO remove
-    val custom_emojis: List<CustomEmojiView>,
     val tagline: Tagline? = null,
     /** Added in 1.0.0 */
     val oauth_providers: List<PublicOAuthProvider>,
