@@ -9,6 +9,4 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @Serializable
 data class CommentResponse(
     val comment_view: CommentView,
-    // TODO is removed
-    val recipient_ids: List<LocalUserId>,
 ) : DatatypeRoot
