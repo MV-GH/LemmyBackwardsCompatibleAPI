@@ -584,7 +584,6 @@ internal class Transformer : MapperGenerator {
     override fun toUni(d: X4DatatypesCommentResponse): LemmyapiDatatypesCommentResponse =
         LemmyapiDatatypesCommentResponse(
             comment_view = this.toUni(d = d.comment_view),
-            recipient_ids = d.recipient_ids,
         )
 
     override fun toUni(d: X4DatatypesCommentView): LemmyapiDatatypesCommentView =
