@@ -193,7 +193,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("post/mark_as_read")
      */
-    abstract suspend fun markPostAsRead(form: MarkPostAsRead): Result<Unit>
+    abstract suspend fun markManyPostAsRead(form: MarkManyPostsAsRead): Result<Unit>
 
     /**
      * A moderator can lock a post ( IE disable new comments ).

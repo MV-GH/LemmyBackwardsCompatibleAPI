@@ -5,4 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class MarkManyPostsAsRead(
     val post_ids: List<PostId>,
+    val read: Boolean
 )
