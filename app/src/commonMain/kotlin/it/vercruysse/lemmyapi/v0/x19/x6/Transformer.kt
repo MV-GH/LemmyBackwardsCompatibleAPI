@@ -142,7 +142,7 @@ import it.vercruysse.lemmyapi.datatypes.LockPost as LemmyapiDatatypesLockPost
 import it.vercruysse.lemmyapi.datatypes.Login as LemmyapiDatatypesLogin
 import it.vercruysse.lemmyapi.datatypes.LoginResponse as LemmyapiDatatypesLoginResponse
 import it.vercruysse.lemmyapi.datatypes.LoginToken as LemmyapiDatatypesLoginToken
-import it.vercruysse.lemmyapi.datatypes.MarkPostAsRead as LemmyapiDatatypesMarkPostAsRead
+import it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead as LemmyapiDatatypesMarkPostAsRead
 import it.vercruysse.lemmyapi.datatypes.ModAddToCommunity as LemmyapiDatatypesModAddCommunity
 import it.vercruysse.lemmyapi.datatypes.ModAddToCommunityView as LemmyapiDatatypesModAddCommunityView
 import it.vercruysse.lemmyapi.datatypes.ModBanFromCommunity as LemmyapiDatatypesModBanFromCommunity

@@ -276,7 +276,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("post/mark_as_read")
      */
-    override suspend fun markPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): Result<Unit> = form.post_ids
+    override suspend fun markManyPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): Result<Unit> = form.post_ids
         .map { MarkPostAsRead(post_id = it, read = form.read, auth = "" + auth) }
         .map { apiV18.markPostAsRead(it) }
         .map { it.map { } }
