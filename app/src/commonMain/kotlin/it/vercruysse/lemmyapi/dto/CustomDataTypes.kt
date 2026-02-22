@@ -119,6 +119,9 @@ enum class ModlogActionType(override val minimumVersion: Version = MINIMUM_API_V
     AdminAllowInstance(V1_0_0),
 }
 
+// TODO: fix
+// now only "Active" | "Hot" | "New" | "Old" | "Top" | "MostComments" | "NewComments" | "Controversial" | "Scaled"
+
 @Serializable
 enum class SortType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
     VersionTracker {

@@ -1,13 +1,13 @@
 package it.vercruysse.lemmyapi.datatypes
 
-import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
-// TODO: changes mark read
+import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
 data class MarkManyPostsAsRead(
     val post_ids: List<PostId>,
-): DatatypeRoot
+    val read: Boolean,
+) : DatatypeRoot

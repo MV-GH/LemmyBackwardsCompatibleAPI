@@ -7,6 +7,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.json.JsonClassDiscriminator
 import kotlinx.serialization.Serializable
 
+
+// TODO: most likely wrong
+
 @CommonParcelize
 @Serializable
 @OptIn(ExperimentalSerializationApi::class)
