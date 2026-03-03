@@ -2,7 +2,7 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.CommunityFollowerState
+import it.vercruysse.lemmyapi.enums.CommunityFollowerState
 import kotlinx.serialization.Serializable
 
 @CommonParcelize

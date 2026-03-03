@@ -2,13 +2,13 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
-import it.vercruysse.lemmyapi.dto.PostListingMode
-import it.vercruysse.lemmyapi.dto.ListingType
-import it.vercruysse.lemmyapi.dto.SortType
+import it.vercruysse.lemmyapi.enums.PostListingMode
+import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.SortType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
-import it.vercruysse.lemmyapi.dto.VoteShow
+import it.vercruysse.lemmyapi.enums.VoteShow
 
 @CommonParcelize
 @Serializable
