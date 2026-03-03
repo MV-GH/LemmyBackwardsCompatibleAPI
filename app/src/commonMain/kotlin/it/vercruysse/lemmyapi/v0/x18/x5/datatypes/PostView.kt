@@ -1,6 +1,6 @@
 package it.vercruysse.lemmyapi.v0.x18.x5.datatypes
 
-import it.vercruysse.lemmyapi.dto.SubscribedType
+import it.vercruysse.lemmyapi.enums.SubscribedType
 import kotlinx.serialization.Serializable
 
 @Serializable

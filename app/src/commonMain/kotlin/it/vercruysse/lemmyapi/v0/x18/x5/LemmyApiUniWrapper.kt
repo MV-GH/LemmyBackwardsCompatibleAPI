@@ -12,8 +12,8 @@ import it.vercruysse.lemmyapi.datatypes.PagedResponse
 import it.vercruysse.lemmyapi.datatypes.UnreadCountsResponse
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
-import it.vercruysse.lemmyapi.dto.NotificationDataType
-import it.vercruysse.lemmyapi.dto.NotificationType
+import it.vercruysse.lemmyapi.enums.NotificationDataType
+import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCaptcha
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetReportCount
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadCount

@@ -35,11 +35,10 @@ internal interface MapperGenerator {
     fun toUni(d: AdminPurgePersonView): it.vercruysse.lemmyapi.datatypes.AdminPurgePersonView
     fun toUni(d: AdminPurgePost): it.vercruysse.lemmyapi.datatypes.AdminPurgePost
     fun toUni(d: AdminPurgePostView): it.vercruysse.lemmyapi.datatypes.AdminPurgePostView
-    fun toUni(d: BanFromCommunityResponse): it.vercruysse.lemmyapi.datatypes.BanFromCommunityResponse
-    fun toUni(d: BannedPersonsResponse): it.vercruysse.lemmyapi.datatypes.BannedPersonsResponse
-    fun toUni(d: BanPersonResponse): it.vercruysse.lemmyapi.datatypes.BanPersonResponse
-    fun toUni(d: BlockCommunityResponse): it.vercruysse.lemmyapi.datatypes.BlockCommunityResponse
-    fun toUni(d: BlockPersonResponse): it.vercruysse.lemmyapi.datatypes.BlockPersonResponse
+    fun toUni(d: BanFromCommunityResponse): it.vercruysse.lemmyapi.datatypes.PersonResponse
+    fun toUni(d: BanPersonResponse): it.vercruysse.lemmyapi.datatypes.PersonResponse
+    fun toUni(d: BlockCommunityResponse): it.vercruysse.lemmyapi.datatypes.CommunityResponse
+    fun toUni(d: BlockPersonResponse): it.vercruysse.lemmyapi.datatypes.PersonResponse
     fun toUni(d: CaptchaResponse): it.vercruysse.lemmyapi.datatypes.CaptchaResponse
     fun toUni(d: Comment, counts: CommentAggregates): it.vercruysse.lemmyapi.datatypes.Comment
 
@@ -59,28 +58,13 @@ internal interface MapperGenerator {
     fun toUni(d: FederatedInstances): it.vercruysse.lemmyapi.datatypes.FederatedInstances
     fun toUni(d: GenerateTotpSecretResponse): it.vercruysse.lemmyapi.datatypes.GenerateTotpSecretResponse
     fun toUni(d: GetCaptchaResponse): it.vercruysse.lemmyapi.datatypes.GetCaptchaResponse
-    fun toUni(d: GetCommentsResponse): it.vercruysse.lemmyapi.datatypes.GetCommentsResponse
     fun toUni(d: GetCommunityResponse): it.vercruysse.lemmyapi.datatypes.GetCommunityResponse
-    fun toUni(d: GetFederatedInstancesResponse): it.vercruysse.lemmyapi.datatypes.GetFederatedInstancesResponse
-    fun toUni(d: GetModlogResponse): it.vercruysse.lemmyapi.datatypes.GetModlogResponse
     fun toUni(d: GetPersonDetailsResponse): it.vercruysse.lemmyapi.datatypes.GetPersonDetailsResponse
     fun toUni(d: GetPostResponse): it.vercruysse.lemmyapi.datatypes.GetPostResponse
-    fun toUni(d: GetPostsResponse): it.vercruysse.lemmyapi.datatypes.GetPostsResponse
-    fun toUni(d: GetReportCountResponse): it.vercruysse.lemmyapi.datatypes.GetReportCountResponse
     fun toUni(d: GetSiteMetadataResponse): it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse
-
-    fun toUni(d: GetUnreadCountResponse): it.vercruysse.lemmyapi.datatypes.GetUnreadCountResponse
-    fun toUni(
-        d: GetUnreadRegistrationApplicationCountResponse,
-    ): it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse
     fun toUni(d: Instance): it.vercruysse.lemmyapi.datatypes.Instance
     fun toUni(d: InstanceWithFederationState): it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState
     fun toUni(d: Language): it.vercruysse.lemmyapi.datatypes.Language
-    fun toUni(d: ListCommentLikesResponse): it.vercruysse.lemmyapi.datatypes.ListCommentLikesResponse
-    fun toUni(d: ListCommunitiesResponse): it.vercruysse.lemmyapi.datatypes.ListCommunitiesResponse
-    fun toUni(d: ListPostLikesResponse): it.vercruysse.lemmyapi.datatypes.ListPostLikesResponse
-    fun toUni(d: ListRegistrationApplicationsResponse): it.vercruysse.lemmyapi.datatypes.ListRegistrationApplicationsResponse
-
     fun toUni(d: LocalSiteRateLimit): it.vercruysse.lemmyapi.datatypes.LocalSiteRateLimit
     fun toUni(d: LocalUser): it.vercruysse.lemmyapi.datatypes.LocalUser
     fun toUni(d: LocalUserView): it.vercruysse.lemmyapi.datatypes.LocalUserView
@@ -179,7 +163,7 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPersonDetails): GetPersonDetails
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPost): GetPost
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPosts): GetPosts
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetReportCount): GetReportCount
+
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetSiteMetadata): GetSiteMetadata
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.HideCommunity): HideCommunity
     fun fromUniC(d: it.vercruysse.lemmyapi.datatypes.ListReports): ListCommentReports

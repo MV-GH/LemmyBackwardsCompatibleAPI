@@ -1,6 +1,6 @@
 package it.vercruysse.lemmyapi.v0.x19.x4.datatypes
 
-import it.vercruysse.lemmyapi.dto.CommunityVisibility
+import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import kotlinx.serialization.Serializable
 
 @Serializable

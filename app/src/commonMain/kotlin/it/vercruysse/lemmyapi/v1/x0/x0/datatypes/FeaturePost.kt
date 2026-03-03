@@ -1,6 +1,6 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
-import it.vercruysse.lemmyapi.dto.PostFeatureType
+import it.vercruysse.lemmyapi.enums.PostFeatureType
 import kotlinx.serialization.Serializable
 
 @Serializable

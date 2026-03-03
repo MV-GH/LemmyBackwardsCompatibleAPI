@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
-import it.vercruysse.lemmyapi.dto.CommunityFollowerState
-import it.vercruysse.lemmyapi.dto.CommunityNotificationsMode
+import it.vercruysse.lemmyapi.enums.CommunityFollowerState
+import it.vercruysse.lemmyapi.enums.CommunityNotificationsMode
 import kotlinx.serialization.Serializable
 
 @Serializable

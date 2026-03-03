@@ -3,7 +3,7 @@ package it.vercruysse.lemmyapi
 import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.dto.NodeInfo
-import it.vercruysse.lemmyapi.dto.VersionTracker
+import it.vercruysse.lemmyapi.enums.VersionTracker
 import it.vercruysse.lemmyapi.dto.getSupportedEntries
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.pictrs.PictrsService

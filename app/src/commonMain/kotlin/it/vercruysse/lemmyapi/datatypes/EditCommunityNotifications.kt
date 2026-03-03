@@ -2,7 +2,7 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.CommunityNotificationsMode
+import it.vercruysse.lemmyapi.enums.CommunityNotificationsMode
 import kotlinx.serialization.Serializable
 
 @CommonParcelize
