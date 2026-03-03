@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
-import it.vercruysse.lemmyapi.dto.ListingType
-import it.vercruysse.lemmyapi.dto.ModlogActionType
+import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.ModlogActionType
 import kotlinx.serialization.Serializable
 
 @Serializable

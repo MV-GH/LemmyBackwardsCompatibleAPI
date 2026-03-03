@@ -2,7 +2,7 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.ReportType
+import it.vercruysse.lemmyapi.enums.ReportType
 import kotlinx.serialization.Serializable
 
 @CommonParcelize

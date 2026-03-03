@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.x19.x0.datatypes
 
-import it.vercruysse.lemmyapi.dto.RegistrationMode
-import it.vercruysse.lemmyapi.dto.ListingType
+import it.vercruysse.lemmyapi.enums.RegistrationMode
+import it.vercruysse.lemmyapi.enums.ListingType
 import kotlinx.serialization.Serializable
 
 @Serializable

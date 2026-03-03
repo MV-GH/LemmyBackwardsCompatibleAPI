@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.SortType
+import it.vercruysse.lemmyapi.enums.SortType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize

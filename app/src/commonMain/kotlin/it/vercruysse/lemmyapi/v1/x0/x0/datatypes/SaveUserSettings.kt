@@ -1,9 +1,9 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
-import it.vercruysse.lemmyapi.dto.SortType
-import it.vercruysse.lemmyapi.dto.PostListingMode
-import it.vercruysse.lemmyapi.dto.ListingType
-import it.vercruysse.lemmyapi.dto.VoteShow
+import it.vercruysse.lemmyapi.enums.SortType
+import it.vercruysse.lemmyapi.enums.PostListingMode
+import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.VoteShow
 import kotlinx.serialization.Serializable
 
 @Serializable
