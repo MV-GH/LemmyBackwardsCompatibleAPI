@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
-data class PagedResponse<T>(
+data class PagedResponse<T : DatatypeRoot>(
     val items: List<T>,
     val next_page: PaginationCursor? = null,
     val prev_page: PaginationCursor? = null,
