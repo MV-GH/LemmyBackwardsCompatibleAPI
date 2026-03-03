@@ -13,4 +13,5 @@ internal data class Register(
     val captcha_answer: String? = null,
     val honeypot: String? = null,
     val answer: String? = null,
+    val stay_logged_in: Boolean? = null,
 )

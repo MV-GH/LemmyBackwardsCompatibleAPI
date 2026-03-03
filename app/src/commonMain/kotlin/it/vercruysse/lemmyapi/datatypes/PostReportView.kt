@@ -4,10 +4,12 @@ import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import kotlinx.serialization.SerialName
 
 
 @CommonParcelize
 @Serializable
+@SerialName("post")
 data class PostReportView(
     val post_report: PostReport,
     val post: Post,
@@ -21,5 +23,7 @@ data class PostReportView(
     val creator_is_admin: Boolean,
     val creator_is_moderator: Boolean,
     val creator_banned: Boolean,
+    val creator_ban_expires_at: String? = null,
     val creator_banned_from_community: Boolean,
-) : DatatypeRoot
+    val creator_community_ban_expires_at: String? = null,
+) : DatatypeRoot, ReportCombinedView

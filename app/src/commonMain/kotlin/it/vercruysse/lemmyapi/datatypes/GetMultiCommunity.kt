@@ -7,5 +7,6 @@ import kotlinx.serialization.Serializable
 @CommonParcelize
 @Serializable
 data class GetMultiCommunity(
-    val id: MultiCommunityId,
+    val id: MultiCommunityId? = null,
+    val name: String? = null,
 ) : DatatypeRoot

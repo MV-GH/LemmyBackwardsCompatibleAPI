@@ -17,4 +17,6 @@ data class Register(
     val captcha_answer: String? = null,
     val honeypot: String? = null,
     val answer: String? = null,
+    /** Added in 1.0.0 */
+    val stay_logged_in: Boolean? = null,
 ) : DatatypeRoot

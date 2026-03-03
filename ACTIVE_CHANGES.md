@@ -30,3 +30,17 @@ But each has different behaviour. The old behaviour is to hide all voting types 
 - Instance block support
 - 2FA rework, one must now provide a valid 2FA code to enable 2FA. Added routes to support this.
 
+
+
+TODO: cleanup
+
+## 1.0.0 too many to write down...
+https://github.com/LemmyNet/lemmy/issues/6292 tags to CommunityTags
+https://github.com/LemmyNet/lemmy/issues/6291 description to summary
+https://github.com/LemmyNet/lemmy/issues/6150 page back removal
+https://github.com/LemmyNet/lemmy/issues/6062 All enums use snake_case now
+
+TODO:
+media changes
+enum changes
+combined types

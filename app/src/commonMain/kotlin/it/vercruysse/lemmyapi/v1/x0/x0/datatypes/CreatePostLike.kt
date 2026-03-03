@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class CreatePostLike(
     val post_id: PostId,
-    val score: Int,
+    // TODO: update
+    val is_upvote: Boolean? = null,
 )

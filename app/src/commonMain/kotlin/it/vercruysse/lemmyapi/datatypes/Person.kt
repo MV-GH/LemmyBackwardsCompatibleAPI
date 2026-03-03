@@ -25,4 +25,6 @@ data class Person(
     val instance_id: InstanceId,
     val post_count: Long,
     val comment_count: Long,
+    /** Added in 1.0.0 */
+    val last_refreshed_at: String,
 ) : DatatypeRoot, Identity

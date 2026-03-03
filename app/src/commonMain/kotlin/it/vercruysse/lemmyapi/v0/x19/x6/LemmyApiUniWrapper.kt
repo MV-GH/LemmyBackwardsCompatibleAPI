@@ -8,6 +8,7 @@ import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
 import it.vercruysse.lemmyapi.datatypes.ListNotifications
 import it.vercruysse.lemmyapi.datatypes.ListNotificationsResponse
 import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
+import it.vercruysse.lemmyapi.datatypes.ModlogView
 import it.vercruysse.lemmyapi.datatypes.MyUserInfo
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
@@ -57,8 +58,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun getModlog(
         form: it.vercruysse.lemmyapi.datatypes.GetModlog,
-    ): Result<it.vercruysse.lemmyapi.datatypes.GetModlogResponse> =
-        api.getModlog(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.PagedResponse<ModlogView>> = notSupported()
 
     /**
      * Search lemmy.
@@ -898,8 +898,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("user/totp/update")
      */
     override suspend fun updateTotp(
-        form: it.vercruysse.lemmyapi.datatypes.UpdateTotp,
-    ): Result<it.vercruysse.lemmyapi.datatypes.UpdateTotpResponse> =
+        form: it.vercruysse.lemmyapi.datatypes.EditTotp,
+    ): Result<it.vercruysse.lemmyapi.datatypes.EditTotpResponse> =
         api.updateTotp(transformer.fromUni(form)).map(transformer::toUni)
 
     /**

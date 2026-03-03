@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 internal data class AdminListUsers(
     val banned_only: Boolean? = null,
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
+    // TODO: AdminListSortType
+    val sort: String? /* "new" | "old" */ = null,
     val limit: Long? = null,
 )

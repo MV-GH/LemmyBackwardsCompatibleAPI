@@ -14,10 +14,14 @@ import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
 data class GetPosts(
     val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
     val sort: SortType? /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */ = null,
+    /** Added in 1.0.0 */
+    val time_range_seconds: Long? = null,
     val community_id: CommunityId? = null,
     val community_name: String? = null,
     /** Added in 1.0.0 */
     val multi_community_id: MultiCommunityId? = null,
+    /** Added in 1.0.0 */
+    val multi_community_name: String? = null,
     val show_hidden: Boolean? = null,
     /** Added in 0.19.6 */
     val show_read: Boolean? = null,

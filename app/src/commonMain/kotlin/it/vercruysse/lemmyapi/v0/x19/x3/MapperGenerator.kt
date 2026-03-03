@@ -124,7 +124,7 @@ internal interface MapperGenerator {
     fun toUni(d: PrivateMessageReportView): it.vercruysse.lemmyapi.datatypes.PrivateMessageReportView
     fun toUni(d: PrivateMessageResponse): it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse
     fun toUni(d: PrivateMessageView): it.vercruysse.lemmyapi.datatypes.PrivateMessageView
-    fun toUni(d: ReadableFederationState): it.vercruysse.lemmyapi.datatypes.ReadableFederationState
+    fun toUni(d: ReadableFederationState): it.vercruysse.lemmyapi.datatypes.FederationQueueState
     fun toUni(d: RegistrationApplication): it.vercruysse.lemmyapi.datatypes.RegistrationApplication
     fun toUni(d: RegistrationApplicationResponse): it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse
     fun toUni(d: RegistrationApplicationView): it.vercruysse.lemmyapi.datatypes.RegistrationApplicationView
@@ -134,7 +134,7 @@ internal interface MapperGenerator {
     fun toUni(d: SiteResponse): it.vercruysse.lemmyapi.datatypes.SiteResponse
     fun toUni(d: SiteView): it.vercruysse.lemmyapi.datatypes.SiteView
     fun toUni(d: Tagline): it.vercruysse.lemmyapi.datatypes.Tagline
-    fun toUni(d: UpdateTotpResponse): it.vercruysse.lemmyapi.datatypes.UpdateTotpResponse
+    fun toUni(d: UpdateTotpResponse): it.vercruysse.lemmyapi.datatypes.EditTotpResponse
 
     // body mappings
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddAdmin): AddAdmin
@@ -211,6 +211,6 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.SaveUserSettings): SaveUserSettings
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.Search): Search
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.TransferCommunity): TransferCommunity
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.UpdateTotp): UpdateTotp
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.EditTotp): UpdateTotp
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.VerifyEmail): VerifyEmail
 }

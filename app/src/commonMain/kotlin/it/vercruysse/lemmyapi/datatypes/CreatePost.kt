@@ -18,7 +18,7 @@ data class CreatePost(
     val language_id: LanguageId? = null,
     val custom_thumbnail: String? = null,
     /** Added in Lemmy 1.0.0 */
-    val tags: List<TagId>? = null,
+    val tags: List<CommunityTagId>? = null,
     /** Added in Lemmy 1.0.0 */
     val scheduled_publish_time_at: Long? = null,
 ) : DatatypeRoot

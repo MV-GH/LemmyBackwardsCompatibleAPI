@@ -243,6 +243,6 @@ fun downloadTypes(
 }
 
 fun main() {
-    downloadTypes("1.0.0-error-status-code.0", "v1/x0/x0")
+    downloadTypes("1.0.0-suggested-community-fixes.0", "v1/x0/x1")
     exitProcess(0)
 }

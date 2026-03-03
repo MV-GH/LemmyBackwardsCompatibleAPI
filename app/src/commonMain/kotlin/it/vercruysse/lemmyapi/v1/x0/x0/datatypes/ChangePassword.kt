@@ -7,4 +7,5 @@ internal data class ChangePassword(
     val new_password: SensitiveString,
     val new_password_verify: SensitiveString,
     val old_password: SensitiveString,
+    val stay_logged_in: Boolean? = null,
 )

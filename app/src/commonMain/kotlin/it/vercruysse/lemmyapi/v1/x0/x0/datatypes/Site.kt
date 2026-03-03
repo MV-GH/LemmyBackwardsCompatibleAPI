@@ -11,7 +11,7 @@ internal data class Site(
     val updated_at: String? = null,
     val icon: DbUrl? = null,
     val banner: DbUrl? = null,
-    val description: String? = null,
+    val summary: String? = null,
     val ap_id: DbUrl,
     val last_refreshed_at: String,
     val inbox_url: DbUrl,

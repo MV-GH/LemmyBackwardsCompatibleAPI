@@ -15,7 +15,7 @@ import it.vercruysse.lemmyapi.dto.FederationMode
 data class CreateSite(
     val name: String,
     val sidebar: String? = null,
-    val description: String? = null,
+    val summary: String? = null,
     /** Removed in 1.0.0 */
     val icon: String? = null,
     /** Removed in 1.0.0 */
@@ -69,5 +69,5 @@ data class CreateSite(
     /** Added in 1.0.0 */
     val disable_email_notifications: Boolean? = null,
     /** Added in 1.0.0 */
-    val suggested_communities: MultiCommunityId? = null,
+    val suggested_multi_community_id: MultiCommunityId? = null,
 ) : DatatypeRoot

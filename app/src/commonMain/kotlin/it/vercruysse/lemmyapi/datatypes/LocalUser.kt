@@ -33,7 +33,6 @@ data class LocalUser(
     val admin: Boolean,
     val post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
     val totp_2fa_enabled: Boolean,
-    val enable_keyboard_navigation: Boolean,
     val enable_animated_images: Boolean,
     /** Added in 1.0.0 */
     val enable_private_messages: Boolean,

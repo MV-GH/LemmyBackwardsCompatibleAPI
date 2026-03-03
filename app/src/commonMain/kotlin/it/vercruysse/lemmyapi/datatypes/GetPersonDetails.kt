@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: many removed, research
+// TODO: many fields removed, research
 
 @CommonParcelize
 @Serializable

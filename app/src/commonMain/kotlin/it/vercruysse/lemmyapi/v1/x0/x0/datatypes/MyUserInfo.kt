@@ -7,6 +7,7 @@ internal data class MyUserInfo(
     val local_user_view: LocalUserView,
     val follows: List<CommunityFollowerView>,
     val moderates: List<CommunityModeratorView>,
+    val multi_community_follows: List<MultiCommunityView>,
     val community_blocks: List<Community>,
     val instance_communities_blocks: List<Instance>,
     val instance_persons_blocks: List<Instance>,

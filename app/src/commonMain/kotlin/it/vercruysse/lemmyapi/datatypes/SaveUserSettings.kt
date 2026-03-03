@@ -41,7 +41,6 @@ data class SaveUserSettings(
     val blocking_keywords: List<String>? = null,
     val open_links_in_new_tab: Boolean? = null,
     val infinite_scroll_enabled: Boolean? = null,
-    val enable_keyboard_navigation: Boolean? = null,
     val enable_animated_images: Boolean? = null,
     val enable_private_messages: Boolean? = null,
     val collapse_bot_comments: Boolean? = null,

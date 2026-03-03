@@ -13,5 +13,5 @@ internal data class EditPost(
     val language_id: LanguageId? = null,
     val custom_thumbnail: String? = null,
     val scheduled_publish_time_at: Long? = null,
-    val tags: List<TagId>? = null,
+    val tags: List<CommunityTagId>? = null,
 )

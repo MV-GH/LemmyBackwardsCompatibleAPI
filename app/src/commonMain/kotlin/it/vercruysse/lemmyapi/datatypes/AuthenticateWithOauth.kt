@@ -14,4 +14,5 @@ data class AuthenticateWithOauth(
     val username: String? = null,
     val answer: String? = null,
     val pkce_code_verifier: String? = null,
+    val stay_logged_in: Boolean? = null,
 ): DatatypeRoot

@@ -10,5 +10,5 @@ data class CommunityView(
     val community: Community,
     val community_actions: CommunityActions? = null,
     val can_mod: Boolean,
-    val post_tags: TagsView,
+    val tags: CommunityTagsView,
 ) : DatatypeRoot

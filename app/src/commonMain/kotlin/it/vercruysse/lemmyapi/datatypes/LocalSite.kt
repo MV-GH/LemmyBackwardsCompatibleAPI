@@ -35,7 +35,7 @@ data class LocalSite(
     val reports_email_admins: Boolean,
     val federation_signed_fetch: Boolean,
     val default_post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
-    val default_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */,
+    val default_post_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */,
     val default_comment_sort_type: SortType /* "Hot" | "Top" | "New" | "Old" | "Controversial" */,
     val oauth_registration: Boolean,
     val post_upvotes: FederationMode /* "All" | "Local" | "Disable" */,
@@ -53,6 +53,6 @@ data class LocalSite(
     val users_active_month: Long,
     val users_active_half_year: Long,
     val disable_email_notifications: Boolean,
-    val suggested_communities: MultiCommunityId? = null,
+    val suggested_multi_community_id: MultiCommunityId? = null,
     val default_items_per_page: Long,
     ) : DatatypeRoot, Identity

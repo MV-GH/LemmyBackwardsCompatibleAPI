@@ -14,7 +14,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 data class EditSite(
     val name: String? = null,
     val sidebar: String? = null,
-    val description: String? = null,
+    val summary: String? = null,
     val icon: String? = null,
     val banner: String? = null,
     val enable_downvotes: Boolean? = null,
@@ -25,7 +25,11 @@ data class EditSite(
     val private_instance: Boolean? = null,
     val default_theme: String? = null,
     val default_post_listing_type: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" */ = null,
-    val default_sort_type: SortType? /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */ = null,
+    val default_post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
+    val default_post_sort_type: SortType? /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */ = null,
+    val default_post_time_range_seconds: Long? = null,
+    val default_items_per_page: Long,
+    val default_comment_sort_type: SortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
     val legal_information: String? = null,
     val application_email_admins: Boolean? = null,
     val hide_modlog_mod_names: Boolean? = null,
@@ -58,8 +62,6 @@ data class EditSite(
     val registration_mode: RegistrationMode? /* "Closed" | "RequireApplication" | "Open" */ = null,
     val reports_email_admins: Boolean? = null,
     val content_warning: String? = null,
-    val default_post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
     /** Added in 1.0.0 */
-    val suggested_communities: MultiCommunityId? = null,
-    val default_items_per_page: Long,
+    val suggested_multi_community_id: MultiCommunityId? = null,
 ) : DatatypeRoot

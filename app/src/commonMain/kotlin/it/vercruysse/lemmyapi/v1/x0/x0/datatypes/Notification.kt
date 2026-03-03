@@ -10,7 +10,8 @@ internal data class Notification(
     val comment_id: CommentId? = null,
     val read: Boolean,
     val published_at: String,
-    val kind: NotificationType /* "Mention" | "Reply" | "Subscribed" | "PrivateMessage" */,
+    val kind: NotificationType /* "mention" | "reply" | "subscribed" | "private_message" | "mod_action" */,
     val post_id: PostId? = null,
     val private_message_id: PrivateMessageId? = null,
+    val modlog_id: ModlogId? = null,
 )

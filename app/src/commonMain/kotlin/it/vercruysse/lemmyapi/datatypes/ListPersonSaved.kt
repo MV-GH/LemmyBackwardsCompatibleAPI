@@ -8,8 +8,7 @@ import kotlinx.serialization.Serializable
 @CommonParcelize
 @Serializable
 data class ListPersonSaved(
-    val type_: ListingType? /* "All" | "Comments" | "Posts" */ = null,
+    val type_: String? /* "All" | "Comments" | "Posts" */ = null,
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 ): DatatypeRoot

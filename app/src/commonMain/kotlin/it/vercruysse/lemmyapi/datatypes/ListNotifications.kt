@@ -14,7 +14,5 @@ data class ListNotifications(
     val page: Long? = null,
     /** Added 1.0.0 */
     val page_cursor: PaginationCursor? = null,
-    /** Added 1.0.0 */
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 ) : DatatypeRoot

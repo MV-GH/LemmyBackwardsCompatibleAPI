@@ -19,5 +19,5 @@ data class EditPost(
     /** Added in Lemmy 1.0.0 */
     val scheduled_publish_time_at: Long? = null,
     /** Added in Lemmy 1.0.0 */
-    val tags: List<TagId>? = null,
+    val tags: List<CommunityTagId>? = null,
 ) : DatatypeRoot

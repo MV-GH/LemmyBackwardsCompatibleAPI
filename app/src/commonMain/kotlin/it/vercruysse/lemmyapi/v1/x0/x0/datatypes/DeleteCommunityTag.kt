@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class DeleteCommunityTag(
-    val tag_id: TagId,
+    val tag_id: CommunityTagId,
+    val delete: Boolean,
 )

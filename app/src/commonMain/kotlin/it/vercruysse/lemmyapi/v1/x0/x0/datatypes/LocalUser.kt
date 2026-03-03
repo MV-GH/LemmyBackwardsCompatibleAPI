@@ -3,6 +3,7 @@ package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 import it.vercruysse.lemmyapi.dto.PostListingMode
 import it.vercruysse.lemmyapi.dto.ListingType
 import it.vercruysse.lemmyapi.dto.SortType
+import it.vercruysse.lemmyapi.dto.VoteShow
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,8 +13,8 @@ internal data class LocalUser(
     val email: SensitiveString? = null,
     val show_nsfw: Boolean,
     val theme: String,
-    val default_post_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "Top" | "MostComments" | "NewComments" | "Controversial" | "Scaled" */,
-    val default_listing_type: ListingType /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */,
+    val default_post_sort_type: SortType /* "active" | "hot" | "new" | "old" | "top" | "most_comments" | "new_comments" | "controversial" | "scaled" */,
+    val default_listing_type: ListingType /* "all" | "local" | "subscribed" | "moderator_view" | "suggested" */,
     val interface_language: String,
     val show_avatars: Boolean,
     val send_notifications_to_email: Boolean,
@@ -25,20 +26,19 @@ internal data class LocalUser(
     val blur_nsfw: Boolean,
     val infinite_scroll_enabled: Boolean,
     val admin: Boolean,
-    val post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
+    val post_listing_mode: PostListingMode /* "list" | "card" | "small_card" */,
     val totp_2fa_enabled: Boolean,
-    val enable_keyboard_navigation: Boolean,
     val enable_animated_images: Boolean,
     val collapse_bot_comments: Boolean,
     val last_donation_notification_at: String,
     val enable_private_messages: Boolean,
-    val default_comment_sort_type: SortType /* "Hot" | "Top" | "New" | "Old" | "Controversial" */,
+    val default_comment_sort_type: SortType /* "hot" | "top" | "new" | "old" | "controversial" */,
     val auto_mark_fetched_posts_as_read: Boolean,
     val hide_media: Boolean,
     val default_post_time_range_seconds: Long? = null,
     val show_score: Boolean,
     val show_upvotes: Boolean,
-    val show_downvotes: String /* "Show" | "ShowForOthers" | "Hide" */,
+    val show_downvotes: VoteShow /* "show" | "show_for_others" | "hide" */,
     val show_upvote_percentage: Boolean,
     val show_person_votes: Boolean,
     val default_items_per_page: Long,

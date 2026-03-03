@@ -4,9 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ListCommunityPendingFollows(
-    val pending_only: Boolean? = null,
+    val unread_only: Boolean? = null,
     val all_communities: Boolean? = null,
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 )

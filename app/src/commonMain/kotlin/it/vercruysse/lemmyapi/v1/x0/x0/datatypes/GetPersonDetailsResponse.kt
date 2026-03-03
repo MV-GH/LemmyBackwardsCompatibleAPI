@@ -7,4 +7,5 @@ internal data class GetPersonDetailsResponse(
     val person_view: PersonView,
     val site: Site? = null,
     val moderates: List<CommunityModeratorView>,
+    val multi_communities_created: List<MultiCommunityView>,
 )

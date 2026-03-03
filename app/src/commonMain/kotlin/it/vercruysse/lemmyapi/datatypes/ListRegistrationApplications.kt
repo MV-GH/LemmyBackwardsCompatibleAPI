@@ -13,7 +13,5 @@ data class ListRegistrationApplications(
     val page: Long? = null,
     /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
-    /** Added in 1.0.0 */
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 ) : DatatypeRoot

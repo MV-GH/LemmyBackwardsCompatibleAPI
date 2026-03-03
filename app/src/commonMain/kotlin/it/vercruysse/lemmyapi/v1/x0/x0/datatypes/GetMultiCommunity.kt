@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class GetMultiCommunity(
-    val id: MultiCommunityId,
+    val id: MultiCommunityId? = null,
+    val name: String? = null,
 )

@@ -18,4 +18,6 @@ internal data class UserSettingsBackup(
     val blocked_users: List<String>,
     val blocked_instances_communities: List<String>,
     val blocked_instances_persons: List<String>,
+    val blocking_keywords: List<String>,
+    val discussion_languages: List<String>,
 )

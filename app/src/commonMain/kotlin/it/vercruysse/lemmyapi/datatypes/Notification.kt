@@ -16,4 +16,5 @@ data class Notification(
     val kind: NotificationType /* "Mention" | "Reply" | "Subscribed" | "PrivateMessage" */,
     val post_id: PostId? = null,
     val private_message_id: PrivateMessageId? = null,
+    val modlog_id: ModlogId? = null,
 ) : DatatypeRoot

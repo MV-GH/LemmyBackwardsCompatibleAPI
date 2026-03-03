@@ -9,5 +9,5 @@ import kotlinx.serialization.Serializable
 data class ModEditPost(
     val post_id: PostId,
     val nsfw: Boolean? = null,
-    val tags: List<TagId>? = null,
+    val tags: List<CommunityTagId>? = null,
 ) : DatatypeRoot
