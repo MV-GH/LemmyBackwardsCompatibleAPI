@@ -31,14 +31,6 @@ internal interface MapperGenerator {
     // GENERATED
     fun toUni(d: AddAdminResponse): it.vercruysse.lemmyapi.datatypes.AddAdminResponse
     fun toUni(d: AddModToCommunityResponse): it.vercruysse.lemmyapi.datatypes.AddModToCommunityResponse
-    fun toUni(d: AdminPurgeComment): it.vercruysse.lemmyapi.datatypes.AdminPurgeComment
-    fun toUni(d: AdminPurgeCommentView): it.vercruysse.lemmyapi.datatypes.AdminPurgeCommentView
-    fun toUni(d: AdminPurgeCommunity): it.vercruysse.lemmyapi.datatypes.AdminPurgeCommunity
-    fun toUni(d: AdminPurgeCommunityView): it.vercruysse.lemmyapi.datatypes.AdminPurgeCommunityView
-    fun toUni(d: AdminPurgePerson): it.vercruysse.lemmyapi.datatypes.AdminPurgePerson
-    fun toUni(d: AdminPurgePersonView): it.vercruysse.lemmyapi.datatypes.AdminPurgePersonView
-    fun toUni(d: AdminPurgePost): it.vercruysse.lemmyapi.datatypes.AdminPurgePost
-    fun toUni(d: AdminPurgePostView): it.vercruysse.lemmyapi.datatypes.AdminPurgePostView
     fun toUni(d: BanFromCommunityResponse): it.vercruysse.lemmyapi.datatypes.PersonResponse
     fun toUni(d: BanPersonResponse): it.vercruysse.lemmyapi.datatypes.PersonResponse
     fun toUni(d: BlockCommunityResponse): it.vercruysse.lemmyapi.datatypes.CommunityResponse
@@ -59,7 +51,6 @@ internal interface MapperGenerator {
     fun toUni(d: CustomEmojiKeyword): it.vercruysse.lemmyapi.datatypes.CustomEmojiKeyword
     fun toUni(d: CustomEmojiResponse): it.vercruysse.lemmyapi.datatypes.CustomEmojiResponse
     fun toUni(d: CustomEmojiView): it.vercruysse.lemmyapi.datatypes.CustomEmojiView
-    fun toUni(d: FederatedInstances): it.vercruysse.lemmyapi.datatypes.FederatedInstances
     fun toUni(d: GenerateTotpSecretResponse): it.vercruysse.lemmyapi.datatypes.GenerateTotpSecretResponse
     fun toUni(d: GetCaptchaResponse): it.vercruysse.lemmyapi.datatypes.GetCaptchaResponse
     fun toUni(d: GetCommunityResponse): it.vercruysse.lemmyapi.datatypes.GetCommunityResponse
@@ -75,28 +66,6 @@ internal interface MapperGenerator {
     fun toUni(d: LocalUserView): it.vercruysse.lemmyapi.datatypes.LocalUserView
     fun toUni(d: LoginResponse): it.vercruysse.lemmyapi.datatypes.LoginResponse
     fun toUni(d: LoginToken): it.vercruysse.lemmyapi.datatypes.LoginToken
-    fun toUni(d: ModAdd): it.vercruysse.lemmyapi.datatypes.AdminAdd
-    fun toUni(d: ModAddCommunity): it.vercruysse.lemmyapi.datatypes.ModAddToCommunity
-    fun toUni(d: ModAddCommunityView): it.vercruysse.lemmyapi.datatypes.ModAddToCommunityView
-    fun toUni(d: ModAddView): it.vercruysse.lemmyapi.datatypes.AdminAddView
-    fun toUni(d: ModBan): it.vercruysse.lemmyapi.datatypes.AdminBan
-    fun toUni(d: ModBanFromCommunity): it.vercruysse.lemmyapi.datatypes.ModBanFromCommunity
-    fun toUni(d: ModBanFromCommunityView): it.vercruysse.lemmyapi.datatypes.ModBanFromCommunityView
-    fun toUni(d: ModBanView): it.vercruysse.lemmyapi.datatypes.AdminBanView
-    fun toUni(d: ModFeaturePost): it.vercruysse.lemmyapi.datatypes.ModFeaturePost
-    fun toUni(d: ModFeaturePostView): it.vercruysse.lemmyapi.datatypes.ModFeaturePostView
-    fun toUni(d: ModHideCommunity): it.vercruysse.lemmyapi.datatypes.ModChangeCommunityVisibility
-    fun toUni(d: ModHideCommunityView): it.vercruysse.lemmyapi.datatypes.ModChangeCommunityVisibilityView
-    fun toUni(d: ModLockPost): it.vercruysse.lemmyapi.datatypes.ModLockPost
-    fun toUni(d: ModLockPostView): it.vercruysse.lemmyapi.datatypes.ModLockPostView
-    fun toUni(d: ModRemoveComment): it.vercruysse.lemmyapi.datatypes.ModRemoveComment
-    fun toUni(d: ModRemoveCommentView): it.vercruysse.lemmyapi.datatypes.ModRemoveCommentView
-    fun toUni(d: ModRemoveCommunity): it.vercruysse.lemmyapi.datatypes.AdminRemoveCommunity
-    fun toUni(d: ModRemoveCommunityView): it.vercruysse.lemmyapi.datatypes.AdminRemoveCommunityView
-    fun toUni(d: ModRemovePost): it.vercruysse.lemmyapi.datatypes.ModRemovePost
-    fun toUni(d: ModRemovePostView): it.vercruysse.lemmyapi.datatypes.ModRemovePostView
-    fun toUni(d: ModTransferCommunity): it.vercruysse.lemmyapi.datatypes.ModTransferCommunity
-    fun toUni(d: ModTransferCommunityView): it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView
     fun toUni(d: MyUserInfo): it.vercruysse.lemmyapi.datatypes.MyUserInfo
     fun toUni(d: Person, counts: PersonAggregates): it.vercruysse.lemmyapi.datatypes.Person
 

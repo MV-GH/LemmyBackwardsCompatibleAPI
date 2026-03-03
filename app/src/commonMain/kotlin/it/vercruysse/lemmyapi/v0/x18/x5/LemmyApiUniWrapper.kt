@@ -359,26 +359,26 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         form: it.vercruysse.lemmyapi.datatypes.ListReports,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>> =
         when (form.type_) {
-            it.vercruysse.lemmyapi.dto.ReportType.Communities -> notSupported()
-            it.vercruysse.lemmyapi.dto.ReportType.Posts -> {
+            it.vercruysse.lemmyapi.enums.ReportType.Communities -> notSupported()
+            it.vercruysse.lemmyapi.enums.ReportType.Posts -> {
                 apiV18.listPostReports(transformer.fromUniP(form)).map { resp ->
                     PagedResponse(resp.post_reports.map(transformer::toUni))
                 }
             }
 
-            it.vercruysse.lemmyapi.dto.ReportType.Comments -> {
+            it.vercruysse.lemmyapi.enums.ReportType.Comments -> {
                 apiV18.listCommentReports(transformer.fromUniC(form)).map { resp ->
                     PagedResponse(resp.comment_reports.map(transformer::toUni))
                 }
             }
 
-            it.vercruysse.lemmyapi.dto.ReportType.PrivateMessages -> {
+            it.vercruysse.lemmyapi.enums.ReportType.PrivateMessages -> {
                 apiV18.listPrivateMessageReports(transformer.fromUniPm(form)).map { resp ->
                     PagedResponse(resp.private_message_reports.map(transformer::toUni))
                 }
             }
 
-            it.vercruysse.lemmyapi.dto.ReportType.All -> {
+            it.vercruysse.lemmyapi.enums.ReportType.All -> {
                 runCatching {
                     val postsResp = apiV18.listPostReports(transformer.fromUniP(form)).getOrThrow()
                     val commentsResp = apiV18.listCommentReports(transformer.fromUniC(form)).getOrThrow()
