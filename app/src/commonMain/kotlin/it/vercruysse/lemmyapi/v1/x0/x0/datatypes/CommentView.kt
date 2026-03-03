@@ -12,7 +12,7 @@ internal data class CommentView(
     val comment_actions: CommentActions? = null,
     val person_actions: PersonActions? = null,
     val creator_is_admin: Boolean,
-    val post_tags: TagsView,
+    val tags: CommunityTagsView,
     val can_mod: Boolean,
     val creator_banned: Boolean,
     val creator_ban_expires_at: String? = null,

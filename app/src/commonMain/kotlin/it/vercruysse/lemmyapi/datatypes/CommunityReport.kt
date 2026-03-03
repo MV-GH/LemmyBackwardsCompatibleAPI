@@ -13,7 +13,7 @@ data class CommunityReport(
     val community_id: CommunityId,
     val original_community_name: String,
     val original_community_title: String,
-    val original_community_description: String? = null,
+    val original_community_summary: String? = null,
     val original_community_sidebar: String? = null,
     val original_community_icon: String? = null,
     val original_community_banner: String? = null,

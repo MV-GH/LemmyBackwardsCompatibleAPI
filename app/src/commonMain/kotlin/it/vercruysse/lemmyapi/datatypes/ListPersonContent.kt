@@ -8,10 +8,10 @@ import kotlinx.serialization.Serializable
 @CommonParcelize
 @Serializable
 data class ListPersonContent(
-    val type_: ListingType? /* "All" | "Comments" | "Posts" */ = null,
+    // TODO: custom enum
+    val type_: String? /* "all" | "comments" | "posts" */ = null,
     val person_id: PersonId? = null,
     val username: String? = null,
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 ): DatatypeRoot

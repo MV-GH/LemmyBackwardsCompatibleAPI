@@ -16,7 +16,7 @@ data class Site(
     val updated_at: String? = null,
     val icon: String? = null,
     val banner: String? = null,
-    val description: String? = null,
+    val summary: String? = null,
     val ap_id: String,
     val last_refreshed_at: String,
     val inbox_url: String,

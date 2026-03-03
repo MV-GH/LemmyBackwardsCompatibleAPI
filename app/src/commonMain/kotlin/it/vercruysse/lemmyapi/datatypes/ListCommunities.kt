@@ -15,8 +15,6 @@ data class ListCommunities(
     val sort: SortType? /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */ = null,
     /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
-    /** Added in 1.0.0 */
-    val page_back: Boolean? = null,
     /** Removed in 1.0.0 */
     val page: Long? = null,
     val limit: Long? = null,

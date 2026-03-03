@@ -13,7 +13,7 @@ data class EditCommunity(
     val title: String? = null,
     /** Added in Lemmy 1.0.0 */
     val sidebar: String? = null,
-    val description: String? = null,
+    val summary: String? = null,
     /** Removed in Lemmy 1.0.0 */
     val icon: String? = null,
     /** Removed in Lemmy 1.0.0 */

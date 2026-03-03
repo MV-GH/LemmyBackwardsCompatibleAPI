@@ -13,6 +13,7 @@ internal data class Person(
     val ap_id: DbUrl,
     val bio: String? = null,
     val local: Boolean,
+    val last_refreshed_at: String,
     val banner: DbUrl? = null,
     val deleted: Boolean,
     val matrix_user_id: String? = null,

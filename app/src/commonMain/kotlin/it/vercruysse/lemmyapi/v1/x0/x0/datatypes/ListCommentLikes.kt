@@ -6,6 +6,5 @@ import kotlinx.serialization.Serializable
 internal data class ListCommentLikes(
     val comment_id: CommentId,
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 )

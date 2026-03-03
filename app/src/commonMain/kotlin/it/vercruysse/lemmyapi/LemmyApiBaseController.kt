@@ -39,7 +39,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("modlog")
      */
-    abstract suspend fun getModlog(form: GetModlog): Result<GetModlogResponse>
+    abstract suspend fun getModlog(form: GetModlog): Result<PagedResponse<ModlogView>>
 
     /**
      * Search lemmy.
@@ -88,7 +88,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("community/list")
      */
-    abstract suspend fun listCommunities(form: ListCommunities): Result<ListCommunitiesResponse>
+    abstract suspend fun listCommunities(form: ListCommunities): Result<PagedResponse<CommunityView>>
 
     /**
      * Follow / subscribe to a community.
@@ -102,7 +102,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("community/block")
      */
-    abstract suspend fun blockCommunity(form: BlockCommunity): Result<BlockCommunityResponse>
+    abstract suspend fun blockCommunity(form: BlockCommunity): Result<CommunityResponse>
 
     /**
      * Delete a community.
@@ -130,7 +130,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("community/ban_user")
      */
-    abstract suspend fun banFromCommunity(form: BanFromCommunity): Result<BanFromCommunityResponse>
+    abstract suspend fun banFromCommunity(form: BanFromCommunity): Result<PersonResponse>
 
     /**
      * Add a moderator to your community.
@@ -144,7 +144,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("federated_instances")
      */
-    abstract suspend fun getFederatedInstances(): Result<GetFederatedInstancesResponse>
+    abstract suspend fun getFederatedInstances(form: GetFederatedInstances): Result<PagedResponse<FederatedInstanceView>>
 
     /**
      * Get / fetch a post.
@@ -172,7 +172,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("post/list")
      */
-    abstract suspend fun getPosts(form: GetPosts): Result<GetPostsResponse>
+    abstract suspend fun getPosts(form: GetPosts): Result<PagedResponse<PostView>>
 
     /**
      * Delete a post.
@@ -240,7 +240,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     /**
      * List reports.
      */
-    abstract suspend fun listReports(form: ListReports): Result<ListReportsResponse>
+    abstract suspend fun listReports(form: ListReports): Result<PagedResponse<ReportCombinedView>>
 
     /**
      * Fetch metadata for any given site.
@@ -275,7 +275,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("comment/list")
      */
-    abstract suspend fun getComments(form: GetComments): Result<GetCommentsResponse>
+    abstract suspend fun getComments(form: GetComments): Result<PagedResponse<CommentView>>
 
     /**
      * Delete a comment.
@@ -390,28 +390,29 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     /**
      * List notifications.
      */
-    abstract suspend fun listNotifications(form: ListNotifications): Result<ListNotificationsResponse>
+    abstract suspend fun listNotifications(form: ListNotifications): Result<PagedResponse<NotificationView>>
 
     /**
      * Ban a person from your site.
      *
-     * @POST("user/ban")
+     * @POST("admin/ban")
      */
-    abstract suspend fun banPerson(form: BanPerson): Result<BanPersonResponse>
+    abstract suspend fun banPerson(form: BanPerson): Result<PersonResponse>
 
+// TODO: merged into list of users
     /**
      * Get a list of banned users
      *
      * @GET("user/banned")
      */
-    abstract suspend fun getBannedPersons(): Result<BannedPersonsResponse>
+    abstract suspend fun getBannedPersons(): Result<PagedResponse<PersonView>>
 
     /**
      * Block a person.
      *
      * @POST("user/block")
      */
-    abstract suspend fun blockPerson(form: BlockPerson): Result<BlockPersonResponse>
+    abstract suspend fun blockPerson(form: BlockPerson): Result<PersonResponse>
 
     /**
      * Log into lemmy.
@@ -463,18 +464,11 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun changePassword(form: ChangePassword): Result<LoginResponse>
 
     /**
-     * Get counts for your reports
-     *
-     * @GET("user/report_count")
-     */
-    abstract suspend fun getReportCount(form: GetReportCount): Result<GetReportCountResponse>
-
-    /**
      * Get your unread counts
      *
-     * @GET("user/unread_count")
+     * @GET("account/unread_counts")
      */
-    abstract suspend fun getUnreadCount(): Result<GetUnreadCountResponse>
+    abstract suspend fun getUnreadCounts(): Result<UnreadCountsResponse>
 
     /**
      * Verify your email
@@ -505,18 +499,11 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun addAdmin(form: AddAdmin): Result<AddAdminResponse>
 
     /**
-     * Get the unread registration applications count.
-     *
-     * @GET("admin/registration_application/count")
-     */
-    abstract suspend fun getUnreadRegistrationApplicationCount(): Result<GetUnreadRegistrationApplicationCountResponse>
-
-    /**
      * List the registration applications.
      *
      * @GET("admin/registration_application/list")
      */
-    abstract suspend fun listRegistrationApplications(form: ListRegistrationApplications): Result<ListRegistrationApplicationsResponse>
+    abstract suspend fun listRegistrationApplications(form: ListRegistrationApplications): Result<PagedResponse<RegistrationApplicationView>>
 
     /**
      * Approve a registration application
@@ -606,7 +593,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("user/totp/update")
      */
-    abstract suspend fun updateTotp(form: UpdateTotp): Result<UpdateTotpResponse>
+    abstract suspend fun updateTotp(form: EditTotp): Result<EditTotpResponse>
 
     /**
      * Export a backup of your user settings, including your saved content,
@@ -656,28 +643,28 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("post/like/list")
      */
-    abstract suspend fun listPostLikes(form: ListPostLikes): Result<ListPostLikesResponse>
+    abstract suspend fun listPostLikes(form: ListPostLikes): Result<PagedResponse<VoteView>>
 
     /**
      * List a comment's likes. Admin-only.
      *
      * @GET("comment/like/list")
      */
-    abstract suspend fun listCommentLikes(form: ListCommentLikes): Result<ListCommentLikesResponse>
+    abstract suspend fun listCommentLikes(form: ListCommentLikes): Result<PagedResponse<VoteView>>
 
     /**
      * List all the media for your user
      *
      * @GET("account/list_media")
      */
-    abstract suspend fun listMedia(form: ListMedia): Result<ListMediaResponse>
+    abstract suspend fun listMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
     /**
      * List all the media known to your instance.
      *
      * @GET("admin/list_all_media")
      */
-    abstract suspend fun listAllMedia(form: ListMedia): Result<ListMediaResponse>
+    abstract suspend fun listAllMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
     /**
      * Hide a post from list views.

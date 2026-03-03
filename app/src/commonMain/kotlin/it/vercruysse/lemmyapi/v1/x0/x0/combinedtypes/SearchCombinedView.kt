@@ -10,6 +10,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
 
+// TODO: wrong serialization
+
 @Serializable
 @OptIn(ExperimentalSerializationApi::class)
 @JsonClassDiscriminator("type_")

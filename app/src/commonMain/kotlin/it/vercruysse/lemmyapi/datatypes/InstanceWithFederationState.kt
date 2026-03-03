@@ -14,5 +14,5 @@ data class InstanceWithFederationState(
     val updated_at: String? = null,
     val software: String? = null,
     val version: String? = null,
-    val federation_state: ReadableFederationState? = null,
+    val federation_state: FederationQueueState? = null,
 ) : DatatypeRoot

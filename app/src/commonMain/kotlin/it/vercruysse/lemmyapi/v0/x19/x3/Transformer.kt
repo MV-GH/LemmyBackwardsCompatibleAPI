@@ -175,7 +175,7 @@ import it.vercruysse.lemmyapi.datatypes.PurgeComment as LemmyapiDatatypesPurgeCo
 import it.vercruysse.lemmyapi.datatypes.PurgeCommunity as LemmyapiDatatypesPurgeCommunity
 import it.vercruysse.lemmyapi.datatypes.PurgePerson as LemmyapiDatatypesPurgePerson
 import it.vercruysse.lemmyapi.datatypes.PurgePost as LemmyapiDatatypesPurgePost
-import it.vercruysse.lemmyapi.datatypes.ReadableFederationState as LemmyapiDatatypesReadableFederationState
+import it.vercruysse.lemmyapi.datatypes.FederationQueueState as LemmyapiDatatypesReadableFederationState
 import it.vercruysse.lemmyapi.datatypes.Register as LemmyapiDatatypesRegister
 import it.vercruysse.lemmyapi.datatypes.RegistrationApplication as LemmyapiDatatypesRegistrationApplication
 import it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse as LemmyapiDatatypesRegistrationApplicationResponse
@@ -199,8 +199,8 @@ import it.vercruysse.lemmyapi.datatypes.SiteResponse as LemmyapiDatatypesSiteRes
 import it.vercruysse.lemmyapi.datatypes.SiteView as LemmyapiDatatypesSiteView
 import it.vercruysse.lemmyapi.datatypes.Tagline as LemmyapiDatatypesTagline
 import it.vercruysse.lemmyapi.datatypes.TransferCommunity as LemmyapiDatatypesTransferCommunity
-import it.vercruysse.lemmyapi.datatypes.UpdateTotp as LemmyapiDatatypesUpdateTotp
-import it.vercruysse.lemmyapi.datatypes.UpdateTotpResponse as LemmyapiDatatypesUpdateTotpResponse
+import it.vercruysse.lemmyapi.datatypes.EditTotp as LemmyapiDatatypesUpdateTotp
+import it.vercruysse.lemmyapi.datatypes.EditTotpResponse as LemmyapiDatatypesUpdateTotpResponse
 import it.vercruysse.lemmyapi.datatypes.UserBlockInstanceCommunitiesParams as LemmyapiDatatypesBlockInstance
 import it.vercruysse.lemmyapi.datatypes.VerifyEmail as LemmyapiDatatypesVerifyEmail
 import it.vercruysse.lemmyapi.datatypes.VoteView as LemmyapiDatatypesVoteView
@@ -431,7 +431,7 @@ internal class Transformer : MapperGenerator {
             creator_banned_from_community = d.creator_banned_from_community,
             creator_is_moderator = d.creator_is_moderator,
             creator_is_admin = d.creator_is_admin,
-            post_tags = emptyList(),
+            tags = emptyList(),
             creator_banned = d.creator.banned,
             creator_ban_expires_at = d.creator.ban_expires,
             can_mod = false,
@@ -445,7 +445,7 @@ internal class Transformer : MapperGenerator {
             id = d.id,
             name = d.name,
             title = d.title,
-            description = d.description,
+            summary = d.description,
             removed = d.removed,
             published_at = d.published,
             updated_at = d.updated,
@@ -476,7 +476,7 @@ internal class Transformer : MapperGenerator {
         LemmyapiDatatypesCommunityView(
             community = this.toUni(d = d.community, d.counts),
             can_mod = false,
-            post_tags = emptyList(),
+            tags = emptyList(),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed), if (d.blocked) "" else null),
         )
 
@@ -525,11 +525,11 @@ internal class Transformer : MapperGenerator {
             reports_email_admins = d.reports_email_admins,
             federation_signed_fetch = d.federation_signed_fetch,
             default_post_listing_mode = PostListingMode.Card,
-            default_sort_type = SortType.Active,
+            default_post_sort_type = SortType.Active,
             disallow_nsfw_content = !d.enable_nsfw,
             oauth_registration = false,
             disable_email_notifications = false,
-            suggested_communities = null,
+            suggested_multi_community_id = null,
             default_comment_sort_type = SortType.Active,
             default_post_time_range_seconds = null,
             post_upvotes = FederationMode.All,
@@ -980,7 +980,7 @@ internal class Transformer : MapperGenerator {
             creator_banned_from_community = d.creator_banned_from_community,
             creator_is_moderator = d.creator_is_moderator,
             creator_is_admin = d.creator_is_admin,
-            post_tags = emptyList(),
+            tags = emptyList(),
             creator_banned = d.creator.banned,
             creator_ban_expires_at = d.creator.ban_expires,
             can_mod = false,
@@ -1019,7 +1019,7 @@ internal class Transformer : MapperGenerator {
             creator_banned_from_community = d.creator_banned_from_community,
             creator_is_moderator = d.creator_is_moderator,
             creator_is_admin = d.creator_is_admin,
-            post_tags = emptyList(),
+            tags = emptyList(),
             creator_banned = d.creator.banned,
             creator_ban_expires_at = d.creator.ban_expires,
             can_mod = false,
@@ -1393,8 +1393,8 @@ internal class Transformer : MapperGenerator {
             follows = d.follows.map { this.toUni(d = it) },
             moderates = d.moderates.map { this.toUni(d = it) },
             community_blocks = d.community_blocks.map { this.toUni(d = it.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)) },
-            instance_community_blocks = d.instance_blocks.map { this.toUni(d = it.instance) },
-            instance_person_blocks = emptyList(),
+            instance_communities_blocks = d.instance_blocks.map { this.toUni(d = it.instance) },
+            instance_persons_blocks = emptyList(),
             person_blocks = d.person_blocks.map { this.toUni(d = it.target) },
             discussion_languages = d.discussion_languages,
         )
@@ -1594,7 +1594,7 @@ internal class Transformer : MapperGenerator {
         updated_at = d.updated,
         icon = d.icon,
         banner = d.banner,
-        description = d.description,
+        summary = d.description,
         ap_id = d.actor_id,
         last_refreshed_at = d.last_refreshed_at,
         inbox_url = d.inbox_url,
@@ -1710,7 +1710,7 @@ internal class Transformer : MapperGenerator {
         X3DatatypesCreateCommunity(
             name = d.name,
             title = d.title,
-            description = d.description,
+            description = d.summary,
             icon = d.icon,
             banner = d.banner,
             nsfw = d.nsfw,
@@ -1765,7 +1765,7 @@ internal class Transformer : MapperGenerator {
         X3DatatypesCreateSite(
             name = d.name,
             sidebar = d.sidebar,
-            description = d.description,
+            description = d.summary,
             icon = d.icon,
             banner = d.banner,
             enable_downvotes = when (d.post_downvotes) {
@@ -1857,7 +1857,7 @@ internal class Transformer : MapperGenerator {
         X3DatatypesEditCommunity(
             community_id = d.community_id,
             title = d.title,
-            description = d.description,
+            description = d.summary,
             icon = d.icon,
             banner = d.banner,
             nsfw = d.nsfw,
@@ -1892,7 +1892,7 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesEditSite): X3DatatypesEditSite = X3DatatypesEditSite(
         name = d.name,
         sidebar = d.sidebar,
-        description = d.description,
+        description = d.summary,
         icon = d.icon,
         banner = d.banner,
         enable_downvotes = d.enable_downvotes,

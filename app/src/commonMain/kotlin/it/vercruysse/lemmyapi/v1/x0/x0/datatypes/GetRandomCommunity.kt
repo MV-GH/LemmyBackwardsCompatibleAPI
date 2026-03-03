@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class GetRandomCommunity(
-    val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */ = null,
+    val type_: ListingType? /* "all" | "local" | "subscribed" | "moderator_view" | "suggested" */ = null,
     val show_nsfw: Boolean? = null,
 )

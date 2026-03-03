@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: is removed
+
 @CommonParcelize
 @Serializable
 data class ResolveObjectResponse(

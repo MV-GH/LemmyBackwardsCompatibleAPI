@@ -10,6 +10,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ListPersonHidden(
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 ) : DatatypeRoot

@@ -5,6 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class ListTaglines(
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 )

@@ -6,12 +6,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class GetComments(
-    val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */ = null,
-    val sort: CommentSortType? /* "Hot" | "Top" | "New" | "Old" | "Controversial" */ = null,
+    val type_: ListingType? /* "all" | "local" | "subscribed" | "moderator_view" | "suggested" */ = null,
+    val sort: CommentSortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
     val time_range_seconds: Long? = null,
     val max_depth: Long? = null,
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
     val limit: Long? = null,
     val community_id: CommunityId? = null,
     val community_name: String? = null,
