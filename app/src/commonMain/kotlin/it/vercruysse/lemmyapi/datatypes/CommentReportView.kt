@@ -5,9 +5,11 @@ import it.vercruysse.lemmyapi.Identity
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import kotlinx.serialization.SerialName
 
 @CommonParcelize
 @Serializable
+@SerialName("comment")
 data class CommentReportView(
     val comment_report: CommentReport,
     val comment: Comment,
@@ -22,8 +24,10 @@ data class CommentReportView(
     val creator_is_admin: Boolean,
     val creator_is_moderator: Boolean,
     val creator_banned: Boolean,
+    val creator_ban_expires_at: String? = null,
     val creator_banned_from_community: Boolean,
-) : DatatypeRoot, Identity {
+    val creator_community_ban_expires_at: String? = null,
+) : DatatypeRoot, Identity, ReportCombinedView {
     override val id: Long
         get() = comment_report.id
 }

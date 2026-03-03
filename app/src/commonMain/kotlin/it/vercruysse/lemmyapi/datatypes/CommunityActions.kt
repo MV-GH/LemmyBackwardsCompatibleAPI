@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CommunityActions(
     val followed_at: String? = null,
-    val follow_state: CommunityFollowerState? /* "Accepted" | "Pending" | "ApprovalRequired" */ = null,
+    val follow_state: CommunityFollowerState? /* "accepted" | "pending" | "approval_required" | "denied" */ = null,
     val blocked_at: String? = null,
     val became_moderator_at: String? = null,
     val received_ban_at: String? = null,

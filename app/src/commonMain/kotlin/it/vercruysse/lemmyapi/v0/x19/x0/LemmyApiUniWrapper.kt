@@ -907,8 +907,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("user/totp/update")
      */
     override suspend fun updateTotp(
-        form: it.vercruysse.lemmyapi.datatypes.UpdateTotp,
-    ): Result<it.vercruysse.lemmyapi.datatypes.UpdateTotpResponse> =
+        form: it.vercruysse.lemmyapi.datatypes.EditTotp,
+    ): Result<it.vercruysse.lemmyapi.datatypes.EditTotpResponse> =
         api.updateTotp(transformer.fromUni(form)).map(transformer::toUni)
 
     /**

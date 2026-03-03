@@ -16,5 +16,7 @@ internal data class PostReportView(
     val creator_is_admin: Boolean,
     val creator_is_moderator: Boolean,
     val creator_banned: Boolean,
+    val creator_ban_expires_at: String? = null,
     val creator_banned_from_community: Boolean,
+    val creator_community_ban_expires_at: String? = null,
 )

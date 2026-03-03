@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 internal data class MultiCommunityFollow(
     val multi_community_id: MultiCommunityId,
     val person_id: PersonId,
-    val follow_state: CommunityFollowerState /* "Accepted" | "Pending" | "ApprovalRequired" */,
+    val follow_state: CommunityFollowerState /* "accepted" | "pending" | "approval_required" | "denied" */,
 )

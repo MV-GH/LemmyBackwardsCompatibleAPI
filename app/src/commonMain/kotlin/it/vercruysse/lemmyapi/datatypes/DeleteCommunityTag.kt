@@ -7,5 +7,6 @@ import kotlinx.serialization.Serializable
 @CommonParcelize
 @Serializable
 data class DeleteCommunityTag(
-    val tag_id: TagId,
+    val tag_id: CommunityTagId,
+    val delete: Boolean,
 ): DatatypeRoot

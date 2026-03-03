@@ -6,11 +6,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class ListCommunities(
-    val type_: ListingType? /* "All" | "Local" | "Subscribed" | "ModeratorView" | "Suggested" */ = null,
-    val sort: SortType? /* "ActiveSixMonths" | "ActiveMonthly" | "ActiveWeekly" | "ActiveDaily" | "Hot" | "New" | "Old" | "NameAsc" | "NameDesc" | "Comments" | "Posts" | "Subscribers" | "SubscribersLocal" */ = null,
+    val type_: ListingType? /* "all" | "local" | "subscribed" | "moderator_view" | "suggested" */ = null,
+    val sort: SortType? /* "active_six_months" | "active_monthly" | "active_weekly" | "active_daily" | "hot" | "new" | "old" | "name_asc" | "name_desc" | "comments" | "posts" | "subscribers" | "subscribers_local" */ = null,
     val time_range_seconds: Long? = null,
     val show_nsfw: Boolean? = null,
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 )

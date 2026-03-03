@@ -7,13 +7,15 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: not correct yet
+
 @CommonParcelize
 @Serializable
 data class Community(
     override val id: CommunityId,
     val name: String,
     val title: String,
-    val description: String? = null,
+    val summary: String? = null,
     val removed: Boolean,
     val published_at: String,
     val updated_at: String? = null,
@@ -21,6 +23,7 @@ data class Community(
     val nsfw: Boolean,
     val ap_id: String,
     val local: Boolean,
+    val last_refreshed_at: String,
     val icon: String? = null,
     val banner: String? = null,
     val hidden: Boolean,

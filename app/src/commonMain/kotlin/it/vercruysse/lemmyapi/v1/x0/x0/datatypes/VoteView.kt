@@ -7,5 +7,5 @@ internal data class VoteView(
     val creator: Person,
     val creator_banned: Boolean,
     val creator_banned_from_community: Boolean,
-    val score: Int,
+    val is_upvote: Boolean,
 )

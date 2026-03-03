@@ -9,5 +9,5 @@ import kotlinx.serialization.Serializable
 data class CreateMultiCommunity(
     val name: String,
     val title: String? = null,
-    val description: String? = null,
+    val summary: String? = null,
 ) : DatatypeRoot

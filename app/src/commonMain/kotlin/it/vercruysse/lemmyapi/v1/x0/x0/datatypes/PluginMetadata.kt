@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class PluginMetadata(
     val name: String,
-    val url: String,
-    val description: String,
+    val url: String? = null,
+    val description: String? = null,
 )

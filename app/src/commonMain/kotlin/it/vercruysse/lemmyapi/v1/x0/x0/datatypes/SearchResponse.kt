@@ -5,7 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class SearchResponse(
-    val results: List<SearchCombinedView>,
+    val resolve: SearchCombinedView? = null,
+    val search: List<SearchCombinedView>,
     val next_page: PaginationCursor? = null,
     val prev_page: PaginationCursor? = null,
 )

@@ -20,8 +20,6 @@ data class GetModlog(
     val comment_id: CommentId? = null,
     /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
-    /** Added in 1.0.0 */
-    val page_back: Boolean? = null,
     /** Removed in 1.0.0 */
     val page: Long? = null,
     val limit: Long? = null,

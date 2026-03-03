@@ -12,7 +12,7 @@ data class CreateCommunity(
     val name: String,
     val title: String,
     val sidebar: String? = null,
-    val description: String? = null,
+    val summary: String? = null,
     val icon: String? = null,
     val banner: String? = null,
     val nsfw: Boolean? = null,

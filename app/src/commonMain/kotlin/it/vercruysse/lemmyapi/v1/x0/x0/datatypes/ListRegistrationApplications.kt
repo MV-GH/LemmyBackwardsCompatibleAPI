@@ -6,6 +6,5 @@ import kotlinx.serialization.Serializable
 internal data class ListRegistrationApplications(
     val unread_only: Boolean? = null,
     val page_cursor: PaginationCursor? = null,
-    val page_back: Boolean? = null,
     val limit: Long? = null,
 )

@@ -27,7 +27,7 @@ enum class SubscribedType {
     NotSubscribed,
     Pending,
 }
-
+// TODO: denied
 @Serializable
 enum class CommunityFollowerState {
     Accepted,
@@ -82,6 +82,7 @@ enum class SearchType(override val minimumVersion: Version = MINIMUM_API_VERSION
     Url,
 }
 
+// TODO: changes
 @Serializable
 enum class ModlogActionType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
     VersionTracker {
@@ -216,6 +217,7 @@ enum class NotificationType(override val minimumVersion: Version = MINIMUM_API_V
     Reply,
     PrivateMessage,
     Subscribed(V1_0_0),
+    ModAction(V1_0_0),
 }
 
 @Serializable

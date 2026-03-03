@@ -1,3 +1,0 @@
-package it.vercruysse.lemmyapi.datatypes
-
-typealias AdminBlockInstanceId = Long

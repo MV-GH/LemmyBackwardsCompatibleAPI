@@ -11,8 +11,9 @@ internal data class GetSiteResponse(
     val discussion_languages: List<LanguageId>,
     val tagline: Tagline? = null,
     val oauth_providers: List<PublicOAuthProvider>,
-    val admin_oauth_providers: List<OAuthProvider>,
+    val admin_oauth_providers: List<AdminOAuthProvider>,
     val blocked_urls: List<LocalSiteUrlBlocklist>,
     val image_upload_disabled: Boolean,
     val active_plugins: List<PluginMetadata>,
+    val last_application_duration_seconds: Long? = null,
 )
