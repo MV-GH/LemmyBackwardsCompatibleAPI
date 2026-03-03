@@ -5,7 +5,6 @@ import it.vercruysse.lemmyapi.datatypes.CommunityActions
 import it.vercruysse.lemmyapi.datatypes.LinkMetadata
 import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
 import it.vercruysse.lemmyapi.datatypes.Notification
-import it.vercruysse.lemmyapi.datatypes.NotificationData
 import it.vercruysse.lemmyapi.datatypes.NotificationView
 import it.vercruysse.lemmyapi.datatypes.PersonActions
 import it.vercruysse.lemmyapi.datatypes.PostActions
@@ -23,20 +22,6 @@ import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
 import it.vercruysse.lemmyapi.datatypes.AddAdminResponse as LemmyapiDatatypesAddAdminResponse
 import it.vercruysse.lemmyapi.datatypes.AddModToCommunity as LemmyapiDatatypesAddModToCommunity
 import it.vercruysse.lemmyapi.datatypes.AddModToCommunityResponse as LemmyapiDatatypesAddModToCommunityResponse
-import it.vercruysse.lemmyapi.datatypes.AdminAdd as LemmyapiDatatypesModAdd
-import it.vercruysse.lemmyapi.datatypes.AdminAddView as LemmyapiDatatypesModAddView
-import it.vercruysse.lemmyapi.datatypes.AdminBan as LemmyapiDatatypesModBan
-import it.vercruysse.lemmyapi.datatypes.AdminBanView as LemmyapiDatatypesModBanView
-import it.vercruysse.lemmyapi.datatypes.AdminPurgeComment as LemmyapiDatatypesAdminPurgeComment
-import it.vercruysse.lemmyapi.datatypes.AdminPurgeCommentView as LemmyapiDatatypesAdminPurgeCommentView
-import it.vercruysse.lemmyapi.datatypes.AdminPurgeCommunity as LemmyapiDatatypesAdminPurgeCommunity
-import it.vercruysse.lemmyapi.datatypes.AdminPurgeCommunityView as LemmyapiDatatypesAdminPurgeCommunityView
-import it.vercruysse.lemmyapi.datatypes.AdminPurgePerson as LemmyapiDatatypesAdminPurgePerson
-import it.vercruysse.lemmyapi.datatypes.AdminPurgePersonView as LemmyapiDatatypesAdminPurgePersonView
-import it.vercruysse.lemmyapi.datatypes.AdminPurgePost as LemmyapiDatatypesAdminPurgePost
-import it.vercruysse.lemmyapi.datatypes.AdminPurgePostView as LemmyapiDatatypesAdminPurgePostView
-import it.vercruysse.lemmyapi.datatypes.AdminRemoveCommunity as LemmyapiDatatypesModRemoveCommunity
-import it.vercruysse.lemmyapi.datatypes.AdminRemoveCommunityView as LemmyapiDatatypesModRemoveCommunityView
 import it.vercruysse.lemmyapi.datatypes.ApproveRegistrationApplication as LemmyapiDatatypesApproveRegistrationApplication
 import it.vercruysse.lemmyapi.datatypes.BanFromCommunity as LemmyapiDatatypesBanFromCommunity
 import it.vercruysse.lemmyapi.datatypes.BanPerson as LemmyapiDatatypesBanPerson
@@ -84,7 +69,6 @@ import it.vercruysse.lemmyapi.datatypes.EditPost as LemmyapiDatatypesEditPost
 import it.vercruysse.lemmyapi.datatypes.EditPrivateMessage as LemmyapiDatatypesEditPrivateMessage
 import it.vercruysse.lemmyapi.datatypes.EditSite as LemmyapiDatatypesEditSite
 import it.vercruysse.lemmyapi.datatypes.FeaturePost as LemmyapiDatatypesFeaturePost
-import it.vercruysse.lemmyapi.datatypes.FederatedInstances as LemmyapiDatatypesFederatedInstances
 import it.vercruysse.lemmyapi.datatypes.FollowCommunity as LemmyapiDatatypesFollowCommunity
 import it.vercruysse.lemmyapi.datatypes.GenerateTotpSecretResponse as LemmyapiDatatypesGenerateTotpSecretResponse
 import it.vercruysse.lemmyapi.datatypes.GetCaptchaResponse as LemmyapiDatatypesGetCaptchaResponse
@@ -119,22 +103,6 @@ import it.vercruysse.lemmyapi.datatypes.Login as LemmyapiDatatypesLogin
 import it.vercruysse.lemmyapi.datatypes.LoginResponse as LemmyapiDatatypesLoginResponse
 import it.vercruysse.lemmyapi.datatypes.LoginToken as LemmyapiDatatypesLoginToken
 import it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead as LemmyapiDatatypesMarkPostAsRead
-import it.vercruysse.lemmyapi.datatypes.ModAddToCommunity as LemmyapiDatatypesModAddCommunity
-import it.vercruysse.lemmyapi.datatypes.ModAddToCommunityView as LemmyapiDatatypesModAddCommunityView
-import it.vercruysse.lemmyapi.datatypes.ModBanFromCommunity as LemmyapiDatatypesModBanFromCommunity
-import it.vercruysse.lemmyapi.datatypes.ModBanFromCommunityView as LemmyapiDatatypesModBanFromCommunityView
-import it.vercruysse.lemmyapi.datatypes.ModChangeCommunityVisibility as LemmyapiDatatypesModChangeCommunityVisibility
-import it.vercruysse.lemmyapi.datatypes.ModChangeCommunityVisibilityView as LemmyapiDatatypesModChangeCommunityVisibilityView
-import it.vercruysse.lemmyapi.datatypes.ModFeaturePost as LemmyapiDatatypesModFeaturePost
-import it.vercruysse.lemmyapi.datatypes.ModFeaturePostView as LemmyapiDatatypesModFeaturePostView
-import it.vercruysse.lemmyapi.datatypes.ModLockPost as LemmyapiDatatypesModLockPost
-import it.vercruysse.lemmyapi.datatypes.ModLockPostView as LemmyapiDatatypesModLockPostView
-import it.vercruysse.lemmyapi.datatypes.ModRemoveComment as LemmyapiDatatypesModRemoveComment
-import it.vercruysse.lemmyapi.datatypes.ModRemoveCommentView as LemmyapiDatatypesModRemoveCommentView
-import it.vercruysse.lemmyapi.datatypes.ModRemovePost as LemmyapiDatatypesModRemovePost
-import it.vercruysse.lemmyapi.datatypes.ModRemovePostView as LemmyapiDatatypesModRemovePostView
-import it.vercruysse.lemmyapi.datatypes.ModTransferCommunity as LemmyapiDatatypesModTransferCommunity
-import it.vercruysse.lemmyapi.datatypes.ModTransferCommunityView as LemmyapiDatatypesModTransferCommunityView
 import it.vercruysse.lemmyapi.datatypes.MyUserInfo as LemmyapiDatatypesMyUserInfo
 import it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
 import it.vercruysse.lemmyapi.datatypes.PasswordReset as LemmyapiDatatypesPasswordReset
@@ -189,14 +157,6 @@ import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddAdmin as X3DatatypesAddAdmi
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddAdminResponse as X3DatatypesAddAdminResponse
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddModToCommunity as X3DatatypesAddModToCommunity
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddModToCommunityResponse as X3DatatypesAddModToCommunityResponse
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgeComment as X3DatatypesAdminPurgeComment
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgeCommentView as X3DatatypesAdminPurgeCommentView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgeCommunity as X3DatatypesAdminPurgeCommunity
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgeCommunityView as X3DatatypesAdminPurgeCommunityView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgePerson as X3DatatypesAdminPurgePerson
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgePersonView as X3DatatypesAdminPurgePersonView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgePost as X3DatatypesAdminPurgePost
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AdminPurgePostView as X3DatatypesAdminPurgePostView
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ApproveRegistrationApplication as X3DatatypesApproveRegistrationApplication
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BanFromCommunity as X3DatatypesBanFromCommunity
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.BanFromCommunityResponse as X3DatatypesBanFromCommunityResponse
@@ -252,7 +212,6 @@ import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.EditPost as X3DatatypesEditPos
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.EditPrivateMessage as X3DatatypesEditPrivateMessage
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.EditSite as X3DatatypesEditSite
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.FeaturePost as X3DatatypesFeaturePost
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.FederatedInstances as X3DatatypesFederatedInstances
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.FollowCommunity as X3DatatypesFollowCommunity
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GenerateTotpSecretResponse as X3DatatypesGenerateTotpSecretResponse
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetCaptchaResponse as X3DatatypesGetCaptchaResponse
@@ -295,28 +254,6 @@ import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MarkCommentReplyAsRead as X3Da
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MarkPersonMentionAsRead as X3DatatypesMarkPersonMentionAsRead
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MarkPostAsRead as X3DatatypesMarkPostAsRead
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MarkPrivateMessageAsRead as X3DatatypesMarkPrivateMessageAsRead
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModAdd as X3DatatypesModAdd
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModAddCommunity as X3DatatypesModAddCommunity
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModAddCommunityView as X3DatatypesModAddCommunityView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModAddView as X3DatatypesModAddView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModBan as X3DatatypesModBan
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModBanFromCommunity as X3DatatypesModBanFromCommunity
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModBanFromCommunityView as X3DatatypesModBanFromCommunityView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModBanView as X3DatatypesModBanView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModFeaturePost as X3DatatypesModFeaturePost
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModFeaturePostView as X3DatatypesModFeaturePostView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModHideCommunity as X3DatatypesModHideCommunity
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModHideCommunityView as X3DatatypesModHideCommunityView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModLockPost as X3DatatypesModLockPost
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModLockPostView as X3DatatypesModLockPostView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemoveComment as X3DatatypesModRemoveComment
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemoveCommentView as X3DatatypesModRemoveCommentView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemoveCommunity as X3DatatypesModRemoveCommunity
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemoveCommunityView as X3DatatypesModRemoveCommunityView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemovePost as X3DatatypesModRemovePost
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModRemovePostView as X3DatatypesModRemovePostView
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModTransferCommunity as X3DatatypesModTransferCommunity
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ModTransferCommunityView as X3DatatypesModTransferCommunityView
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.MyUserInfo as X3DatatypesMyUserInfo
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PasswordChangeAfterReset as X3DatatypesPasswordChangeAfterReset
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.PasswordReset as X3DatatypesPasswordReset
@@ -560,65 +497,6 @@ internal class Transformer : MapperGenerator {
         moderators = d.moderators.map { this.toUni(d = it) },
     )
 
-    override fun toUni(d: X3DatatypesAdminPurgeComment): LemmyapiDatatypesAdminPurgeComment =
-        LemmyapiDatatypesAdminPurgeComment(
-            id = d.id,
-            admin_person_id = d.admin_person_id,
-            post_id = d.post_id,
-            reason = d.reason ?: "",
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesAdminPurgeCommentView): LemmyapiDatatypesAdminPurgeCommentView =
-        LemmyapiDatatypesAdminPurgeCommentView(
-            admin_purge_comment = this.toUni(d = d.admin_purge_comment),
-            admin = d.admin?.let { this.toUni(d = it) },
-            post = this.toUni(d = d.post, counts = X3DatatypesPostAggregates(-1, -1, -1, -1, -1, "", "")),
-        )
-
-    override fun toUni(d: X3DatatypesAdminPurgeCommunity): LemmyapiDatatypesAdminPurgeCommunity =
-        LemmyapiDatatypesAdminPurgeCommunity(
-            id = d.id,
-            admin_person_id = d.admin_person_id,
-            reason = d.reason ?: "",
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesAdminPurgeCommunityView): LemmyapiDatatypesAdminPurgeCommunityView = LemmyapiDatatypesAdminPurgeCommunityView(
-        admin_purge_community = this.toUni(d = d.admin_purge_community),
-        admin = d.admin?.let { this.toUni(d = it) },
-    )
-
-    override fun toUni(d: X3DatatypesAdminPurgePerson): LemmyapiDatatypesAdminPurgePerson =
-        LemmyapiDatatypesAdminPurgePerson(
-            id = d.id,
-            admin_person_id = d.admin_person_id,
-            reason = d.reason ?: "",
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesAdminPurgePersonView): LemmyapiDatatypesAdminPurgePersonView =
-        LemmyapiDatatypesAdminPurgePersonView(
-            admin_purge_person = this.toUni(d = d.admin_purge_person),
-            admin = d.admin?.let { this.toUni(d = it) },
-        )
-
-    override fun toUni(d: X3DatatypesAdminPurgePost): LemmyapiDatatypesAdminPurgePost =
-        LemmyapiDatatypesAdminPurgePost(
-            id = d.id,
-            admin_person_id = d.admin_person_id,
-            community_id = d.community_id,
-            reason = d.reason ?: "",
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesAdminPurgePostView): LemmyapiDatatypesAdminPurgePostView =
-        LemmyapiDatatypesAdminPurgePostView(
-            admin_purge_post = this.toUni(d = d.admin_purge_post),
-            admin = d.admin?.let { this.toUni(d = it) },
-            community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-        )
-
     override fun toUni(d: X3DatatypesBanFromCommunityResponse): it.vercruysse.lemmyapi.datatypes.PersonResponse =
         it.vercruysse.lemmyapi.datatypes.PersonResponse(person_view = this.toUni(d = d.person_view))
 
@@ -626,7 +504,7 @@ internal class Transformer : MapperGenerator {
         it.vercruysse.lemmyapi.datatypes.PersonResponse(person_view = this.toUni(d = d.person_view))
 
     override fun toUni(d: X3DatatypesBlockCommunityResponse): it.vercruysse.lemmyapi.datatypes.CommunityResponse =
-        it.vercruysse.lemmyapi.datatypes.CommunityResponse(community_view = this.toUni(d = d.community_view), moderators = emptyList())
+        it.vercruysse.lemmyapi.datatypes.CommunityResponse(community_view = this.toUni(d = d.community_view), discussion_languages = emptyList())
 
     override fun toUni(d: X3DatatypesBlockPersonResponse): it.vercruysse.lemmyapi.datatypes.PersonResponse =
         it.vercruysse.lemmyapi.datatypes.PersonResponse(person_view = this.toUni(d = d.person_view))
@@ -730,13 +608,6 @@ internal class Transformer : MapperGenerator {
             keywords = d.keywords.map { this.toUni(d = it) },
         )
 
-    override fun toUni(d: X3DatatypesFederatedInstances): LemmyapiDatatypesFederatedInstances =
-        LemmyapiDatatypesFederatedInstances(
-            linked = d.linked.map { this.toUni(d = it) },
-            allowed = d.allowed.map { this.toUni(d = it) },
-            blocked = d.blocked.map { this.toUni(d = it) },
-        )
-
     override fun toUni(d: X3DatatypesGenerateTotpSecretResponse): LemmyapiDatatypesGenerateTotpSecretResponse = LemmyapiDatatypesGenerateTotpSecretResponse(
         totp_secret_url = d.totp_secret_url,
     )
@@ -782,9 +653,7 @@ internal class Transformer : MapperGenerator {
                 kind = NotificationType.Reply,
                 post_id = d.post.id,
             ),
-            data = NotificationData.Comment(
-                comment = this.toUniCV(d),
-            ),
+            data =this.toUniCV(d),
         )
 
     fun toUniCV(d: X3DatatypesCommentReplyView): LemmyapiDatatypesCommentView =
@@ -816,9 +685,7 @@ internal class Transformer : MapperGenerator {
                 kind = NotificationType.Mention,
                 post_id = d.post.id,
             ),
-            data = NotificationData.Comment(
-                comment = this.toUniPV(d),
-            ),
+            data = this.toUniPV(d),
         )
 
     fun toUniPV(d: X3DatatypesPersonMentionView): LemmyapiDatatypesCommentView =
@@ -848,9 +715,7 @@ internal class Transformer : MapperGenerator {
                 published_at = d.private_message.published,
                 kind = NotificationType.PrivateMessage,
             ),
-            data = NotificationData.PrivateMessage(
-                private_message = this.toUni(d),
-            ),
+            data = this.toUni(d),
         )
 
     override fun toUni(d: X3DatatypesGetSiteMetadataResponse): LemmyapiDatatypesGetSiteMetadataResponse = LemmyapiDatatypesGetSiteMetadataResponse(
@@ -963,203 +828,6 @@ internal class Transformer : MapperGenerator {
             ip = d.ip,
             user_agent = d.user_agent,
         )
-
-    override fun toUni(d: X3DatatypesModAdd): LemmyapiDatatypesModAdd = LemmyapiDatatypesModAdd(
-        id = d.id,
-        mod_person_id = d.mod_person_id,
-        other_person_id = d.other_person_id,
-        removed = d.removed,
-        published_at = d.when_,
-    )
-
-    override fun toUni(d: X3DatatypesModAddCommunity): LemmyapiDatatypesModAddCommunity =
-        LemmyapiDatatypesModAddCommunity(
-            id = d.id,
-            mod_person_id = d.mod_person_id,
-            other_person_id = d.other_person_id,
-            community_id = d.community_id,
-            removed = d.removed,
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesModAddCommunityView): LemmyapiDatatypesModAddCommunityView =
-        LemmyapiDatatypesModAddCommunityView(
-            mod_add_to_community = this.toUni(d = d.mod_add_community),
-            moderator = d.moderator?.let { this.toUni(d = it) },
-            community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-            other_person = this.toUni(d = d.modded_person),
-        )
-
-    override fun toUni(d: X3DatatypesModAddView): LemmyapiDatatypesModAddView =
-        LemmyapiDatatypesModAddView(
-            admin_add = this.toUni(d = d.mod_add),
-            moderator = d.moderator?.let { this.toUni(d = it) },
-            other_person = this.toUni(d = d.modded_person),
-        )
-
-    override fun toUni(d: X3DatatypesModBan): LemmyapiDatatypesModBan = LemmyapiDatatypesModBan(
-        id = d.id,
-        mod_person_id = d.mod_person_id,
-        other_person_id = d.other_person_id,
-        reason = d.reason,
-        banned = d.banned,
-        expires_at = d.expires,
-        published_at = d.when_,
-        instance_id = -1,
-    )
-
-    override fun toUni(d: X3DatatypesModBanFromCommunity): LemmyapiDatatypesModBanFromCommunity =
-        LemmyapiDatatypesModBanFromCommunity(
-            id = d.id,
-            mod_person_id = d.mod_person_id,
-            other_person_id = d.other_person_id,
-            community_id = d.community_id,
-            reason = d.reason ?: "",
-            banned = d.banned,
-            expires_at = d.expires,
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesModBanFromCommunityView): LemmyapiDatatypesModBanFromCommunityView = LemmyapiDatatypesModBanFromCommunityView(
-        mod_ban_from_community = this.toUni(d = d.mod_ban_from_community),
-        moderator = d.moderator?.let { this.toUni(d = it) },
-        community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-        other_person = this.toUni(d = d.banned_person),
-    )
-
-    override fun toUni(d: X3DatatypesModBanView): LemmyapiDatatypesModBanView =
-        LemmyapiDatatypesModBanView(
-            admin_ban = this.toUni(d = d.mod_ban),
-            moderator = d.moderator?.let { this.toUni(d = it) },
-            other_person = this.toUni(d = d.banned_person),
-        )
-
-    override fun toUni(d: X3DatatypesModFeaturePost): LemmyapiDatatypesModFeaturePost =
-        LemmyapiDatatypesModFeaturePost(
-            id = d.id,
-            mod_person_id = d.mod_person_id,
-            post_id = d.post_id,
-            featured = d.featured,
-            published_at = d.when_,
-            is_featured_community = d.is_featured_community,
-        )
-
-    override fun toUni(d: X3DatatypesModFeaturePostView): LemmyapiDatatypesModFeaturePostView =
-        LemmyapiDatatypesModFeaturePostView(
-            mod_feature_post = this.toUni(d = d.mod_feature_post),
-            moderator = d.moderator?.let { this.toUni(d = it) },
-            post = this.toUni(d = d.post, counts = X3DatatypesPostAggregates(-1, -1, -1, -1, -1, "", "")),
-            community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-        )
-
-    override fun toUni(d: X3DatatypesModHideCommunity): LemmyapiDatatypesModChangeCommunityVisibility =
-        LemmyapiDatatypesModChangeCommunityVisibility(
-            id = d.id,
-            community_id = d.community_id,
-            mod_person_id = d.mod_person_id,
-            published_at = d.when_,
-            reason = d.reason,
-            visibility = if (d.hidden) {
-                CommunityVisibility.Unlisted
-            } else {
-                CommunityVisibility.Public
-            },
-        )
-
-    override fun toUni(d: X3DatatypesModHideCommunityView): LemmyapiDatatypesModChangeCommunityVisibilityView =
-        LemmyapiDatatypesModChangeCommunityVisibilityView(
-            mod_change_community_visibility = this.toUni(d = d.mod_hide_community),
-            moderator = d.admin?.let { this.toUni(d = it) },
-            community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-        )
-
-    override fun toUni(d: X3DatatypesModLockPost): LemmyapiDatatypesModLockPost =
-        LemmyapiDatatypesModLockPost(
-            id = d.id,
-            mod_person_id = d.mod_person_id,
-            post_id = d.post_id,
-            locked = d.locked,
-            published_at = d.when_,
-            reason = "",
-        )
-
-    override fun toUni(d: X3DatatypesModLockPostView): LemmyapiDatatypesModLockPostView =
-        LemmyapiDatatypesModLockPostView(
-            mod_lock_post = this.toUni(d = d.mod_lock_post),
-            moderator = d.moderator?.let { this.toUni(d = it) },
-            post = this.toUni(d = d.post, counts = X3DatatypesPostAggregates(-1, -1, -1, -1, -1, "", "")),
-            community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-        )
-
-    override fun toUni(d: X3DatatypesModRemoveComment): LemmyapiDatatypesModRemoveComment =
-        LemmyapiDatatypesModRemoveComment(
-            id = d.id,
-            mod_person_id = d.mod_person_id,
-            comment_id = d.comment_id,
-            reason = d.reason ?: "",
-            removed = d.removed,
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesModRemoveCommentView): LemmyapiDatatypesModRemoveCommentView =
-        LemmyapiDatatypesModRemoveCommentView(
-            mod_remove_comment = this.toUni(d = d.mod_remove_comment),
-            moderator = d.moderator?.let { this.toUni(d = it) },
-            comment = this.toUni(d = d.comment, X3DatatypesCommentAggregates(-1, -1, -1, -1, "", -1)),
-            other_person = this.toUni(d = d.commenter),
-            post = this.toUni(d = d.post, counts = X3DatatypesPostAggregates(-1, -1, -1, -1, -1, "", "")),
-            community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-        )
-
-    override fun toUni(d: X3DatatypesModRemoveCommunity): LemmyapiDatatypesModRemoveCommunity =
-        LemmyapiDatatypesModRemoveCommunity(
-            id = d.id,
-            mod_person_id = d.mod_person_id,
-            community_id = d.community_id,
-            reason = d.reason,
-            removed = d.removed,
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesModRemoveCommunityView): LemmyapiDatatypesModRemoveCommunityView = LemmyapiDatatypesModRemoveCommunityView(
-        admin_remove_community = this.toUni(d = d.mod_remove_community),
-        moderator = d.moderator?.let { this.toUni(d = it) },
-        community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-    )
-
-    override fun toUni(d: X3DatatypesModRemovePost): LemmyapiDatatypesModRemovePost =
-        LemmyapiDatatypesModRemovePost(
-            id = d.id,
-            mod_person_id = d.mod_person_id,
-            post_id = d.post_id,
-            reason = d.reason ?: "",
-            removed = d.removed,
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesModRemovePostView): LemmyapiDatatypesModRemovePostView =
-        LemmyapiDatatypesModRemovePostView(
-            mod_remove_post = this.toUni(d = d.mod_remove_post),
-            moderator = d.moderator?.let { this.toUni(d = it) },
-            post = this.toUni(d = d.post, counts = X3DatatypesPostAggregates(-1, -1, -1, -1, -1, "", "")),
-            community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-        )
-
-    override fun toUni(d: X3DatatypesModTransferCommunity): LemmyapiDatatypesModTransferCommunity =
-        LemmyapiDatatypesModTransferCommunity(
-            id = d.id,
-            mod_person_id = d.mod_person_id,
-            other_person_id = d.other_person_id,
-            community_id = d.community_id,
-            published_at = d.when_,
-        )
-
-    override fun toUni(d: X3DatatypesModTransferCommunityView): LemmyapiDatatypesModTransferCommunityView = LemmyapiDatatypesModTransferCommunityView(
-        mod_transfer_community = this.toUni(d = d.mod_transfer_community),
-        moderator = d.moderator?.let { this.toUni(d = it) },
-        community = this.toUni(d = d.community, counts = X3DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1)),
-        other_person = this.toUni(d = d.modded_person),
-    )
 
     override fun toUni(d: X3DatatypesMyUserInfo): LemmyapiDatatypesMyUserInfo =
         LemmyapiDatatypesMyUserInfo(
@@ -1323,7 +991,6 @@ internal class Transformer : MapperGenerator {
         last_successful_published_time_at = d.last_successful_published_time,
         fail_count = d.fail_count,
         last_retry_at = d.last_retry,
-        next_retry_at = d.next_retry,
     )
 
     override fun toUni(d: X3DatatypesRegistrationApplication): LemmyapiDatatypesRegistrationApplication = LemmyapiDatatypesRegistrationApplication(
@@ -1647,10 +1314,10 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesEditCustomEmoji): X3DatatypesEditCustomEmoji =
         X3DatatypesEditCustomEmoji(
             id = d.id,
-            category = d.category,
-            image_url = d.image_url,
-            alt_text = d.alt_text,
-            keywords = d.keywords,
+            category = d.category ?: "",
+            image_url = d.image_url ?: "",
+            alt_text = d.alt_text ?: "",
+            keywords = d.keywords ?: emptyList(),
         )
 
     override fun fromUni(d: LemmyapiDatatypesEditPost): X3DatatypesEditPost = X3DatatypesEditPost(

@@ -59,7 +59,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun getModlog(
         form: it.vercruysse.lemmyapi.datatypes.GetModlog,
-    ): Result<it.vercruysse.lemmyapi.datatypes.PagedResponse<ModlogView>> = notSupported()
+    ): Result<PagedResponse<ModlogView>> = notSupported()
 
     /**
      * Search lemmy.
@@ -331,26 +331,26 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         form: it.vercruysse.lemmyapi.datatypes.ListReports,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>> =
         when (form.type_) {
-            it.vercruysse.lemmyapi.dto.ReportType.Communities -> notSupported()
-            it.vercruysse.lemmyapi.dto.ReportType.Posts -> {
+            it.vercruysse.lemmyapi.enums.ReportType.Communities -> notSupported()
+            it.vercruysse.lemmyapi.enums.ReportType.Posts -> {
                 api.listPostReports(transformer.fromUniP(form)).map { resp ->
                     PagedResponse(resp.post_reports.map(transformer::toUni))
                 }
             }
 
-            it.vercruysse.lemmyapi.dto.ReportType.Comments -> {
+            it.vercruysse.lemmyapi.enums.ReportType.Comments -> {
                 api.listCommentReports(transformer.fromUniC(form)).map { resp ->
                     PagedResponse(resp.comment_reports.map(transformer::toUni))
                 }
             }
 
-            it.vercruysse.lemmyapi.dto.ReportType.PrivateMessages -> {
+            it.vercruysse.lemmyapi.enums.ReportType.PrivateMessages -> {
                 api.listPrivateMessageReports(transformer.fromUniPm(form)).map { resp ->
                     PagedResponse(resp.private_message_reports.map(transformer::toUni))
                 }
             }
 
-            it.vercruysse.lemmyapi.dto.ReportType.All -> {
+            it.vercruysse.lemmyapi.enums.ReportType.All -> {
                 runCatching {
                     val postsResp = api.listPostReports(transformer.fromUniP(form)).getOrThrow()
                     val commentsResp = api.listCommentReports(transformer.fromUniC(form)).getOrThrow()
