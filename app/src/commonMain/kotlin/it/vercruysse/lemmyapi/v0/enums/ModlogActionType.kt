@@ -30,13 +30,13 @@ internal enum class ModlogActionType {
             ModLockPost -> UniModlogActionType.ModLockPost
             ModFeaturePost -> UniModlogActionType.ModFeaturePost
             ModRemoveComment -> UniModlogActionType.ModRemoveComment
-            ModRemoveCommunity -> UniModlogActionType.ModRemoveCommunity
+            ModRemoveCommunity -> UniModlogActionType.AdminRemoveCommunity
             ModBanFromCommunity -> UniModlogActionType.ModBanFromCommunity
-            ModAddCommunity -> UniModlogActionType.ModAddCommunity
+            ModAddCommunity -> UniModlogActionType.ModAddToCommunity
             ModTransferCommunity -> UniModlogActionType.ModTransferCommunity
-            ModAdd -> UniModlogActionType.ModAdd
-            ModBan -> UniModlogActionType.ModBan
-            ModHideCommunity -> UniModlogActionType.ModHideCommunity
+            ModAdd -> UniModlogActionType.AdminAdd
+            ModBan -> UniModlogActionType.AdminBan
+            ModHideCommunity -> UniModlogActionType.ModChangeCommunityVisibility
             AdminPurgePerson -> UniModlogActionType.AdminPurgePerson
             AdminPurgeCommunity -> UniModlogActionType.AdminPurgeCommunity
             AdminPurgePost -> UniModlogActionType.AdminPurgePost
@@ -52,13 +52,13 @@ internal enum class ModlogActionType {
                 UniModlogActionType.ModLockPost -> ModLockPost
                 UniModlogActionType.ModFeaturePost -> ModFeaturePost
                 UniModlogActionType.ModRemoveComment -> ModRemoveComment
-                UniModlogActionType.ModRemoveCommunity -> ModRemoveCommunity
+                UniModlogActionType.AdminRemoveCommunity -> ModRemoveCommunity
                 UniModlogActionType.ModBanFromCommunity -> ModBanFromCommunity
-                UniModlogActionType.ModAddCommunity -> ModAddCommunity
+                UniModlogActionType.ModAddToCommunity -> ModAddCommunity
                 UniModlogActionType.ModTransferCommunity -> ModTransferCommunity
-                UniModlogActionType.ModAdd -> ModAdd
-                UniModlogActionType.ModBan -> ModBan
-                UniModlogActionType.ModHideCommunity -> ModHideCommunity
+                UniModlogActionType.AdminAdd -> ModAdd
+                UniModlogActionType.AdminBan -> ModBan
+                UniModlogActionType.ModChangeCommunityVisibility -> ModHideCommunity
                 UniModlogActionType.AdminPurgePerson -> AdminPurgePerson
                 UniModlogActionType.AdminPurgeCommunity -> AdminPurgeCommunity
                 UniModlogActionType.AdminPurgePost -> AdminPurgePost

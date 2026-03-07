@@ -3,8 +3,6 @@ package it.vercruysse.lemmyapi.enums
 import it.vercruysse.lemmyapi.v0.enums.SubscribedType
 import kotlinx.serialization.Serializable
 
-// TODO: mapped from previous version
-
 @Serializable
 enum class CommunityFollowerState {
     Accepted,

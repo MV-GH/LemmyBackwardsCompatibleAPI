@@ -6,7 +6,6 @@ import it.vercruysse.lemmyapi.V1_0_0
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// TODO: changes
 @Serializable
 enum class ModlogActionType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
     VersionTracker {
@@ -16,30 +15,21 @@ enum class ModlogActionType(override val minimumVersion: Version = MINIMUM_API_V
     @SerialName("mod_feature_post") ModFeaturePost,
     @SerialName("mod_remove_comment") ModRemoveComment,
     @SerialName("mod_lock_comment") ModLockComment(V1_0_0),
-
-    /** Deprecated alias for AdminRemoveCommunity */
-    @SerialName("mod_remove_community") ModRemoveCommunity(MINIMUM_API_VERSION, V1_0_0),
-    @SerialName("admin_remove_community") AdminRemoveCommunity(V1_0_0),
+    @SerialName("admin_remove_community") AdminRemoveCommunity(MINIMUM_API_VERSION),
     @SerialName("mod_ban_from_community") ModBanFromCommunity,
-
-    /** Deprecated alias for ModAddToCommunity */
-    @SerialName("mod_add_community") ModAddCommunity(MINIMUM_API_VERSION, V1_0_0),
-    @SerialName("mod_add_to_community") ModAddToCommunity(V1_0_0),
+    @SerialName("mod_add_to_community") ModAddToCommunity(MINIMUM_API_VERSION),
     @SerialName("mod_transfer_community") ModTransferCommunity,
-
-    /** Deprecated alias for AdminAdd */
-    @SerialName("mod_add") ModAdd(MINIMUM_API_VERSION, V1_0_0),
-
-    /** Deprecated alias for AdminBan */
-    @SerialName("mod_ban") ModBan(MINIMUM_API_VERSION, V1_0_0),
-    @SerialName("admin_add") AdminAdd(V1_0_0),
-    @SerialName("admin_ban") AdminBan(V1_0_0),
-    @SerialName("mod_hide_community") ModHideCommunity(MINIMUM_API_VERSION, V1_0_0),
-    @SerialName("mod_change_community_visibility") ModChangeCommunityVisibility(V1_0_0),
+    @SerialName("admin_add") AdminAdd(MINIMUM_API_VERSION),
+    @SerialName("admin_ban") AdminBan(MINIMUM_API_VERSION),
+    @SerialName("mod_change_community_visibility") ModChangeCommunityVisibility(MINIMUM_API_VERSION),
     @SerialName("admin_purge_person") AdminPurgePerson,
     @SerialName("admin_purge_community") AdminPurgeCommunity,
     @SerialName("admin_purge_post") AdminPurgePost,
     @SerialName("admin_purge_comment") AdminPurgeComment,
     @SerialName("admin_block_instance") AdminBlockInstance(V1_0_0),
     @SerialName("admin_allow_instance") AdminAllowInstance(V1_0_0),
+    @SerialName("mod_warn_comment") ModWarnComment(V1_0_0),
+    @SerialName("mod_warn_post") ModWarnPost(V1_0_0),
+    @SerialName("admin_feature_post_site") AdminFeaturePostSite(V1_0_0),
+    ;
 }
