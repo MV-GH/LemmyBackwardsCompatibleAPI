@@ -1,6 +1,6 @@
 package it.vercruysse.lemmyapi.v0.x19.x3.datatypes
 
-import it.vercruysse.lemmyapi.enums.CommentSortType
+import it.vercruysse.lemmyapi.v0.enums.CommentSortType
 import kotlinx.serialization.Serializable
 
 @Serializable

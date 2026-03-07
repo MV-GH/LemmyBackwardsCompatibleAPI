@@ -1,9 +1,9 @@
-package it.vercruysse.lemmyapi.enums
+package it.vercruysse.lemmyapi.v0.enums
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class SubscribedType {
+internal enum class SubscribedType {
     Subscribed,
     NotSubscribed,
     Pending,
