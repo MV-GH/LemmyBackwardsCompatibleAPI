@@ -8,7 +8,7 @@ import it.vercruysse.lemmyapi.datatypes.Notification
 import it.vercruysse.lemmyapi.datatypes.NotificationView
 import it.vercruysse.lemmyapi.datatypes.PersonActions
 import it.vercruysse.lemmyapi.datatypes.PostActions
-import it.vercruysse.lemmyapi.enums.CommentSortType
+import it.vercruysse.lemmyapi.v0.enums.CommentSortType as V0CommentSortType
 import it.vercruysse.lemmyapi.enums.CommunityFollowerState
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import it.vercruysse.lemmyapi.enums.FederationMode
@@ -16,6 +16,13 @@ import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.enums.VoteShow
+import it.vercruysse.lemmyapi.v0.enums.ListingType as V0ListingType
+import it.vercruysse.lemmyapi.v0.enums.ModlogActionType as V0ModlogActionType
+import it.vercruysse.lemmyapi.v0.enums.PostFeatureType as V0PostFeatureType
+import it.vercruysse.lemmyapi.v0.enums.PostListingMode as V0PostListingMode
+import it.vercruysse.lemmyapi.v0.enums.RegistrationMode as V0RegistrationMode
+import it.vercruysse.lemmyapi.v0.enums.SearchType as V0SearchType
+import it.vercruysse.lemmyapi.v0.enums.SortType as V0SortType
 import it.vercruysse.lemmyapi.utils.toAt
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.LocalUser
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
@@ -301,8 +308,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
             email = d.email,
             show_nsfw = d.show_nsfw,
             theme = d.theme,
-            default_post_sort_type = d.default_sort_type,
-            default_listing_type = d.default_listing_type,
+            default_post_sort_type = d.default_sort_type.toUni(),
+            default_listing_type = d.default_listing_type.toUni(),
             interface_language = d.interface_language,
             show_avatars = d.show_avatars,
             send_notifications_to_email = d.send_notifications_to_email,
@@ -466,7 +473,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             application_question = d.application_question,
             private_instance = d.private_instance,
             default_theme = d.default_theme,
-            default_post_listing_type = d.default_post_listing_type,
+            default_post_listing_type = d.default_post_listing_type.toUni(),
             legal_information = d.legal_information,
             application_email_admins = d.application_email_admins,
             slur_filter_regex = d.slur_filter_regex,
@@ -475,7 +482,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             captcha_difficulty = d.captcha_difficulty,
             published_at = addTimezoneOffset(d.published),
             updated_at = addTimezoneOffsetNullable(d.updated),
-            registration_mode = d.registration_mode,
+            registration_mode = d.registration_mode.toUni(),
             reports_email_admins = d.reports_email_admins,
             federation_signed_fetch = false,
             default_post_listing_mode = PostListingMode.Card,
@@ -1172,7 +1179,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             application_question = d.application_question,
             private_instance = d.private_instance,
             default_theme = d.default_theme,
-            default_post_listing_type = d.default_post_listing_type,
+            default_post_listing_type = V0ListingType.fromUniNullable(d.default_post_listing_type),
             legal_information = d.legal_information,
             application_email_admins = d.application_email_admins,
             discussion_languages = d.discussion_languages,
@@ -1195,7 +1202,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             allowed_instances = d.allowed_instances,
             blocked_instances = d.blocked_instances,
             taglines = d.taglines,
-            registration_mode = d.registration_mode,
+            registration_mode = V0RegistrationMode.fromUniNullable(d.registration_mode),
             auth = auth,
         )
 
@@ -1307,7 +1314,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         application_question = d.application_question,
         private_instance = d.private_instance,
         default_theme = d.default_theme,
-        default_post_listing_type = d.default_post_listing_type,
+        default_post_listing_type = V0ListingType.fromUniNullable(d.default_post_listing_type),
         legal_information = d.legal_information,
         application_email_admins = d.application_email_admins,
         hide_modlog_mod_names = d.hide_modlog_mod_names,
@@ -1332,7 +1339,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         allowed_instances = d.allowed_instances,
         blocked_instances = d.blocked_instances,
         taglines = d.taglines,
-        registration_mode = d.registration_mode,
+        registration_mode = V0RegistrationMode.fromUniNullable(d.registration_mode),
         reports_email_admins = d.reports_email_admins,
         auth = auth,
     )
@@ -1341,7 +1348,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         X5DatatypesFeaturePost(
             post_id = d.post_id,
             featured = d.featured,
-            feature_type = d.feature_type,
+            feature_type = V0PostFeatureType.fromUni(d.feature_type),
             auth = auth,
         )
 
@@ -1360,8 +1367,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     override fun fromUni(d: LemmyapiDatatypesGetComments): X5DatatypesGetComments =
         X5DatatypesGetComments(
-            type_ = d.type_,
-            sort = d.sort,
+            type_ = V0ListingType.fromUniNullable(d.type_),
+            sort = V0CommentSortType.fromUniNullable(d.sort),
             max_depth = d.max_depth,
             page = d.page,
             limit = d.limit,
@@ -1385,7 +1392,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         community_id = d.community_id,
         page = d.page,
         limit = d.limit,
-        type_ = d.type_,
+        type_ = V0ModlogActionType.fromUniNullable(d.type_),
         other_person_id = d.other_person_id,
         auth = auth,
     )
@@ -1394,7 +1401,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         X5DatatypesGetPersonDetails(
             person_id = d.person_id,
             username = d.username,
-            sort = d.sort,
+            sort = V0SortType.fromUniNullable(d.sort),
             page = d.page,
             limit = d.limit,
             community_id = d.community_id,
@@ -1409,8 +1416,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetPosts): X5DatatypesGetPosts = X5DatatypesGetPosts(
-        type_ = d.type_,
-        sort = d.sort,
+        type_ = V0ListingType.fromUniNullable(d.type_),
+        sort = V0SortType.fromUniNullable(d.sort),
         page = d.page,
         limit = d.limit,
         community_id = d.community_id,
@@ -1420,7 +1427,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     fun fromUniR(d: LemmyapiDatatypesListNotifications): X5DatatypesGetReplies =
         X5DatatypesGetReplies(
-            sort = CommentSortType.New,
+            sort = V0CommentSortType.New,
             page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
@@ -1429,7 +1436,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     fun fromUniM(d: LemmyapiDatatypesListNotifications): X5DatatypesGetPersonMentions =
         X5DatatypesGetPersonMentions(
-            sort = CommentSortType.New,
+            sort = V0CommentSortType.New,
             page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
@@ -1468,8 +1475,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     override fun fromUni(d: LemmyapiDatatypesListCommunities): X5DatatypesListCommunities =
         X5DatatypesListCommunities(
-            type_ = d.type_,
-            sort = d.sort,
+            type_ = V0ListingType.fromUniNullable(d.type_),
+            sort = V0SortType.fromUniNullable(d.sort),
             show_nsfw = d.show_nsfw,
             page = d.page,
             limit = d.limit,
@@ -1647,8 +1654,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
             show_nsfw = d.show_nsfw,
             show_scores = d.show_score,
             theme = d.theme,
-            default_sort_type = d.default_post_sort_type,
-            default_listing_type = d.default_listing_type,
+            default_sort_type = V0SortType.fromUniNullable(d.default_post_sort_type),
+            default_listing_type = V0ListingType.fromUniNullable(d.default_listing_type),
             interface_language = d.interface_language,
             avatar = d.avatar,
             banner = d.banner,
@@ -1671,9 +1678,9 @@ internal class Transformer(var auth: String) : MapperGenerator {
         community_id = d.community_id,
         community_name = d.community_name,
         creator_id = d.creator_id,
-        type_ = d.type_,
-        sort = d.sort,
-        listing_type = d.listing_type,
+        type_ = V0SearchType.fromUniNullable(d.type_),
+        sort = V0SortType.fromUniNullable(d.sort),
+        listing_type = V0ListingType.fromUniNullable(d.listing_type),
         page = d.page,
         limit = d.limit,
         auth = auth,

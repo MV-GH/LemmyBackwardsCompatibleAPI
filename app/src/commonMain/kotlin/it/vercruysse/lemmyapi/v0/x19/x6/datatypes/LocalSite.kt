@@ -1,9 +1,9 @@
 package it.vercruysse.lemmyapi.v0.x19.x6.datatypes
 
-import it.vercruysse.lemmyapi.enums.SortType
-import it.vercruysse.lemmyapi.enums.PostListingMode
-import it.vercruysse.lemmyapi.enums.RegistrationMode
-import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.v0.enums.SortType
+import it.vercruysse.lemmyapi.v0.enums.PostListingMode
+import it.vercruysse.lemmyapi.v0.enums.RegistrationMode
+import it.vercruysse.lemmyapi.v0.enums.ListingType
 import kotlinx.serialization.Serializable
 
 @Serializable
