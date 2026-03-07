@@ -19,7 +19,6 @@ import it.vercruysse.lemmyapi.enums.VoteShow
 import it.vercruysse.lemmyapi.v0.enums.ListingType as V0ListingType
 import it.vercruysse.lemmyapi.v0.enums.ModlogActionType as V0ModlogActionType
 import it.vercruysse.lemmyapi.v0.enums.PostFeatureType as V0PostFeatureType
-import it.vercruysse.lemmyapi.v0.enums.PostListingMode as V0PostListingMode
 import it.vercruysse.lemmyapi.v0.enums.RegistrationMode as V0RegistrationMode
 import it.vercruysse.lemmyapi.v0.enums.SearchType as V0SearchType
 import it.vercruysse.lemmyapi.v0.enums.SortType as V0SortType
@@ -159,9 +158,7 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.ApproveRegistrationApplication
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.BanFromCommunity as X5DatatypesBanFromCommunity
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.BanFromCommunityResponse as X5DatatypesBanFromCommunityResponse
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.BanPerson as X5DatatypesBanPerson
-import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.BanPersonResponse as X5DatatypesBanPersonResponse
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.BlockCommunity as X5DatatypesBlockCommunity
-import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.BlockCommunityResponse as X5DatatypesBlockCommunityResponse
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.BlockPerson as X5DatatypesBlockPerson
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.CaptchaResponse as X5DatatypesCaptchaResponse
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.ChangePassword as X5DatatypesChangePassword

@@ -214,7 +214,6 @@ import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.EditPost as X0DatatypesEditPos
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.EditPrivateMessage as X0DatatypesEditPrivateMessage
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.EditSite as X0DatatypesEditSite
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.FeaturePost as X0DatatypesFeaturePost
-import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.FederatedInstances as X0DatatypesFederatedInstances
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.FollowCommunity as X0DatatypesFollowCommunity
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GenerateTotpSecretResponse as X0DatatypesGenerateTotpSecretResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetCaptchaResponse as X0DatatypesGetCaptchaResponse
@@ -226,13 +225,11 @@ import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetModlog as X0DatatypesGetMod
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonDetails as X0DatatypesGetPersonDetails
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonDetailsResponse as X0DatatypesGetPersonDetailsResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonMentions as X0DatatypesGetPersonMentions
-import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonMentionsResponse as X0DatatypesGetPersonMentionsResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPost as X0DatatypesGetPost
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPostResponse as X0DatatypesGetPostResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPosts as X0DatatypesGetPosts
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPrivateMessages as X0DatatypesGetPrivateMessages
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetReplies as X0DatatypesGetReplies
-import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetRepliesResponse as X0DatatypesGetRepliesResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetSiteMetadata as X0DatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetSiteMetadataResponse as X0DatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetSiteResponse as X0DatatypesGetSiteResponse
