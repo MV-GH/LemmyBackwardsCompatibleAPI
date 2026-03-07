@@ -1,8 +1,7 @@
 package it.vercruysse.lemmyapi.enums
 
+import it.vercruysse.lemmyapi.v0.enums.SubscribedType
 import kotlinx.serialization.Serializable
-
-// TODO: mapped from previous version
 
 @Serializable
 enum class CommunityFollowerState {
@@ -13,7 +12,7 @@ enum class CommunityFollowerState {
     ;
 
     companion object {
-        fun from(d: SubscribedType): CommunityFollowerState? =
+       internal fun from(d: SubscribedType): CommunityFollowerState? =
             when (d) {
                 SubscribedType.Subscribed -> Accepted
                 SubscribedType.NotSubscribed -> null
