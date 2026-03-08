@@ -1,8 +1,10 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@SerialName("private_message")
 internal data class PrivateMessage(
     val id: PrivateMessageId,
     val creator_id: PersonId,
@@ -14,4 +16,4 @@ internal data class PrivateMessage(
     val ap_id: DbUrl,
     val local: Boolean,
     val removed: Boolean,
-)
+) : PostOrCommentOrPrivateMessage
