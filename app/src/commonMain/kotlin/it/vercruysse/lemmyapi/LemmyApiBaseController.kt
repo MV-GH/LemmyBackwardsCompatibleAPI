@@ -53,7 +53,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("resolve_object")
      */
-    abstract suspend fun resolveObject(form: ResolveObject): Result<ResolveObjectResponse>
+    abstract suspend fun resolveObject(form: ResolveObject): Result<SearchResponse>
 
     /**
      * Get / fetch a community.

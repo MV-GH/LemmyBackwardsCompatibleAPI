@@ -68,7 +68,6 @@ internal interface MapperGenerator0x19x4 {
     fun toUni(d: RegistrationApplication): it.vercruysse.lemmyapi.datatypes.RegistrationApplication
     fun toUni(d: RegistrationApplicationResponse): it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse
     fun toUni(d: RegistrationApplicationView): it.vercruysse.lemmyapi.datatypes.RegistrationApplicationView
-    fun toUni(d: ResolveObjectResponse): it.vercruysse.lemmyapi.datatypes.ResolveObjectResponse
     fun toUni(d: SearchResponse): it.vercruysse.lemmyapi.datatypes.SearchResponse
     fun toUni(d: Site): it.vercruysse.lemmyapi.datatypes.Site
     fun toUni(d: SiteResponse): it.vercruysse.lemmyapi.datatypes.SiteResponse
