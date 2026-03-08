@@ -5,9 +5,11 @@ import it.vercruysse.lemmyapi.Identity
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import kotlinx.serialization.SerialName
 
 @CommonParcelize
 @Serializable
+@SerialName("post")
 data class Post(
     override val id: PostId,
     val name: String,
@@ -43,4 +45,4 @@ data class Post(
     val federation_pending: Boolean,
     val embed_video_width: Long? = null,
     val embed_video_height: Long? = null,
-) : DatatypeRoot, Identity
+) : DatatypeRoot, Identity, PostOrCommentOrPrivateMessage

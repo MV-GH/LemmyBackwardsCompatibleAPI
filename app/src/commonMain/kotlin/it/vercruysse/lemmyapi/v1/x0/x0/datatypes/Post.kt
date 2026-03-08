@@ -1,8 +1,10 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@SerialName("post")
 internal data class Post(
     val id: PostId,
     val name: String,
@@ -38,4 +40,4 @@ internal data class Post(
     val federation_pending: Boolean,
     val embed_video_width: Long? = null,
     val embed_video_height: Long? = null,
-)
+) : PostOrCommentOrPrivateMessage
