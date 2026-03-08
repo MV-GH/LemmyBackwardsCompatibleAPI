@@ -1,8 +1,10 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@SerialName("private_message")
 internal data class PrivateMessageReportView(
     val private_message_report: PrivateMessageReport,
     val private_message: PrivateMessage,
@@ -12,4 +14,4 @@ internal data class PrivateMessageReportView(
     val creator_is_admin: Boolean,
     val creator_banned: Boolean,
     val creator_ban_expires_at: String? = null,
-)
+) : ReportCombinedView
