@@ -1,8 +1,10 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@SerialName("comment")
 internal data class CommentReportView(
     val comment_report: CommentReport,
     val comment: Comment,
@@ -20,4 +22,4 @@ internal data class CommentReportView(
     val creator_ban_expires_at: String? = null,
     val creator_banned_from_community: Boolean,
     val creator_community_ban_expires_at: String? = null,
-)
+) : ReportCombinedView

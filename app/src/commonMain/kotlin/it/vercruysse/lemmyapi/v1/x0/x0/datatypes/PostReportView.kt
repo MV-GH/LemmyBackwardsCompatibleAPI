@@ -1,8 +1,10 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@SerialName("post")
 internal data class PostReportView(
     val post_report: PostReport,
     val post: Post,
@@ -19,4 +21,4 @@ internal data class PostReportView(
     val creator_ban_expires_at: String? = null,
     val creator_banned_from_community: Boolean,
     val creator_community_ban_expires_at: String? = null,
-)
+) : ReportCombinedView
