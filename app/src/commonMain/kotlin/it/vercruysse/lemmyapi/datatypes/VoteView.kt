@@ -6,8 +6,6 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO add new files and remove old files
-
 @CommonParcelize
 @Serializable
 data class VoteView(
