@@ -5,9 +5,11 @@ import it.vercruysse.lemmyapi.Identity
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import kotlinx.serialization.SerialName
 
 @CommonParcelize
 @Serializable
+@SerialName("comment")
 data class Comment(
     override val id: CommentId,
     val creator_id: PersonId,
@@ -34,4 +36,4 @@ data class Comment(
     val federation_pending: Boolean,
     /** Added in Lemmy 1.0.0 */
     val locked: Boolean,
-) : DatatypeRoot, Identity
+) : DatatypeRoot, Identity, PostOrCommentOrPrivateMessage

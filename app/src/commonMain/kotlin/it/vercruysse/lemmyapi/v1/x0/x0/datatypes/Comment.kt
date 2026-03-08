@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@SerialName("comment")
 internal data class Comment(
     val id: CommentId,
     val creator_id: PersonId,
@@ -26,4 +27,4 @@ internal data class Comment(
     val unresolved_report_count: Long,
     val federation_pending: Boolean,
     val locked: Boolean,
-)
+) : PostOrCommentOrPrivateMessage
