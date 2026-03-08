@@ -1076,10 +1076,10 @@ internal class Transformer : MapperGenerator {
     override fun toUni(d: X4DatatypesSearchResponse): LemmyapiDatatypesSearchResponse =
         LemmyapiDatatypesSearchResponse(
             search = buildList {
-                addAll(d.comments.map { LemmyapiDatatypesSearchCombinedView.Comment(comment = this@Transformer.toUni(d = it)) })
-                addAll(d.posts.map { LemmyapiDatatypesSearchCombinedView.Post(post = this@Transformer.toUni(d = it)) })
-                addAll(d.communities.map { LemmyapiDatatypesSearchCombinedView.Community(community = this@Transformer.toUni(d = it)) })
-                addAll(d.users.map { LemmyapiDatatypesSearchCombinedView.Person(person = this@Transformer.toUni(d = it)) })
+                addAll(d.comments.map(this@Transformer::toUni))
+                addAll(d.posts.map(this@Transformer::toUni))
+                addAll(d.communities.map(this@Transformer::toUni))
+                addAll(d.users.map(this@Transformer::toUni))
             },
         )
 
