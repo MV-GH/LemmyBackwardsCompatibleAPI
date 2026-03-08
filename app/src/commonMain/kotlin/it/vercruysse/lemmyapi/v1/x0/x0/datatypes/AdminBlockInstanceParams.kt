@@ -7,6 +7,5 @@ internal data class AdminBlockInstanceParams(
     val instance: String,
     val block: Boolean,
     val reason: String,
-    // TODO: type change
     val expires_at: Long? = null,
 )

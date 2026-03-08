@@ -912,7 +912,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun listPostLikes(
         form: it.vercruysse.lemmyapi.datatypes.ListPostLikes,
-    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> = notSupported()
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> =
+        api.listPostLikes(transformer.fromUni(form)).map { PagedResponse(it.post_likes.map(transformer::toUni)) }
 
     /**
      * List a comment's likes. Admin-only.
@@ -921,7 +922,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun listCommentLikes(
         form: it.vercruysse.lemmyapi.datatypes.ListCommentLikes,
-    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> = notSupported()
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> =
+        api.listCommentLikes(transformer.fromUni(form)).map { PagedResponse(it.comment_likes.map(transformer::toUni)) }
 
     /**
      * List all the media for your user
