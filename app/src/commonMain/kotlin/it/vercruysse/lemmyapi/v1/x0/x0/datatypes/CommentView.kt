@@ -1,8 +1,10 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@SerialName("comment")
 internal data class CommentView(
     val comment: Comment,
     val creator: Person,
@@ -19,4 +21,4 @@ internal data class CommentView(
     val creator_is_moderator: Boolean,
     val creator_banned_from_community: Boolean,
     val creator_community_ban_expires_at: String? = null,
-)
+) : SearchCombinedView, NotificationData
