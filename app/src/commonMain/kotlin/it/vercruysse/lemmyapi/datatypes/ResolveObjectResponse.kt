@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: is removed
+// TODO: is removed, replaced by SearchResponse
 
 @CommonParcelize
 @Serializable
