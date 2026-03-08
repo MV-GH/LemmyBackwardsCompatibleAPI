@@ -137,14 +137,12 @@ import it.vercruysse.lemmyapi.datatypes.RemoveCommunity as LemmyapiDatatypesRemo
 import it.vercruysse.lemmyapi.datatypes.RemovePost as LemmyapiDatatypesRemovePost
 import it.vercruysse.lemmyapi.datatypes.ResolveCommentReport as LemmyapiDatatypesResolveCommentReport
 import it.vercruysse.lemmyapi.datatypes.ResolveObject as LemmyapiDatatypesResolveObject
-import it.vercruysse.lemmyapi.datatypes.ResolveObjectResponse as LemmyapiDatatypesResolveObjectResponse
 import it.vercruysse.lemmyapi.datatypes.ResolvePostReport as LemmyapiDatatypesResolvePostReport
 import it.vercruysse.lemmyapi.datatypes.ResolvePrivateMessageReport as LemmyapiDatatypesResolvePrivateMessageReport
 import it.vercruysse.lemmyapi.datatypes.SaveComment as LemmyapiDatatypesSaveComment
 import it.vercruysse.lemmyapi.datatypes.SavePost as LemmyapiDatatypesSavePost
 import it.vercruysse.lemmyapi.datatypes.SaveUserSettings as LemmyapiDatatypesSaveUserSettings
 import it.vercruysse.lemmyapi.datatypes.Search as LemmyapiDatatypesSearch
-import it.vercruysse.lemmyapi.datatypes.SearchCombinedView as LemmyapiDatatypesSearchCombinedView
 import it.vercruysse.lemmyapi.datatypes.SearchResponse as LemmyapiDatatypesSearchResponse
 import it.vercruysse.lemmyapi.datatypes.Site as LemmyapiDatatypesSite
 import it.vercruysse.lemmyapi.datatypes.SiteResponse as LemmyapiDatatypesSiteResponse
@@ -1003,12 +1001,16 @@ internal class Transformer : MapperGenerator {
         admin = d.admin?.let { this.toUni(d = it) },
     )
 
-    override fun toUni(d: X0DatatypesResolveObjectResponse): LemmyapiDatatypesResolveObjectResponse =
-        LemmyapiDatatypesResolveObjectResponse(
-            comment = d.comment?.let { this.toUni(d = it) },
-            post = d.post?.let { this.toUni(d = it) },
-            community = d.community?.let { this.toUni(d = it) },
-            person = d.person?.let { this.toUni(d = it) },
+    override fun toUni(d: X0DatatypesResolveObjectResponse): LemmyapiDatatypesSearchResponse =
+        LemmyapiDatatypesSearchResponse(
+            resolve = when {
+                d.post != null -> toUni(d.post)
+                d.comment != null -> toUni(d.comment)
+                d.community != null -> toUni(d.community)
+                d.person != null -> toUni(d.person)
+                else -> null
+            },
+            search = emptyList(),
         )
 
     override fun toUni(d: X0DatatypesSearchResponse): LemmyapiDatatypesSearchResponse =

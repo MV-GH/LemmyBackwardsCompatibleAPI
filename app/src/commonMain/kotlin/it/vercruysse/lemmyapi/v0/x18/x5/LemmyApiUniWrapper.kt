@@ -87,7 +87,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun resolveObject(
         form: it.vercruysse.lemmyapi.datatypes.ResolveObject,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ResolveObjectResponse> =
+    ): Result<it.vercruysse.lemmyapi.datatypes.SearchResponse> =
         apiV18.resolveObject(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
