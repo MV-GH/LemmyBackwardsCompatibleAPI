@@ -105,4 +105,9 @@ class FeatureFlags(val version: Version) {
      * Mark donation dialog as shown, feature added in 0.19.11
      */
     fun markDonationDialogShown(): Boolean = v0x19x11Plus
+
+    /**
+     * V1 Feature added in 1.0
+     */
+    fun v1(): Boolean = v1
 }
