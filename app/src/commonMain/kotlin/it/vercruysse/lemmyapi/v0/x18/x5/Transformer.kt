@@ -671,8 +671,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     override fun toUni(d: X5DatatypesGetPersonDetailsResponse): LemmyapiDatatypesGetPersonDetailsResponse = LemmyapiDatatypesGetPersonDetailsResponse(
         person_view = this.toUni(d = d.person_view),
-        comments = d.comments.map { this.toUni(d = it) },
-        posts = d.posts.map { this.toUni(d = it) },
         moderates = d.moderates.map { this.toUni(d = it) },
         multi_communities_created = emptyList()
     )
@@ -1399,11 +1397,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
         X5DatatypesGetPersonDetails(
             person_id = d.person_id,
             username = d.username,
-            sort = V0SortType.fromUniNullable(d.sort),
-            page = d.page,
-            limit = d.limit,
-            community_id = d.community_id,
-            saved_only = d.saved_only,
             auth = auth,
         )
 

@@ -15,6 +15,7 @@ import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.enums.NotificationDataType
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCaptcha
+import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetPersonDetails
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetReportCount
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadCount
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadRegistrationApplicationCount
@@ -1026,13 +1027,14 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun listPersonContent(
         form: it.vercruysse.lemmyapi.datatypes.ListPersonContent,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> {
-        val getPersonDetailsForm = it.vercruysse.lemmyapi.datatypes.GetPersonDetails(
-            person_id = form.person_id,
+        val getPersonDetailsForm = GetPersonDetails(
             username = form.username,
+            person_id = form.person_id,
             page = form.page,
             limit = form.limit,
+            auth = auth,
         )
-        return apiV18.getPersonDetails(transformer.fromUni(getPersonDetailsForm)).map { response ->
+        return apiV18.getPersonDetails(getPersonDetailsForm).map { response ->
             val comments = when (form.type_) {
                 it.vercruysse.lemmyapi.enums.PersonContentType.Posts -> emptyList()
                 else -> response.comments.map { transformer.toUni(it) }
