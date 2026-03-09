@@ -14,6 +14,7 @@ import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.enums.NotificationDataType
 import it.vercruysse.lemmyapi.enums.NotificationType
+import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonDetails
 
 internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
@@ -981,13 +982,13 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun listPersonContent(
         form: it.vercruysse.lemmyapi.datatypes.ListPersonContent,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> {
-        val getPersonDetailsForm = it.vercruysse.lemmyapi.datatypes.GetPersonDetails(
-            person_id = form.person_id,
+        val getPersonDetailsForm = GetPersonDetails(
             username = form.username,
+            person_id = form.person_id,
             page = form.page,
             limit = form.limit,
         )
-        return api.getPersonDetails(transformer.fromUni(getPersonDetailsForm)).map { response ->
+        return api.getPersonDetails(getPersonDetailsForm).map { response ->
             val comments = when (form.type_) {
                 it.vercruysse.lemmyapi.enums.PersonContentType.Posts -> emptyList()
                 else -> response.comments.map { transformer.toUni(it) }
