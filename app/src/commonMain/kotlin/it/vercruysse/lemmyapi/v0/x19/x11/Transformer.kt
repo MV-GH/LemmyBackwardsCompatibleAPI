@@ -9,6 +9,7 @@ import it.vercruysse.lemmyapi.datatypes.PersonActions
 import it.vercruysse.lemmyapi.datatypes.PostActions
 import it.vercruysse.lemmyapi.v0.enums.CommentSortType as V0CommentSortType
 import it.vercruysse.lemmyapi.enums.CommunityFollowerState
+import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.enums.SortType
@@ -453,10 +454,9 @@ internal class Transformer : MapperGenerator {
             local = d.local,
             icon = d.icon,
             banner = d.banner,
-            hidden = d.hidden,
             posting_restricted_to_mods = d.posting_restricted_to_mods,
             instance_id = d.instance_id,
-            visibility = d.visibility.toUni(),
+            visibility = if (d.hidden) CommunityVisibility.Unlisted else d.visibility.toUni(),
             subscribers = counts.subscribers,
             posts = counts.posts,
             comments = counts.comments,
