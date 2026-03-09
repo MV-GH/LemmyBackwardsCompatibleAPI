@@ -7,8 +7,6 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO: not correct yet
-
 @CommonParcelize
 @Serializable
 data class Community(
@@ -26,8 +24,6 @@ data class Community(
     val last_refreshed_at: String,
     val icon: String? = null,
     val banner: String? = null,
-    // TODO: might be replaced by visibility but currently is gone
-    val hidden: Boolean,
     val posting_restricted_to_mods: Boolean,
     val instance_id: InstanceId,
     val visibility: CommunityVisibility /* "Public" | "Unlisted" | "LocalOnlyPublic" | "LocalOnlyPrivate" | "Private" */,
