@@ -1017,4 +1017,31 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun getRegistrationApplication(
         form: it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication,
     ): Result<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse> = notSupported()
+
+    /**
+     * List the content for a person.
+     *
+     * @GET("person/content")
+     */
+    override suspend fun listPersonContent(
+        form: it.vercruysse.lemmyapi.datatypes.ListPersonContent,
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> {
+        val getPersonDetailsForm = it.vercruysse.lemmyapi.datatypes.GetPersonDetails(
+            person_id = form.person_id,
+            username = form.username,
+            page = form.page,
+            limit = form.limit,
+        )
+        return apiV18.getPersonDetails(transformer.fromUni(getPersonDetailsForm)).map { response ->
+            val comments = when (form.type_) {
+                it.vercruysse.lemmyapi.enums.PersonContentType.Posts -> emptyList()
+                else -> response.comments.map { transformer.toUni(it) }
+            }
+            val posts = when (form.type_) {
+                it.vercruysse.lemmyapi.enums.PersonContentType.Comments -> emptyList()
+                else -> response.posts.map { transformer.toUni(it) }
+            }
+            PagedResponse(items = comments + posts)
+        }
+    }
 }
