@@ -687,7 +687,14 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("post/hide")
      */
-    abstract suspend fun hidePost(form: HidePost): Result<Unit>
+    abstract suspend fun hidePost(form: HidePost): Result<PostResponse>
+
+    /**
+     * Hide multiple posts from list views.
+     *
+     * @POST("post/hide")
+     */
+    abstract suspend fun hidePosts(form: HidePosts): Result<Unit>
 
     /**
      * Get the application a user submitted when they first registered their account

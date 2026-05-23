@@ -92,7 +92,7 @@ import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetS
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
 import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
-import it.vercruysse.lemmyapi.datatypes.HidePost as LemmyapiDatatypesHidePost
+import it.vercruysse.lemmyapi.datatypes.HidePosts as LemmyapiDatatypesHidePosts
 import it.vercruysse.lemmyapi.datatypes.ImageDetails as LemmyapiDatatypesImageDetails
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
 import it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState as LemmyapiDatatypesInstanceWithFederationState
@@ -1575,7 +1575,7 @@ internal class Transformer : MapperGenerator {
             reason = d.reason,
         )
 
-    override fun fromUni(d: LemmyapiDatatypesHidePost): X11DatatypesHidePost = X11DatatypesHidePost(
+    override fun fromUni(d: LemmyapiDatatypesHidePosts): X11DatatypesHidePost = X11DatatypesHidePost(
         post_ids = d.post_ids,
         hide = d.hide,
     )

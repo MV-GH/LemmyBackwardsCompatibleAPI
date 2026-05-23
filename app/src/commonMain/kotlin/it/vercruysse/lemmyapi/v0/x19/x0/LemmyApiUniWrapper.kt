@@ -990,7 +990,10 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("post/hide")
      */
-    override suspend fun hidePost(form: it.vercruysse.lemmyapi.datatypes.HidePost): Result<Unit> =
+    override suspend fun hidePost(form: it.vercruysse.lemmyapi.datatypes.HidePost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
+        notSupported()
+
+    override suspend fun hidePosts(form: it.vercruysse.lemmyapi.datatypes.HidePosts): Result<Unit> =
         notSupported()
 
     /**

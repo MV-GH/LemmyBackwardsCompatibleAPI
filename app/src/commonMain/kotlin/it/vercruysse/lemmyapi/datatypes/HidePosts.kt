@@ -7,7 +7,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
-data class HidePost(
-    val post_id: PostId,
+data class HidePosts(
+    val post_ids: List<PostId>,
     val hide: Boolean,
 ) : DatatypeRoot
