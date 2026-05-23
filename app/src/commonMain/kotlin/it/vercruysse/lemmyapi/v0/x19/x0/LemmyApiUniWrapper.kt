@@ -859,7 +859,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("site/block")
      */
-    override suspend fun blockInstance(
+    override suspend fun userBlockInstanceCommunities(
         form: it.vercruysse.lemmyapi.datatypes.UserBlockInstanceCommunitiesParams,
     ): Result<Unit> =
         api.blockInstance(transformer.fromUni(form))
@@ -962,7 +962,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @GET("admin/list_all_media")
      */
-    override suspend fun listAllMedia(
+    override suspend fun listMediaAdmin(
         form: it.vercruysse.lemmyapi.datatypes.ListMedia,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> =
         notSupported()

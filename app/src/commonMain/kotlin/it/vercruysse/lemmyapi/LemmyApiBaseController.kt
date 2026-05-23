@@ -589,7 +589,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("site/block")
      */
-    abstract suspend fun blockInstance(form: UserBlockInstanceCommunitiesParams): Result<Unit>
+    abstract suspend fun userBlockInstanceCommunities(form: UserBlockInstanceCommunitiesParams): Result<Unit>
 
     /**
      * Generate a TOTP / two-factor secret.
@@ -676,12 +676,6 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun listMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
     // TODO: implement later
-    /**
-     * Upload a generic image.
-     *
-     * @POST("image")
-     */
-    open suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> = notSupported()
 
     /**
      * Upload a user avatar image.
@@ -730,7 +724,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("admin/list_all_media")
      */
-    abstract suspend fun listAllMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
+    abstract suspend fun listMediaAdmin(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
     /**
      * Hide a post from list views.
@@ -752,4 +746,18 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      * @GET("admin/users")
      */
     abstract suspend fun adminListUsers(form: AdminListUsers): Result<PagedResponse<LocalUserView>>
+
+    /**
+     * Upload a generic image.
+     *
+     * @POST("image")
+     */
+    open suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> = notSupported()
+
+    /**
+     * Delete media for your account.
+     *
+     * @DELETE("account/media")
+     */
+    open suspend fun deleteMedia(form: DeleteImageParams): Result<Unit> = notSupported()
 }
