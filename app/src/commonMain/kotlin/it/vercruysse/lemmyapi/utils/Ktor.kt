@@ -5,6 +5,16 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
+suspend inline fun <reified R> HttpClient.deleteResult(
+    urlString: String,
+    builder: HttpRequestBuilder.() -> Unit = {},
+): Result<R> = runCatching { delete(urlString, builder).body() }
+
+suspend inline fun <reified R, reified T> HttpClient.deleteResult(
+    urlString: String,
+    body: T,
+): Result<R> = this.deleteResult(urlString) { setJsonBody(body) }
+
 suspend inline fun <reified R> HttpClient.getResult(
     urlString: String,
     builder: HttpRequestBuilder.() -> Unit = {},
