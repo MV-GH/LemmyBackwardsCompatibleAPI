@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
-internal data class CreatePostWarning(
+data class CreatePostWarning(
     val post_id: PostId,
     val reason: String,
 ) : DatatypeRoot

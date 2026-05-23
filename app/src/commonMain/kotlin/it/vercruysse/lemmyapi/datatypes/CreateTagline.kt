@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
-internal data class CreateTagline(
+data class CreateTagline(
     val content: String,
 ): DatatypeRoot
