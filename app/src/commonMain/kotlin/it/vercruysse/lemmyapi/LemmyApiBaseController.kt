@@ -752,12 +752,12 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("image")
      */
-    open suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> = notSupported()
+    abstract suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse>
 
     /**
      * Delete media for your account.
      *
      * @DELETE("account/media")
      */
-    open suspend fun deleteMedia(form: DeleteImageParams): Result<Unit> = notSupported()
+    abstract suspend fun deleteMedia(form: DeleteImageParams): Result<Unit>
 }

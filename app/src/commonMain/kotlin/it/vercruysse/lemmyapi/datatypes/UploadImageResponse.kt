@@ -9,4 +9,5 @@ import kotlinx.serialization.Serializable
 data class UploadImageResponse(
     val image_url: String,
     val filename: String,
+    val delete_filename: String = filename,
 ): DatatypeRoot
