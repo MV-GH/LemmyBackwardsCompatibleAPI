@@ -3,6 +3,18 @@
 This document lists the changes that you will need to actively handle, through feature flags.
 
 
+## V1
+
+### Image upload / delete compatibility
+
+- Consumers should use `LemmyApiBaseController.uploadImage()` and `LemmyApiBaseController.deleteMedia()`.
+- Pre-1.0 Lemmy instances are now wired internally to legacy pictrs endpoints; callers should not use pictrs APIs directly anymore.
+- `UploadImageResponse` now includes `delete_filename`.
+- Always pass `uploadImage(...).delete_filename` into `deleteMedia(DeleteImageParams(...))`.
+- On Lemmy `1.x`, `delete_filename == filename`.
+- On pre-`1.0`, `delete_filename` contains the full legacy pictrs delete path, like `/pictrs/image/delete/{delete_token}/{file}`.
+
+
 ## 0.19.11
 
 - Added `last_donation_notification` field to LocalUser
