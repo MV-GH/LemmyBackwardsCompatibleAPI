@@ -6,6 +6,8 @@ import it.vercruysse.lemmyapi.datatypes.*
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
+// TODO: update these descriptions
+
 abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String?) :
     LemmyApiBase(
         client,
@@ -193,7 +195,14 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("post/mark_as_read")
      */
-    abstract suspend fun markManyPostAsRead(form: MarkManyPostsAsRead): Result<Unit>
+    abstract suspend fun markPostAsRead(form: MarkPostAsRead): Result<PostResponse>
+
+    /**
+     * Mark multiple posts as read.
+     *
+     * @POST("post/mark_as_read")
+     */
+    abstract suspend fun markManyPostsAsRead(form: MarkManyPostsAsRead): Result<Unit>
 
     /**
      * A moderator can lock a post ( IE disable new comments ).
@@ -580,7 +589,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("site/block")
      */
-    abstract suspend fun blockInstance(form: UserBlockInstanceCommunitiesParams): Result<Unit>
+    abstract suspend fun userBlockInstanceCommunities(form: UserBlockInstanceCommunitiesParams): Result<Unit>
 
     /**
      * Generate a TOTP / two-factor secret.
@@ -600,7 +609,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("user/totp/update")
      */
-    abstract suspend fun updateTotp(form: EditTotp): Result<EditTotpResponse>
+    abstract suspend fun editTotp(form: EditTotp): Result<EditTotpResponse>
 
     /**
      * Export a backup of your user settings, including your saved content,
@@ -666,12 +675,56 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      */
     abstract suspend fun listMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
+    // TODO: implement later
+
+    /**
+     * Upload a user avatar image.
+     *
+     * @POST("account/avatar")
+     */
+    open suspend fun uploadUserAvatar(image: ByteArray): Result<UploadImageResponse> = notSupported()
+
+    /**
+     * Upload a user banner image.
+     *
+     * @POST("account/banner")
+     */
+    open suspend fun uploadUserBanner(image: ByteArray): Result<UploadImageResponse> = notSupported()
+
+    /**
+     * Upload a site banner image.
+     *
+     * @POST("site/banner")
+     */
+    open suspend fun uploadSiteBanner(image: ByteArray): Result<UploadImageResponse> = notSupported()
+
+    /**
+     * Upload a site icon image.
+     *
+     * @POST("site/icon")
+     */
+    open suspend fun uploadSiteIcon(image: ByteArray): Result<UploadImageResponse> = notSupported()
+
+    /**
+     * Upload a community banner image.
+     *
+     * @POST("community/banner")
+     */
+    open suspend fun uploadCommunityBanner(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse> = notSupported()
+
+    /**
+     * Upload a community icon image.
+     *
+     * @POST("community/icon")
+     */
+    open suspend fun uploadCommunityIcon(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse> = notSupported()
+
     /**
      * List all the media known to your instance.
      *
      * @GET("admin/list_all_media")
      */
-    abstract suspend fun listAllMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
+    abstract suspend fun listMediaAdmin(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
     /**
      * Hide a post from list views.
@@ -693,4 +746,18 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      * @GET("admin/users")
      */
     abstract suspend fun adminListUsers(form: AdminListUsers): Result<PagedResponse<LocalUserView>>
+
+    /**
+     * Upload a generic image.
+     *
+     * @POST("image")
+     */
+    open suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> = notSupported()
+
+    /**
+     * Delete media for your account.
+     *
+     * @DELETE("account/media")
+     */
+    open suspend fun deleteMedia(form: DeleteImageParams): Result<Unit> = notSupported()
 }
