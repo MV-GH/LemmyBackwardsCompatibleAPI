@@ -14,6 +14,10 @@ class FeatureFlags(val version: Version) {
     private val v0x19x4Plus = version.withoutSuffixes() >= "0.19.4".toVersion()
     private val v0x19x6Plus = version.withoutSuffixes() >= "0.19.6".toVersion()
     private val v0x19x11Plus = version.withoutSuffixes() >= "0.19.11".toVersion()
+
+    /**
+     * V1 Feature added in 1.0
+     */
     val v1 = version.withoutSuffixes() >= "1".toVersion()
 
     /**
@@ -105,9 +109,4 @@ class FeatureFlags(val version: Version) {
      * Mark donation dialog as shown, feature added in 0.19.11
      */
     fun markDonationDialogShown(): Boolean = v0x19x11Plus
-
-    /**
-     * V1 Feature added in 1.0
-     */
-    fun v1(): Boolean = v1
 }

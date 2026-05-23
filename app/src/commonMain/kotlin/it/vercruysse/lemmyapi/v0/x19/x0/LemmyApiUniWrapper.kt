@@ -1000,4 +1000,5 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
             PagedResponse(items = comments + posts)
         }
     }
+    override suspend fun adminListUsers(form: it.vercruysse.lemmyapi.datatypes.AdminListUsers): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalUserView>> = notSupported()
 }
