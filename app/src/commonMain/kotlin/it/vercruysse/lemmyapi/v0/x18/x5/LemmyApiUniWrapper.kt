@@ -287,11 +287,25 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     /**
      * Mark a post as read.
      *
+     * @POST("post/mark_as_read")
+     */
+    override suspend fun markPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
+        apiV18.markPostAsRead(
+            MarkPostAsRead(
+                post_id = form.post_id,
+                read = form.read,
+                auth = "" + auth,
+            ),
+        ).map(transformer::toUni)
+
+    /**
+     * Mark multiple posts as read.
+     *
      * Maps v19 logic
      *
      * @POST("post/mark_as_read")
      */
-    override suspend fun markManyPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): Result<Unit> = form.post_ids
+    override suspend fun markManyPostsAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): Result<Unit> = form.post_ids
         .map { MarkPostAsRead(post_id = it, read = form.read, auth = "" + auth) }
         .map { apiV18.markPostAsRead(it) }
         .map { it.map { } }
@@ -915,7 +929,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("user/totp/update")
      */
-    override suspend fun updateTotp(
+    override suspend fun editTotp(
         form: it.vercruysse.lemmyapi.datatypes.EditTotp,
     ): Result<it.vercruysse.lemmyapi.datatypes.EditTotpResponse> = notSupported()
 

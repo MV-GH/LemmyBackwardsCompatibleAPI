@@ -265,7 +265,27 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("post/mark_as_read")
      */
-    override suspend fun markManyPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): Result<Unit> =
+    override suspend fun markPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
+        api.markPostAsRead(
+            it.vercruysse.lemmyapi.v0.x19.x4.datatypes.MarkPostAsRead(
+                post_ids = listOf(form.post_id),
+                read = form.read,
+            ),
+        ).fold(
+            onSuccess = { _ ->
+                api.getPost(it.vercruysse.lemmyapi.v0.x19.x4.datatypes.GetPost(id = form.post_id))
+                    .map(transformer::toUni)
+                    .map { post -> it.vercruysse.lemmyapi.datatypes.PostResponse(post_view = post.post_view) }
+            },
+            onFailure = { Result.failure(it) },
+        )
+
+    /**
+     * Mark multiple posts as read.
+     *
+     * @POST("post/mark_as_read")
+     */
+    override suspend fun markManyPostsAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): Result<Unit> =
         api.markPostAsRead(transformer.fromUni(form))
 
     /**
@@ -862,7 +882,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("user/totp/update")
      */
-    override suspend fun updateTotp(
+    override suspend fun editTotp(
         form: it.vercruysse.lemmyapi.datatypes.EditTotp,
     ): Result<it.vercruysse.lemmyapi.datatypes.EditTotpResponse> =
         api.updateTotp(transformer.fromUni(form)).map(transformer::toUni)
