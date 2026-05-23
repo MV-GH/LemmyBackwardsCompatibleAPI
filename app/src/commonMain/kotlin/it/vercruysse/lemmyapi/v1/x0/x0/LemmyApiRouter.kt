@@ -384,7 +384,7 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
     abstract suspend fun listTaglines(form: ListTaglines): Result<PagedResponse<Tagline>>
 
     /** @GET("admin/users") */
-    abstract suspend fun listUsers(form: AdminListUsers): Result<PagedResponse<LocalUserView>>
+    abstract suspend fun adminListUsers(form: AdminListUsers): Result<PagedResponse<LocalUserView>>
 
     /** @POST("custom_emoji") */
     abstract suspend fun createCustomEmoji(form: CreateCustomEmoji): Result<CustomEmojiResponse>
@@ -442,5 +442,26 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
 
     /** @GET("image/list") */
     abstract suspend fun listMediaAdmin(form: ListMedia): Result<PagedResponse<LocalImageView>>
+
+    /** @POST("community/banner") */
+    abstract suspend fun uploadCommunityBanner(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse>
+
+    /** @POST("community/icon") */
+    abstract suspend fun uploadCommunityIcon(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse>
+
+    /** @POST("image") */
+    abstract suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse>
+
+    /** @POST("site/banner") */
+    abstract suspend fun uploadSiteBanner(image: ByteArray): Result<UploadImageResponse>
+
+    /** @POST("site/icon") */
+    abstract suspend fun uploadSiteIcon(image: ByteArray): Result<UploadImageResponse>
+
+    /** @POST("account/avatar") */
+    abstract suspend fun uploadUserAvatar(image: ByteArray): Result<UploadImageResponse>
+
+    /** @POST("account/banner") */
+    abstract suspend fun uploadUserBanner(image: ByteArray): Result<UploadImageResponse>
 }
 

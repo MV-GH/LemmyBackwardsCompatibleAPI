@@ -3,9 +3,11 @@ package it.vercruysse.lemmyapi.v1.x0.x0
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
+import it.vercruysse.lemmyapi.utils.addQueryParams
 import it.vercruysse.lemmyapi.utils.deleteResult
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
+import it.vercruysse.lemmyapi.utils.postUploadResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.*
 
@@ -516,7 +518,7 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
         client.getResult("admin/tagline/list", form)
 
     /** @GET("admin/users") */
-    override suspend fun listUsers(form: AdminListUsers): Result<PagedResponse<LocalUserView>> =
+    override suspend fun adminListUsers(form: AdminListUsers): Result<PagedResponse<LocalUserView>> =
         client.getResult("admin/users", form)
 
     /** @POST("custom_emoji") */
@@ -595,13 +597,32 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
     override suspend fun listMediaAdmin(form: ListMedia): Result<PagedResponse<LocalImageView>> =
         client.getResult("image/list", form)
 
-    // TODO:
-    //uploadCommunityBanner,DELETE,CommunityIdQuery,Unit
-    //uploadCommunityIcon,DELETE,CommunityIdQuery,Unit
-    //uploadImage,GET,object,Unit
-    //uploadSiteBanner,DELETE,object,Unit
-    //uploadSiteIcon,DELETE,object,Unit
-    //uploadUserAvatar,DELETE,object,Unit
-    //uploadUserBanner,DELETE,object,Unit
+    /** @POST("community/banner") */
+    override suspend fun uploadCommunityBanner(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse> =
+        client.postUploadResult("community/banner", image) { addQueryParams(form) }
+
+    /** @POST("community/icon") */
+    override suspend fun uploadCommunityIcon(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse> =
+        client.postUploadResult("community/icon", image) { addQueryParams(form) }
+
+    /** @POST("image") */
+    override suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> =
+        client.postUploadResult("image", image)
+
+    /** @POST("site/banner") */
+    override suspend fun uploadSiteBanner(image: ByteArray): Result<UploadImageResponse> =
+        client.postUploadResult("site/banner", image)
+
+    /** @POST("site/icon") */
+    override suspend fun uploadSiteIcon(image: ByteArray): Result<UploadImageResponse> =
+        client.postUploadResult("site/icon", image)
+
+    /** @POST("account/avatar") */
+    override suspend fun uploadUserAvatar(image: ByteArray): Result<UploadImageResponse> =
+        client.postUploadResult("account/avatar", image)
+
+    /** @POST("account/banner") */
+    override suspend fun uploadUserBanner(image: ByteArray): Result<UploadImageResponse> =
+        client.postUploadResult("account/banner", image)
 }
 
