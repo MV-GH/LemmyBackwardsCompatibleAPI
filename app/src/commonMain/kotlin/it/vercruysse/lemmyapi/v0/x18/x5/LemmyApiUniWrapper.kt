@@ -5,6 +5,7 @@ import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.LemmyApiBaseController
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojis
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
+import it.vercruysse.lemmyapi.datatypes.ListLoginsResponse
 import it.vercruysse.lemmyapi.datatypes.ListNotifications
 import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
 import it.vercruysse.lemmyapi.datatypes.MyUserInfo
@@ -970,7 +971,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @GET("user/list_logins")
      */
-    override suspend fun listLogins(): Result<List<it.vercruysse.lemmyapi.datatypes.LoginToken>> = notSupported()
+    override suspend fun listLogins(): Result<ListLoginsResponse> = notSupported()
 
     /**
      * Returns an error message if your auth token is invalid
