@@ -125,7 +125,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("community/transfer")
      */
-    abstract suspend fun transferCommunity(form: TransferCommunity): Result<CommunityResponse>
+    abstract suspend fun transferCommunity(form: TransferCommunity): Result<GetCommunityResponse>
 
     /**
      * Ban a user from a community.

@@ -213,8 +213,16 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun transferCommunity(
         form: it.vercruysse.lemmyapi.datatypes.TransferCommunity,
-    ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
-        apiV18.transferCommunity(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.GetCommunityResponse> =
+        apiV18.transferCommunity(transformer.fromUni(form)).map { communityResponse ->
+            val uniCommunityResponse = transformer.toUni(communityResponse)
+            it.vercruysse.lemmyapi.datatypes.GetCommunityResponse(
+                community_view = uniCommunityResponse.community_view,
+                site = null,
+                moderators = emptyList(),
+                discussion_languages = uniCommunityResponse.discussion_languages,
+            )
+        }
 
     /**
      * Ban a user from a community.
