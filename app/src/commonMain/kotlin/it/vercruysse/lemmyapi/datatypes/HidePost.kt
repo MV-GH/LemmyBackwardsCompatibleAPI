@@ -5,11 +5,9 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
-// TODO changes again, single post Id
-
 @CommonParcelize
 @Serializable
 data class HidePost(
-    val post_ids: List<PostId>,
+    val post_id: PostId,
     val hide: Boolean,
 ) : DatatypeRoot
