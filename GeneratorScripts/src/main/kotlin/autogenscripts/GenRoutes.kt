@@ -18,7 +18,7 @@ enum class HttpMethod {
     PUT,
 }
 
-const val LEMMY_SPEC_LINK = """https://raw.githubusercontent.com/MV-GH/lemmy_openapi_spec/master/lemmy_spec.yaml"""
+const val LEMMY_SPEC_LINK = """blob:https://join-lemmy.org/7fe59b0d-6b94-40d4-bba8-d03a1a0ab8b7"""
 
 data class RouteInfo(
     val path: String,

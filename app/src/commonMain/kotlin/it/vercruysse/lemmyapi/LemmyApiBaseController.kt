@@ -406,7 +406,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      */
     abstract suspend fun banPerson(form: BanPerson): Result<PersonResponse>
 
-// TODO: merged into list of users
+// TODO: remove it
     /**
      * Get a list of banned users
      *
@@ -686,4 +686,11 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      * @GET("admin/registration_application")
      */
     abstract suspend fun getRegistrationApplication(form: GetRegistrationApplication): Result<RegistrationApplicationResponse>
+
+    /**
+     * Get a list of users.
+     *
+     * @GET("admin/users")
+     */
+    abstract suspend fun adminListUsers(form: AdminListUsers): Result<PagedResponse<LocalUserView>>
 }
