@@ -14,6 +14,7 @@ import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.enums.NotificationDataType
 import it.vercruysse.lemmyapi.enums.NotificationType
+import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCaptcha
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetPersonDetails
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetReportCount
@@ -25,13 +26,15 @@ import kotlin.map
 internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
     private val apiV18 = LemmyApiController(client, actualVersion, baseUrl, auth)
+    private val pictrsApi = PictrsService(client, auth)
     private val transformer = Transformer(auth ?: "")
 
-    override var auth: String? = auth
+    override var auth: String?
+        get() = super.auth
         set(value) {
-            transformer.auth = value ?: ""
-            field = value
-            apiV18.auth = value // Not sure if this needed
+            super.auth = value
+            apiV18.auth = value
+            pictrsApi.auth = value
         }
 
     // START
@@ -1060,5 +1063,12 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
             PagedResponse(items = comments + posts)
         }
     }
+
+    override suspend fun uploadImage(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
+        pictrsApi.uploadImage(image)
+
+    override suspend fun deleteMedia(form: it.vercruysse.lemmyapi.datatypes.DeleteImageParams): Result<Unit> =
+        pictrsApi.deleteMedia(form)
+
     override suspend fun adminListUsers(form: it.vercruysse.lemmyapi.datatypes.AdminListUsers): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalUserView>> = notSupported()
 }
