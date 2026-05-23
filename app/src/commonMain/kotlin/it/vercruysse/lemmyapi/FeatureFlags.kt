@@ -18,7 +18,7 @@ class FeatureFlags(val version: Version) {
     /**
      * V1 Feature added in 1.0
      */
-    val v1 = version.withoutSuffixes() >= "1".toVersion()
+    val v1 = version.withoutSuffixes() >= "1.0.0".toVersion()
 
     /**
      * InstanceBlock Feature added in 0.19

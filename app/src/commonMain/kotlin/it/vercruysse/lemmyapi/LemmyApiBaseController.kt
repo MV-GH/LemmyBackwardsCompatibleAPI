@@ -675,50 +675,6 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      */
     abstract suspend fun listMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
-    // TODO: implement later
-
-    /**
-     * Upload a user avatar image.
-     *
-     * @POST("account/avatar")
-     */
-    open suspend fun uploadUserAvatar(image: ByteArray): Result<UploadImageResponse> = notSupported()
-
-    /**
-     * Upload a user banner image.
-     *
-     * @POST("account/banner")
-     */
-    open suspend fun uploadUserBanner(image: ByteArray): Result<UploadImageResponse> = notSupported()
-
-    /**
-     * Upload a site banner image.
-     *
-     * @POST("site/banner")
-     */
-    open suspend fun uploadSiteBanner(image: ByteArray): Result<UploadImageResponse> = notSupported()
-
-    /**
-     * Upload a site icon image.
-     *
-     * @POST("site/icon")
-     */
-    open suspend fun uploadSiteIcon(image: ByteArray): Result<UploadImageResponse> = notSupported()
-
-    /**
-     * Upload a community banner image.
-     *
-     * @POST("community/banner")
-     */
-    open suspend fun uploadCommunityBanner(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse> = notSupported()
-
-    /**
-     * Upload a community icon image.
-     *
-     * @POST("community/icon")
-     */
-    open suspend fun uploadCommunityIcon(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse> = notSupported()
-
     /**
      * List all the media known to your instance.
      *
@@ -760,4 +716,88 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      * @DELETE("account/media")
      */
     abstract suspend fun deleteMedia(form: DeleteImageParams): Result<Unit>
+
+    /**
+     * Upload a user avatar image.
+     *
+     * @POST("account/avatar")
+     */
+    abstract suspend fun uploadUserAvatar(image: ByteArray): Result<UploadImageResponse>
+
+    /**
+     * Upload a user banner image.
+     *
+     * @POST("account/banner")
+     */
+    abstract suspend fun uploadUserBanner(image: ByteArray): Result<UploadImageResponse>
+
+    /**
+     * Upload a site banner image.
+     *
+     * @POST("site/banner")
+     */
+    abstract suspend fun uploadSiteBanner(image: ByteArray): Result<UploadImageResponse>
+
+    /**
+     * Upload a site icon image.
+     *
+     * @POST("site/icon")
+     */
+    abstract suspend fun uploadSiteIcon(image: ByteArray): Result<UploadImageResponse>
+
+    /**
+     * Upload a community banner image.
+     *
+     * @POST("community/banner")
+     */
+    abstract suspend fun uploadCommunityBanner(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse>
+
+    /**
+     * Upload a community icon image.
+     *
+     * @POST("community/icon")
+     */
+    abstract suspend fun uploadCommunityIcon(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse>
+
+    /**
+     * Delete a user avatar image.
+     *
+     * @DELETE("account/avatar")
+     */
+    abstract suspend fun deleteUserAvatar(): Result<Unit>
+
+    /**
+     * Delete a user banner image.
+     *
+     * @DELETE("account/banner")
+     */
+    abstract suspend fun deleteUserBanner(): Result<Unit>
+
+    /**
+     * Delete a community banner image.
+     *
+     * @DELETE("community/banner")
+     */
+    abstract suspend fun deleteCommunityBanner(form: CommunityIdQuery): Result<Unit>
+
+    /**
+     * Delete a community icon image.
+     *
+     * @DELETE("community/icon")
+     */
+    abstract suspend fun deleteCommunityIcon(form: CommunityIdQuery): Result<Unit>
+
+    /**
+     * Delete a site banner image.
+     *
+     * @DELETE("site/banner")
+     */
+    abstract suspend fun deleteSiteBanner(): Result<Unit>
+
+    /**
+     * Delete a site icon image.
+     *
+     * @DELETE("site/icon")
+     */
+    abstract suspend fun deleteSiteIcon(): Result<Unit>
 }

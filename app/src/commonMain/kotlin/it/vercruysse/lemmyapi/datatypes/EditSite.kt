@@ -28,7 +28,7 @@ data class EditSite(
     val default_post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
     val default_post_sort_type: SortType? /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */ = null,
     val default_post_time_range_seconds: Long? = null,
-    val default_items_per_page: Long,
+    val default_items_per_page: Long? = null,
     val default_comment_sort_type: SortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
     val legal_information: String? = null,
     val application_email_admins: Boolean? = null,

@@ -17,12 +17,6 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
     /** @PUT("site") */
     abstract suspend fun editSite(form: EditSite): Result<SiteResponse>
 
-    /** @DELETE("site/banner") */
-    abstract suspend fun deleteSiteBanner(): Result<Unit>
-
-    /** @DELETE("site/icon") */
-    abstract suspend fun deleteSiteIcon(): Result<Unit>
-
     /** @GET("modlog") */
     abstract suspend fun getModlog(form: GetModlog): Result<PagedResponse<ModlogView>>
 
@@ -91,12 +85,6 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
 
     /** @GET("community/pending_follows/list") */
     abstract suspend fun listCommunityPendingFollows(form: ListCommunityPendingFollows): Result<PagedResponse<PendingFollowerView>>
-
-    /** @DELETE("community/banner") */
-    abstract suspend fun deleteCommunityBanner(form: CommunityIdQuery): Result<Unit>
-
-    /** @DELETE("community/icon") */
-    abstract suspend fun deleteCommunityIcon(form: CommunityIdQuery): Result<Unit>
 
     /** @GET("federated_instances") */
     abstract suspend fun getFederatedInstances(form: GetFederatedInstances): Result<PagedResponse<FederatedInstanceView>>
@@ -326,14 +314,6 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
     /** @GET("account/media/list") */
     abstract suspend fun listMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
-    /** @DELETE("account/media") */
-    abstract suspend fun deleteMedia(form: DeleteImageParams): Result<Unit>
-
-    /** @DELETE("account/avatar") */
-    abstract suspend fun deleteUserAvatar(): Result<Unit>
-
-    /** @DELETE("account/banner") */
-    abstract suspend fun deleteUserBanner(): Result<Unit>
 
     /** @POST("admin/add") */
     abstract suspend fun addAdmin(form: AddAdmin): Result<AddAdminResponse>
@@ -443,14 +423,17 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
     /** @GET("image/list") */
     abstract suspend fun listMediaAdmin(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
+    /** @POST("image") */
+    abstract suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse>
+
+    /** @DELETE("account/media") */
+    abstract suspend fun deleteMedia(form: DeleteImageParams): Result<Unit>
+
     /** @POST("community/banner") */
     abstract suspend fun uploadCommunityBanner(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse>
 
     /** @POST("community/icon") */
     abstract suspend fun uploadCommunityIcon(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse>
-
-    /** @POST("image") */
-    abstract suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse>
 
     /** @POST("site/banner") */
     abstract suspend fun uploadSiteBanner(image: ByteArray): Result<UploadImageResponse>
@@ -463,5 +446,24 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
 
     /** @POST("account/banner") */
     abstract suspend fun uploadUserBanner(image: ByteArray): Result<UploadImageResponse>
+
+    /** @DELETE("account/avatar") */
+    abstract suspend fun deleteUserAvatar(): Result<Unit>
+
+    /** @DELETE("account/banner") */
+    abstract suspend fun deleteUserBanner(): Result<Unit>
+
+    /** @DELETE("community/banner") */
+    abstract suspend fun deleteCommunityBanner(form: CommunityIdQuery): Result<Unit>
+
+    /** @DELETE("community/icon") */
+    abstract suspend fun deleteCommunityIcon(form: CommunityIdQuery): Result<Unit>
+
+    /** @DELETE("site/banner") */
+    abstract suspend fun deleteSiteBanner(): Result<Unit>
+
+    /** @DELETE("site/icon") */
+    abstract suspend fun deleteSiteIcon(): Result<Unit>
+
 }
 
