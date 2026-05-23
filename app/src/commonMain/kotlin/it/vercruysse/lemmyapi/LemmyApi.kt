@@ -67,7 +67,7 @@ object LemmyApi {
         return if (nodeResult.isFailure) {
             false
         } else {
-            return isFediverse(nodeResult.getOrThrow())
+            isFediverse(nodeResult.getOrThrow())
         }
     }
 
