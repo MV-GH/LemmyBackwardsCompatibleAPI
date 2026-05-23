@@ -1116,4 +1116,86 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         pictrsApi.deleteMedia(form)
 
     override suspend fun adminListUsers(form: it.vercruysse.lemmyapi.datatypes.AdminListUsers): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalUserView>> = notSupported()
+
+    override suspend fun getRandomCommunity(form: it.vercruysse.lemmyapi.datatypes.GetRandomCommunity): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> = notSupported()
+
+    override suspend fun createCommunityReport(form: it.vercruysse.lemmyapi.datatypes.CreateCommunityReport): Result<it.vercruysse.lemmyapi.datatypes.CommunityReportResponse> = notSupported()
+
+    override suspend fun resolveCommunityReport(form: it.vercruysse.lemmyapi.datatypes.ResolveCommunityReport): Result<it.vercruysse.lemmyapi.datatypes.CommunityReportResponse> = notSupported()
+
+    override suspend fun createCommunityTag(form: it.vercruysse.lemmyapi.datatypes.CreateCommunityTag): Result<it.vercruysse.lemmyapi.datatypes.CommunityTag> = notSupported()
+
+    override suspend fun editCommunityTag(form: it.vercruysse.lemmyapi.datatypes.EditCommunityTag): Result<it.vercruysse.lemmyapi.datatypes.CommunityTag> = notSupported()
+
+    override suspend fun deleteCommunityTag(form: it.vercruysse.lemmyapi.datatypes.DeleteCommunityTag): Result<it.vercruysse.lemmyapi.datatypes.CommunityTag> = notSupported()
+
+    override suspend fun editCommunityNotifications(form: it.vercruysse.lemmyapi.datatypes.EditCommunityNotifications): Result<Unit> = notSupported()
+
+    override suspend fun approveCommunityPendingFollow(form: it.vercruysse.lemmyapi.datatypes.ApproveCommunityPendingFollower): Result<Unit> = notSupported()
+
+    override suspend fun listCommunityPendingFollows(form: it.vercruysse.lemmyapi.datatypes.ListCommunityPendingFollows): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PendingFollowerView>> = notSupported()
+
+    override suspend fun modEditPost(form: it.vercruysse.lemmyapi.datatypes.ModEditPost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> = notSupported()
+
+    override suspend fun editPostNotifications(form: it.vercruysse.lemmyapi.datatypes.EditPostNotifications): Result<Unit> = notSupported()
+
+    override suspend fun warnPost(form: it.vercruysse.lemmyapi.datatypes.CreatePostWarning): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> = notSupported()
+
+    override suspend fun getCommentsSlim(form: it.vercruysse.lemmyapi.datatypes.GetComments): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentSlimView>> = notSupported()
+
+    override suspend fun lockComment(form: it.vercruysse.lemmyapi.datatypes.LockComment): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> = notSupported()
+
+    override suspend fun warnComment(form: it.vercruysse.lemmyapi.datatypes.CreateCommentWarning): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> = notSupported()
+
+    override suspend fun notePerson(form: it.vercruysse.lemmyapi.datatypes.NotePerson): Result<Unit> = notSupported()
+
+    override suspend fun listPersonSaved(form: it.vercruysse.lemmyapi.datatypes.ListPersonSaved): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> = notSupported()
+
+    override suspend fun listPersonRead(form: it.vercruysse.lemmyapi.datatypes.ListPersonRead): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> = notSupported()
+
+    override suspend fun listPersonHidden(form: it.vercruysse.lemmyapi.datatypes.ListPersonHidden): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> = notSupported()
+
+    override suspend fun listPersonLiked(form: it.vercruysse.lemmyapi.datatypes.ListPersonLiked): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> = notSupported()
+
+    override suspend fun resendVerificationEmail(form: it.vercruysse.lemmyapi.datatypes.ResendVerificationEmail): Result<Unit> = notSupported()
+
+    override suspend fun authenticateWithOAuth(form: it.vercruysse.lemmyapi.datatypes.AuthenticateWithOauth): Result<it.vercruysse.lemmyapi.datatypes.LoginResponse> = notSupported()
+
+    override suspend fun userBlockInstancePersons(form: it.vercruysse.lemmyapi.datatypes.UserBlockInstancePersonsParams): Result<Unit> = notSupported()
+
+    override suspend fun adminAllowInstance(form: it.vercruysse.lemmyapi.datatypes.AdminAllowInstanceParams): Result<Unit> = notSupported()
+
+    override suspend fun adminBlockInstance(form: it.vercruysse.lemmyapi.datatypes.AdminBlockInstanceParams): Result<Unit> = notSupported()
+
+    override suspend fun createTagline(form: it.vercruysse.lemmyapi.datatypes.CreateTagline): Result<it.vercruysse.lemmyapi.datatypes.TaglineResponse> = notSupported()
+
+    override suspend fun editTagline(form: it.vercruysse.lemmyapi.datatypes.EditTagline): Result<it.vercruysse.lemmyapi.datatypes.TaglineResponse> = notSupported()
+
+    override suspend fun deleteTagline(form: it.vercruysse.lemmyapi.datatypes.DeleteTagline): Result<Unit> = notSupported()
+
+    override suspend fun listTaglines(form: it.vercruysse.lemmyapi.datatypes.ListTaglines): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.Tagline>> = notSupported()
+
+    override suspend fun createOAuthProvider(form: it.vercruysse.lemmyapi.datatypes.CreateOAuthProvider): Result<it.vercruysse.lemmyapi.datatypes.AdminOAuthProvider> = notSupported()
+
+    override suspend fun editOAuthProvider(form: it.vercruysse.lemmyapi.datatypes.EditOAuthProvider): Result<it.vercruysse.lemmyapi.datatypes.AdminOAuthProvider> = notSupported()
+
+    override suspend fun deleteOAuthProvider(form: it.vercruysse.lemmyapi.datatypes.DeleteOAuthProvider): Result<Unit> = notSupported()
+
+    override suspend fun getMultiCommunity(form: it.vercruysse.lemmyapi.datatypes.GetMultiCommunity): Result<it.vercruysse.lemmyapi.datatypes.GetMultiCommunityResponse> = notSupported()
+
+    override suspend fun createMultiCommunity(form: it.vercruysse.lemmyapi.datatypes.CreateMultiCommunity): Result<it.vercruysse.lemmyapi.datatypes.MultiCommunityResponse> = notSupported()
+
+    override suspend fun editMultiCommunity(form: it.vercruysse.lemmyapi.datatypes.EditMultiCommunity): Result<it.vercruysse.lemmyapi.datatypes.MultiCommunityResponse> = notSupported()
+
+    override suspend fun createMultiCommunityEntry(form: it.vercruysse.lemmyapi.datatypes.CreateOrDeleteMultiCommunityEntry): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> = notSupported()
+
+    override suspend fun deleteMultiCommunityEntry(form: it.vercruysse.lemmyapi.datatypes.CreateOrDeleteMultiCommunityEntry): Result<Unit> = notSupported()
+
+    override suspend fun followMultiCommunity(form: it.vercruysse.lemmyapi.datatypes.FollowMultiCommunity): Result<it.vercruysse.lemmyapi.datatypes.MultiCommunityResponse> = notSupported()
+
+    override suspend fun listMultiCommunities(form: it.vercruysse.lemmyapi.datatypes.ListMultiCommunities): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.MultiCommunityView>> = notSupported()
+
+    override suspend fun deleteMediaAdmin(form: it.vercruysse.lemmyapi.datatypes.DeleteImageParams): Result<Unit> = notSupported()
+
+    override suspend fun imageHealth(): Result<Unit> = notSupported()
 }

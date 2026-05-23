@@ -800,4 +800,291 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      * @DELETE("site/icon")
      */
     abstract suspend fun deleteSiteIcon(): Result<Unit>
+
+    /**
+     * Get a random community.
+     *
+     * @GET("community/random")
+     */
+    abstract suspend fun getRandomCommunity(form: GetRandomCommunity): Result<CommunityResponse>
+
+    /**
+     * Report a community.
+     *
+     * @POST("community/report")
+     */
+    abstract suspend fun createCommunityReport(form: CreateCommunityReport): Result<CommunityReportResponse>
+
+    /**
+     * Resolve a community report.
+     *
+     * @PUT("community/report/resolve")
+     */
+    abstract suspend fun resolveCommunityReport(form: ResolveCommunityReport): Result<CommunityReportResponse>
+
+    /**
+     * Create a community tag.
+     *
+     * @POST("community/tag")
+     */
+    abstract suspend fun createCommunityTag(form: CreateCommunityTag): Result<CommunityTag>
+
+    /**
+     * Edit a community tag.
+     *
+     * @PUT("community/tag")
+     */
+    abstract suspend fun editCommunityTag(form: EditCommunityTag): Result<CommunityTag>
+
+    /**
+     * Delete a community tag.
+     *
+     * @DELETE("community/tag")
+     */
+    abstract suspend fun deleteCommunityTag(form: DeleteCommunityTag): Result<CommunityTag>
+
+    /**
+     * Edit community notifications.
+     *
+     * @PUT("community/notifications")
+     */
+    abstract suspend fun editCommunityNotifications(form: EditCommunityNotifications): Result<Unit>
+
+    /**
+     * Approve a community pending follower.
+     *
+     * @POST("community/pending_follows/approve")
+     */
+    abstract suspend fun approveCommunityPendingFollow(form: ApproveCommunityPendingFollower): Result<Unit>
+
+    /**
+     * List community pending follows.
+     *
+     * @GET("community/pending_follows/list")
+     */
+    abstract suspend fun listCommunityPendingFollows(form: ListCommunityPendingFollows): Result<PagedResponse<PendingFollowerView>>
+
+    /**
+     * Mod edit a post.
+     *
+     * @PUT("post/mod_edit")
+     */
+    abstract suspend fun modEditPost(form: ModEditPost): Result<PostResponse>
+
+    /**
+     * Edit post notifications.
+     *
+     * @PUT("post/notifications")
+     */
+    abstract suspend fun editPostNotifications(form: EditPostNotifications): Result<Unit>
+
+    /**
+     * Warn a post.
+     *
+     * @POST("post/warn")
+     */
+    abstract suspend fun warnPost(form: CreatePostWarning): Result<PostResponse>
+
+    /**
+     * Get slim comment list.
+     *
+     * @GET("comment/list/slim")
+     */
+    abstract suspend fun getCommentsSlim(form: GetComments): Result<PagedResponse<CommentSlimView>>
+
+    /**
+     * Lock a comment.
+     *
+     * @POST("comment/lock")
+     */
+    abstract suspend fun lockComment(form: LockComment): Result<CommentResponse>
+
+    /**
+     * Warn a comment.
+     *
+     * @POST("comment/warn")
+     */
+    abstract suspend fun warnComment(form: CreateCommentWarning): Result<CommentResponse>
+
+    /**
+     * Note a person (moderator note).
+     *
+     * @POST("person/note")
+     */
+    abstract suspend fun notePerson(form: NotePerson): Result<Unit>
+
+    /**
+     * List saved posts and comments for a person.
+     *
+     * @GET("account/saved")
+     */
+    abstract suspend fun listPersonSaved(form: ListPersonSaved): Result<PagedResponse<PostCommentCombinedView>>
+
+    /**
+     * List read posts for a person.
+     *
+     * @GET("account/read")
+     */
+    abstract suspend fun listPersonRead(form: ListPersonRead): Result<PagedResponse<PostView>>
+
+    /**
+     * List hidden posts for a person.
+     *
+     * @GET("account/hidden")
+     */
+    abstract suspend fun listPersonHidden(form: ListPersonHidden): Result<PagedResponse<PostView>>
+
+    /**
+     * List liked posts and comments for a person.
+     *
+     * @GET("account/liked")
+     */
+    abstract suspend fun listPersonLiked(form: ListPersonLiked): Result<PagedResponse<PostCommentCombinedView>>
+
+    /**
+     * Resend verification email.
+     *
+     * @POST("account/auth/resend_verification_email")
+     */
+    abstract suspend fun resendVerificationEmail(form: ResendVerificationEmail): Result<Unit>
+
+    /**
+     * Authenticate with OAuth.
+     *
+     * @POST("oauth/authenticate")
+     */
+    abstract suspend fun authenticateWithOAuth(form: AuthenticateWithOauth): Result<LoginResponse>
+
+    /**
+     * Block an instance for persons.
+     *
+     * @POST("account/block/instance/persons")
+     */
+    abstract suspend fun userBlockInstancePersons(form: UserBlockInstancePersonsParams): Result<Unit>
+
+    /**
+     * Allow an instance (admin).
+     *
+     * @POST("admin/instance/allow")
+     */
+    abstract suspend fun adminAllowInstance(form: AdminAllowInstanceParams): Result<Unit>
+
+    /**
+     * Block an instance (admin).
+     *
+     * @POST("admin/instance/block")
+     */
+    abstract suspend fun adminBlockInstance(form: AdminBlockInstanceParams): Result<Unit>
+
+    /**
+     * Create a tagline.
+     *
+     * @POST("admin/tagline")
+     */
+    abstract suspend fun createTagline(form: CreateTagline): Result<TaglineResponse>
+
+    /**
+     * Edit a tagline.
+     *
+     * @PUT("admin/tagline")
+     */
+    abstract suspend fun editTagline(form: EditTagline): Result<TaglineResponse>
+
+    /**
+     * Delete a tagline.
+     *
+     * @DELETE("admin/tagline")
+     */
+    abstract suspend fun deleteTagline(form: DeleteTagline): Result<Unit>
+
+    /**
+     * List taglines.
+     *
+     * @GET("admin/tagline/list")
+     */
+    abstract suspend fun listTaglines(form: ListTaglines): Result<PagedResponse<Tagline>>
+
+    /**
+     * Create an OAuth provider.
+     *
+     * @POST("oauth_provider")
+     */
+    abstract suspend fun createOAuthProvider(form: CreateOAuthProvider): Result<AdminOAuthProvider>
+
+    /**
+     * Edit an OAuth provider.
+     *
+     * @PUT("oauth_provider")
+     */
+    abstract suspend fun editOAuthProvider(form: EditOAuthProvider): Result<AdminOAuthProvider>
+
+    /**
+     * Delete an OAuth provider.
+     *
+     * @DELETE("oauth_provider")
+     */
+    abstract suspend fun deleteOAuthProvider(form: DeleteOAuthProvider): Result<Unit>
+
+    /**
+     * Get a multi-community.
+     *
+     * @GET("multi_community")
+     */
+    abstract suspend fun getMultiCommunity(form: GetMultiCommunity): Result<GetMultiCommunityResponse>
+
+    /**
+     * Create a multi-community.
+     *
+     * @POST("multi_community")
+     */
+    abstract suspend fun createMultiCommunity(form: CreateMultiCommunity): Result<MultiCommunityResponse>
+
+    /**
+     * Edit a multi-community.
+     *
+     * @PUT("multi_community")
+     */
+    abstract suspend fun editMultiCommunity(form: EditMultiCommunity): Result<MultiCommunityResponse>
+
+    /**
+     * Add a community to a multi-community.
+     *
+     * @POST("multi_community/entry")
+     */
+    abstract suspend fun createMultiCommunityEntry(form: CreateOrDeleteMultiCommunityEntry): Result<CommunityResponse>
+
+    /**
+     * Remove a community from a multi-community.
+     *
+     * @DELETE("multi_community/entry")
+     */
+    abstract suspend fun deleteMultiCommunityEntry(form: CreateOrDeleteMultiCommunityEntry): Result<Unit>
+
+    /**
+     * Follow a multi-community.
+     *
+     * @POST("multi_community/follow")
+     */
+    abstract suspend fun followMultiCommunity(form: FollowMultiCommunity): Result<MultiCommunityResponse>
+
+    /**
+     * List multi-communities.
+     *
+     * @GET("multi_community/list")
+     */
+    abstract suspend fun listMultiCommunities(form: ListMultiCommunities): Result<PagedResponse<MultiCommunityView>>
+
+    /**
+     * Delete admin media.
+     *
+     * @DELETE("image")
+     */
+    abstract suspend fun deleteMediaAdmin(form: DeleteImageParams): Result<Unit>
+
+    /**
+     * Check image service health.
+     *
+     * @GET("image/health")
+     */
+    abstract suspend fun imageHealth(): Result<Unit>
 }
