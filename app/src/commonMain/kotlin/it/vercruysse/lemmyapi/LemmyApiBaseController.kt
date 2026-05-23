@@ -631,7 +631,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @GET("user/list_logins")
      */
-    abstract suspend fun listLogins(): Result<List<LoginToken>>
+    abstract suspend fun listLogins(): Result<ListLoginsResponse>
 
     /**
      * Returns an error message if your auth token is invalid
