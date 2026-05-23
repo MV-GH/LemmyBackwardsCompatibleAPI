@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
-internal data class EditOAuthProvider(
+data class EditOAuthProvider(
     val id: OAuthProviderId,
     val display_name: String? = null,
     val authorization_endpoint: String? = null,
