@@ -8,9 +8,8 @@ import it.vercruysse.lemmyapi.enums.ListingType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.ImageMode
-
-// TODO: missing fields + mapping
 
 @CommonParcelize
 @Serializable
@@ -18,8 +17,6 @@ data class EditSite(
     val name: String? = null,
     val sidebar: String? = null,
     val summary: String? = null,
-    /** Removed in 1.0.0 */
-    val enable_downvotes: Boolean? = null,
     /** Removed in 1.0.0 */
     val enable_nsfw: Boolean? = null,
     val community_creation_admin_only: Boolean? = null,
@@ -73,6 +70,16 @@ data class EditSite(
     val registration_mode: RegistrationMode? /* "Closed" | "RequireApplication" | "Open" */ = null,
     val reports_email_admins: Boolean? = null,
     val content_warning: String? = null,
+    /** Added in 1.0.0 */
+    val oauth_registration: Boolean? = null,
+    /** Added in 1.0.0 */
+    val post_upvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
+    /** Added in 1.0.0 */
+    val post_downvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
+    /** Added in 1.0.0 */
+    val comment_upvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
+    /** Added in 1.0.0 */
+    val comment_downvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
     /** Added in 1.0.0 */
     val suggested_multi_community_id: MultiCommunityId? = null,
     /** Added in 1.0.0 */
