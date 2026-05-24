@@ -8,4 +8,4 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ListCustomEmojis(
     val category: String? = null,
-): DatatypeRoot
+) : DatatypeRoot

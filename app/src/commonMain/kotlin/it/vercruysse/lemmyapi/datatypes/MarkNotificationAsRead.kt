@@ -11,5 +11,5 @@ data class MarkNotificationAsRead(
     val notification_id: NotificationId,
     val read: Boolean,
     /** Doesn't exist but needed for compatability with before 1.0.0 */
-    val _kind: NotificationType? = null
+    val _kind: NotificationType? = null,
 ) : DatatypeRoot

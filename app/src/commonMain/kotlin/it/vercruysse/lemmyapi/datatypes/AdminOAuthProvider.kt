@@ -22,4 +22,4 @@ data class AdminOAuthProvider(
     val published_at: String,
     val updated_at: String? = null,
     val use_pkce: Boolean,
-): DatatypeRoot
+) : DatatypeRoot

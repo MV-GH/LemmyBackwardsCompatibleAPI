@@ -10,4 +10,4 @@ data class AdminAllowInstanceParams(
     val instance: String,
     val allow: Boolean,
     val reason: String,
-): DatatypeRoot
+) : DatatypeRoot

@@ -13,4 +13,4 @@ data class PersonActions(
     val voted_at: String? = null,
     val upvotes: Long? = null,
     val downvotes: Long? = null,
-): DatatypeRoot
+) : DatatypeRoot

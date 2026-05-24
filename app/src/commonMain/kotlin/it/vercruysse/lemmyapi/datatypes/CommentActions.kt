@@ -10,4 +10,4 @@ data class CommentActions(
     val like_score: Int = 0,
     val voted_at: String? = null,
     val saved_at: String? = null,
-): DatatypeRoot
+) : DatatypeRoot

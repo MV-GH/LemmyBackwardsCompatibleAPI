@@ -401,6 +401,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>> =
         when (form.type_) {
             it.vercruysse.lemmyapi.enums.ReportType.Communities -> notSupported()
+
             it.vercruysse.lemmyapi.enums.ReportType.Posts -> {
                 api.listPostReports(transformer.fromUniP(form)).map { resp ->
                     PagedResponse(resp.post_reports.map(transformer::toUni))

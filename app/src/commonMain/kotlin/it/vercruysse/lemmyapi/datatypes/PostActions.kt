@@ -16,4 +16,4 @@ data class PostActions(
     val like_score: Int = 0,
     val hidden_at: String? = null,
     val notifications: PostNotificationsMode? /* "AllComments" | "RepliesAndMentions" | "Mute" */ = null,
-): DatatypeRoot
+) : DatatypeRoot

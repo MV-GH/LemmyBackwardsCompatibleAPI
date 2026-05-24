@@ -1,9 +1,8 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
@@ -24,4 +23,4 @@ data class GetSiteResponse(
     val last_application_duration_seconds: Long? = null,
     /** Added in 1.0.0 */
     val captcha_enabled: Boolean,
-    ) : DatatypeRoot
+) : DatatypeRoot

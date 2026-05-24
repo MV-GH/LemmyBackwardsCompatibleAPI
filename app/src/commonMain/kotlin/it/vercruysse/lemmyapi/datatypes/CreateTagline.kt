@@ -8,4 +8,4 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CreateTagline(
     val content: String,
-): DatatypeRoot
+) : DatatypeRoot

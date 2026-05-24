@@ -8,4 +8,4 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CommunityReportResponse(
     val community_report_view: CommunityReportView,
-): DatatypeRoot
+) : DatatypeRoot
