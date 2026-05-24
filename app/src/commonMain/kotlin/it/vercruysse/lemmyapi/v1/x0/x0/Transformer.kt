@@ -586,6 +586,7 @@ internal class Transformer : MapperGenerator {
         resolver_id = d.resolver_id,
         published_at = d.published_at,
         updated_at = d.updated_at,
+        violates_instance_rules = d.violates_instance_rules,
     )
 
     override fun toUni(d: X0DatatypesCommentReportResponse): LemmyapiDatatypesCommentReportResponse = LemmyapiDatatypesCommentReportResponse(
