@@ -7,7 +7,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class PostListingMode(override val minimumVersion: Version = V0_19_0, override val maximumVersion: Version? = null) : VersionTracker {
-    @SerialName("list") List,
-    @SerialName("card") Card,
-    @SerialName("small_card") SmallCard,
+    @SerialName("list")
+    List,
+
+    @SerialName("card")
+    Card,
+
+    @SerialName("small_card")
+    SmallCard,
 }

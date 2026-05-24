@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.enums
 
-import it.vercruysse.lemmyapi.enums.SortType as UniSortType
 import kotlinx.serialization.Serializable
+import it.vercruysse.lemmyapi.enums.SortType as UniSortType
 
 @Serializable
 internal enum class SortType {

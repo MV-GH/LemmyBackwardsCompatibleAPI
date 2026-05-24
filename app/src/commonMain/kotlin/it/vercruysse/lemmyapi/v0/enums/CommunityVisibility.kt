@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.enums
 
-import it.vercruysse.lemmyapi.enums.CommunityVisibility as UniCommunityVisibility
 import kotlinx.serialization.Serializable
+import it.vercruysse.lemmyapi.enums.CommunityVisibility as UniCommunityVisibility
 
 @Serializable
 internal enum class CommunityVisibility {

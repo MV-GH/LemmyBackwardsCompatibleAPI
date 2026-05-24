@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.enums
 
-import it.vercruysse.lemmyapi.enums.PostListingMode as UniPostListingMode
 import kotlinx.serialization.Serializable
+import it.vercruysse.lemmyapi.enums.PostListingMode as UniPostListingMode
 
 @Serializable
 internal enum class PostListingMode {

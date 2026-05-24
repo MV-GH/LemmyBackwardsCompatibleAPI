@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.enums
 
-import it.vercruysse.lemmyapi.enums.ListingType as UniListingType
 import kotlinx.serialization.Serializable
+import it.vercruysse.lemmyapi.enums.ListingType as UniListingType
 
 @Serializable
 internal enum class ListingType {
