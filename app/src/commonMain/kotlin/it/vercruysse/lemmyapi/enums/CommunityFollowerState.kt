@@ -8,11 +8,11 @@ enum class CommunityFollowerState {
     Accepted,
     Pending,
     ApprovalRequired,
-    Denied
+    Denied,
     ;
 
     companion object {
-       internal fun from(d: SubscribedType): CommunityFollowerState? =
+        internal fun from(d: SubscribedType): CommunityFollowerState? =
             when (d) {
                 SubscribedType.Subscribed -> Accepted
                 SubscribedType.NotSubscribed -> null

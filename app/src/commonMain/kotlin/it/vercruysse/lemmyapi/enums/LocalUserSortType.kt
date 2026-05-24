@@ -7,6 +7,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class LocalUserSortType(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
-    @SerialName("new") New,
-    @SerialName("old") Old;
+    @SerialName("new")
+    New,
+
+    @SerialName("old")
+    Old,
 }

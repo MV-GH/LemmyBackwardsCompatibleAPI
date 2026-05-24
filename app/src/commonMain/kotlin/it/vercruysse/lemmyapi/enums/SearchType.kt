@@ -8,10 +8,21 @@ import kotlinx.serialization.Serializable
 @Serializable
 enum class SearchType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
     VersionTracker {
-    @SerialName("all") All,
-    @SerialName("comments") Comments,
-    @SerialName("posts") Posts,
-    @SerialName("communities") Communities,
-    @SerialName("users") Users,
-    @SerialName("url") Url,
+    @SerialName("all")
+    All,
+
+    @SerialName("comments")
+    Comments,
+
+    @SerialName("posts")
+    Posts,
+
+    @SerialName("communities")
+    Communities,
+
+    @SerialName("users")
+    Users,
+
+    @SerialName("url")
+    Url,
 }

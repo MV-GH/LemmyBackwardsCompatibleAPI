@@ -8,7 +8,6 @@ import it.vercruysse.lemmyapi.datatypes.Notification
 import it.vercruysse.lemmyapi.datatypes.NotificationView
 import it.vercruysse.lemmyapi.datatypes.PersonActions
 import it.vercruysse.lemmyapi.datatypes.PostActions
-import it.vercruysse.lemmyapi.v0.enums.CommentSortType as V0CommentSortType
 import it.vercruysse.lemmyapi.enums.CommunityFollowerState
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import it.vercruysse.lemmyapi.enums.FederationMode
@@ -16,13 +15,6 @@ import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.enums.VoteShow
-import it.vercruysse.lemmyapi.v0.enums.ListingType as V0ListingType
-import it.vercruysse.lemmyapi.v0.enums.ModlogActionType as V0ModlogActionType
-import it.vercruysse.lemmyapi.v0.enums.PostFeatureType as V0PostFeatureType
-import it.vercruysse.lemmyapi.v0.enums.PostListingMode as V0PostListingMode
-import it.vercruysse.lemmyapi.v0.enums.RegistrationMode as V0RegistrationMode
-import it.vercruysse.lemmyapi.v0.enums.SearchType as V0SearchType
-import it.vercruysse.lemmyapi.v0.enums.SortType as V0SortType
 import it.vercruysse.lemmyapi.utils.toAt
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SiteMetadata
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
@@ -75,7 +67,10 @@ import it.vercruysse.lemmyapi.datatypes.EditCustomEmoji as LemmyapiDatatypesEdit
 import it.vercruysse.lemmyapi.datatypes.EditPost as LemmyapiDatatypesEditPost
 import it.vercruysse.lemmyapi.datatypes.EditPrivateMessage as LemmyapiDatatypesEditPrivateMessage
 import it.vercruysse.lemmyapi.datatypes.EditSite as LemmyapiDatatypesEditSite
+import it.vercruysse.lemmyapi.datatypes.EditTotp as LemmyapiDatatypesUpdateTotp
+import it.vercruysse.lemmyapi.datatypes.EditTotpResponse as LemmyapiDatatypesUpdateTotpResponse
 import it.vercruysse.lemmyapi.datatypes.FeaturePost as LemmyapiDatatypesFeaturePost
+import it.vercruysse.lemmyapi.datatypes.FederationQueueState as LemmyapiDatatypesReadableFederationState
 import it.vercruysse.lemmyapi.datatypes.FollowCommunity as LemmyapiDatatypesFollowCommunity
 import it.vercruysse.lemmyapi.datatypes.GenerateTotpSecretResponse as LemmyapiDatatypesGenerateTotpSecretResponse
 import it.vercruysse.lemmyapi.datatypes.GetCaptchaResponse as LemmyapiDatatypesGetCaptchaResponse
@@ -131,7 +126,6 @@ import it.vercruysse.lemmyapi.datatypes.PurgeComment as LemmyapiDatatypesPurgeCo
 import it.vercruysse.lemmyapi.datatypes.PurgeCommunity as LemmyapiDatatypesPurgeCommunity
 import it.vercruysse.lemmyapi.datatypes.PurgePerson as LemmyapiDatatypesPurgePerson
 import it.vercruysse.lemmyapi.datatypes.PurgePost as LemmyapiDatatypesPurgePost
-import it.vercruysse.lemmyapi.datatypes.FederationQueueState as LemmyapiDatatypesReadableFederationState
 import it.vercruysse.lemmyapi.datatypes.Register as LemmyapiDatatypesRegister
 import it.vercruysse.lemmyapi.datatypes.RegistrationApplication as LemmyapiDatatypesRegistrationApplication
 import it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse as LemmyapiDatatypesRegistrationApplicationResponse
@@ -153,11 +147,17 @@ import it.vercruysse.lemmyapi.datatypes.SiteResponse as LemmyapiDatatypesSiteRes
 import it.vercruysse.lemmyapi.datatypes.SiteView as LemmyapiDatatypesSiteView
 import it.vercruysse.lemmyapi.datatypes.Tagline as LemmyapiDatatypesTagline
 import it.vercruysse.lemmyapi.datatypes.TransferCommunity as LemmyapiDatatypesTransferCommunity
-import it.vercruysse.lemmyapi.datatypes.EditTotp as LemmyapiDatatypesUpdateTotp
-import it.vercruysse.lemmyapi.datatypes.EditTotpResponse as LemmyapiDatatypesUpdateTotpResponse
 import it.vercruysse.lemmyapi.datatypes.UserBlockInstanceCommunitiesParams as LemmyapiDatatypesBlockInstance
 import it.vercruysse.lemmyapi.datatypes.VerifyEmail as LemmyapiDatatypesVerifyEmail
 import it.vercruysse.lemmyapi.datatypes.VoteView as LemmyapiDatatypesVoteView
+import it.vercruysse.lemmyapi.v0.enums.CommentSortType as V0CommentSortType
+import it.vercruysse.lemmyapi.v0.enums.ListingType as V0ListingType
+import it.vercruysse.lemmyapi.v0.enums.ModlogActionType as V0ModlogActionType
+import it.vercruysse.lemmyapi.v0.enums.PostFeatureType as V0PostFeatureType
+import it.vercruysse.lemmyapi.v0.enums.PostListingMode as V0PostListingMode
+import it.vercruysse.lemmyapi.v0.enums.RegistrationMode as V0RegistrationMode
+import it.vercruysse.lemmyapi.v0.enums.SearchType as V0SearchType
+import it.vercruysse.lemmyapi.v0.enums.SortType as V0SortType
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddAdmin as X3DatatypesAddAdmin
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddAdminResponse as X3DatatypesAddAdminResponse
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.AddModToCommunity as X3DatatypesAddModToCommunity
@@ -633,7 +633,7 @@ internal class Transformer : MapperGenerator {
         person_view = this.toUni(d = d.person_view),
         site = d.site?.let { this.toUni(d = it) },
         moderates = d.moderates.map { this.toUni(d = it) },
-        multi_communities_created = emptyList()
+        multi_communities_created = emptyList(),
     )
 
     override fun toUni(d: X3DatatypesGetPostResponse): LemmyapiDatatypesGetPostResponse =
@@ -655,7 +655,7 @@ internal class Transformer : MapperGenerator {
                 kind = NotificationType.Reply,
                 post_id = d.post.id,
             ),
-            data =this.toUniCV(d),
+            data = this.toUniCV(d),
         )
 
     fun toUniCV(d: X3DatatypesCommentReplyView): LemmyapiDatatypesCommentView =
@@ -1474,8 +1474,6 @@ internal class Transformer : MapperGenerator {
             limit = d.limit,
             unread_only = d.unread_only,
         )
-
-
 
     override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X3DatatypesGetSiteMetadata =
         X3DatatypesGetSiteMetadata(

@@ -18,7 +18,6 @@ import it.vercruysse.lemmyapi.utils.isBetweenVersions
  *
  */
 
-
 /**
  * Returns the supported entries for the given version.
  * It is possible that this list is empty, such case means this type is not used at all in a newer version

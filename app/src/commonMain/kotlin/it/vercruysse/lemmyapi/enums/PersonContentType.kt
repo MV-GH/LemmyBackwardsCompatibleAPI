@@ -7,7 +7,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class PersonContentType(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
-    @SerialName("all") All,
-    @SerialName("comments") Comments,
-    @SerialName("posts") Posts,
+    @SerialName("all")
+    All,
+
+    @SerialName("comments")
+    Comments,
+
+    @SerialName("posts")
+    Posts,
 }

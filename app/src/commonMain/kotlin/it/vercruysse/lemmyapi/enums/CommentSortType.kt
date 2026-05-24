@@ -9,9 +9,18 @@ import kotlinx.serialization.Serializable
 @Serializable
 enum class CommentSortType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
     VersionTracker {
-    @SerialName("hot") Hot,
-    @SerialName("top") Top,
-    @SerialName("new") New,
-    @SerialName("old") Old,
-    @SerialName("controversial") Controversial(V0_19_0),
+    @SerialName("hot")
+    Hot,
+
+    @SerialName("top")
+    Top,
+
+    @SerialName("new")
+    New,
+
+    @SerialName("old")
+    Old,
+
+    @SerialName("controversial")
+    Controversial(V0_19_0),
 }

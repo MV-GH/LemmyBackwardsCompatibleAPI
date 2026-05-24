@@ -625,4 +625,3 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
     override suspend fun uploadUserBanner(image: ByteArray): Result<UploadImageResponse> =
         client.postUploadResult("account/banner", image)
 }
-

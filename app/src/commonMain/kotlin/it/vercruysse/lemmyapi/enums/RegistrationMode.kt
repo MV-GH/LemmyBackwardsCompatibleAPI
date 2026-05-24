@@ -8,7 +8,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 enum class RegistrationMode(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
     VersionTracker {
-    @SerialName("closed") Closed,
-    @SerialName("require_application") RequireApplication,
-    @SerialName("open") Open,
+    @SerialName("closed")
+    Closed,
+
+    @SerialName("require_application")
+    RequireApplication,
+
+    @SerialName("open")
+    Open,
 }

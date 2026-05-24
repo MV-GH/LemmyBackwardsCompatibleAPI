@@ -5,6 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class PostFeatureType {
-    @SerialName("local") Local,
-    @SerialName("community") Community,
+    @SerialName("local")
+    Local,
+
+    @SerialName("community")
+    Community,
 }

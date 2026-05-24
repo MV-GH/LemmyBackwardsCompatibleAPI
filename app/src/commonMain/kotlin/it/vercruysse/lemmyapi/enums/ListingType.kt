@@ -10,9 +10,18 @@ import kotlinx.serialization.Serializable
 @Serializable
 enum class ListingType(override val minimumVersion: Version = MINIMUM_API_VERSION, override val maximumVersion: Version? = null) :
     VersionTracker {
-    @SerialName("all") All,
-    @SerialName("local") Local,
-    @SerialName("subscribed") Subscribed,
-    @SerialName("moderator_view") ModeratorView(V0_19_0),
-    @SerialName("suggested") Suggested(V1_0_0),
+    @SerialName("all")
+    All,
+
+    @SerialName("local")
+    Local,
+
+    @SerialName("subscribed")
+    Subscribed,
+
+    @SerialName("moderator_view")
+    ModeratorView(V0_19_0),
+
+    @SerialName("suggested")
+    Suggested(V1_0_0),
 }

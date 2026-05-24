@@ -3,8 +3,8 @@ package it.vercruysse.lemmyapi
 import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.dto.NodeInfo
-import it.vercruysse.lemmyapi.enums.VersionTracker
 import it.vercruysse.lemmyapi.dto.getSupportedEntries
+import it.vercruysse.lemmyapi.enums.VersionTracker
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 
 // Wanted to keep this as an interface, but interfaces can't keep state

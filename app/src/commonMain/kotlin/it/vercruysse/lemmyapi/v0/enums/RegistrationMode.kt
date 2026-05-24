@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.enums
 
-import it.vercruysse.lemmyapi.enums.RegistrationMode as UniRegistrationMode
 import kotlinx.serialization.Serializable
+import it.vercruysse.lemmyapi.enums.RegistrationMode as UniRegistrationMode
 
 @Serializable
 internal enum class RegistrationMode {

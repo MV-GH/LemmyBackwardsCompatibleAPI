@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.enums
 
-import it.vercruysse.lemmyapi.enums.PostFeatureType as UniPostFeatureType
 import kotlinx.serialization.Serializable
+import it.vercruysse.lemmyapi.enums.PostFeatureType as UniPostFeatureType
 
 @Serializable
 internal enum class PostFeatureType {
