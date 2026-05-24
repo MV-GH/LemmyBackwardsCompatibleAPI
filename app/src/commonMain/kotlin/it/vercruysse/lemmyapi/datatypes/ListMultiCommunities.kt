@@ -13,6 +13,8 @@ data class ListMultiCommunities(
     val sort: MultiCommunitySortType? /* "new" | "old" | "name_asc" | "name_desc" | "communities" | "subscribers" | "subscribers_local" */ = null,
     val creator_id: PersonId? = null,
     val time_range_seconds: Long? = null,
+    val search_term: String? = null,
+    val search_title_only: Boolean? = null,
     val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
 ) : DatatypeRoot

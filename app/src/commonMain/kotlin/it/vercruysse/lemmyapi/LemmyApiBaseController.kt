@@ -449,14 +449,14 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      *
      * @POST("user/password_reset")
      */
-    abstract suspend fun resetPassword(form: PasswordReset): Result<Unit>
+    abstract suspend fun resetPassword(form: ResetPassword): Result<Unit>
 
     /**
      * Change your password from an email / token based reset.
      *
      * @POST("user/password_change")
      */
-    abstract suspend fun changePasswordAfterReset(form: PasswordChangeAfterReset): Result<Unit>
+    abstract suspend fun changePasswordAfterReset(form: ChangePasswordAfterReset): Result<Unit>
 
     /**
      * Mark all notifications as read.

@@ -33,9 +33,9 @@ data class LocalUser(
     val admin: Boolean,
     val post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
     val totp_2fa_enabled: Boolean,
-    val enable_animated_images: Boolean,
+    val animated_images_enabled: Boolean,
     /** Added in 1.0.0 */
-    val enable_private_messages: Boolean,
+    val private_messages_enabled: Boolean,
     val collapse_bot_comments: Boolean,
     /** Added in 1.0.0 */
     val default_comment_sort_type: SortType,

@@ -24,4 +24,6 @@ data class PrivateMessage(
     val local: Boolean,
     /** Added in Lemmy 1.0.0 */
     val removed: Boolean,
+    /** Added in Lemmy 1.0.0 */
+    val deleted_by_recipient: Boolean,
 ) : DatatypeRoot, Identity, PostOrCommentOrPrivateMessage

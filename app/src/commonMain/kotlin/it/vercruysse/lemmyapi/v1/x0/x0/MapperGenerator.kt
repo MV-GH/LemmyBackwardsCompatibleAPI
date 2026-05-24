@@ -256,8 +256,8 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): MarkPostAsRead
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ModEditPost): ModEditPost
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.NotePerson): NotePerson
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset): PasswordChangeAfterReset
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordReset): PasswordReset
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset): ChangePasswordAfterReset
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResetPassword): ResetPassword
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgeComment): PurgeComment
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgeCommunity): PurgeCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgePerson): PurgePerson

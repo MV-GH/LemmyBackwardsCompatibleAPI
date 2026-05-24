@@ -13,6 +13,8 @@ internal data class GetModlog(
     val other_person_id: PersonId? = null,
     val post_id: PostId? = null,
     val comment_id: CommentId? = null,
+    val show_bulk: Boolean? = null,
+    val bulk_action_parent_id: ModlogId? = null,
     val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
 )

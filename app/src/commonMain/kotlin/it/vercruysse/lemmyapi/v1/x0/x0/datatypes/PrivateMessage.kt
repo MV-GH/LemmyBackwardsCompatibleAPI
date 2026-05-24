@@ -16,4 +16,5 @@ internal data class PrivateMessage(
     val ap_id: DbUrl,
     val local: Boolean,
     val removed: Boolean,
+    val deleted_by_recipient: Boolean,
 ) : PostOrCommentOrPrivateMessage
