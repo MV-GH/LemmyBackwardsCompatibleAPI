@@ -14,6 +14,9 @@ This document lists the changes that you will need to actively handle, through f
 - On Lemmy `1.x`, `delete_filename == filename`.
 - On pre-`1.0`, `delete_filename` contains the full legacy pictrs delete path, like `/pictrs/image/delete/{delete_token}/{file}`.
 
+### Avatar/Icon/Banner
+
+Should now use the dedicated avatar/icon/banner upload/delete endpoints.
 
 ## 0.19.11
 

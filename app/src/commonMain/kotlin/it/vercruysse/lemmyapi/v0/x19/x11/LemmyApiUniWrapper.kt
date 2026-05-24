@@ -1068,8 +1068,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery,
     ): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
         uploadAndApplyImage(image) { imageUrl ->
-            editCommunity(
-                it.vercruysse.lemmyapi.datatypes.EditCommunity(
+            api.editCommunity(
+                it.vercruysse.lemmyapi.v0.x19.x11.datatypes.EditCommunity(
                     community_id = form.id,
                     banner = imageUrl,
                 ),
@@ -1081,8 +1081,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery,
     ): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
         uploadAndApplyImage(image) { imageUrl ->
-            editCommunity(
-                it.vercruysse.lemmyapi.datatypes.EditCommunity(
+            api.editCommunity(
+                it.vercruysse.lemmyapi.v0.x19.x11.datatypes.EditCommunity(
                     community_id = form.id,
                     icon = imageUrl,
                 ),
@@ -1091,8 +1091,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
 
     override suspend fun uploadSiteBanner(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
         uploadAndApplyImage(image) { imageUrl ->
-            editSite(
-                it.vercruysse.lemmyapi.datatypes.EditSite(
+            api.editSite(
+                it.vercruysse.lemmyapi.v0.x19.x11.datatypes.EditSite(
                     banner = imageUrl,
                 ),
             ).map {}
@@ -1100,8 +1100,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
 
     override suspend fun uploadSiteIcon(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
         uploadAndApplyImage(image) { imageUrl ->
-            editSite(
-                it.vercruysse.lemmyapi.datatypes.EditSite(
+            api.editSite(
+                it.vercruysse.lemmyapi.v0.x19.x11.datatypes.EditSite(
                     icon = imageUrl,
                 ),
             ).map {}
@@ -1109,8 +1109,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
 
     override suspend fun uploadUserAvatar(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
         uploadAndApplyImage(image) { imageUrl ->
-            saveUserSettings(
-                it.vercruysse.lemmyapi.datatypes.SaveUserSettings(
+            api.saveUserSettings(
+                it.vercruysse.lemmyapi.v0.x19.x11.datatypes.SaveUserSettings(
                     avatar = imageUrl,
                 ),
             )
@@ -1118,24 +1118,48 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
 
     override suspend fun uploadUserBanner(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
         uploadAndApplyImage(image) { imageUrl ->
-            saveUserSettings(
-                it.vercruysse.lemmyapi.datatypes.SaveUserSettings(
+            api.saveUserSettings(
+                it.vercruysse.lemmyapi.v0.x19.x11.datatypes.SaveUserSettings(
                     banner = imageUrl,
                 ),
             )
         }
 
-    override suspend fun deleteUserAvatar(): Result<Unit> = notSupported()
+    override suspend fun deleteUserAvatar(): Result<Unit> =
+        api.saveUserSettings(it.vercruysse.lemmyapi.v0.x19.x11.datatypes.SaveUserSettings(avatar = ""))
 
-    override suspend fun deleteUserBanner(): Result<Unit> = notSupported()
+    override suspend fun deleteUserBanner(): Result<Unit> =
+        api.saveUserSettings(it.vercruysse.lemmyapi.v0.x19.x11.datatypes.SaveUserSettings(banner = ""))
 
-    override suspend fun deleteCommunityBanner(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> = notSupported()
+    override suspend fun deleteCommunityBanner(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> =
+        api.editCommunity(
+            it.vercruysse.lemmyapi.v0.x19.x11.datatypes.EditCommunity(
+                community_id = form.id,
+                banner = "",
+            ),
+        ).map {}
 
-    override suspend fun deleteCommunityIcon(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> = notSupported()
+    override suspend fun deleteCommunityIcon(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> =
+        api.editCommunity(
+            it.vercruysse.lemmyapi.v0.x19.x11.datatypes.EditCommunity(
+                community_id = form.id,
+                icon = "",
+            ),
+        ).map {}
 
-    override suspend fun deleteSiteBanner(): Result<Unit> = notSupported()
+    override suspend fun deleteSiteBanner(): Result<Unit> =
+        api.editSite(
+            it.vercruysse.lemmyapi.v0.x19.x11.datatypes.EditSite(
+                banner = "",
+            ),
+        ).map {}
 
-    override suspend fun deleteSiteIcon(): Result<Unit> = notSupported()
+    override suspend fun deleteSiteIcon(): Result<Unit> =
+        api.editSite(
+            it.vercruysse.lemmyapi.v0.x19.x11.datatypes.EditSite(
+                icon = "",
+            ),
+        ).map {}
 
     override suspend fun deleteMedia(form: it.vercruysse.lemmyapi.datatypes.DeleteImageParams): Result<Unit> =
         pictrsApi.deleteMedia(form)
