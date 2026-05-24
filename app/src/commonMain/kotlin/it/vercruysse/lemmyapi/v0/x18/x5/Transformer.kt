@@ -1170,8 +1170,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
             name = d.name,
             sidebar = d.sidebar,
             description = d.summary,
-            icon = d.icon,
-            banner = d.banner,
             enable_downvotes = when (d.post_downvotes) {
                 FederationMode.Local, FederationMode.All -> true
                 FederationMode.Disable -> false
@@ -1307,7 +1305,11 @@ internal class Transformer(var auth: String) : MapperGenerator {
         name = d.name,
         sidebar = d.sidebar,
         description = d.summary,
-        enable_downvotes = d.enable_downvotes,
+        enable_downvotes = when (d.post_downvotes) {
+            FederationMode.Local, FederationMode.All -> true
+            FederationMode.Disable -> false
+            null -> null
+        },
         enable_nsfw = d.enable_nsfw,
         community_creation_admin_only = d.community_creation_admin_only,
         require_email_verification = d.email_verification_required,

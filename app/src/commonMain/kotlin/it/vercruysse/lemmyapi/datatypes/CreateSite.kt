@@ -17,10 +17,6 @@ data class CreateSite(
     val name: String,
     val sidebar: String? = null,
     val summary: String? = null,
-    /** Removed in 1.0.0 */
-    val icon: String? = null,
-    /** Removed in 1.0.0 */
-    val banner: String? = null,
     val community_creation_admin_only: Boolean? = null,
     val email_verification_required: Boolean? = null,
     val application_question: String? = null,
