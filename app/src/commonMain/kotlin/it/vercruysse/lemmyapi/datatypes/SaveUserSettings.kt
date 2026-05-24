@@ -23,10 +23,6 @@ data class SaveUserSettings(
     val default_items_per_page: Long? = null,
     val default_comment_sort_type: SortType? /* "Hot" | "Top" | "New" | "Old" | "Controversial" */ = null,
     val interface_language: String? = null,
-    /** Removed in 1.0.0 */
-    val avatar: String? = null,
-    /** Removed in 1.0.0 */
-    val banner: String? = null,
     val display_name: String? = null,
     val email: String? = null,
     val bio: String? = null,
@@ -46,7 +42,7 @@ data class SaveUserSettings(
     val collapse_bot_comments: Boolean? = null,
     val show_score: Boolean? = null,
     val show_upvotes: Boolean? = null,
-    val show_downvotes: VoteShow? /* "Show" | "ShowForOthers" | "Hide" */ = null,
+    val show_downvotes: VoteShow? /* "show" | "show_for_others" | "hide" */ = null,
     val show_upvote_percentage: Boolean? = null,
     /** Added in 1.0.0 */
     val auto_mark_fetched_posts_as_read: Boolean? = null,

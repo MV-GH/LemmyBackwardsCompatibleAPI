@@ -12,17 +12,15 @@ import it.vercruysse.lemmyapi.enums.ImageMode
 
 // TODO: missing fields + mapping
 
-// TODO: icon banner fields prob outdated
-
 @CommonParcelize
 @Serializable
 data class EditSite(
     val name: String? = null,
     val sidebar: String? = null,
     val summary: String? = null,
-    val icon: String? = null,
-    val banner: String? = null,
+    /** Removed in 1.0.0 */
     val enable_downvotes: Boolean? = null,
+    /** Removed in 1.0.0 */
     val enable_nsfw: Boolean? = null,
     val community_creation_admin_only: Boolean? = null,
     val email_verification_required: Boolean? = null,
@@ -59,14 +57,18 @@ data class EditSite(
     /** Added in 1.0.0 */
     val rate_limit_import_user_settings_interval_seconds: Long? = null,
     val federation_enabled: Boolean? = null,
+    /** Removed in 1.0.0 */
     val federation_debug: Boolean? = null,
     /** Removed in 1.0.0 */
     val captcha_enabled: Boolean? = null,
     /** Removed in 1.0.0 */
     val captcha_difficulty: String? = null,
+    /** Removed in 1.0.0 */
     val allowed_instances: List<String>? = null,
+    /** Removed in 1.0.0 */
     val blocked_instances: List<String>? = null,
     val blocked_urls: List<String>? = null,
+    /** Removed in 1.0.0 */
     val taglines: List<String>? = null,
     val registration_mode: RegistrationMode? /* "Closed" | "RequireApplication" | "Open" */ = null,
     val reports_email_admins: Boolean? = null,
