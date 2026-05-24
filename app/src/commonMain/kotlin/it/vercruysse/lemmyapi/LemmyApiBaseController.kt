@@ -6,8 +6,6 @@ import it.vercruysse.lemmyapi.datatypes.*
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
-// TODO: update these descriptions
-
 abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String?) :
     LemmyApiBase(
         client,
@@ -45,7 +43,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun getModlog(form: GetModlog): Result<PagedResponse<ModlogView>>
 
     /**
-     * Search lemmy.
+     * Search lemmy. If `search_term` is a url it also attempts to fetch it, just like `resolve_object`.
      *
      * @GET("search")
      */
@@ -248,7 +246,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun resolvePostReport(form: ResolvePostReport): Result<PostReportResponse>
 
     /**
-     * List reports.
+     * List user reports.
      */
     abstract suspend fun listReports(form: ListReports): Result<PagedResponse<ReportCombinedView>>
 
@@ -407,12 +405,12 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun getCaptcha(): Result<GetCaptchaResponse>
 
     /**
-     * Mark a notification as read
+     * Mark a notification as read.
      */
     abstract suspend fun markNotificationAsRead(form: MarkNotificationAsRead): Result<Unit>
 
     /**
-     * List notifications.
+     * Get your inbox (replies, comment mentions, post mentions, and messages).
      */
     abstract suspend fun listNotifications(form: ListNotifications): Result<PagedResponse<NotificationView>>
 
@@ -480,14 +478,16 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun changePassword(form: ChangePassword): Result<LoginResponse>
 
     /**
-     * Get your unread counts
+     * Returns the amount of unread items of various types. For normal users this means
+     * the number of unread notifications, mods and admins get additional unread counts for
+     * reports, registration applications and pending follows to private communities.
      *
      * @GET("account/unread_counts")
      */
     abstract suspend fun getUnreadCounts(): Result<UnreadCountsResponse>
 
     /**
-     * Verify your email
+     * Verify your email.
      *
      * @POST("user/verify_email")
      */
@@ -501,7 +501,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun leaveAdmin(): Result<GetSiteResponse>
 
     /**
-     * Mark donation dialog as shown.
+     * Mark the donation dialog as shown, so it isn't displayed anymore.
      *
      * @POST("user/donation_dialog_shown")
      */
@@ -585,7 +585,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun listCustomEmojis(form: ListCustomEmojis): Result<ListCustomEmojisResponse>
 
     /**
-     * Block an instance.
+     * Block an instance's communities as a user.
      *
      * @POST("site/block")
      */
@@ -594,7 +594,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     /**
      * Generate a TOTP / two-factor secret.
      *
-     * Afterwards you need to call `/user/totp/update` with a valid token to enable it.
+     * Afterwards you need to call `/account/auth/totp/edit` with a valid token to enable it.
      *
      * @POST("user/totp/generate")
      */
@@ -603,7 +603,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     /**
      * Enable / Disable TOTP / two-factor authentication.
      *
-     * To enable, you need to first call `/user/totp/generate` and then pass a valid token to this.
+     * To enable, you need to first call `/account/auth/totp/generate` and then pass a valid token to this.
      *
      * Disabling is only possible if 2FA was previously enabled. Again it is necessary to pass a valid token.
      *
@@ -641,14 +641,14 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun validateAuth(): Result<Unit>
 
     /**
-     * Get data of current user
+     * Get data of current user.
      *
      * @GET("/account")
      */
     abstract suspend fun getMyUser(): Result<MyUserInfo>
 
     /**
-     * Logout your user
+     * Invalidate the currently used auth token.
      *
      * @POST("user/logout")
      */
@@ -725,7 +725,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun deleteMedia(form: DeleteImageParams): Result<Unit>
 
     /**
-     * Upload a user avatar image.
+     * Upload new user avatar.
      *
      * @POST("account/avatar")
      */
@@ -746,7 +746,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun uploadSiteBanner(image: ByteArray): Result<UploadImageResponse>
 
     /**
-     * Upload a site icon image.
+     * Upload new site icon.
      *
      * @POST("site/icon")
      */
@@ -767,7 +767,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun uploadCommunityIcon(image: ByteArray, form: CommunityIdQuery): Result<UploadImageResponse>
 
     /**
-     * Delete a user avatar image.
+     * Delete the user avatar.
      *
      * @DELETE("account/avatar")
      */
@@ -802,7 +802,7 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun deleteSiteBanner(): Result<Unit>
 
     /**
-     * Delete a site icon image.
+     * Delete the site icon.
      *
      * @DELETE("site/icon")
      */
@@ -872,21 +872,21 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun listCommunityPendingFollows(form: ListCommunityPendingFollows): Result<PagedResponse<PendingFollowerView>>
 
     /**
-     * Mod edit a post.
+     * Mods can change nsfw flag and tags for a post.
      *
      * @PUT("post/mod_edit")
      */
     abstract suspend fun modEditPost(form: ModEditPost): Result<PostResponse>
 
     /**
-     * Edit post notifications.
+     * Change notification settings for a post.
      *
      * @PUT("post/notifications")
      */
     abstract suspend fun editPostNotifications(form: EditPostNotifications): Result<Unit>
 
     /**
-     * Warn a post.
+     * Creates a warning against a post and notifies the user.
      *
      * @POST("post/warn")
      */
@@ -914,21 +914,21 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun warnComment(form: CreateCommentWarning): Result<CommentResponse>
 
     /**
-     * Note a person (moderator note).
+     * Make a note for a person.
      *
      * @POST("person/note")
      */
     abstract suspend fun notePerson(form: NotePerson): Result<Unit>
 
     /**
-     * List saved posts and comments for a person.
+     * List your saved content.
      *
      * @GET("account/saved")
      */
     abstract suspend fun listPersonSaved(form: ListPersonSaved): Result<PagedResponse<PostCommentCombinedView>>
 
     /**
-     * List read posts for a person.
+     * List your read content.
      *
      * @GET("account/read")
      */
@@ -942,14 +942,14 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun listPersonHidden(form: ListPersonHidden): Result<PagedResponse<PostView>>
 
     /**
-     * List liked posts and comments for a person.
+     * List your liked content.
      *
      * @GET("account/liked")
      */
     abstract suspend fun listPersonLiked(form: ListPersonLiked): Result<PagedResponse<PostCommentCombinedView>>
 
     /**
-     * Resend verification email.
+     * Resend a verification email.
      *
      * @POST("account/auth/resend_verification_email")
      */
@@ -963,35 +963,35 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun authenticateWithOAuth(form: AuthenticateWithOauth): Result<LoginResponse>
 
     /**
-     * Block an instance for persons.
+     * Block an instance's persons as a user.
      *
      * @POST("account/block/instance/persons")
      */
     abstract suspend fun userBlockInstancePersons(form: UserBlockInstancePersonsParams): Result<Unit>
 
     /**
-     * Allow an instance (admin).
+     * Globally allow an instance as admin.
      *
      * @POST("admin/instance/allow")
      */
     abstract suspend fun adminAllowInstance(form: AdminAllowInstanceParams): Result<Unit>
 
     /**
-     * Block an instance (admin).
+     * Globally block an instance as admin.
      *
      * @POST("admin/instance/block")
      */
     abstract suspend fun adminBlockInstance(form: AdminBlockInstanceParams): Result<Unit>
 
     /**
-     * Create a tagline.
+     * Create a new tagline.
      *
      * @POST("admin/tagline")
      */
     abstract suspend fun createTagline(form: CreateTagline): Result<TaglineResponse>
 
     /**
-     * Edit a tagline.
+     * Edit an existing tagline.
      *
      * @PUT("admin/tagline")
      */
@@ -1012,21 +1012,21 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun listTaglines(form: ListTaglines): Result<PagedResponse<Tagline>>
 
     /**
-     * Create an OAuth provider.
+     * Create a new OAuth provider method.
      *
      * @POST("oauth_provider")
      */
     abstract suspend fun createOAuthProvider(form: CreateOAuthProvider): Result<AdminOAuthProvider>
 
     /**
-     * Edit an OAuth provider.
+     * Edit an existing OAuth provider method.
      *
      * @PUT("oauth_provider")
      */
     abstract suspend fun editOAuthProvider(form: EditOAuthProvider): Result<AdminOAuthProvider>
 
     /**
-     * Delete an OAuth provider.
+     * Delete an OAuth provider method.
      *
      * @DELETE("oauth_provider")
      */
