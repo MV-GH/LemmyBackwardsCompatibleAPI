@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.enums.FederationMode
+import it.vercruysse.lemmyapi.enums.ImageMode
 
 @CommonParcelize
 @Serializable
@@ -21,7 +22,7 @@ data class CreateSite(
     /** Removed in 1.0.0 */
     val banner: String? = null,
     val community_creation_admin_only: Boolean? = null,
-    val require_email_verification: Boolean? = null,
+    val email_verification_required: Boolean? = null,
     val application_question: String? = null,
     val private_instance: Boolean? = null,
     val default_theme: String? = null,
@@ -29,9 +30,15 @@ data class CreateSite(
     val default_post_listing_mode: PostListingMode? /* "List" | "Card" | "SmallCard" */ = null,
     val default_post_sort_type: SortType? /* "Active" | "Hot" | "New" | "Old" | "Top" | "MostComments" | "NewComments" | "Controversial" | "Scaled" */ = null,
     val default_post_time_range_seconds: Long? = null,
+    /** Added in 1.0.0 */
+    val default_items_per_page: Long? = null,
     val default_comment_sort_type: SortType? /* "Hot" | "Top" | "New" | "Old" | "Controversial" */ = null,
     val legal_information: String? = null,
     val application_email_admins: Boolean? = null,
+    /** Added in 1.0.0 */
+    val reports_email_admins: Boolean? = null,
+    /** Added in 1.0.0 */
+    val federation_signed_fetch: Boolean? = null,
     val discussion_languages: List<LanguageId>? = null,
     val slur_filter_regex: String? = null,
     val rate_limit_message_max_requests: Long? = null,
@@ -49,7 +56,9 @@ data class CreateSite(
     val rate_limit_import_user_settings_max_requests: Long? = null,
     val rate_limit_import_user_settings_interval_seconds: Long? = null,
     val federation_enabled: Boolean? = null,
+    /** Removed in 1.0.0 */
     val captcha_enabled: Boolean? = null,
+    /** Removed in 1.0.0 */
     val captcha_difficulty: String? = null,
     /** Removed in 1.0.0 */
     val allowed_instances: List<String>? = null,
@@ -65,9 +74,27 @@ data class CreateSite(
     val post_downvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
     val comment_upvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
     val comment_downvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
-    val disallow_nsfw_content: Boolean? = null,
+    val nsfw_content_disallowed: Boolean? = null,
     /** Added in 1.0.0 */
-    val disable_email_notifications: Boolean? = null,
+    val email_notifications_disabled: Boolean? = null,
     /** Added in 1.0.0 */
     val suggested_multi_community_id: MultiCommunityId? = null,
+    /** Added in 1.0.0 */
+    val image_mode: ImageMode? /* "none" | "store_link_previews" | "proxy_all_images" */ = null,
+    /** Added in 1.0.0 */
+    val image_proxy_bypass_domains: String? = null,
+    /** Added in 1.0.0 */
+    val image_upload_timeout_seconds: Long? = null,
+    /** Added in 1.0.0 */
+    val image_max_thumbnail_size: Long? = null,
+    /** Added in 1.0.0 */
+    val image_max_avatar_size: Long? = null,
+    /** Added in 1.0.0 */
+    val image_max_banner_size: Long? = null,
+    /** Added in 1.0.0 */
+    val image_max_upload_size: Long? = null,
+    /** Added in 1.0.0 */
+    val image_allow_video_uploads: Boolean? = null,
+    /** Added in 1.0.0 */
+    val image_upload_disabled: Boolean? = null,
 ) : DatatypeRoot

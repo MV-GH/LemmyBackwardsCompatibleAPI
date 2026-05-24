@@ -11,6 +11,7 @@ import it.vercruysse.lemmyapi.datatypes.PostActions
 import it.vercruysse.lemmyapi.enums.CommunityFollowerState
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import it.vercruysse.lemmyapi.enums.FederationMode
+import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
@@ -463,7 +464,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             site_id = d.site_id,
             site_setup = d.site_setup,
             community_creation_admin_only = d.community_creation_admin_only,
-            require_email_verification = d.require_email_verification,
+            email_verification_required = d.require_email_verification,
             application_question = d.application_question,
             private_instance = d.private_instance,
             default_theme = d.default_theme,
@@ -472,8 +473,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
             application_email_admins = d.application_email_admins,
             slur_filter_regex = d.slur_filter_regex,
             federation_enabled = d.federation_enabled,
-            captcha_enabled = d.captcha_enabled,
-            captcha_difficulty = d.captcha_difficulty,
             published_at = addTimezoneOffset(d.published),
             updated_at = addTimezoneOffsetNullable(d.updated),
             registration_mode = d.registration_mode.toUni(),
@@ -481,9 +480,9 @@ internal class Transformer(var auth: String) : MapperGenerator {
             federation_signed_fetch = false,
             default_post_listing_mode = PostListingMode.Card,
             default_post_sort_type = SortType.Active,
-            disallow_nsfw_content = !d.enable_nsfw,
+            nsfw_content_disallowed = !d.enable_nsfw,
             oauth_registration = false,
-            disable_email_notifications = false,
+            email_notifications_disabled = false,
             suggested_multi_community_id = null,
             default_comment_sort_type = SortType.Active,
             default_post_time_range_seconds = null,
@@ -500,6 +499,14 @@ internal class Transformer(var auth: String) : MapperGenerator {
             users_active_month = counts.users_active_month,
             users_active_half_year = counts.users_active_half_year,
             default_items_per_page = 20,
+            image_mode = ImageMode.StoreLinkPreviews,
+            image_upload_timeout_seconds = 0,
+            image_max_thumbnail_size = 0,
+            image_max_avatar_size = 0,
+            image_max_banner_size = 0,
+            image_max_upload_size = 0,
+            image_allow_video_uploads = false,
+            image_upload_disabled = false,
         )
 
     override fun toUni(d: X5DatatypesPersonView, is_admin: Boolean): LemmyapiDatatypesPersonView =
@@ -1170,9 +1177,9 @@ internal class Transformer(var auth: String) : MapperGenerator {
                 FederationMode.Disable -> false
                 null -> null
             },
-            enable_nsfw = if (d.disallow_nsfw_content == null) null else !d.disallow_nsfw_content,
+            enable_nsfw = if (d.nsfw_content_disallowed == null) null else !d.nsfw_content_disallowed,
             community_creation_admin_only = d.community_creation_admin_only,
-            require_email_verification = d.require_email_verification,
+            require_email_verification = d.email_verification_required,
             application_question = d.application_question,
             private_instance = d.private_instance,
             default_theme = d.default_theme,
@@ -1194,8 +1201,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
             rate_limit_search = d.rate_limit_search_max_requests,
             rate_limit_search_per_second = d.rate_limit_search_interval_seconds,
             federation_enabled = d.federation_enabled,
-            captcha_enabled = d.captcha_enabled,
-            captcha_difficulty = d.captcha_difficulty,
+            captcha_enabled = null,
+            captcha_difficulty = null,
             allowed_instances = d.allowed_instances,
             blocked_instances = d.blocked_instances,
             taglines = d.taglines,
@@ -1307,7 +1314,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         enable_downvotes = d.enable_downvotes,
         enable_nsfw = d.enable_nsfw,
         community_creation_admin_only = d.community_creation_admin_only,
-        require_email_verification = d.require_email_verification,
+        require_email_verification = d.email_verification_required,
         application_question = d.application_question,
         private_instance = d.private_instance,
         default_theme = d.default_theme,
@@ -1331,8 +1338,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
         rate_limit_search_per_second = d.rate_limit_search_interval_seconds,
         federation_enabled = d.federation_enabled,
         federation_debug = d.federation_debug,
-        captcha_enabled = d.captcha_enabled,
-        captcha_difficulty = d.captcha_difficulty,
+        captcha_enabled = null,
+        captcha_difficulty = null,
         allowed_instances = d.allowed_instances,
         blocked_instances = d.blocked_instances,
         taglines = d.taglines,
