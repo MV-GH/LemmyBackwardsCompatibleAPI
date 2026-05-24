@@ -378,6 +378,13 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun getPersonDetails(form: GetPersonDetails): Result<GetPersonDetailsResponse>
 
     /**
+     * List persons.
+     *
+     * @GET("person/list")
+     */
+    abstract suspend fun listPersons(form: ListPersons): Result<PagedResponse<PersonView>>
+
+    /**
      * List the content for a person.
      *
      * @GET("person/content")

@@ -240,6 +240,7 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListMultiCommunities): ListMultiCommunities
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListNotifications): ListNotifications
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListPersonContent): ListPersonContent
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListPersons): ListPersons
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListPersonHidden): ListPersonHidden
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListPersonLiked): ListPersonLiked
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListPersonRead): ListPersonRead

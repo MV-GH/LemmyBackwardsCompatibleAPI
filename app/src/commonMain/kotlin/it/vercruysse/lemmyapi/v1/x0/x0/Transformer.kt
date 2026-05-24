@@ -17,6 +17,7 @@ import it.vercruysse.lemmyapi.datatypes.BlockCommunity as LemmyapiDatatypesBlock
 import it.vercruysse.lemmyapi.datatypes.BlockPerson as LemmyapiDatatypesBlockPerson
 import it.vercruysse.lemmyapi.datatypes.CaptchaResponse as LemmyapiDatatypesCaptchaResponse
 import it.vercruysse.lemmyapi.datatypes.ChangePassword as LemmyapiDatatypesChangePassword
+import it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
 import it.vercruysse.lemmyapi.datatypes.Comment as LemmyapiDatatypesComment
 import it.vercruysse.lemmyapi.datatypes.CommentActions as LemmyapiDatatypesCommentActions
 import it.vercruysse.lemmyapi.datatypes.CommentReport as LemmyapiDatatypesCommentReport
@@ -135,6 +136,7 @@ import it.vercruysse.lemmyapi.datatypes.ListPersonHidden as LemmyapiDatatypesLis
 import it.vercruysse.lemmyapi.datatypes.ListPersonLiked as LemmyapiDatatypesListPersonLiked
 import it.vercruysse.lemmyapi.datatypes.ListPersonRead as LemmyapiDatatypesListPersonRead
 import it.vercruysse.lemmyapi.datatypes.ListPersonSaved as LemmyapiDatatypesListPersonSaved
+import it.vercruysse.lemmyapi.datatypes.ListPersons as LemmyapiDatatypesListPersons
 import it.vercruysse.lemmyapi.datatypes.ListPostLikes as LemmyapiDatatypesListPostLikes
 import it.vercruysse.lemmyapi.datatypes.ListRegistrationApplications as LemmyapiDatatypesListRegistrationApplications
 import it.vercruysse.lemmyapi.datatypes.ListReports as LemmyapiDatatypesListReports
@@ -168,8 +170,6 @@ import it.vercruysse.lemmyapi.datatypes.Notification as LemmyapiDatatypesNotific
 import it.vercruysse.lemmyapi.datatypes.NotificationData as LemmyapiDatatypesNotificationData
 import it.vercruysse.lemmyapi.datatypes.NotificationView as LemmyapiDatatypesNotificationView
 import it.vercruysse.lemmyapi.datatypes.OAuthAccount as LemmyapiDatatypesOAuthAccount
-import it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
-import it.vercruysse.lemmyapi.datatypes.ResetPassword as LemmyapiDatatypesPasswordReset
 import it.vercruysse.lemmyapi.datatypes.PendingFollow as LemmyapiDatatypesPendingFollow
 import it.vercruysse.lemmyapi.datatypes.PendingFollowerView as LemmyapiDatatypesPendingFollowerView
 import it.vercruysse.lemmyapi.datatypes.Person as LemmyapiDatatypesPerson
@@ -206,6 +206,7 @@ import it.vercruysse.lemmyapi.datatypes.RemoveCommunity as LemmyapiDatatypesRemo
 import it.vercruysse.lemmyapi.datatypes.RemovePost as LemmyapiDatatypesRemovePost
 import it.vercruysse.lemmyapi.datatypes.ReportCombinedView as LemmyapiDatatypesReportCombinedView
 import it.vercruysse.lemmyapi.datatypes.ResendVerificationEmail as LemmyapiDatatypesResendVerificationEmail
+import it.vercruysse.lemmyapi.datatypes.ResetPassword as LemmyapiDatatypesPasswordReset
 import it.vercruysse.lemmyapi.datatypes.ResolveCommentReport as LemmyapiDatatypesResolveCommentReport
 import it.vercruysse.lemmyapi.datatypes.ResolveCommunityReport as LemmyapiDatatypesResolveCommunityReport
 import it.vercruysse.lemmyapi.datatypes.ResolveObject as LemmyapiDatatypesResolveObject
@@ -247,6 +248,7 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.BlockCommunity as X0DatatypesBl
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.BlockPerson as X0DatatypesBlockPerson
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CaptchaResponse as X0DatatypesCaptchaResponse
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ChangePassword as X0DatatypesChangePassword
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ChangePasswordAfterReset as X0DatatypesPasswordChangeAfterReset
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.Comment as X0DatatypesComment
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CommentActions as X0DatatypesCommentActions
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CommentReport as X0DatatypesCommentReport
@@ -365,6 +367,7 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListPersonHidden as X0Datatypes
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListPersonLiked as X0DatatypesListPersonLiked
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListPersonRead as X0DatatypesListPersonRead
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListPersonSaved as X0DatatypesListPersonSaved
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListPersons as X0DatatypesListPersons
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListPostLikes as X0DatatypesListPostLikes
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListRegistrationApplications as X0DatatypesListRegistrationApplications
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListReports as X0DatatypesListReports
@@ -398,8 +401,6 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.Notification as X0DatatypesNoti
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.NotificationData as X0DatatypesNotificationData
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.NotificationView as X0DatatypesNotificationView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.OAuthAccount as X0DatatypesOAuthAccount
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ChangePasswordAfterReset as X0DatatypesPasswordChangeAfterReset
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResetPassword as X0DatatypesPasswordReset
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PendingFollow as X0DatatypesPendingFollow
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PendingFollowerView as X0DatatypesPendingFollowerView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.Person as X0DatatypesPerson
@@ -436,6 +437,7 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.RemoveCommunity as X0DatatypesR
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.RemovePost as X0DatatypesRemovePost
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ReportCombinedView as X0DatatypesReportCombinedView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResendVerificationEmail as X0DatatypesResendVerificationEmail
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResetPassword as X0DatatypesPasswordReset
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResolveCommentReport as X0DatatypesResolveCommentReport
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResolveCommunityReport as X0DatatypesResolveCommunityReport
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResolveObject as X0DatatypesResolveObject
@@ -2181,6 +2183,15 @@ internal class Transformer : MapperGenerator {
         username = d.username,
         community_id = d.community_id,
         community_name = d.community_name,
+        page_cursor = d.page_cursor,
+        limit = d.limit,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesListPersons): X0DatatypesListPersons = X0DatatypesListPersons(
+        type_ = d.type_,
+        sort = d.sort,
+        search_term = d.search_term,
+        search_title_only = d.search_title_only,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
