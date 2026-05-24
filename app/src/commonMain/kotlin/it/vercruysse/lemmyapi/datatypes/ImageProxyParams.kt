@@ -10,4 +10,4 @@ data class ImageProxyParams(
     val url: String,
     val file_type: String? = null,
     val max_size: Long? = null,
-): DatatypeRoot
+) : DatatypeRoot

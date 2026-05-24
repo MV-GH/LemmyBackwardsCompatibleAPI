@@ -1,14 +1,13 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
-import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
-import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.enums.VoteShow
+import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable

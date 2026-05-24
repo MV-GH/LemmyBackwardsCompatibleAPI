@@ -8,4 +8,4 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DeleteTagline(
     val id: TaglineId,
-): DatatypeRoot
+) : DatatypeRoot

@@ -9,4 +9,4 @@ import kotlinx.serialization.Serializable
 data class CreateCommunityReport(
     val community_id: CommunityId,
     val reason: String,
-): DatatypeRoot
+) : DatatypeRoot

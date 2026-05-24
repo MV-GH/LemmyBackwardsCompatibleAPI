@@ -1,16 +1,15 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
-import it.vercruysse.lemmyapi.enums.SortType
-import it.vercruysse.lemmyapi.enums.PostListingMode
-import it.vercruysse.lemmyapi.enums.RegistrationMode
-import it.vercruysse.lemmyapi.enums.ListingType
-import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.ImageMode
+import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.PostListingMode
+import it.vercruysse.lemmyapi.enums.RegistrationMode
+import it.vercruysse.lemmyapi.enums.SortType
+import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
@@ -63,4 +62,4 @@ data class LocalSite(
     val image_max_upload_size: Long,
     val image_allow_video_uploads: Boolean,
     val image_upload_disabled: Boolean,
-    ) : DatatypeRoot, Identity
+) : DatatypeRoot, Identity

@@ -19,4 +19,4 @@ data class ListPersonContent(
     val limit: Long? = null,
     /** Removed in 1.0.0 */
     val page: Long? = null,
-): DatatypeRoot
+) : DatatypeRoot

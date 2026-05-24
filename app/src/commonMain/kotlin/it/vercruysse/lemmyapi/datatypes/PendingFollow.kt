@@ -12,4 +12,4 @@ data class PendingFollow(
     val community: Community,
     val is_new_instance: Boolean,
     val follow_state: CommunityFollowerState? /* "Accepted" | "Pending" | "ApprovalRequired" */ = null,
-): DatatypeRoot
+) : DatatypeRoot

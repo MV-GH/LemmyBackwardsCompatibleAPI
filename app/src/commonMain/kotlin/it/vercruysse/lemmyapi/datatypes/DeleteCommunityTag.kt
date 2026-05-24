@@ -9,4 +9,4 @@ import kotlinx.serialization.Serializable
 data class DeleteCommunityTag(
     val tag_id: CommunityTagId,
     val delete: Boolean,
-): DatatypeRoot
+) : DatatypeRoot

@@ -12,4 +12,4 @@ data class OAuthAccount(
     val oauth_user_id: String,
     val published_at: String,
     val updated_at: String? = null,
-): DatatypeRoot
+) : DatatypeRoot

@@ -21,4 +21,4 @@ data class ListReports(
     val show_community_rule_violations: Boolean? = null,
     /** Added in 1.0.0 */
     val my_reports_only: Boolean? = null,
-): DatatypeRoot
+) : DatatypeRoot

@@ -10,4 +10,4 @@ data class PluginMetadata(
     val name: String,
     val url: String? = null,
     val description: String? = null,
-): DatatypeRoot
+) : DatatypeRoot

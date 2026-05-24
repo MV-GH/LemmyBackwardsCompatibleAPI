@@ -9,4 +9,4 @@ import kotlinx.serialization.Serializable
 data class EditTagline(
     val id: TaglineId,
     val content: String,
-): DatatypeRoot
+) : DatatypeRoot

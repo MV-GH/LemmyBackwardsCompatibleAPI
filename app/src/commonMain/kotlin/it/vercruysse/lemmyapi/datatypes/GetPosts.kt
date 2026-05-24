@@ -1,13 +1,11 @@
 package it.vercruysse.lemmyapi.datatypes
 
-import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.enums.SortType
-import it.vercruysse.lemmyapi.enums.ListingType
-import kotlinx.serialization.Serializable
-
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
-
+import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.SortType
+import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
@@ -50,9 +48,7 @@ data class GetPosts(
     val limit: Long? = null,
 ) : DatatypeRoot {
 
-    internal fun toPostsForm(): GetPosts {
-        return this.copy(page_cursor = null, page = this.page)
-    }
+    internal fun toPostsForm(): GetPosts = this.copy(page_cursor = null, page = this.page)
 
     internal fun toValidatedForm(): GetPosts {
         val pageCursorSet = this.page_cursor != PAGE_CURSOR_GUARD
@@ -62,6 +58,5 @@ data class GetPosts(
         } else {
             this.copy(page_cursor = null, page = this.page)
         }
-
     }
 }

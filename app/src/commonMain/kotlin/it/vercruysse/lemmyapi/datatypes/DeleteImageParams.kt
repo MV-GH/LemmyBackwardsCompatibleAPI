@@ -8,4 +8,4 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DeleteImageParams(
     val filename: String,
-): DatatypeRoot
+) : DatatypeRoot

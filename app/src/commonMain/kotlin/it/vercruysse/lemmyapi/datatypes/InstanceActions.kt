@@ -11,4 +11,4 @@ data class InstanceActions(
     val received_ban_at: String? = null,
     val ban_expires_at: String? = null,
     val blocked_persons_at: String? = null,
-): DatatypeRoot
+) : DatatypeRoot

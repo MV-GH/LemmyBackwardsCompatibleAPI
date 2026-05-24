@@ -16,4 +16,4 @@ data class CommunityActions(
     val received_ban_at: String? = null,
     val ban_expires_at: String? = null,
     val notifications: CommunityNotificationsMode? /* "AllPostsAndComments" | "AllPosts" | "RepliesAndMentions" | "Mute" */ = null,
-): DatatypeRoot
+) : DatatypeRoot

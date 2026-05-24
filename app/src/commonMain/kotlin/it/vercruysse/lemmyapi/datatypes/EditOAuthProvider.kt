@@ -19,4 +19,4 @@ data class EditOAuthProvider(
     val account_linking_enabled: Boolean? = null,
     val use_pkce: Boolean? = null,
     val enabled: Boolean? = null,
-): DatatypeRoot
+) : DatatypeRoot

@@ -5,7 +5,6 @@ import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PostId
 import kotlinx.serialization.Serializable
 
-
 @CommonParcelize
 @Serializable
 data class CreatePostWarning(

@@ -12,4 +12,4 @@ data class UploadImageResponse(
     /* Added for pre V1 compatability, deletion requires a combination of filename and secret.
      Pass this to delete endpoint */
     val delete_filename: String = filename,
-): DatatypeRoot
+) : DatatypeRoot

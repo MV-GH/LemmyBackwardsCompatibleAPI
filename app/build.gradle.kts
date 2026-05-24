@@ -5,7 +5,7 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "2.3.21"
-    id("org.jmailen.kotlinter") version "5.0.1"
+    id("org.jmailen.kotlinter") version "5.5.0"
     id("com.google.devtools.ksp") version ("2.3.8")
     id("com.vanniktech.maven.publish") version "0.33.0"
     id("com.github.ben-manes.versions") version "0.54.0"
@@ -32,7 +32,7 @@ kotlin {
 
     android {
         namespace = "it.vercruysse.lemmyapi"
-        compileSdk = 35
+        compileSdk = 36
         minSdk = 21
         compilerOptions {
             freeCompilerArgs.addAll(
@@ -93,7 +93,7 @@ kotlin {
 
         jvmTest.dependencies {
             implementation(kotlin("reflect"))
-            implementation("io.mockk:mockk:1.13.13")
+            implementation("io.mockk:mockk:1.14.9")
             implementation("org.wiremock:wiremock:3.13.2")
             implementation("com.marcinziolo:kotlin-wiremock:2.1.1")
             implementation("ch.qos.logback:logback-classic:1.5.32")
@@ -149,15 +149,11 @@ publishing {
 
 
 tasks.withType<LintTask> {
-    val l = fileTree(".")
-    l.setIncludes(listOf("**/datatypes/**"))
-    this.source = this.source.minus(l).asFileTree
+    exclude("**/datatypes/**")
 }
 
 tasks.withType<FormatTask> {
-    val l = fileTree(".")
-    l.setIncludes(listOf("**/datatypes/**"))
-    this.source = this.source.minus(l).asFileTree
+    exclude("**/datatypes/**")
 }
 
 enum class OS {

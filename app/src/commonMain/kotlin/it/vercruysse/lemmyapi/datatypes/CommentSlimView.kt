@@ -16,4 +16,4 @@ data class CommentSlimView(
     val creator_banned: Boolean,
     val creator_is_moderator: Boolean,
     val creator_banned_from_community: Boolean,
-): DatatypeRoot
+) : DatatypeRoot

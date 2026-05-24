@@ -11,4 +11,4 @@ data class ListPersonSaved(
     val type_: PersonContentType? /* "All" | "Comments" | "Posts" */ = null,
     val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
-): DatatypeRoot
+) : DatatypeRoot

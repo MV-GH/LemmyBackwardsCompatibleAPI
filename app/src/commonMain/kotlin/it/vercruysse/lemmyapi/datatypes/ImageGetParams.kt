@@ -9,4 +9,4 @@ import kotlinx.serialization.Serializable
 data class ImageGetParams(
     val file_type: String? = null,
     val max_size: Long? = null,
-): DatatypeRoot
+) : DatatypeRoot

@@ -8,4 +8,4 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ListCustomEmojisResponse(
     val custom_emojis: List<CustomEmojiView>,
-): DatatypeRoot
+) : DatatypeRoot
