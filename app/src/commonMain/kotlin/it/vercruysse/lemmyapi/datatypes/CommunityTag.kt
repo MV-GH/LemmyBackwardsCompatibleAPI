@@ -19,4 +19,4 @@ data class CommunityTag(
     val updated_at: String? = null,
     val deleted: Boolean,
     val color: String /* "color01" | "color02" | "color03" | "color04" | "color05" | "color06" | "color07" | "color08" | "color09" | "color10" */,
-): DatatypeRoot
+) : DatatypeRoot

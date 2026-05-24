@@ -9,4 +9,3 @@ import kotlinx.serialization.Serializable
 data class GetRegistrationApplication(
     val person_id: PersonId,
 ) : DatatypeRoot
-

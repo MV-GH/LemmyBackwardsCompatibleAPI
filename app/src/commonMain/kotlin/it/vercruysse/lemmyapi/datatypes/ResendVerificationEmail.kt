@@ -8,4 +8,4 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ResendVerificationEmail(
     val email: SensitiveString,
-): DatatypeRoot
+) : DatatypeRoot

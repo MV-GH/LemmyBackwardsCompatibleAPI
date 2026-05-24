@@ -10,4 +10,4 @@ data class ApproveCommunityPendingFollower(
     val community_id: CommunityId,
     val follower_id: PersonId,
     val approve: Boolean,
-): DatatypeRoot
+) : DatatypeRoot

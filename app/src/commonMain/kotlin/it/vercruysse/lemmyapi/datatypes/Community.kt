@@ -1,11 +1,10 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable

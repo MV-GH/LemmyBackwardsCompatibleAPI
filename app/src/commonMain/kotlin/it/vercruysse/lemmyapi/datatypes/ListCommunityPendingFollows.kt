@@ -11,4 +11,4 @@ data class ListCommunityPendingFollows(
     val all_communities: Boolean? = null,
     val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
-): DatatypeRoot
+) : DatatypeRoot

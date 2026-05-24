@@ -10,4 +10,4 @@ data class FederationBlockList(
     val published_at: String,
     val updated_at: String? = null,
     val expires_at: String? = null,
-): DatatypeRoot
+) : DatatypeRoot
