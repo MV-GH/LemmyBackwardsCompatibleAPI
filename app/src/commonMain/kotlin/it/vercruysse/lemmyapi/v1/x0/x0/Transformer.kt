@@ -462,32 +462,51 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.VerifyEmail as X0DatatypesVerif
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.VoteView as X0DatatypesVoteView
 
 internal class Transformer : MapperGenerator {
+
+    fun voteBoolToInt(d: Boolean) = if (d) 1 else -1
+    fun voteTriBoolToInt(d: Boolean?) = when (d) {
+        null -> 0
+        true -> 1
+        false -> -1
+    }
+    fun voteIntToBool(d: Int): Boolean = when (d) {
+        1 -> true
+        -1 -> false
+        else -> throw IllegalArgumentException("Invalid vote value: $d")
+    }
+    fun voteIntToTriBool(d: Int): Boolean? = when (d) {
+        1 -> true
+        -1 -> false
+        0 -> null
+        else -> throw IllegalArgumentException("Invalid vote value: $d")
+    }
+
     override fun toUni(d: X0DatatypesAddAdminResponse): LemmyapiDatatypesAddAdminResponse = LemmyapiDatatypesAddAdminResponse(
-        admins = d.admins.map { this.toUni(d = it) }
+        admins = d.admins.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesAddModToCommunityResponse): LemmyapiDatatypesAddModToCommunityResponse = LemmyapiDatatypesAddModToCommunityResponse(
-        moderators = d.moderators.map { this.toUni(d = it) }
+        moderators = d.moderators.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesAdminAllowInstanceParams): LemmyapiDatatypesAdminAllowInstanceParams = LemmyapiDatatypesAdminAllowInstanceParams(
         instance = d.instance,
         allow = d.allow,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun toUni(d: X0DatatypesAdminBlockInstanceParams): LemmyapiDatatypesAdminBlockInstanceParams = LemmyapiDatatypesAdminBlockInstanceParams(
         instance = d.instance,
         block = d.block,
         reason = d.reason,
-        expires_at = d.expires_at
+        expires_at = d.expires_at,
     )
 
     override fun toUni(d: X0DatatypesAdminListUsers): LemmyapiDatatypesAdminListUsers = LemmyapiDatatypesAdminListUsers(
         banned_only = d.banned_only,
         page_cursor = d.page_cursor,
         sort = d.sort,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun toUni(d: X0DatatypesAdminOAuthProvider): LemmyapiDatatypesAdminOAuthProvider = LemmyapiDatatypesAdminOAuthProvider(
@@ -505,7 +524,7 @@ internal class Transformer : MapperGenerator {
         enabled = d.enabled,
         published_at = d.published_at,
         updated_at = d.updated_at,
-        use_pkce = d.use_pkce
+        use_pkce = d.use_pkce,
     )
 
     override fun toUni(d: X0DatatypesAuthenticateWithOauth): LemmyapiDatatypesAuthenticateWithOauth = LemmyapiDatatypesAuthenticateWithOauth(
@@ -516,13 +535,13 @@ internal class Transformer : MapperGenerator {
         username = d.username,
         answer = d.answer,
         pkce_code_verifier = d.pkce_code_verifier,
-        stay_logged_in = d.stay_logged_in
+        stay_logged_in = d.stay_logged_in,
     )
 
     override fun toUni(d: X0DatatypesCaptchaResponse): LemmyapiDatatypesCaptchaResponse = LemmyapiDatatypesCaptchaResponse(
         png = d.png,
         wav = d.wav,
-        uuid = d.uuid
+        uuid = d.uuid,
     )
 
     override fun toUni(d: X0DatatypesComment): LemmyapiDatatypesComment = LemmyapiDatatypesComment(
@@ -546,12 +565,13 @@ internal class Transformer : MapperGenerator {
         report_count = d.report_count,
         unresolved_report_count = d.unresolved_report_count,
         federation_pending = d.federation_pending,
-        locked = d.locked
+        locked = d.locked,
     )
 
     override fun toUni(d: X0DatatypesCommentActions): LemmyapiDatatypesCommentActions = LemmyapiDatatypesCommentActions(
+        like_score = voteTriBoolToInt(d.vote_is_upvote),
         voted_at = d.voted_at,
-        saved_at = d.saved_at
+        saved_at = d.saved_at,
     )
 
     override fun toUni(d: X0DatatypesCommentReport): LemmyapiDatatypesCommentReport = LemmyapiDatatypesCommentReport(
@@ -563,11 +583,11 @@ internal class Transformer : MapperGenerator {
         resolved = d.resolved,
         resolver_id = d.resolver_id,
         published_at = d.published_at,
-        updated_at = d.updated_at
+        updated_at = d.updated_at,
     )
 
     override fun toUni(d: X0DatatypesCommentReportResponse): LemmyapiDatatypesCommentReportResponse = LemmyapiDatatypesCommentReportResponse(
-        comment_report_view = this.toUni(d = d.comment_report_view)
+        comment_report_view = this.toUni(d = d.comment_report_view),
     )
 
     override fun toUni(d: X0DatatypesCommentReportView): LemmyapiDatatypesCommentReportView = LemmyapiDatatypesCommentReportView(
@@ -586,11 +606,11 @@ internal class Transformer : MapperGenerator {
         creator_banned = d.creator_banned,
         creator_ban_expires_at = d.creator_ban_expires_at,
         creator_banned_from_community = d.creator_banned_from_community,
-        creator_community_ban_expires_at = d.creator_community_ban_expires_at
+        creator_community_ban_expires_at = d.creator_community_ban_expires_at,
     )
 
     override fun toUni(d: X0DatatypesCommentResponse): LemmyapiDatatypesCommentResponse = LemmyapiDatatypesCommentResponse(
-        comment_view = this.toUni(d = d.comment_view)
+        comment_view = this.toUni(d = d.comment_view),
     )
 
     override fun toUni(d: X0DatatypesCommentSlimView): LemmyapiDatatypesCommentSlimView = LemmyapiDatatypesCommentSlimView(
@@ -602,7 +622,7 @@ internal class Transformer : MapperGenerator {
         can_mod = d.can_mod,
         creator_banned = d.creator_banned,
         creator_is_moderator = d.creator_is_moderator,
-        creator_banned_from_community = d.creator_banned_from_community
+        creator_banned_from_community = d.creator_banned_from_community,
     )
 
     override fun toUni(d: X0DatatypesCommentView): LemmyapiDatatypesCommentView = LemmyapiDatatypesCommentView(
@@ -620,7 +640,7 @@ internal class Transformer : MapperGenerator {
         creator_is_admin = d.creator_is_admin,
         creator_is_moderator = d.creator_is_moderator,
         creator_banned_from_community = d.creator_banned_from_community,
-        creator_community_ban_expires_at = d.creator_community_ban_expires_at
+        creator_community_ban_expires_at = d.creator_community_ban_expires_at,
     )
 
     override fun toUni(d: X0DatatypesCommunity): LemmyapiDatatypesCommunity = LemmyapiDatatypesCommunity(
@@ -652,7 +672,7 @@ internal class Transformer : MapperGenerator {
         subscribers_local = d.subscribers_local,
         report_count = d.report_count,
         unresolved_report_count = d.unresolved_report_count,
-        local_removed = d.local_removed
+        local_removed = d.local_removed,
     )
 
     override fun toUni(d: X0DatatypesCommunityActions): LemmyapiDatatypesCommunityActions = LemmyapiDatatypesCommunityActions(
@@ -662,21 +682,21 @@ internal class Transformer : MapperGenerator {
         became_moderator_at = d.became_moderator_at,
         received_ban_at = d.received_ban_at,
         ban_expires_at = d.ban_expires_at,
-        notifications = d.notifications
+        notifications = d.notifications,
     )
 
     override fun toUni(d: X0DatatypesCommunityFollowerView): LemmyapiDatatypesCommunityFollowerView = LemmyapiDatatypesCommunityFollowerView(
         community = this.toUni(d = d.community),
-        follower = this.toUni(d = d.follower)
+        follower = this.toUni(d = d.follower),
     )
 
     override fun toUni(d: X0DatatypesCommunityIdQuery): LemmyapiDatatypesCommunityIdQuery = LemmyapiDatatypesCommunityIdQuery(
-        id = d.id
+        id = d.id,
     )
 
     override fun toUni(d: X0DatatypesCommunityModeratorView): LemmyapiDatatypesCommunityModeratorView = LemmyapiDatatypesCommunityModeratorView(
         community = this.toUni(d = d.community),
-        moderator = this.toUni(d = d.moderator)
+        moderator = this.toUni(d = d.moderator),
     )
 
     override fun toUni(d: X0DatatypesCommunityReport): LemmyapiDatatypesCommunityReport = LemmyapiDatatypesCommunityReport(
@@ -693,11 +713,11 @@ internal class Transformer : MapperGenerator {
         resolved = d.resolved,
         resolver_id = d.resolver_id,
         published_at = d.published_at,
-        updated_at = d.updated_at
+        updated_at = d.updated_at,
     )
 
     override fun toUni(d: X0DatatypesCommunityReportResponse): LemmyapiDatatypesCommunityReportResponse = LemmyapiDatatypesCommunityReportResponse(
-        community_report_view = this.toUni(d = d.community_report_view)
+        community_report_view = this.toUni(d = d.community_report_view),
     )
 
     override fun toUni(d: X0DatatypesCommunityReportView): LemmyapiDatatypesCommunityReportView = LemmyapiDatatypesCommunityReportView(
@@ -710,12 +730,12 @@ internal class Transformer : MapperGenerator {
         creator_banned = d.creator_banned,
         creator_ban_expires_at = d.creator_ban_expires_at,
         creator_banned_from_community = d.creator_banned_from_community,
-        creator_community_ban_expires_at = d.creator_community_ban_expires_at
+        creator_community_ban_expires_at = d.creator_community_ban_expires_at,
     )
 
     override fun toUni(d: X0DatatypesCommunityResponse): LemmyapiDatatypesCommunityResponse = LemmyapiDatatypesCommunityResponse(
         community_view = this.toUni(d = d.community_view),
-        discussion_languages = d.discussion_languages
+        discussion_languages = d.discussion_languages,
     )
 
     override fun toUni(d: X0DatatypesCommunityTag): LemmyapiDatatypesCommunityTag = LemmyapiDatatypesCommunityTag(
@@ -728,14 +748,14 @@ internal class Transformer : MapperGenerator {
         published_at = d.published_at,
         updated_at = d.updated_at,
         deleted = d.deleted,
-        color = d.color
+        color = d.color,
     )
 
     override fun toUni(d: X0DatatypesCommunityView): LemmyapiDatatypesCommunityView = LemmyapiDatatypesCommunityView(
         community = this.toUni(d = d.community),
         community_actions = d.community_actions?.let { this.toUni(d = it) },
         can_mod = d.can_mod,
-        tags = d.tags.map { this.toUni(d = it) }
+        tags = d.tags.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesCustomEmoji): LemmyapiDatatypesCustomEmoji = LemmyapiDatatypesCustomEmoji(
@@ -745,25 +765,25 @@ internal class Transformer : MapperGenerator {
         alt_text = d.alt_text,
         category = d.category,
         published_at = d.published_at,
-        updated_at = d.updated_at
+        updated_at = d.updated_at,
     )
 
     override fun toUni(d: X0DatatypesCustomEmojiKeyword): LemmyapiDatatypesCustomEmojiKeyword = LemmyapiDatatypesCustomEmojiKeyword(
         custom_emoji_id = d.custom_emoji_id,
-        keyword = d.keyword
+        keyword = d.keyword,
     )
 
     override fun toUni(d: X0DatatypesCustomEmojiResponse): LemmyapiDatatypesCustomEmojiResponse = LemmyapiDatatypesCustomEmojiResponse(
-        custom_emoji = this.toUni(d = d.custom_emoji)
+        custom_emoji = this.toUni(d = d.custom_emoji),
     )
 
     override fun toUni(d: X0DatatypesCustomEmojiView): LemmyapiDatatypesCustomEmojiView = LemmyapiDatatypesCustomEmojiView(
         custom_emoji = this.toUni(d = d.custom_emoji),
-        keywords = d.keywords.map { this.toUni(d = it) }
+        keywords = d.keywords.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesEditTotpResponse): LemmyapiDatatypesEditTotpResponse = LemmyapiDatatypesEditTotpResponse(
-        enabled = d.enabled
+        enabled = d.enabled,
     )
 
     override fun toUni(d: X0DatatypesExportDataResponse): LemmyapiDatatypesExportDataResponse = LemmyapiDatatypesExportDataResponse(
@@ -772,7 +792,7 @@ internal class Transformer : MapperGenerator {
         read_posts = d.read_posts,
         liked = d.liked,
         moderates = d.moderates,
-        settings = this.toUni(d = d.settings)
+        settings = this.toUni(d = d.settings),
     )
 
     override fun toUni(d: X0DatatypesFederatedInstanceView): LemmyapiDatatypesFederatedInstanceView = LemmyapiDatatypesFederatedInstanceView(
@@ -780,18 +800,18 @@ internal class Transformer : MapperGenerator {
         site = d.site?.let { this.toUni(d = it) },
         queue_state = d.queue_state?.let { this.toUni(d = it) },
         blocked = d.blocked?.let { this.toUni(d = it) },
-        allowed = d.allowed?.let { this.toUni(d = it) }
+        allowed = d.allowed?.let { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesFederationAllowList): LemmyapiDatatypesFederationAllowList = LemmyapiDatatypesFederationAllowList(
         published_at = d.published_at,
-        updated_at = d.updated_at
+        updated_at = d.updated_at,
     )
 
     override fun toUni(d: X0DatatypesFederationBlockList): LemmyapiDatatypesFederationBlockList = LemmyapiDatatypesFederationBlockList(
         published_at = d.published_at,
         updated_at = d.updated_at,
-        expires_at = d.expires_at
+        expires_at = d.expires_at,
     )
 
     override fun toUni(d: X0DatatypesFederationQueueState): LemmyapiDatatypesFederationQueueState = LemmyapiDatatypesFederationQueueState(
@@ -799,44 +819,44 @@ internal class Transformer : MapperGenerator {
         last_successful_id = d.last_successful_id,
         last_successful_published_time_at = d.last_successful_published_time_at,
         fail_count = d.fail_count,
-        last_retry_at = d.last_retry_at
+        last_retry_at = d.last_retry_at,
     )
 
     override fun toUni(d: X0DatatypesGenerateTotpSecretResponse): LemmyapiDatatypesGenerateTotpSecretResponse = LemmyapiDatatypesGenerateTotpSecretResponse(
-        totp_secret_url = d.totp_secret_url
+        totp_secret_url = d.totp_secret_url,
     )
 
     override fun toUni(d: X0DatatypesGetCaptchaResponse): LemmyapiDatatypesGetCaptchaResponse = LemmyapiDatatypesGetCaptchaResponse(
-        ok = d.ok?.let { this.toUni(d = it) }
+        ok = d.ok?.let { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesGetCommunityResponse): LemmyapiDatatypesGetCommunityResponse = LemmyapiDatatypesGetCommunityResponse(
         community_view = this.toUni(d = d.community_view),
         site = d.site?.let { this.toUni(d = it) },
         moderators = d.moderators.map { this.toUni(d = it) },
-        discussion_languages = d.discussion_languages
+        discussion_languages = d.discussion_languages,
     )
 
     override fun toUni(d: X0DatatypesGetMultiCommunityResponse): LemmyapiDatatypesGetMultiCommunityResponse = LemmyapiDatatypesGetMultiCommunityResponse(
         multi_community_view = this.toUni(d = d.multi_community_view),
-        communities = d.communities.map { this.toUni(d = it) }
+        communities = d.communities.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesGetPersonDetailsResponse): LemmyapiDatatypesGetPersonDetailsResponse = LemmyapiDatatypesGetPersonDetailsResponse(
         person_view = this.toUni(d = d.person_view),
         site = d.site?.let { this.toUni(d = it) },
         moderates = d.moderates.map { this.toUni(d = it) },
-        multi_communities_created = d.multi_communities_created.map { this.toUni(d = it) }
+        multi_communities_created = d.multi_communities_created.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesGetPostResponse): LemmyapiDatatypesGetPostResponse = LemmyapiDatatypesGetPostResponse(
         post_view = this.toUni(d = d.post_view),
         community_view = this.toUni(d = d.community_view),
-        cross_posts = d.cross_posts.map { this.toUni(d = it) }
+        cross_posts = d.cross_posts.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesGetSiteMetadataResponse): LemmyapiDatatypesGetSiteMetadataResponse = LemmyapiDatatypesGetSiteMetadataResponse(
-        metadata = this.toUni(d = d.metadata)
+        metadata = this.toUni(d = d.metadata),
     )
 
     override fun toUni(d: X0DatatypesGetSiteResponse): LemmyapiDatatypesGetSiteResponse = LemmyapiDatatypesGetSiteResponse(
@@ -851,7 +871,7 @@ internal class Transformer : MapperGenerator {
         admin_oauth_providers = d.admin_oauth_providers.map { this.toUni(d = it) },
         image_upload_disabled = d.image_upload_disabled,
         active_plugins = d.active_plugins.map { this.toUni(d = it) },
-        last_application_duration_seconds = d.last_application_duration_seconds
+        last_application_duration_seconds = d.last_application_duration_seconds,
     )
 
     override fun toUni(d: X0DatatypesImageDetails): LemmyapiDatatypesImageDetails = LemmyapiDatatypesImageDetails(
@@ -859,18 +879,18 @@ internal class Transformer : MapperGenerator {
         width = d.width,
         height = d.height,
         content_type = d.content_type,
-        blurhash = d.blurhash
+        blurhash = d.blurhash,
     )
 
     override fun toUni(d: X0DatatypesImageGetParams): LemmyapiDatatypesImageGetParams = LemmyapiDatatypesImageGetParams(
         file_type = d.file_type,
-        max_size = d.max_size
+        max_size = d.max_size,
     )
 
     override fun toUni(d: X0DatatypesImageProxyParams): LemmyapiDatatypesImageProxyParams = LemmyapiDatatypesImageProxyParams(
         url = d.url,
         file_type = d.file_type,
-        max_size = d.max_size
+        max_size = d.max_size,
     )
 
     override fun toUni(d: X0DatatypesInstance): LemmyapiDatatypesInstance = LemmyapiDatatypesInstance(
@@ -879,20 +899,20 @@ internal class Transformer : MapperGenerator {
         published_at = d.published_at,
         updated_at = d.updated_at,
         software = d.software,
-        version = d.version
+        version = d.version,
     )
 
     override fun toUni(d: X0DatatypesInstanceActions): LemmyapiDatatypesInstanceActions = LemmyapiDatatypesInstanceActions(
         blocked_communities_at = d.blocked_communities_at,
         received_ban_at = d.received_ban_at,
         ban_expires_at = d.ban_expires_at,
-        blocked_persons_at = d.blocked_persons_at
+        blocked_persons_at = d.blocked_persons_at,
     )
 
     override fun toUni(d: X0DatatypesLanguage): LemmyapiDatatypesLanguage = LemmyapiDatatypesLanguage(
         id = d.id,
         code = d.code,
-        name = d.name
+        name = d.name,
     )
 
     override fun toUni(d: X0DatatypesLinkMetadata): LemmyapiDatatypesLinkMetadata = LemmyapiDatatypesLinkMetadata(
@@ -904,28 +924,28 @@ internal class Transformer : MapperGenerator {
         image_height = d.image_height,
         embed_video_url = d.embed_video_url,
         video_width = d.video_width,
-        video_height = d.video_height
+        video_height = d.video_height,
     )
 
     override fun toUni(d: X0DatatypesListCustomEmojisResponse): LemmyapiDatatypesListCustomEmojisResponse = LemmyapiDatatypesListCustomEmojisResponse(
-        custom_emojis = d.custom_emojis.map { this.toUni(d = it) }
+        custom_emojis = d.custom_emojis.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesListLoginsResponse): LemmyapiDatatypesListLoginsResponse = LemmyapiDatatypesListLoginsResponse(
-        logins = d.logins.map { this.toUni(d = it) }
+        logins = d.logins.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesLocalImage): LemmyapiDatatypesLocalImage = LemmyapiDatatypesLocalImage(
         person_id = d.person_id,
         pictrs_alias = d.pictrs_alias,
         published_at = d.published_at,
-        thumbnail_for_post_id = d.thumbnail_for_post_id
+        thumbnail_for_post_id = d.thumbnail_for_post_id,
     )
 
     override fun toUni(d: X0DatatypesLocalImageView): LemmyapiDatatypesLocalImageView = LemmyapiDatatypesLocalImageView(
         local_image = this.toUni(d = d.local_image),
         person = this.toUni(d = d.person),
-        post = d.post?.let { this.toUni(d = it) }
+        post = d.post?.let { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesLocalSite): LemmyapiDatatypesLocalSite = LemmyapiDatatypesLocalSite(
@@ -969,7 +989,7 @@ internal class Transformer : MapperGenerator {
         users_active_half_year = d.users_active_half_year,
         disable_email_notifications = d.disable_email_notifications,
         suggested_multi_community_id = d.suggested_multi_community_id,
-        default_items_per_page = d.default_items_per_page
+        default_items_per_page = d.default_items_per_page,
     )
 
     override fun toUni(d: X0DatatypesLocalSiteRateLimit): LemmyapiDatatypesLocalSiteRateLimit = LemmyapiDatatypesLocalSiteRateLimit(
@@ -989,14 +1009,14 @@ internal class Transformer : MapperGenerator {
         published_at = d.published_at,
         updated_at = d.updated_at,
         import_user_settings_max_requests = d.import_user_settings_max_requests,
-        import_user_settings_interval_seconds = d.import_user_settings_interval_seconds
+        import_user_settings_interval_seconds = d.import_user_settings_interval_seconds,
     )
 
     override fun toUni(d: X0DatatypesLocalSiteUrlBlocklist): LemmyapiDatatypesLocalSiteUrlBlocklist = LemmyapiDatatypesLocalSiteUrlBlocklist(
         id = d.id,
         url = d.url,
         published_at = d.published_at,
-        updated_at = d.updated_at
+        updated_at = d.updated_at,
     )
 
     override fun toUni(d: X0DatatypesLocalUser): LemmyapiDatatypesLocalUser = LemmyapiDatatypesLocalUser(
@@ -1033,33 +1053,33 @@ internal class Transformer : MapperGenerator {
         show_downvotes = d.show_downvotes,
         show_upvote_percentage = d.show_upvote_percentage,
         show_person_votes = d.show_person_votes,
-        default_items_per_page = d.default_items_per_page
+        default_items_per_page = d.default_items_per_page,
     )
 
     override fun toUni(d: X0DatatypesLocalUserView): LemmyapiDatatypesLocalUserView = LemmyapiDatatypesLocalUserView(
         local_user = this.toUni(d = d.local_user),
         person = this.toUni(d = d.person),
         banned = d.banned,
-        ban_expires_at = d.ban_expires_at
+        ban_expires_at = d.ban_expires_at,
     )
 
     override fun toUni(d: X0DatatypesLoginResponse): LemmyapiDatatypesLoginResponse = LemmyapiDatatypesLoginResponse(
         jwt = d.jwt,
         registration_created = d.registration_created,
-        verify_email_sent = d.verify_email_sent
+        verify_email_sent = d.verify_email_sent,
     )
 
     override fun toUni(d: X0DatatypesLoginToken): LemmyapiDatatypesLoginToken = LemmyapiDatatypesLoginToken(
         user_id = d.user_id,
         published_at = d.published_at,
         ip = d.ip,
-        user_agent = d.user_agent
+        user_agent = d.user_agent,
     )
 
     override fun toUni(d: X0DatatypesModEditPost): LemmyapiDatatypesModEditPost = LemmyapiDatatypesModEditPost(
         post_id = d.post_id,
         nsfw = d.nsfw,
-        tags = d.tags
+        tags = d.tags,
     )
 
     override fun toUni(d: X0DatatypesModlog): LemmyapiDatatypesModlog = LemmyapiDatatypesModlog(
@@ -1068,7 +1088,7 @@ internal class Transformer : MapperGenerator {
         is_revert = d.is_revert,
         reason = d.reason,
         expires_at = d.expires_at,
-        published_at = d.published_at
+        published_at = d.published_at,
     )
 
     override fun toUni(d: X0DatatypesModlogView): LemmyapiDatatypesModlogView = LemmyapiDatatypesModlogView(
@@ -1078,7 +1098,7 @@ internal class Transformer : MapperGenerator {
         target_instance = d.target_instance?.let { this.toUni(d = it) },
         target_community = d.target_community?.let { this.toUni(d = it) },
         target_post = d.target_post?.let { this.toUni(d = it) },
-        target_comment = d.target_comment?.let { this.toUni(d = it) }
+        target_comment = d.target_comment?.let { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesMultiCommunity): LemmyapiDatatypesMultiCommunity = LemmyapiDatatypesMultiCommunity(
@@ -1096,28 +1116,28 @@ internal class Transformer : MapperGenerator {
         updated_at = d.updated_at,
         subscribers = d.subscribers,
         subscribers_local = d.subscribers_local,
-        communities = d.communities
+        communities = d.communities,
     )
 
     override fun toUni(d: X0DatatypesMultiCommunityEntry): LemmyapiDatatypesMultiCommunityEntry = LemmyapiDatatypesMultiCommunityEntry(
         multi_community_id = d.multi_community_id,
-        community_id = d.community_id
+        community_id = d.community_id,
     )
 
     override fun toUni(d: X0DatatypesMultiCommunityFollow): LemmyapiDatatypesMultiCommunityFollow = LemmyapiDatatypesMultiCommunityFollow(
         multi_community_id = d.multi_community_id,
         person_id = d.person_id,
-        follow_state = d.follow_state
+        follow_state = d.follow_state,
     )
 
     override fun toUni(d: X0DatatypesMultiCommunityResponse): LemmyapiDatatypesMultiCommunityResponse = LemmyapiDatatypesMultiCommunityResponse(
-        multi_community_view = this.toUni(d = d.multi_community_view)
+        multi_community_view = this.toUni(d = d.multi_community_view),
     )
 
     override fun toUni(d: X0DatatypesMultiCommunityView): LemmyapiDatatypesMultiCommunityView = LemmyapiDatatypesMultiCommunityView(
         multi = this.toUni(d = d.multi),
         follow_state = d.follow_state,
-        owner = this.toUni(d = d.owner)
+        owner = this.toUni(d = d.owner),
     )
 
     override fun toUni(d: X0DatatypesMyUserInfo): LemmyapiDatatypesMyUserInfo = LemmyapiDatatypesMyUserInfo(
@@ -1130,12 +1150,12 @@ internal class Transformer : MapperGenerator {
         instance_persons_blocks = d.instance_persons_blocks.map { this.toUni(d = it) },
         person_blocks = d.person_blocks.map { this.toUni(d = it) },
         keyword_blocks = d.keyword_blocks,
-        discussion_languages = d.discussion_languages
+        discussion_languages = d.discussion_languages,
     )
 
     override fun toUni(d: X0DatatypesNotePerson): LemmyapiDatatypesNotePerson = LemmyapiDatatypesNotePerson(
         person_id = d.person_id,
-        note = d.note
+        note = d.note,
     )
 
     override fun toUni(d: X0DatatypesNotification): LemmyapiDatatypesNotification = LemmyapiDatatypesNotification(
@@ -1147,14 +1167,14 @@ internal class Transformer : MapperGenerator {
         kind = d.kind,
         post_id = d.post_id,
         private_message_id = d.private_message_id,
-        modlog_id = d.modlog_id
+        modlog_id = d.modlog_id,
     )
 
     override fun toUni(d: X0DatatypesNotificationData): LemmyapiDatatypesNotificationData = super.toUni(d)
 
     override fun toUni(d: X0DatatypesNotificationView): LemmyapiDatatypesNotificationView = LemmyapiDatatypesNotificationView(
         notification = this.toUni(d = d.notification),
-        data = d.let { toUni(d.data) }
+        data = d.let { toUni(d.data) },
     )
 
     override fun toUni(d: X0DatatypesOAuthAccount): LemmyapiDatatypesOAuthAccount = LemmyapiDatatypesOAuthAccount(
@@ -1162,21 +1182,21 @@ internal class Transformer : MapperGenerator {
         oauth_provider_id = d.oauth_provider_id,
         oauth_user_id = d.oauth_user_id,
         published_at = d.published_at,
-        updated_at = d.updated_at
+        updated_at = d.updated_at,
     )
 
     override fun toUni(d: X0DatatypesPendingFollow): LemmyapiDatatypesPendingFollow = LemmyapiDatatypesPendingFollow(
         person = this.toUni(d = d.person),
         community = this.toUni(d = d.community),
         is_new_instance = d.is_new_instance,
-        follow_state = d.follow_state
+        follow_state = d.follow_state,
     )
 
     override fun toUni(d: X0DatatypesPendingFollowerView): LemmyapiDatatypesPendingFollowerView = LemmyapiDatatypesPendingFollowerView(
         person = this.toUni(d = d.person),
         community = this.toUni(d = d.community),
         is_new_instance = d.is_new_instance,
-        follow_state = d.follow_state
+        follow_state = d.follow_state,
     )
 
     override fun toUni(d: X0DatatypesPerson): LemmyapiDatatypesPerson = LemmyapiDatatypesPerson(
@@ -1196,7 +1216,7 @@ internal class Transformer : MapperGenerator {
         instance_id = d.instance_id,
         post_count = d.post_count,
         comment_count = d.comment_count,
-        last_refreshed_at = d.last_refreshed_at
+        last_refreshed_at = d.last_refreshed_at,
     )
 
     override fun toUni(d: X0DatatypesPersonActions): LemmyapiDatatypesPersonActions = LemmyapiDatatypesPersonActions(
@@ -1205,11 +1225,11 @@ internal class Transformer : MapperGenerator {
         note = d.note,
         voted_at = d.voted_at,
         upvotes = d.upvotes,
-        downvotes = d.downvotes
+        downvotes = d.downvotes,
     )
 
     override fun toUni(d: X0DatatypesPersonResponse): LemmyapiDatatypesPersonResponse = LemmyapiDatatypesPersonResponse(
-        person_view = this.toUni(d = d.person_view)
+        person_view = this.toUni(d = d.person_view),
     )
 
     override fun toUni(d: X0DatatypesPersonView): LemmyapiDatatypesPersonView = LemmyapiDatatypesPersonView(
@@ -1217,13 +1237,13 @@ internal class Transformer : MapperGenerator {
         is_admin = d.is_admin,
         person_actions = d.person_actions?.let { this.toUni(d = it) },
         banned = d.banned,
-        ban_expires_at = d.ban_expires_at
+        ban_expires_at = d.ban_expires_at,
     )
 
     override fun toUni(d: X0DatatypesPluginMetadata): LemmyapiDatatypesPluginMetadata = LemmyapiDatatypesPluginMetadata(
         name = d.name,
         url = d.url,
-        description = d.description
+        description = d.description,
     )
 
     override fun toUni(d: X0DatatypesPost): LemmyapiDatatypesPost = LemmyapiDatatypesPost(
@@ -1260,7 +1280,7 @@ internal class Transformer : MapperGenerator {
         unresolved_report_count = d.unresolved_report_count,
         federation_pending = d.federation_pending,
         embed_video_width = d.embed_video_width,
-        embed_video_height = d.embed_video_height
+        embed_video_height = d.embed_video_height,
     )
 
     override fun toUni(d: X0DatatypesPostActions): LemmyapiDatatypesPostActions = LemmyapiDatatypesPostActions(
@@ -1270,7 +1290,8 @@ internal class Transformer : MapperGenerator {
         saved_at = d.saved_at,
         voted_at = d.voted_at,
         hidden_at = d.hidden_at,
-        notifications = d.notifications
+        notifications = d.notifications,
+        like_score = voteTriBoolToInt(d.vote_is_upvote),
     )
 
     override fun toUni(d: X0DatatypesPostCommentCombinedView): LemmyapiDatatypesPostCommentCombinedView = super.toUni(d)
@@ -1289,11 +1310,11 @@ internal class Transformer : MapperGenerator {
         resolver_id = d.resolver_id,
         published_at = d.published_at,
         updated_at = d.updated_at,
-        violates_instance_rules = d.violates_instance_rules
+        violates_instance_rules = d.violates_instance_rules,
     )
 
     override fun toUni(d: X0DatatypesPostReportResponse): LemmyapiDatatypesPostReportResponse = LemmyapiDatatypesPostReportResponse(
-        post_report_view = this.toUni(d = d.post_report_view)
+        post_report_view = this.toUni(d = d.post_report_view),
     )
 
     override fun toUni(d: X0DatatypesPostReportView): LemmyapiDatatypesPostReportView = LemmyapiDatatypesPostReportView(
@@ -1311,11 +1332,11 @@ internal class Transformer : MapperGenerator {
         creator_banned = d.creator_banned,
         creator_ban_expires_at = d.creator_ban_expires_at,
         creator_banned_from_community = d.creator_banned_from_community,
-        creator_community_ban_expires_at = d.creator_community_ban_expires_at
+        creator_community_ban_expires_at = d.creator_community_ban_expires_at,
     )
 
     override fun toUni(d: X0DatatypesPostResponse): LemmyapiDatatypesPostResponse = LemmyapiDatatypesPostResponse(
-        post_view = this.toUni(d = d.post_view)
+        post_view = this.toUni(d = d.post_view),
     )
 
     override fun toUni(d: X0DatatypesPostView): LemmyapiDatatypesPostView = LemmyapiDatatypesPostView(
@@ -1333,7 +1354,7 @@ internal class Transformer : MapperGenerator {
         creator_is_admin = d.creator_is_admin,
         creator_is_moderator = d.creator_is_moderator,
         creator_banned_from_community = d.creator_banned_from_community,
-        creator_community_ban_expires_at = d.creator_community_ban_expires_at
+        creator_community_ban_expires_at = d.creator_community_ban_expires_at,
     )
 
     override fun toUni(d: X0DatatypesPrivateMessage): LemmyapiDatatypesPrivateMessage = LemmyapiDatatypesPrivateMessage(
@@ -1346,7 +1367,7 @@ internal class Transformer : MapperGenerator {
         updated_at = d.updated_at,
         ap_id = d.ap_id,
         local = d.local,
-        removed = d.removed
+        removed = d.removed,
     )
 
     override fun toUni(d: X0DatatypesPrivateMessageReport): LemmyapiDatatypesPrivateMessageReport = LemmyapiDatatypesPrivateMessageReport(
@@ -1358,11 +1379,11 @@ internal class Transformer : MapperGenerator {
         resolved = d.resolved,
         resolver_id = d.resolver_id,
         published_at = d.published_at,
-        updated_at = d.updated_at
+        updated_at = d.updated_at,
     )
 
     override fun toUni(d: X0DatatypesPrivateMessageReportResponse): LemmyapiDatatypesPrivateMessageReportResponse = LemmyapiDatatypesPrivateMessageReportResponse(
-        private_message_report_view = this.toUni(d = d.private_message_report_view)
+        private_message_report_view = this.toUni(d = d.private_message_report_view),
     )
 
     override fun toUni(d: X0DatatypesPrivateMessageReportView): LemmyapiDatatypesPrivateMessageReportView = LemmyapiDatatypesPrivateMessageReportView(
@@ -1373,17 +1394,17 @@ internal class Transformer : MapperGenerator {
         resolver = d.resolver?.let { this.toUni(d = it) },
         creator_is_admin = d.creator_is_admin,
         creator_banned = d.creator_banned,
-        creator_ban_expires_at = d.creator_ban_expires_at
+        creator_ban_expires_at = d.creator_ban_expires_at,
     )
 
     override fun toUni(d: X0DatatypesPrivateMessageResponse): LemmyapiDatatypesPrivateMessageResponse = LemmyapiDatatypesPrivateMessageResponse(
-        private_message_view = this.toUni(d = d.private_message_view)
+        private_message_view = this.toUni(d = d.private_message_view),
     )
 
     override fun toUni(d: X0DatatypesPrivateMessageView): LemmyapiDatatypesPrivateMessageView = LemmyapiDatatypesPrivateMessageView(
         private_message = this.toUni(d = d.private_message),
         creator = this.toUni(d = d.creator),
-        recipient = this.toUni(d = d.recipient)
+        recipient = this.toUni(d = d.recipient),
     )
 
     override fun toUni(d: X0DatatypesPublicOAuthProvider): LemmyapiDatatypesPublicOAuthProvider = LemmyapiDatatypesPublicOAuthProvider(
@@ -1392,7 +1413,7 @@ internal class Transformer : MapperGenerator {
         authorization_endpoint = d.authorization_endpoint,
         client_id = d.client_id,
         scopes = d.scopes,
-        use_pkce = d.use_pkce
+        use_pkce = d.use_pkce,
     )
 
     override fun toUni(d: X0DatatypesRegistrationApplication): LemmyapiDatatypesRegistrationApplication = LemmyapiDatatypesRegistrationApplication(
@@ -1402,24 +1423,24 @@ internal class Transformer : MapperGenerator {
         admin_id = d.admin_id,
         deny_reason = d.deny_reason,
         published_at = d.published_at,
-        updated_at = d.updated_at
+        updated_at = d.updated_at,
     )
 
     override fun toUni(d: X0DatatypesRegistrationApplicationResponse): LemmyapiDatatypesRegistrationApplicationResponse = LemmyapiDatatypesRegistrationApplicationResponse(
-        registration_application = this.toUni(d = d.registration_application)
+        registration_application = this.toUni(d = d.registration_application),
     )
 
     override fun toUni(d: X0DatatypesRegistrationApplicationView): LemmyapiDatatypesRegistrationApplicationView = LemmyapiDatatypesRegistrationApplicationView(
         registration_application = this.toUni(d = d.registration_application),
         creator_local_user = this.toUni(d = d.creator_local_user),
         creator = this.toUni(d = d.creator),
-        admin = d.admin?.let { this.toUni(d = it) }
+        admin = d.admin?.let { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesReportCombinedView): LemmyapiDatatypesReportCombinedView = super.toUni(d)
 
     override fun toUni(d: X0DatatypesResendVerificationEmail): LemmyapiDatatypesResendVerificationEmail = LemmyapiDatatypesResendVerificationEmail(
-        email = d.email
+        email = d.email,
     )
 
     override fun toUni(d: X0DatatypesSearchCombinedView): LemmyapiDatatypesSearchCombinedView = super.toUni(d)
@@ -1428,7 +1449,7 @@ internal class Transformer : MapperGenerator {
         resolve = d.resolve?.let { this.toUni(d = it) },
         search = d.search.map { this.toUni(d = it) },
         next_page = d.next_page,
-        prev_page = d.prev_page
+        prev_page = d.prev_page,
     )
 
     override fun toUni(d: X0DatatypesSite): LemmyapiDatatypesSite = LemmyapiDatatypesSite(
@@ -1445,51 +1466,51 @@ internal class Transformer : MapperGenerator {
         inbox_url = d.inbox_url,
         public_key = d.public_key,
         instance_id = d.instance_id,
-        content_warning = d.content_warning
+        content_warning = d.content_warning,
     )
 
     override fun toUni(d: X0DatatypesSiteResponse): LemmyapiDatatypesSiteResponse = LemmyapiDatatypesSiteResponse(
-        site_view = this.toUni(d = d.site_view)
+        site_view = this.toUni(d = d.site_view),
     )
 
     override fun toUni(d: X0DatatypesSiteView): LemmyapiDatatypesSiteView = LemmyapiDatatypesSiteView(
         site = this.toUni(d = d.site),
         local_site = this.toUni(d = d.local_site),
         local_site_rate_limit = this.toUni(d = d.local_site_rate_limit),
-        instance = this.toUni(d = d.instance)
+        instance = this.toUni(d = d.instance),
     )
 
     override fun toUni(d: X0DatatypesTagline): LemmyapiDatatypesTagline = LemmyapiDatatypesTagline(
         id = d.id,
         content = d.content,
         published_at = d.published_at,
-        updated_at = d.updated_at
+        updated_at = d.updated_at,
     )
 
     override fun toUni(d: X0DatatypesTaglineResponse): LemmyapiDatatypesTaglineResponse = LemmyapiDatatypesTaglineResponse(
-        tagline = this.toUni(d = d.tagline)
+        tagline = this.toUni(d = d.tagline),
     )
 
     override fun toUni(d: X0DatatypesUnreadCountsResponse): LemmyapiDatatypesUnreadCountsResponse = LemmyapiDatatypesUnreadCountsResponse(
         notification_count = d.notification_count,
         report_count = d.report_count,
         pending_follow_count = d.pending_follow_count,
-        registration_application_count = d.registration_application_count
+        registration_application_count = d.registration_application_count,
     )
 
     override fun toUni(d: X0DatatypesUploadImageResponse): LemmyapiDatatypesUploadImageResponse = LemmyapiDatatypesUploadImageResponse(
         image_url = d.image_url,
-        filename = d.filename
+        filename = d.filename,
     )
 
     override fun toUni(d: X0DatatypesUserBlockInstanceCommunitiesParams): LemmyapiDatatypesUserBlockInstanceCommunitiesParams = LemmyapiDatatypesUserBlockInstanceCommunitiesParams(
         instance_id = d.instance_id,
-        block = d.block
+        block = d.block,
     )
 
     override fun toUni(d: X0DatatypesUserBlockInstancePersonsParams): LemmyapiDatatypesUserBlockInstancePersonsParams = LemmyapiDatatypesUserBlockInstancePersonsParams(
         instance_id = d.instance_id,
-        block = d.block
+        block = d.block,
     )
 
     override fun toUni(d: X0DatatypesUserSettingsBackup): LemmyapiDatatypesUserSettingsBackup = LemmyapiDatatypesUserSettingsBackup(
@@ -1508,37 +1529,68 @@ internal class Transformer : MapperGenerator {
         blocked_instances_communities = d.blocked_instances_communities,
         blocked_instances_persons = d.blocked_instances_persons,
         blocking_keywords = d.blocking_keywords,
-        discussion_languages = d.discussion_languages
+        discussion_languages = d.discussion_languages,
     )
 
     override fun toUni(d: X0DatatypesVoteView): LemmyapiDatatypesVoteView = LemmyapiDatatypesVoteView(
         creator = this.toUni(d = d.creator),
         creator_banned = d.creator_banned,
         creator_banned_from_community = d.creator_banned_from_community,
-        score = d.let { if (d.is_upvote) 1 else -1 }
+        score = d.let { if (d.is_upvote) 1 else -1 },
     )
 
     override fun fromUni(d: LemmyapiDatatypesAddAdmin): X0DatatypesAddAdmin = X0DatatypesAddAdmin(
         person_id = d.person_id,
-        added = d.added
+        added = d.added,
     )
 
     override fun fromUni(d: LemmyapiDatatypesAddModToCommunity): X0DatatypesAddModToCommunity = X0DatatypesAddModToCommunity(
         community_id = d.community_id,
         person_id = d.person_id,
-        added = d.added
+        added = d.added,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesAdminAllowInstanceParams): X0DatatypesAdminAllowInstanceParams = X0DatatypesAdminAllowInstanceParams(
+        instance = d.instance,
+        allow = d.allow,
+        reason = d.reason,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesAdminBlockInstanceParams): X0DatatypesAdminBlockInstanceParams = X0DatatypesAdminBlockInstanceParams(
+        instance = d.instance,
+        block = d.block,
+        reason = d.reason,
+        expires_at = d.expires_at,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesAdminListUsers): X0DatatypesAdminListUsers = X0DatatypesAdminListUsers(
+        banned_only = d.banned_only,
+        page_cursor = d.page_cursor,
+        sort = d.sort,
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesApproveCommunityPendingFollower): X0DatatypesApproveCommunityPendingFollower = X0DatatypesApproveCommunityPendingFollower(
         community_id = d.community_id,
         follower_id = d.follower_id,
-        approve = d.approve
+        approve = d.approve,
     )
 
     override fun fromUni(d: LemmyapiDatatypesApproveRegistrationApplication): X0DatatypesApproveRegistrationApplication = X0DatatypesApproveRegistrationApplication(
         id = d.id,
         approve = d.approve,
-        deny_reason = d.deny_reason
+        deny_reason = d.deny_reason,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesAuthenticateWithOauth): X0DatatypesAuthenticateWithOauth = X0DatatypesAuthenticateWithOauth(
+        code = d.code,
+        oauth_provider_id = d.oauth_provider_id,
+        redirect_uri = d.redirect_uri,
+        show_nsfw = d.show_nsfw,
+        username = d.username,
+        answer = d.answer,
+        pkce_code_verifier = d.pkce_code_verifier,
+        stay_logged_in = d.stay_logged_in,
     )
 
     override fun fromUni(d: LemmyapiDatatypesBanFromCommunity): X0DatatypesBanFromCommunity = X0DatatypesBanFromCommunity(
@@ -1547,7 +1599,7 @@ internal class Transformer : MapperGenerator {
         ban = d.ban,
         remove_or_restore_data = d.remove_or_restore_data,
         reason = d.reason,
-        expires_at = d.expires_at
+        expires_at = d.expires_at,
     )
 
     override fun fromUni(d: LemmyapiDatatypesBanPerson): X0DatatypesBanPerson = X0DatatypesBanPerson(
@@ -1555,46 +1607,51 @@ internal class Transformer : MapperGenerator {
         ban = d.ban,
         remove_or_restore_data = d.remove_or_restore_data,
         reason = d.reason,
-        expires_at = d.expires_at
+        expires_at = d.expires_at,
     )
 
     override fun fromUni(d: LemmyapiDatatypesBlockCommunity): X0DatatypesBlockCommunity = X0DatatypesBlockCommunity(
         community_id = d.community_id,
-        block = d.block
+        block = d.block,
     )
 
     override fun fromUni(d: LemmyapiDatatypesBlockPerson): X0DatatypesBlockPerson = X0DatatypesBlockPerson(
         person_id = d.person_id,
-        block = d.block
+        block = d.block,
     )
 
     override fun fromUni(d: LemmyapiDatatypesChangePassword): X0DatatypesChangePassword = X0DatatypesChangePassword(
         new_password = d.new_password,
         new_password_verify = d.new_password_verify,
         old_password = d.old_password,
-        stay_logged_in = d.stay_logged_in
+        stay_logged_in = d.stay_logged_in,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesCommunityIdQuery): X0DatatypesCommunityIdQuery = X0DatatypesCommunityIdQuery(
+        id = d.id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateComment): X0DatatypesCreateComment = X0DatatypesCreateComment(
         content = d.content,
         post_id = d.post_id,
         parent_id = d.parent_id,
-        language_id = d.language_id
+        language_id = d.language_id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommentLike): X0DatatypesCreateCommentLike = X0DatatypesCreateCommentLike(
-        comment_id = d.comment_id
+        comment_id = d.comment_id,
+        is_upvote = voteIntToTriBool(d.score),
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommentReport): X0DatatypesCreateCommentReport = X0DatatypesCreateCommentReport(
         comment_id = d.comment_id,
         reason = d.reason,
-        violates_instance_rules = d.violates_instance_rules
+        violates_instance_rules = d.violates_instance_rules,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommentWarning): X0DatatypesCreateCommentWarning = X0DatatypesCreateCommentWarning(
         comment_id = d.comment_id,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommunity): X0DatatypesCreateCommunity = X0DatatypesCreateCommunity(
@@ -1607,12 +1664,12 @@ internal class Transformer : MapperGenerator {
         nsfw = d.nsfw,
         posting_restricted_to_mods = d.posting_restricted_to_mods,
         discussion_languages = d.discussion_languages,
-        visibility = d.visibility
+        visibility = d.visibility,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommunityReport): X0DatatypesCreateCommunityReport = X0DatatypesCreateCommunityReport(
         community_id = d.community_id,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommunityTag): X0DatatypesCreateCommunityTag = X0DatatypesCreateCommunityTag(
@@ -1620,7 +1677,7 @@ internal class Transformer : MapperGenerator {
         name = d.name,
         display_name = d.display_name,
         summary = d.summary,
-        color = d.color
+        color = d.color,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCustomEmoji): X0DatatypesCreateCustomEmoji = X0DatatypesCreateCustomEmoji(
@@ -1628,13 +1685,13 @@ internal class Transformer : MapperGenerator {
         shortcode = d.shortcode,
         image_url = d.image_url,
         alt_text = d.alt_text,
-        keywords = d.keywords
+        keywords = d.keywords,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateMultiCommunity): X0DatatypesCreateMultiCommunity = X0DatatypesCreateMultiCommunity(
         name = d.name,
         title = d.title,
-        summary = d.summary
+        summary = d.summary,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateOAuthProvider): X0DatatypesCreateOAuthProvider = X0DatatypesCreateOAuthProvider(
@@ -1650,12 +1707,12 @@ internal class Transformer : MapperGenerator {
         auto_verify_email = d.auto_verify_email,
         account_linking_enabled = d.account_linking_enabled,
         use_pkce = d.use_pkce,
-        enabled = d.enabled
+        enabled = d.enabled,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateOrDeleteMultiCommunityEntry): X0DatatypesCreateOrDeleteMultiCommunityEntry = X0DatatypesCreateOrDeleteMultiCommunityEntry(
         id = d.id,
-        community_id = d.community_id
+        community_id = d.community_id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreatePost): X0DatatypesCreatePost = X0DatatypesCreatePost(
@@ -1669,32 +1726,33 @@ internal class Transformer : MapperGenerator {
         language_id = d.language_id,
         custom_thumbnail = d.custom_thumbnail,
         tags = d.tags,
-        scheduled_publish_time_at = d.scheduled_publish_time_at
+        scheduled_publish_time_at = d.scheduled_publish_time_at,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreatePostLike): X0DatatypesCreatePostLike = X0DatatypesCreatePostLike(
-        post_id = d.post_id
+        post_id = d.post_id,
+        is_upvote = voteIntToTriBool(d.score),
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreatePostReport): X0DatatypesCreatePostReport = X0DatatypesCreatePostReport(
         post_id = d.post_id,
         reason = d.reason,
-        violates_instance_rules = d.violates_instance_rules
+        violates_instance_rules = d.violates_instance_rules,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreatePostWarning): X0DatatypesCreatePostWarning = X0DatatypesCreatePostWarning(
         post_id = d.post_id,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreatePrivateMessage): X0DatatypesCreatePrivateMessage = X0DatatypesCreatePrivateMessage(
         content = d.content,
-        recipient_id = d.recipient_id
+        recipient_id = d.recipient_id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreatePrivateMessageReport): X0DatatypesCreatePrivateMessageReport = X0DatatypesCreatePrivateMessageReport(
         private_message_id = d.private_message_id,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateSite): X0DatatypesCreateSite = X0DatatypesCreateSite(
@@ -1741,68 +1799,68 @@ internal class Transformer : MapperGenerator {
         comment_downvotes = d.comment_downvotes,
         disallow_nsfw_content = d.disallow_nsfw_content,
         disable_email_notifications = d.disable_email_notifications,
-        suggested_multi_community_id = d.suggested_multi_community_id
+        suggested_multi_community_id = d.suggested_multi_community_id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateTagline): X0DatatypesCreateTagline = X0DatatypesCreateTagline(
-        content = d.content
+        content = d.content,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeleteAccount): X0DatatypesDeleteAccount = X0DatatypesDeleteAccount(
         password = d.password,
-        delete_content = d.delete_content
+        delete_content = d.delete_content,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeleteComment): X0DatatypesDeleteComment = X0DatatypesDeleteComment(
         comment_id = d.comment_id,
-        deleted = d.deleted
+        deleted = d.deleted,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeleteCommunity): X0DatatypesDeleteCommunity = X0DatatypesDeleteCommunity(
         community_id = d.community_id,
-        deleted = d.deleted
+        deleted = d.deleted,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeleteCommunityTag): X0DatatypesDeleteCommunityTag = X0DatatypesDeleteCommunityTag(
         tag_id = d.tag_id,
-        delete = d.delete
+        delete = d.delete,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeleteCustomEmoji): X0DatatypesDeleteCustomEmoji = X0DatatypesDeleteCustomEmoji(
-        id = d.id
+        id = d.id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeleteImageParams): X0DatatypesDeleteImageParams = X0DatatypesDeleteImageParams(
-        filename = d.filename
+        filename = d.filename,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeleteOAuthProvider): X0DatatypesDeleteOAuthProvider = X0DatatypesDeleteOAuthProvider(
-        id = d.id
+        id = d.id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeletePost): X0DatatypesDeletePost = X0DatatypesDeletePost(
         post_id = d.post_id,
-        deleted = d.deleted
+        deleted = d.deleted,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeletePrivateMessage): X0DatatypesDeletePrivateMessage = X0DatatypesDeletePrivateMessage(
         private_message_id = d.private_message_id,
-        deleted = d.deleted
+        deleted = d.deleted,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDeleteTagline): X0DatatypesDeleteTagline = X0DatatypesDeleteTagline(
-        id = d.id
+        id = d.id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesDistinguishComment): X0DatatypesDistinguishComment = X0DatatypesDistinguishComment(
         comment_id = d.comment_id,
-        distinguished = d.distinguished
+        distinguished = d.distinguished,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditComment): X0DatatypesEditComment = X0DatatypesEditComment(
         comment_id = d.comment_id,
         content = d.content,
-        language_id = d.language_id
+        language_id = d.language_id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditCommunity): X0DatatypesEditCommunity = X0DatatypesEditCommunity(
@@ -1813,19 +1871,19 @@ internal class Transformer : MapperGenerator {
         nsfw = d.nsfw,
         posting_restricted_to_mods = d.posting_restricted_to_mods,
         discussion_languages = d.discussion_languages,
-        visibility = d.visibility
+        visibility = d.visibility,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditCommunityNotifications): X0DatatypesEditCommunityNotifications = X0DatatypesEditCommunityNotifications(
         community_id = d.community_id,
-        mode = d.mode
+        mode = d.mode,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditCommunityTag): X0DatatypesEditCommunityTag = X0DatatypesEditCommunityTag(
         tag_id = d.tag_id,
         display_name = d.display_name,
         summary = d.summary,
-        color = d.color
+        color = d.color,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditCustomEmoji): X0DatatypesEditCustomEmoji = X0DatatypesEditCustomEmoji(
@@ -1834,14 +1892,14 @@ internal class Transformer : MapperGenerator {
         shortcode = d.shortcode,
         image_url = d.image_url,
         alt_text = d.alt_text,
-        keywords = d.keywords
+        keywords = d.keywords,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditMultiCommunity): X0DatatypesEditMultiCommunity = X0DatatypesEditMultiCommunity(
         id = d.id,
         title = d.title,
         summary = d.summary,
-        deleted = d.deleted
+        deleted = d.deleted,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditOAuthProvider): X0DatatypesEditOAuthProvider = X0DatatypesEditOAuthProvider(
@@ -1856,7 +1914,7 @@ internal class Transformer : MapperGenerator {
         auto_verify_email = d.auto_verify_email,
         account_linking_enabled = d.account_linking_enabled,
         use_pkce = d.use_pkce,
-        enabled = d.enabled
+        enabled = d.enabled,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditPost): X0DatatypesEditPost = X0DatatypesEditPost(
@@ -1869,17 +1927,17 @@ internal class Transformer : MapperGenerator {
         language_id = d.language_id,
         custom_thumbnail = d.custom_thumbnail,
         scheduled_publish_time_at = d.scheduled_publish_time_at,
-        tags = d.tags
+        tags = d.tags,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditPostNotifications): X0DatatypesEditPostNotifications = X0DatatypesEditPostNotifications(
         post_id = d.post_id,
-        mode = d.mode
+        mode = d.mode,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditPrivateMessage): X0DatatypesEditPrivateMessage = X0DatatypesEditPrivateMessage(
         private_message_id = d.private_message_id,
-        content = d.content
+        content = d.content,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditSite): X0DatatypesEditSite = X0DatatypesEditSite(
@@ -1922,37 +1980,37 @@ internal class Transformer : MapperGenerator {
         registration_mode = d.registration_mode,
         reports_email_admins = d.reports_email_admins,
         content_warning = d.content_warning,
-        suggested_multi_community_id = d.suggested_multi_community_id
+        suggested_multi_community_id = d.suggested_multi_community_id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditTagline): X0DatatypesEditTagline = X0DatatypesEditTagline(
         id = d.id,
-        content = d.content
+        content = d.content,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditTotp): X0DatatypesEditTotp = X0DatatypesEditTotp(
         totp_token = d.totp_token,
-        enabled = d.enabled
+        enabled = d.enabled,
     )
 
     override fun fromUni(d: LemmyapiDatatypesFeaturePost): X0DatatypesFeaturePost = X0DatatypesFeaturePost(
         post_id = d.post_id,
         featured = d.featured,
-        feature_type = d.feature_type
+        feature_type = d.feature_type,
     )
 
     override fun fromUni(d: LemmyapiDatatypesFollowCommunity): X0DatatypesFollowCommunity = X0DatatypesFollowCommunity(
         community_id = d.community_id,
-        follow = d.follow
+        follow = d.follow,
     )
 
     override fun fromUni(d: LemmyapiDatatypesFollowMultiCommunity): X0DatatypesFollowMultiCommunity = X0DatatypesFollowMultiCommunity(
         multi_community_id = d.multi_community_id,
-        follow = d.follow
+        follow = d.follow,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetComment): X0DatatypesGetComment = X0DatatypesGetComment(
-        id = d.id
+        id = d.id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetComments): X0DatatypesGetComments = X0DatatypesGetComments(
@@ -1965,19 +2023,19 @@ internal class Transformer : MapperGenerator {
         community_id = d.community_id,
         community_name = d.community_name,
         post_id = d.post_id,
-        parent_id = d.parent_id
+        parent_id = d.parent_id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetCommunity): X0DatatypesGetCommunity = X0DatatypesGetCommunity(
         id = d.id,
-        name = d.name
+        name = d.name,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetFederatedInstances): X0DatatypesGetFederatedInstances = X0DatatypesGetFederatedInstances(
         domain_filter = d.domain_filter,
         kind = d.kind,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetModlog): X0DatatypesGetModlog = X0DatatypesGetModlog(
@@ -1989,22 +2047,22 @@ internal class Transformer : MapperGenerator {
         post_id = d.post_id,
         comment_id = d.comment_id,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetMultiCommunity): X0DatatypesGetMultiCommunity = X0DatatypesGetMultiCommunity(
         id = d.id,
-        name = d.name
+        name = d.name,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetPersonDetails): X0DatatypesGetPersonDetails = X0DatatypesGetPersonDetails(
         person_id = d.person_id,
-        username = d.username
+        username = d.username,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetPost): X0DatatypesGetPost = X0DatatypesGetPost(
         id = d.id,
-        comment_id = d.comment_id
+        comment_id = d.comment_id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetPosts): X0DatatypesGetPosts = X0DatatypesGetPosts(
@@ -2022,37 +2080,37 @@ internal class Transformer : MapperGenerator {
         mark_as_read = d.mark_as_read,
         no_comments_only = d.no_comments_only,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetRandomCommunity): X0DatatypesGetRandomCommunity = X0DatatypesGetRandomCommunity(
         type_ = d.type_,
-        show_nsfw = d.show_nsfw
+        show_nsfw = d.show_nsfw,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetRegistrationApplication): X0DatatypesGetRegistrationApplication = X0DatatypesGetRegistrationApplication(
-        person_id = d.person_id
+        person_id = d.person_id,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X0DatatypesGetSiteMetadata = X0DatatypesGetSiteMetadata(
-        url = d.url
+        url = d.url,
     )
 
     override fun fromUni(d: LemmyapiDatatypesHideCommunity): X0DatatypesHideCommunity = X0DatatypesHideCommunity(
         community_id = d.community_id,
         hidden = d.hidden,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesHidePost): X0DatatypesHidePost = X0DatatypesHidePost(
         post_id = d.post_id,
-        hide = d.hide
+        hide = d.hide,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListCommentLikes): X0DatatypesListCommentLikes = X0DatatypesListCommentLikes(
         comment_id = d.comment_id,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListCommunities): X0DatatypesListCommunities = X0DatatypesListCommunities(
@@ -2060,23 +2118,23 @@ internal class Transformer : MapperGenerator {
         sort = d.sort,
         show_nsfw = d.show_nsfw,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListCommunityPendingFollows): X0DatatypesListCommunityPendingFollows = X0DatatypesListCommunityPendingFollows(
         unread_only = d.unread_only,
         all_communities = d.all_communities,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListCustomEmojis): X0DatatypesListCustomEmojis = X0DatatypesListCustomEmojis(
-        category = d.category
+        category = d.category,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListMedia): X0DatatypesListMedia = X0DatatypesListMedia(
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListMultiCommunities): X0DatatypesListMultiCommunities = X0DatatypesListMultiCommunities(
@@ -2085,14 +2143,14 @@ internal class Transformer : MapperGenerator {
         creator_id = d.creator_id,
         time_range_seconds = d.time_range_seconds,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListNotifications): X0DatatypesListNotifications = X0DatatypesListNotifications(
         type_ = d.type_,
         unread_only = d.unread_only,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListPersonContent): X0DatatypesListPersonContent = X0DatatypesListPersonContent(
@@ -2100,42 +2158,42 @@ internal class Transformer : MapperGenerator {
         person_id = d.person_id,
         username = d.username,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListPersonHidden): X0DatatypesListPersonHidden = X0DatatypesListPersonHidden(
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListPersonLiked): X0DatatypesListPersonLiked = X0DatatypesListPersonLiked(
         type_ = d.type_,
         like_type = d.like_type,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListPersonRead): X0DatatypesListPersonRead = X0DatatypesListPersonRead(
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListPersonSaved): X0DatatypesListPersonSaved = X0DatatypesListPersonSaved(
         type_ = d.type_,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListPostLikes): X0DatatypesListPostLikes = X0DatatypesListPostLikes(
         post_id = d.post_id,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListRegistrationApplications): X0DatatypesListRegistrationApplications = X0DatatypesListRegistrationApplications(
         unread_only = d.unread_only,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListReports): X0DatatypesListReports = X0DatatypesListReports(
@@ -2146,76 +2204,87 @@ internal class Transformer : MapperGenerator {
         page_cursor = d.page_cursor,
         limit = d.limit,
         show_community_rule_violations = d.show_community_rule_violations,
-        my_reports_only = d.my_reports_only
+        my_reports_only = d.my_reports_only,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListTaglines): X0DatatypesListTaglines = X0DatatypesListTaglines(
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesLockComment): X0DatatypesLockComment = X0DatatypesLockComment(
         comment_id = d.comment_id,
         locked = d.locked,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesLockPost): X0DatatypesLockPost = X0DatatypesLockPost(
         post_id = d.post_id,
         locked = d.locked,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesLogin): X0DatatypesLogin = X0DatatypesLogin(
         username_or_email = d.username_or_email,
         password = d.password,
         totp_2fa_token = d.totp_2fa_token,
-        stay_logged_in = d.stay_logged_in
+        stay_logged_in = d.stay_logged_in,
     )
 
     override fun fromUni(d: LemmyapiDatatypesMarkManyPostsAsRead): X0DatatypesMarkManyPostsAsRead = X0DatatypesMarkManyPostsAsRead(
         post_ids = d.post_ids,
-        read = d.read
+        read = d.read,
     )
 
     override fun fromUni(d: LemmyapiDatatypesMarkNotificationAsRead): X0DatatypesMarkNotificationAsRead = X0DatatypesMarkNotificationAsRead(
         notification_id = d.notification_id,
-        read = d.read
+        read = d.read,
     )
 
     override fun fromUni(d: LemmyapiDatatypesMarkPostAsRead): X0DatatypesMarkPostAsRead = X0DatatypesMarkPostAsRead(
         post_id = d.post_id,
-        read = d.read
+        read = d.read,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesModEditPost): X0DatatypesModEditPost = X0DatatypesModEditPost(
+        post_id = d.post_id,
+        nsfw = d.nsfw,
+        tags = d.tags,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesNotePerson): X0DatatypesNotePerson = X0DatatypesNotePerson(
+        person_id = d.person_id,
+        note = d.note,
     )
 
     override fun fromUni(d: LemmyapiDatatypesPasswordChangeAfterReset): X0DatatypesPasswordChangeAfterReset = X0DatatypesPasswordChangeAfterReset(
         token = d.token,
         password = d.password,
-        password_verify = d.password_verify
+        password_verify = d.password_verify,
     )
 
     override fun fromUni(d: LemmyapiDatatypesPasswordReset): X0DatatypesPasswordReset = X0DatatypesPasswordReset(
-        email = d.email
+        email = d.email,
     )
 
     override fun fromUni(d: LemmyapiDatatypesPurgeComment): X0DatatypesPurgeComment = X0DatatypesPurgeComment(
         comment_id = d.comment_id,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesPurgeCommunity): X0DatatypesPurgeCommunity = X0DatatypesPurgeCommunity(
         community_id = d.community_id,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesPurgePerson): X0DatatypesPurgePerson = X0DatatypesPurgePerson(
         person_id = d.person_id,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesPurgePost): X0DatatypesPurgePost = X0DatatypesPurgePost(
         post_id = d.post_id,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesRegister): X0DatatypesRegister = X0DatatypesRegister(
@@ -2228,59 +2297,63 @@ internal class Transformer : MapperGenerator {
         captcha_answer = d.captcha_answer,
         honeypot = d.honeypot,
         answer = d.answer,
-        stay_logged_in = d.stay_logged_in
+        stay_logged_in = d.stay_logged_in,
     )
 
     override fun fromUni(d: LemmyapiDatatypesRemoveComment): X0DatatypesRemoveComment = X0DatatypesRemoveComment(
         comment_id = d.comment_id,
         removed = d.removed,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesRemoveCommunity): X0DatatypesRemoveCommunity = X0DatatypesRemoveCommunity(
         community_id = d.community_id,
         removed = d.removed,
-        reason = d.reason
+        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesRemovePost): X0DatatypesRemovePost = X0DatatypesRemovePost(
         post_id = d.post_id,
         removed = d.removed,
-        reason = d.reason
+        reason = d.reason,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesResendVerificationEmail): X0DatatypesResendVerificationEmail = X0DatatypesResendVerificationEmail(
+        email = d.email,
     )
 
     override fun fromUni(d: LemmyapiDatatypesResolveCommentReport): X0DatatypesResolveCommentReport = X0DatatypesResolveCommentReport(
         report_id = d.report_id,
-        resolved = d.resolved
+        resolved = d.resolved,
     )
 
     override fun fromUni(d: LemmyapiDatatypesResolveCommunityReport): X0DatatypesResolveCommunityReport = X0DatatypesResolveCommunityReport(
         report_id = d.report_id,
-        resolved = d.resolved
+        resolved = d.resolved,
     )
 
     override fun fromUni(d: LemmyapiDatatypesResolveObject): X0DatatypesResolveObject = X0DatatypesResolveObject(
-        q = d.q
+        q = d.q,
     )
 
     override fun fromUni(d: LemmyapiDatatypesResolvePostReport): X0DatatypesResolvePostReport = X0DatatypesResolvePostReport(
         report_id = d.report_id,
-        resolved = d.resolved
+        resolved = d.resolved,
     )
 
     override fun fromUni(d: LemmyapiDatatypesResolvePrivateMessageReport): X0DatatypesResolvePrivateMessageReport = X0DatatypesResolvePrivateMessageReport(
         report_id = d.report_id,
-        resolved = d.resolved
+        resolved = d.resolved,
     )
 
     override fun fromUni(d: LemmyapiDatatypesSaveComment): X0DatatypesSaveComment = X0DatatypesSaveComment(
         comment_id = d.comment_id,
-        save = d.save
+        save = d.save,
     )
 
     override fun fromUni(d: LemmyapiDatatypesSavePost): X0DatatypesSavePost = X0DatatypesSavePost(
         post_id = d.post_id,
-        save = d.save
+        save = d.save,
     )
 
     override fun fromUni(d: LemmyapiDatatypesSaveUserSettings): X0DatatypesSaveUserSettings = X0DatatypesSaveUserSettings(
@@ -2316,7 +2389,7 @@ internal class Transformer : MapperGenerator {
         show_upvote_percentage = d.show_upvote_percentage,
         auto_mark_fetched_posts_as_read = d.auto_mark_fetched_posts_as_read,
         hide_media = d.hide_media,
-        show_person_votes = d.show_person_votes
+        show_person_votes = d.show_person_votes,
     )
 
     override fun fromUni(d: LemmyapiDatatypesSearch): X0DatatypesSearch = X0DatatypesSearch(
@@ -2334,15 +2407,25 @@ internal class Transformer : MapperGenerator {
         disliked_only = d.disliked_only,
         show_nsfw = d.show_nsfw,
         page_cursor = d.page_cursor,
-        limit = d.limit
+        limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesTransferCommunity): X0DatatypesTransferCommunity = X0DatatypesTransferCommunity(
         community_id = d.community_id,
-        person_id = d.person_id
+        person_id = d.person_id,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesUserBlockInstanceCommunitiesParams): X0DatatypesUserBlockInstanceCommunitiesParams = X0DatatypesUserBlockInstanceCommunitiesParams(
+        instance_id = d.instance_id,
+        block = d.block,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesUserBlockInstancePersonsParams): X0DatatypesUserBlockInstancePersonsParams = X0DatatypesUserBlockInstancePersonsParams(
+        instance_id = d.instance_id,
+        block = d.block,
     )
 
     override fun fromUni(d: LemmyapiDatatypesVerifyEmail): X0DatatypesVerifyEmail = X0DatatypesVerifyEmail(
-        token = d.token
+        token = d.token,
     )
 }
