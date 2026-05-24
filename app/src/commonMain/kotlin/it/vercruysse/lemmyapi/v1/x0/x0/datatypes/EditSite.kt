@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
 import it.vercruysse.lemmyapi.enums.FederationMode
+import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.RegistrationMode
@@ -13,7 +14,7 @@ internal data class EditSite(
     val sidebar: String? = null,
     val summary: String? = null,
     val community_creation_admin_only: Boolean? = null,
-    val require_email_verification: Boolean? = null,
+    val email_verification_required: Boolean? = null,
     val application_question: String? = null,
     val private_instance: Boolean? = null,
     val default_theme: String? = null,
@@ -25,6 +26,7 @@ internal data class EditSite(
     val default_comment_sort_type: SortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
     val legal_information: String? = null,
     val application_email_admins: Boolean? = null,
+    val federation_signed_fetch: Boolean? = null,
     val discussion_languages: List<LanguageId>? = null,
     val slur_filter_regex: String? = null,
     val rate_limit_message_max_requests: Long? = null,
@@ -42,8 +44,6 @@ internal data class EditSite(
     val rate_limit_import_user_settings_max_requests: Long? = null,
     val rate_limit_import_user_settings_interval_seconds: Long? = null,
     val federation_enabled: Boolean? = null,
-    val captcha_enabled: Boolean? = null,
-    val captcha_difficulty: String? = null,
     val blocked_urls: List<String>? = null,
     val registration_mode: RegistrationMode? /* "closed" | "require_application" | "open" */ = null,
     val reports_email_admins: Boolean? = null,
@@ -53,7 +53,16 @@ internal data class EditSite(
     val post_downvotes: FederationMode? /* "all" | "local" | "disable" */ = null,
     val comment_upvotes: FederationMode? /* "all" | "local" | "disable" */ = null,
     val comment_downvotes: FederationMode? /* "all" | "local" | "disable" */ = null,
-    val disallow_nsfw_content: Boolean? = null,
-    val disable_email_notifications: Boolean? = null,
+    val nsfw_content_disallowed: Boolean? = null,
+    val email_notifications_disabled: Boolean? = null,
     val suggested_multi_community_id: MultiCommunityId? = null,
+    val image_mode: ImageMode? /* "none" | "store_link_previews" | "proxy_all_images" */ = null,
+    val image_proxy_bypass_domains: String? = null,
+    val image_upload_timeout_seconds: Long? = null,
+    val image_max_thumbnail_size: Long? = null,
+    val image_max_avatar_size: Long? = null,
+    val image_max_banner_size: Long? = null,
+    val image_max_upload_size: Long? = null,
+    val image_allow_video_uploads: Boolean? = null,
+    val image_upload_disabled: Boolean? = null,
 )
