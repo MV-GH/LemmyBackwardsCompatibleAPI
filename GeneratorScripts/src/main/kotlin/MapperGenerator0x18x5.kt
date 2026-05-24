@@ -78,16 +78,6 @@ internal interface MapperGenerator0x18x5 {
     )
     fun toUni(d: CommunityView): it.vercruysse.lemmyapi.datatypes.CommunityView
 
-    fun toUniF(d: Instance): it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState =
-        it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState(
-            id = d.id,
-            domain = d.domain,
-            published_at = d.published,
-            updated_at = d.updated,
-            software = d.software,
-            version = d.version,
-        )
-
     fun toUni(d: SiteMetadata): it.vercruysse.lemmyapi.datatypes.LinkMetadata =
         it.vercruysse.lemmyapi.datatypes.LinkMetadata(
             title = d.title,

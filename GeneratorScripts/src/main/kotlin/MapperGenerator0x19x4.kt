@@ -37,7 +37,6 @@ internal interface MapperGenerator0x19x4 {
     fun toUni(d: GetSiteMetadataResponse): it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse
     fun toUni(d: GetSiteResponse): it.vercruysse.lemmyapi.datatypes.GetSiteResponse
     fun toUni(d: Instance): it.vercruysse.lemmyapi.datatypes.Instance
-    fun toUni(d: InstanceWithFederationState): it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState
     fun toUni(d: Language): it.vercruysse.lemmyapi.datatypes.Language
     fun toUni(d: LinkMetadata): it.vercruysse.lemmyapi.datatypes.LinkMetadata
     fun toUni(d: LocalImage): it.vercruysse.lemmyapi.datatypes.LocalImage
