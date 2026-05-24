@@ -12,7 +12,6 @@ data class VoteView(
     val creator: Person,
     val creator_banned: Boolean,
     val creator_banned_from_community: Boolean,
-    // TODO: to be changed
     val score: Int,
 ) : DatatypeRoot, Identity {
     override val id: Long

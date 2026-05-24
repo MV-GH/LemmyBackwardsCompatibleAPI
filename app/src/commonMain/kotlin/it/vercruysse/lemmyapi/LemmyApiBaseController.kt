@@ -14,7 +14,8 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
         actualVersion,
         baseUrl,
         auth,
-    ) {
+    ),
+    OldRoutes {
     /**
      * Gets the site, and your user data.
      *
@@ -421,14 +422,6 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
      * @POST("admin/ban")
      */
     abstract suspend fun banPerson(form: BanPerson): Result<PersonResponse>
-
-// TODO: remove it
-    /**
-     * Get a list of banned users
-     *
-     * @GET("user/banned")
-     */
-    abstract suspend fun getBannedPersons(): Result<PagedResponse<PersonView>>
 
     /**
      * Block a person.

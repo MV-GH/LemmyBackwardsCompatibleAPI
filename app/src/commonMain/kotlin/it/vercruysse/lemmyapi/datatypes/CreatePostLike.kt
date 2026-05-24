@@ -9,6 +9,5 @@ import it.vercruysse.lemmyapi.CommonParcelize
 @Serializable
 data class CreatePostLike(
     val post_id: PostId,
-    // TODO: update
     val score: Int,
 ) : DatatypeRoot

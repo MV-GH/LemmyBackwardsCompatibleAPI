@@ -8,8 +8,7 @@ import it.vercruysse.lemmyapi.enums.VersionTracker
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 
 // Wanted to keep this as an interface, but interfaces can't keep state
-abstract class LemmyApiBase(httpClient: HttpClient, val version: Version, val baseUrl: String, open var auth: String?) :
-    OldRoutes {
+abstract class LemmyApiBase(httpClient: HttpClient, val version: Version, val baseUrl: String, open var auth: String?) {
     @Suppress("PropertyName")
     val FF = FeatureFlags(version)
 
