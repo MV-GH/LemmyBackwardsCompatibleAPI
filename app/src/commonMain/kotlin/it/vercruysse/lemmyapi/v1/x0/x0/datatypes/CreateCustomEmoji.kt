@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 internal data class CreateCustomEmoji(
     val category: String,
     val shortcode: String,
-    val image_url: String,
+    val image_url: DbUrl,
     val alt_text: String,
     val keywords: List<String>,
 )

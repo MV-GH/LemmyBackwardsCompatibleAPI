@@ -9,6 +9,8 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 
+// TODO: missing fields + mapping
+
 @CommonParcelize
 @Serializable
 data class EditSite(

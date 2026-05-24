@@ -1,9 +1,10 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import it.vercruysse.lemmyapi.enums.FederationMode
+import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.RegistrationMode
 import it.vercruysse.lemmyapi.enums.SortType
-import it.vercruysse.lemmyapi.enums.PostListingMode
-import it.vercruysse.lemmyapi.enums.ListingType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -48,10 +49,10 @@ internal data class EditSite(
     val reports_email_admins: Boolean? = null,
     val content_warning: String? = null,
     val oauth_registration: Boolean? = null,
-    val post_upvotes: RegistrationMode? /* "all" | "local" | "disable" */ = null,
-    val post_downvotes: RegistrationMode? /* "all" | "local" | "disable" */ = null,
-    val comment_upvotes: RegistrationMode? /* "all" | "local" | "disable" */ = null,
-    val comment_downvotes: RegistrationMode? /* "all" | "local" | "disable" */ = null,
+    val post_upvotes: FederationMode? /* "all" | "local" | "disable" */ = null,
+    val post_downvotes: FederationMode? /* "all" | "local" | "disable" */ = null,
+    val comment_upvotes: FederationMode? /* "all" | "local" | "disable" */ = null,
+    val comment_downvotes: FederationMode? /* "all" | "local" | "disable" */ = null,
     val disallow_nsfw_content: Boolean? = null,
     val disable_email_notifications: Boolean? = null,
     val suggested_multi_community_id: MultiCommunityId? = null,
