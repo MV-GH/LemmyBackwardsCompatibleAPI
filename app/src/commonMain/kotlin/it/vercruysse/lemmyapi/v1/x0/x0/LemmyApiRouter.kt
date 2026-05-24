@@ -212,6 +212,9 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
     /** @GET("person") */
     abstract suspend fun getPersonDetails(form: GetPersonDetails): Result<GetPersonDetailsResponse>
 
+    /** @GET("person/list") */
+    abstract suspend fun listPersons(form: ListPersons): Result<PagedResponse<PersonView>>
+
     /** @GET("person/content") */
     abstract suspend fun listPersonContent(form: ListPersonContent): Result<PagedResponse<PostCommentCombinedView>>
 

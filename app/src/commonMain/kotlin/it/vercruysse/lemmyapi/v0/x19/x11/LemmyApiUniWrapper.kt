@@ -1223,4 +1223,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun deleteMediaAdmin(form: it.vercruysse.lemmyapi.datatypes.DeleteImageParams): Result<Unit> = notSupported()
 
     override suspend fun imageHealth(): Result<Unit> = notSupported()
+
+    override suspend fun listPersons(form: it.vercruysse.lemmyapi.datatypes.ListPersons): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PersonView>> = notSupported()
 }

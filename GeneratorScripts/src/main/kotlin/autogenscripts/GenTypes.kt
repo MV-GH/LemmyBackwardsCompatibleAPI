@@ -65,6 +65,7 @@ val fileFieldEnumOverrides = mapOf(
     "PostActions"               to mapOf("notifications" to "PostNotificationsMode"),
     "EditCommunityNotifications" to mapOf("mode" to "CommunityNotificationsMode"),
     "EditPostNotifications"     to mapOf("mode" to "PostNotificationsMode"),
+    "ListPersons"              to mapOf("sort" to "PersonSortType"),
 )
 
 // ============================================================
