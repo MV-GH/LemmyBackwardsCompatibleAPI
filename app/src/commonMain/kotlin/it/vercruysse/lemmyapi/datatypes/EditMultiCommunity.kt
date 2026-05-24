@@ -10,5 +10,6 @@ data class EditMultiCommunity(
     val id: MultiCommunityId,
     val title: String? = null,
     val summary: String? = null,
+    val sidebar: String? = null,
     val deleted: Boolean? = null,
 ) : DatatypeRoot

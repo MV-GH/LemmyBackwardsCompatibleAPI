@@ -567,6 +567,7 @@ internal class Transformer : MapperGenerator {
                 published_at = d.comment_reply.published,
                 kind = NotificationType.Reply,
                 post_id = d.post.id,
+                creator_id = d.creator.id,
             ),
             data = this.toUniCV(d),
         )
@@ -599,6 +600,7 @@ internal class Transformer : MapperGenerator {
                 published_at = d.person_mention.published,
                 kind = NotificationType.Mention,
                 post_id = d.post.id,
+                creator_id = d.creator.id,
             ),
             data = this.toUniPV(d),
         )
@@ -629,6 +631,7 @@ internal class Transformer : MapperGenerator {
                 read = d.private_message.read,
                 published_at = d.private_message.published,
                 kind = NotificationType.PrivateMessage,
+                creator_id = d.creator.id,
             ),
             data = this.toUni(d),
         )
@@ -648,8 +651,8 @@ internal class Transformer : MapperGenerator {
             tagline = if (d.taglines.isEmpty()) null else this.toUni(d = d.taglines.random()),
             oauth_providers = emptyList(),
             admin_oauth_providers = emptyList(),
-            image_upload_disabled = false,
             active_plugins = emptyList(),
+            captcha_enabled = false,
         )
 
     override fun toUni(d: X6DatatypesImageDetails): LemmyapiDatatypesImageDetails =
@@ -803,7 +806,7 @@ internal class Transformer : MapperGenerator {
             infinite_scroll_enabled = d.infinite_scroll_enabled,
             admin = d.admin,
             post_listing_mode = d.post_listing_mode.toUni(),
-            enable_animated_images = d.enable_animated_images,
+            animated_images_enabled = d.enable_animated_images,
             collapse_bot_comments = d.collapse_bot_comments,
             last_donation_notification_at = "",
             show_score = e.score,
@@ -812,7 +815,7 @@ internal class Transformer : MapperGenerator {
             show_upvote_percentage = e.upvote_percentage,
             show_downvotes = if (e.downvotes) VoteShow.Show else VoteShow.Hide,
             hide_media = false,
-            enable_private_messages = true,
+            private_messages_enabled = true,
             default_comment_sort_type = SortType.Active,
             auto_mark_fetched_posts_as_read = false,
             default_post_time_range_seconds = null,
@@ -994,6 +997,7 @@ internal class Transformer : MapperGenerator {
             ap_id = d.ap_id,
             local = d.local,
             removed = false,
+            deleted_by_recipient = false,
         )
 
     override fun toUni(d: X6DatatypesPrivateMessageReport): LemmyapiDatatypesPrivateMessageReport =
@@ -1785,7 +1789,7 @@ internal class Transformer : MapperGenerator {
             open_links_in_new_tab = d.open_links_in_new_tab,
             infinite_scroll_enabled = d.infinite_scroll_enabled,
             post_listing_mode = V0PostListingMode.fromUniNullable(d.post_listing_mode),
-            enable_animated_images = d.enable_animated_images,
+            enable_animated_images = d.animated_images_enabled,
             collapse_bot_comments = d.collapse_bot_comments,
             show_scores = d.show_score,
             show_upvotes = d.show_upvotes,

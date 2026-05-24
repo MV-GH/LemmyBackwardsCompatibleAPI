@@ -688,7 +688,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
                 PagedResponse(resp.private_messages.map(transformer::toUniPMV))
             }
 
-        NotificationDataType.Subscribed -> Result.success(PagedResponse(emptyList()))
+        NotificationDataType.Subscribed, NotificationDataType.ModAction -> Result.success(PagedResponse(emptyList()))
     }
 
     /**
@@ -1072,6 +1072,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         val getPersonDetailsForm = GetPersonDetails(
             username = form.username,
             person_id = form.person_id,
+            community_id = form.community_id,
             page = form.page,
             limit = form.limit,
             auth = auth,

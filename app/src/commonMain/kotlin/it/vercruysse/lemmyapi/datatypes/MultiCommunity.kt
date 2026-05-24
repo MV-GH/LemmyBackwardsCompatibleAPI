@@ -22,4 +22,5 @@ data class MultiCommunity(
     val subscribers: Long,
     val subscribers_local: Long,
     val communities: Long,
+    val sidebar: String? = null,
 ) : DatatypeRoot

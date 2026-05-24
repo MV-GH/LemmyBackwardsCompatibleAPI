@@ -14,6 +14,9 @@ internal data class GetComments(
     val limit: Long? = null,
     val community_id: CommunityId? = null,
     val community_name: String? = null,
+    val creator_id: PersonId? = null,
+    val creator_username: String? = null,
     val post_id: PostId? = null,
     val parent_id: CommentId? = null,
+    val search_term: String? = null,
 )

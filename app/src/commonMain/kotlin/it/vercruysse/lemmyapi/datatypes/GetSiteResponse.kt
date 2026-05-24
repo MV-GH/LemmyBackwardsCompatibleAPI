@@ -20,8 +20,8 @@ data class GetSiteResponse(
     /** Added in 1.0.0 */
     val admin_oauth_providers: List<AdminOAuthProvider>,
     /** Added in 1.0.0 */
-    val image_upload_disabled: Boolean,
-    /** Added in 1.0.0 */
     val active_plugins: List<PluginMetadata>,
     val last_application_duration_seconds: Long? = null,
+    /** Added in 1.0.0 */
+    val captcha_enabled: Boolean,
     ) : DatatypeRoot

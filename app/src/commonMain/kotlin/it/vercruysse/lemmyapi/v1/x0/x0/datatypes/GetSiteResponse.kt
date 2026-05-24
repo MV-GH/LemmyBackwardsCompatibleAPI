@@ -13,7 +13,7 @@ internal data class GetSiteResponse(
     val oauth_providers: List<PublicOAuthProvider>,
     val admin_oauth_providers: List<AdminOAuthProvider>,
     val blocked_urls: List<LocalSiteUrlBlocklist>,
-    val image_upload_disabled: Boolean,
     val active_plugins: List<PluginMetadata>,
     val last_application_duration_seconds: Long? = null,
+    val captcha_enabled: Boolean,
 )

@@ -318,7 +318,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             admin = false,
             post_listing_mode = PostListingMode.Card,
             totp_2fa_enabled = d.let { this.mapLocalUserTotp(it) },
-            enable_animated_images = true,
+            animated_images_enabled = true,
             collapse_bot_comments = false,
             last_donation_notification_at = "",
             show_score = d.show_scores,
@@ -327,7 +327,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             show_person_votes = d.show_scores,
             show_upvote_percentage = d.show_scores,
             hide_media = false,
-            enable_private_messages = true,
+            private_messages_enabled = true,
             default_comment_sort_type = SortType.Active,
             auto_mark_fetched_posts_as_read = false,
             default_post_time_range_seconds = 0,
@@ -453,8 +453,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
             tagline = if (d.taglines.isEmpty()) null else this.toUni(d = d.taglines.random()),
             oauth_providers = emptyList(),
             admin_oauth_providers = emptyList(),
-            image_upload_disabled = false,
             active_plugins = emptyList(),
+            captcha_enabled = false,
         )
 
     override fun toUni(d: X5DatatypesLocalSite, counts: X5DatatypesSiteAggregates): LemmyapiDatatypesLocalSite =
@@ -693,6 +693,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
                 published_at = addTimezoneOffset(d.comment_reply.published),
                 kind = NotificationType.Reply,
                 post_id = d.post.id,
+                creator_id = d.creator.id,
             ),
             data = this.toUniCV(d),
         )
@@ -725,6 +726,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
                 published_at = addTimezoneOffset(d.person_mention.published),
                 kind = NotificationType.Mention,
                 post_id = d.post.id,
+                creator_id = d.creator.id,
             ),
             data = this.toUniPV(d),
         )
@@ -755,6 +757,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
                 read = d.private_message.read,
                 published_at = addTimezoneOffset(d.private_message.published),
                 kind = NotificationType.PrivateMessage,
+                creator_id = d.creator.id,
             ),
             data = this.toUni(d),
         )
@@ -887,6 +890,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             ap_id = d.ap_id,
             local = d.local,
             removed = false,
+            deleted_by_recipient = false,
         )
 
     override fun toUni(d: X5DatatypesPrivateMessageReport): LemmyapiDatatypesPrivateMessageReport =

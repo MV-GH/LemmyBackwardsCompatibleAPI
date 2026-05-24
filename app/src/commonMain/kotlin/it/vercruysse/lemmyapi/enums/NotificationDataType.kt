@@ -21,4 +21,7 @@ enum class NotificationDataType(override val minimumVersion: Version = V1_0_0, o
 
     @SerialName("subscribed")
     Subscribed,
+
+    @SerialName("mod_action")
+    ModAction,
 }

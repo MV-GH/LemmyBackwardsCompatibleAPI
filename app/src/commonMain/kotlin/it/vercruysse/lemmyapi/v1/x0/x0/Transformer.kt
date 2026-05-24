@@ -869,9 +869,9 @@ internal class Transformer : MapperGenerator {
         tagline = d.tagline?.let { this.toUni(d = it) },
         oauth_providers = d.oauth_providers.map { this.toUni(d = it) },
         admin_oauth_providers = d.admin_oauth_providers.map { this.toUni(d = it) },
-        image_upload_disabled = d.image_upload_disabled,
         active_plugins = d.active_plugins.map { this.toUni(d = it) },
         last_application_duration_seconds = d.last_application_duration_seconds,
+        captcha_enabled = d.captcha_enabled,
     )
 
     override fun toUni(d: X0DatatypesImageDetails): LemmyapiDatatypesImageDetails = LemmyapiDatatypesImageDetails(
@@ -1040,8 +1040,8 @@ internal class Transformer : MapperGenerator {
         admin = d.admin,
         post_listing_mode = d.post_listing_mode,
         totp_2fa_enabled = d.totp_2fa_enabled,
-        enable_animated_images = d.enable_animated_images,
-        enable_private_messages = d.enable_private_messages,
+        animated_images_enabled = d.animated_images_enabled,
+        private_messages_enabled = d.private_messages_enabled,
         collapse_bot_comments = d.collapse_bot_comments,
         default_comment_sort_type = d.default_comment_sort_type,
         auto_mark_fetched_posts_as_read = d.auto_mark_fetched_posts_as_read,
@@ -1089,6 +1089,7 @@ internal class Transformer : MapperGenerator {
         reason = d.reason,
         expires_at = d.expires_at,
         published_at = d.published_at,
+        bulk_action_parent_id = d.bulk_action_parent_id,
     )
 
     override fun toUni(d: X0DatatypesModlogView): LemmyapiDatatypesModlogView = LemmyapiDatatypesModlogView(
@@ -1117,6 +1118,7 @@ internal class Transformer : MapperGenerator {
         subscribers = d.subscribers,
         subscribers_local = d.subscribers_local,
         communities = d.communities,
+        sidebar = d.sidebar,
     )
 
     override fun toUni(d: X0DatatypesMultiCommunityEntry): LemmyapiDatatypesMultiCommunityEntry = LemmyapiDatatypesMultiCommunityEntry(
@@ -1168,13 +1170,14 @@ internal class Transformer : MapperGenerator {
         post_id = d.post_id,
         private_message_id = d.private_message_id,
         modlog_id = d.modlog_id,
+        creator_id = d.creator_id,
     )
 
     override fun toUni(d: X0DatatypesNotificationData): LemmyapiDatatypesNotificationData = super.toUni(d)
 
     override fun toUni(d: X0DatatypesNotificationView): LemmyapiDatatypesNotificationView = LemmyapiDatatypesNotificationView(
         notification = this.toUni(d = d.notification),
-        data = d.let { toUni(d.data) },
+        data = this.toUni(d.data),
     )
 
     override fun toUni(d: X0DatatypesOAuthAccount): LemmyapiDatatypesOAuthAccount = LemmyapiDatatypesOAuthAccount(
@@ -1368,6 +1371,7 @@ internal class Transformer : MapperGenerator {
         ap_id = d.ap_id,
         local = d.local,
         removed = d.removed,
+        deleted_by_recipient = d.deleted_by_recipient,
     )
 
     override fun toUni(d: X0DatatypesPrivateMessageReport): LemmyapiDatatypesPrivateMessageReport = LemmyapiDatatypesPrivateMessageReport(
@@ -1691,6 +1695,7 @@ internal class Transformer : MapperGenerator {
         name = d.name,
         title = d.title,
         summary = d.summary,
+        sidebar = d.sidebar,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateOAuthProvider): X0DatatypesCreateOAuthProvider = X0DatatypesCreateOAuthProvider(
@@ -1898,6 +1903,7 @@ internal class Transformer : MapperGenerator {
         id = d.id,
         title = d.title,
         summary = d.summary,
+        sidebar = d.sidebar,
         deleted = d.deleted,
     )
 
@@ -2021,8 +2027,11 @@ internal class Transformer : MapperGenerator {
         limit = d.limit,
         community_id = d.community_id,
         community_name = d.community_name,
+        creator_id = d.creator_id,
+        creator_username = d.creator_username,
         post_id = d.post_id,
         parent_id = d.parent_id,
+        search_term = d.search_term,
     )
 
     override fun fromUni(d: LemmyapiDatatypesGetCommunity): X0DatatypesGetCommunity = X0DatatypesGetCommunity(
@@ -2045,6 +2054,8 @@ internal class Transformer : MapperGenerator {
         other_person_id = d.other_person_id,
         post_id = d.post_id,
         comment_id = d.comment_id,
+        show_bulk = d.show_bulk,
+        bulk_action_parent_id = d.bulk_action_parent_id,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
@@ -2070,6 +2081,8 @@ internal class Transformer : MapperGenerator {
         time_range_seconds = d.time_range_seconds,
         community_id = d.community_id,
         community_name = d.community_name,
+        creator_id = d.creator_id,
+        creator_username = d.creator_username,
         multi_community_id = d.multi_community_id,
         multi_community_name = d.multi_community_name,
         show_hidden = d.show_hidden,
@@ -2078,6 +2091,9 @@ internal class Transformer : MapperGenerator {
         hide_media = d.hide_media,
         mark_as_read = d.mark_as_read,
         no_comments_only = d.no_comments_only,
+        search_term = d.search_term,
+        search_title_only = d.search_title_only,
+        search_url_only = d.search_url_only,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
@@ -2115,7 +2131,11 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesListCommunities): X0DatatypesListCommunities = X0DatatypesListCommunities(
         type_ = d.type_,
         sort = d.sort,
+        time_range_seconds = d.time_range_seconds,
         show_nsfw = d.show_nsfw,
+        multi_community_id = d.multi_community_id,
+        search_term = d.search_term,
+        search_title_only = d.search_title_only,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
@@ -2141,6 +2161,8 @@ internal class Transformer : MapperGenerator {
         sort = d.sort,
         creator_id = d.creator_id,
         time_range_seconds = d.time_range_seconds,
+        search_term = d.search_term,
+        search_title_only = d.search_title_only,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
@@ -2148,6 +2170,7 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesListNotifications): X0DatatypesListNotifications = X0DatatypesListNotifications(
         type_ = d.type_,
         unread_only = d.unread_only,
+        creator_id = d.creator_id,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
@@ -2156,6 +2179,8 @@ internal class Transformer : MapperGenerator {
         type_ = d.type_,
         person_id = d.person_id,
         username = d.username,
+        community_id = d.community_id,
+        community_name = d.community_name,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
@@ -2303,6 +2328,7 @@ internal class Transformer : MapperGenerator {
         comment_id = d.comment_id,
         removed = d.removed,
         reason = d.reason,
+        remove_children = d.remove_children,
     )
 
     override fun fromUni(d: LemmyapiDatatypesRemoveCommunity): X0DatatypesRemoveCommunity = X0DatatypesRemoveCommunity(
@@ -2315,6 +2341,7 @@ internal class Transformer : MapperGenerator {
         post_id = d.post_id,
         removed = d.removed,
         reason = d.reason,
+        remove_children = d.remove_children,
     )
 
     override fun fromUni(d: LemmyapiDatatypesResendVerificationEmail): X0DatatypesResendVerificationEmail = X0DatatypesResendVerificationEmail(
@@ -2379,8 +2406,8 @@ internal class Transformer : MapperGenerator {
         blocking_keywords = d.blocking_keywords,
         open_links_in_new_tab = d.open_links_in_new_tab,
         infinite_scroll_enabled = d.infinite_scroll_enabled,
-        enable_animated_images = d.enable_animated_images,
-        enable_private_messages = d.enable_private_messages,
+        animated_images_enabled = d.animated_images_enabled,
+        private_messages_enabled = d.private_messages_enabled,
         collapse_bot_comments = d.collapse_bot_comments,
         show_score = d.show_score,
         show_upvotes = d.show_upvotes,

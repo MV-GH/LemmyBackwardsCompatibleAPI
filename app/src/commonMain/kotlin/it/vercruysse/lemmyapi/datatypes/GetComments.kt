@@ -22,8 +22,14 @@ data class GetComments(
     val limit: Long? = null,
     val community_id: CommunityId? = null,
     val community_name: String? = null,
+    /** Added in 1.0.0 */
+    val creator_id: PersonId? = null,
+    /** Added in 1.0.0 */
+    val creator_username: String? = null,
     val post_id: PostId? = null,
     val parent_id: CommentId? = null,
+    /** Added in 1.0.0 */
+    val search_term: String? = null,
     /** Removed in 1.0.0 */
     val saved_only: Boolean? = null,
     /** Removed in 1.0.0 */
