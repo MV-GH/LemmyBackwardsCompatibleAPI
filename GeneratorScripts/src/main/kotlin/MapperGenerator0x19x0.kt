@@ -120,7 +120,6 @@ internal interface MapperGenerator0x19x0 {
     fun toUni(d: GetSiteMetadataResponse): it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse
 
     fun toUni(d: Instance): it.vercruysse.lemmyapi.datatypes.Instance
-    fun toUni(d: InstanceWithFederationState): it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState
     fun toUni(d: Language): it.vercruysse.lemmyapi.datatypes.Language
 
     fun toUni(d: LocalSiteRateLimit): it.vercruysse.lemmyapi.datatypes.LocalSiteRateLimit
