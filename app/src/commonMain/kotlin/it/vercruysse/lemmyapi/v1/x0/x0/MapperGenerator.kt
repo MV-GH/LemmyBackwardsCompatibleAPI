@@ -160,13 +160,18 @@ internal interface MapperGenerator {
     // body mappings
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddAdmin): AddAdmin
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AddModToCommunity): AddModToCommunity
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AdminAllowInstanceParams): AdminAllowInstanceParams
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AdminBlockInstanceParams): AdminBlockInstanceParams
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AdminListUsers): AdminListUsers
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ApproveCommunityPendingFollower): ApproveCommunityPendingFollower
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ApproveRegistrationApplication): ApproveRegistrationApplication
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.AuthenticateWithOauth): AuthenticateWithOauth
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BanFromCommunity): BanFromCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BanPerson): BanPerson
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BlockCommunity): BlockCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.BlockPerson): BlockPerson
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ChangePassword): ChangePassword
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): CommunityIdQuery
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateComment): CreateComment
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateCommentLike): CreateCommentLike
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateCommentReport): CreateCommentReport
@@ -249,6 +254,8 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): MarkManyPostsAsRead
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead): MarkNotificationAsRead
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): MarkPostAsRead
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ModEditPost): ModEditPost
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.NotePerson): NotePerson
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset): PasswordChangeAfterReset
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordReset): PasswordReset
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgeComment): PurgeComment
@@ -259,6 +266,7 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.RemoveComment): RemoveComment
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.RemoveCommunity): RemoveCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.RemovePost): RemovePost
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResendVerificationEmail): ResendVerificationEmail
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolveCommentReport): ResolveCommentReport
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolveCommunityReport): ResolveCommunityReport
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolveObject): ResolveObject
@@ -269,5 +277,7 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.SaveUserSettings): SaveUserSettings
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.Search): Search
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.TransferCommunity): TransferCommunity
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.UserBlockInstanceCommunitiesParams): UserBlockInstanceCommunitiesParams
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.UserBlockInstancePersonsParams): UserBlockInstancePersonsParams
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.VerifyEmail): VerifyEmail
 }
