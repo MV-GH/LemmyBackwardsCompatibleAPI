@@ -709,7 +709,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("user/password_reset")
      */
-    override suspend fun resetPassword(form: it.vercruysse.lemmyapi.datatypes.PasswordReset): Result<Unit> =
+    override suspend fun resetPassword(form: it.vercruysse.lemmyapi.datatypes.ResetPassword): Result<Unit> =
         api.resetPassword(transformer.fromUni(form))
 
     /**
@@ -717,7 +717,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("user/password_change")
      */
-    override suspend fun changePasswordAfterReset(form: it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset): Result<Unit> =
+    override suspend fun changePasswordAfterReset(form: it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset): Result<Unit> =
         api.changePasswordAfterReset(transformer.fromUni(form))
 
     /**

@@ -2,9 +2,7 @@
 
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.*
 
-import io.mcarle.konvert.api.Konfig
 import io.mcarle.konvert.api.Konvert
-import io.mcarle.konvert.api.Konverter
 import io.mcarle.konvert.api.Mapping
 
 //@Konverter(
@@ -266,8 +264,8 @@ internal interface MapperGenerator1x0x0 {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): MarkManyPostsAsRead
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead): MarkNotificationAsRead
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): MarkPostAsRead
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset): PasswordChangeAfterReset
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordReset): PasswordReset
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset): ChangePasswordAfterReset
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResetPassword): ResetPassword
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgeComment): PurgeComment
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgeCommunity): PurgeCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgePerson): PurgePerson

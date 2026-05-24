@@ -98,8 +98,8 @@ import it.vercruysse.lemmyapi.datatypes.LockPost as LemmyapiDatatypesLockPost
 import it.vercruysse.lemmyapi.datatypes.Login as LemmyapiDatatypesLogin
 import it.vercruysse.lemmyapi.datatypes.LoginResponse as LemmyapiDatatypesLoginResponse
 import it.vercruysse.lemmyapi.datatypes.MyUserInfo as LemmyapiDatatypesMyUserInfo
-import it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
-import it.vercruysse.lemmyapi.datatypes.PasswordReset as LemmyapiDatatypesPasswordReset
+import it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
+import it.vercruysse.lemmyapi.datatypes.ResetPassword as LemmyapiDatatypesPasswordReset
 import it.vercruysse.lemmyapi.datatypes.Person as LemmyapiDatatypesPerson
 import it.vercruysse.lemmyapi.datatypes.PersonResponse as LemmyapiDatatypesPersonResponse
 import it.vercruysse.lemmyapi.datatypes.PersonView as LemmyapiDatatypesPersonView

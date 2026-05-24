@@ -130,8 +130,8 @@ internal interface MapperGenerator0x19x4 {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.LockPost): LockPost
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.Login): Login
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): MarkPostAsRead
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset): PasswordChangeAfterReset
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PasswordReset): PasswordReset
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset): PasswordChangeAfterReset
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResetPassword): PasswordReset
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgeComment): PurgeComment
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgeCommunity): PurgeCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.PurgePerson): PurgePerson

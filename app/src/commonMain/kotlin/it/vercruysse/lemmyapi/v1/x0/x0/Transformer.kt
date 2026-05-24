@@ -168,8 +168,8 @@ import it.vercruysse.lemmyapi.datatypes.Notification as LemmyapiDatatypesNotific
 import it.vercruysse.lemmyapi.datatypes.NotificationData as LemmyapiDatatypesNotificationData
 import it.vercruysse.lemmyapi.datatypes.NotificationView as LemmyapiDatatypesNotificationView
 import it.vercruysse.lemmyapi.datatypes.OAuthAccount as LemmyapiDatatypesOAuthAccount
-import it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
-import it.vercruysse.lemmyapi.datatypes.PasswordReset as LemmyapiDatatypesPasswordReset
+import it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
+import it.vercruysse.lemmyapi.datatypes.ResetPassword as LemmyapiDatatypesPasswordReset
 import it.vercruysse.lemmyapi.datatypes.PendingFollow as LemmyapiDatatypesPendingFollow
 import it.vercruysse.lemmyapi.datatypes.PendingFollowerView as LemmyapiDatatypesPendingFollowerView
 import it.vercruysse.lemmyapi.datatypes.Person as LemmyapiDatatypesPerson
@@ -398,8 +398,8 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.Notification as X0DatatypesNoti
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.NotificationData as X0DatatypesNotificationData
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.NotificationView as X0DatatypesNotificationView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.OAuthAccount as X0DatatypesOAuthAccount
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PasswordChangeAfterReset as X0DatatypesPasswordChangeAfterReset
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PasswordReset as X0DatatypesPasswordReset
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ChangePasswordAfterReset as X0DatatypesPasswordChangeAfterReset
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResetPassword as X0DatatypesPasswordReset
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PendingFollow as X0DatatypesPendingFollow
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PendingFollowerView as X0DatatypesPendingFollowerView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.Person as X0DatatypesPerson

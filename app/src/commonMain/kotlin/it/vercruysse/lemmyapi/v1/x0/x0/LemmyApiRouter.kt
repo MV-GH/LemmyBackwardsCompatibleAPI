@@ -237,10 +237,10 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
     abstract suspend fun getCaptcha(): Result<GetCaptchaResponse>
 
     /** @POST("account/auth/password_reset") */
-    abstract suspend fun resetPassword(form: PasswordReset): Result<Unit>
+    abstract suspend fun resetPassword(form: ResetPassword): Result<Unit>
 
     /** @POST("account/auth/password_change") */
-    abstract suspend fun changePasswordAfterReset(form: PasswordChangeAfterReset): Result<Unit>
+    abstract suspend fun changePasswordAfterReset(form: ChangePasswordAfterReset): Result<Unit>
 
     /** @PUT("account/auth/change_password") */
     abstract suspend fun changePassword(form: ChangePassword): Result<LoginResponse>
