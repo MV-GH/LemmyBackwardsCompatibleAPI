@@ -5,8 +5,6 @@ import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.enums.PostNotificationsMode
 import kotlinx.serialization.Serializable
 
-// TODO: voting changes
-
 @CommonParcelize
 @Serializable
 data class PostActions(
