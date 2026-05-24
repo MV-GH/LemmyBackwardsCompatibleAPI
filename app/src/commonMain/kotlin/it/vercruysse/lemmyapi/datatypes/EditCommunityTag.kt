@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EditCommunityTag(
     val tag_id: CommunityTagId,
-    val display_name: String,
+    val display_name: String? = null,
     val summary: String? = null,
     val color: String? /* "color01" | "color02" | "color03" | "color04" | "color05" | "color06" | "color07" | "color08" | "color09" | "color10" */ = null,
     ): DatatypeRoot
