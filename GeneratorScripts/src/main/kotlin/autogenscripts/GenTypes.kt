@@ -37,6 +37,7 @@ val globalFieldEnums = mapOf(
     "comment_upvotes" to "FederationMode",
     "comment_downvotes" to "FederationMode",
     "show_downvotes" to "VoteShow",
+    "image_mode" to "ImageMode",
     // Defaults for ambiguous fields overridden per file below
     "type_" to "ListingType",
     "sort" to "SortType",
