@@ -9,7 +9,7 @@ plugins {
     id("com.google.devtools.ksp") version ("2.3.8")
     id("com.vanniktech.maven.publish") version "0.33.0"
     id("com.github.ben-manes.versions") version "0.54.0"
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     id("kotlin-parcelize")
 }
 
@@ -17,14 +17,6 @@ repositories {
     mavenCentral()
     gradlePluginPortal()
     google()
-}
-
-android {
-    namespace = "it.vercruysse.lemmyapi"
-    compileSdk = 35
-    defaultConfig {
-        minSdk = 21
-    }
 }
 
 kotlin {
@@ -38,9 +30,15 @@ kotlin {
         }
     }
 
-    androidTarget {
+    android {
+        namespace = "it.vercruysse.lemmyapi"
+        compileSdk = 35
+        minSdk = 21
         compilerOptions {
-            freeCompilerArgs.addAll("-P", "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=it.vercruysse.lemmyapi.CommonParcelize")
+            freeCompilerArgs.addAll(
+                "-P",
+                "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=it.vercruysse.lemmyapi.CommonParcelize"
+            )
         }
     }
 

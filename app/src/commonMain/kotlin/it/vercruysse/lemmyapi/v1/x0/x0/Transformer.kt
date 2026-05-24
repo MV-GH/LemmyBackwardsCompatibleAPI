@@ -1464,7 +1464,6 @@ internal class Transformer : MapperGenerator {
         ap_id = d.ap_id,
         last_refreshed_at = d.last_refreshed_at,
         inbox_url = d.inbox_url,
-        public_key = d.public_key,
         instance_id = d.instance_id,
         content_warning = d.content_warning,
     )
