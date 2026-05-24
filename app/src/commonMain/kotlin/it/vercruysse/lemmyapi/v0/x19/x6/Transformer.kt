@@ -344,8 +344,8 @@ internal class Transformer : MapperGenerator {
     override fun toUni(d: X6DatatypesBanPersonResponse): it.vercruysse.lemmyapi.datatypes.PersonResponse =
         it.vercruysse.lemmyapi.datatypes.PersonResponse(person_view = this.toUni(d = d.person_view))
 
-    override fun toUni(d: X6DatatypesBlockCommunityResponse): it.vercruysse.lemmyapi.datatypes.CommunityResponse =
-        it.vercruysse.lemmyapi.datatypes.CommunityResponse(community_view = this.toUni(d = d.community_view), discussion_languages = emptyList())
+    override fun toUni(d: X6DatatypesBlockCommunityResponse): LemmyapiDatatypesCommunityResponse =
+        LemmyapiDatatypesCommunityResponse(community_view = this.toUni(d = d.community_view), discussion_languages = emptyList())
 
     override fun toUni(d: X6DatatypesBlockPersonResponse): it.vercruysse.lemmyapi.datatypes.PersonResponse =
         it.vercruysse.lemmyapi.datatypes.PersonResponse(person_view = this.toUni(d = d.person_view))
