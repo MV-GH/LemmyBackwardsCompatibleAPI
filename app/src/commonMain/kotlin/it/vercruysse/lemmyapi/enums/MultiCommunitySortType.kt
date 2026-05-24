@@ -7,11 +7,24 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class MultiCommunitySortType(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
-    @SerialName("new") New,
-    @SerialName("old") Old,
-    @SerialName("name_asc") NameAsc,
-    @SerialName("name_desc") NameDesc,
-    @SerialName("communities") Communities,
-    @SerialName("subscribers") Subscribers,
-    @SerialName("subscribers_local") SubscribersLocal,
+    @SerialName("new")
+    New,
+
+    @SerialName("old")
+    Old,
+
+    @SerialName("name_asc")
+    NameAsc,
+
+    @SerialName("name_desc")
+    NameDesc,
+
+    @SerialName("communities")
+    Communities,
+
+    @SerialName("subscribers")
+    Subscribers,
+
+    @SerialName("subscribers_local")
+    SubscribersLocal,
 }

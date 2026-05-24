@@ -17,7 +17,7 @@ data class PrivateMessage(
     val content: String,
     val deleted: Boolean,
     /** Removed in 1.0.0 */
-    val read: Boolean,
+    val read: Boolean = false,
     val published_at: String,
     val updated_at: String? = null,
     val ap_id: String,

@@ -4,9 +4,9 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "2.1.10"
+    kotlin("plugin.serialization") version "2.3.21"
     id("org.jmailen.kotlinter") version "5.0.1"
-    id("com.google.devtools.ksp") version ("2.1.10-1.0.30")
+    id("com.google.devtools.ksp") version ("2.3.8")
     id("com.vanniktech.maven.publish") version "0.33.0"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.android.library")
@@ -47,12 +47,14 @@ kotlin {
     linuxX64()
     linuxArm64()
     mingwX64()
-    macosX64()
     macosArm64()
+    iosSimulatorArm64()
     iosX64()
     iosArm64()
-    watchosX64()
+    watchosSimulatorArm64()
+    watchosArm32()
     watchosArm64()
+    watchosDeviceArm64()
 
     js {
         nodejs()
@@ -122,19 +124,6 @@ kotlin {
         }
     }
 
-    val publicationsFromMainHost = listOf(jvm(), js(), androidTarget()).map { it.name } + "kotlinMultiplatform"
-
-    publishing {
-        publications {
-            matching { it.name in publicationsFromMainHost }.all {
-                val targetPublication = this@all
-                tasks.withType<AbstractPublishToMaven>()
-                    .matching { it.publication == targetPublication }
-                    .configureEach { onlyIf { getHostOsName() == OS.LINUX } }
-            }
-        }
-    }
-
     targets.configureEach {
         compilations.configureEach {
             compileTaskProvider.configure {
@@ -143,6 +132,19 @@ kotlin {
                     freeCompilerArgs.add("-Xexpect-actual-classes")
                 }
             }
+        }
+    }
+}
+
+val publicationsFromMainHost = listOf("jvm", "js", "android", "kotlinMultiplatform")
+
+publishing {
+    publications {
+        matching { it.name in publicationsFromMainHost }.all {
+            val targetPublication = this@all
+            tasks.withType<AbstractPublishToMaven>()
+                .matching { it.publication == targetPublication }
+                .configureEach { onlyIf { getHostOsName() == OS.LINUX } }
         }
     }
 }

@@ -406,15 +406,15 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
                     val allReports = mutableListOf<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>()
 
                     allReports.addAll(
-                        postsResp.post_reports.map(transformer::toUni)
+                        postsResp.post_reports.map(transformer::toUni),
                     )
 
                     allReports.addAll(
-                        commentsResp.comment_reports.map(transformer::toUni)
+                        commentsResp.comment_reports.map(transformer::toUni),
                     )
 
                     allReports.addAll(
-                        privateMessagesResp.private_message_reports.map(transformer::toUni)
+                        privateMessagesResp.private_message_reports.map(transformer::toUni),
                     )
 
                     PagedResponse(allReports)

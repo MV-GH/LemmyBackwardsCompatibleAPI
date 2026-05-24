@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.enums
 
-import it.vercruysse.lemmyapi.enums.SearchType as UniSearchType
 import kotlinx.serialization.Serializable
+import it.vercruysse.lemmyapi.enums.SearchType as UniSearchType
 
 @Serializable
 internal enum class SearchType {

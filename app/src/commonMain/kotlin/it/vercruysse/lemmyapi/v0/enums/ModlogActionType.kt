@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.enums
 
-import it.vercruysse.lemmyapi.enums.ModlogActionType as UniModlogActionType
 import kotlinx.serialization.Serializable
+import it.vercruysse.lemmyapi.enums.ModlogActionType as UniModlogActionType
 
 @Serializable
 internal enum class ModlogActionType {

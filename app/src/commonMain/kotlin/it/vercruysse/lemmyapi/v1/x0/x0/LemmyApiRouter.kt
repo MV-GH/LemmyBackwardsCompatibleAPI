@@ -314,7 +314,6 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
     /** @GET("account/media/list") */
     abstract suspend fun listMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
 
-
     /** @POST("admin/add") */
     abstract suspend fun addAdmin(form: AddAdmin): Result<AddAdminResponse>
 
@@ -464,6 +463,4 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
 
     /** @DELETE("site/icon") */
     abstract suspend fun deleteSiteIcon(): Result<Unit>
-
 }
-

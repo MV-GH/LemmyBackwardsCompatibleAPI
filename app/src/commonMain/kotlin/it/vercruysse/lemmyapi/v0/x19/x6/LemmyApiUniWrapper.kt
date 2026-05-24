@@ -406,15 +406,15 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
                     val allReports = mutableListOf<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>()
 
                     allReports.addAll(
-                        postsResp.post_reports.map(transformer::toUni)
+                        postsResp.post_reports.map(transformer::toUni),
                     )
 
                     allReports.addAll(
-                        commentsResp.comment_reports.map(transformer::toUni)
+                        commentsResp.comment_reports.map(transformer::toUni),
                     )
 
                     allReports.addAll(
-                        privateMessagesResp.private_message_reports.map(transformer::toUni)
+                        privateMessagesResp.private_message_reports.map(transformer::toUni),
                     )
 
                     PagedResponse(allReports)
@@ -974,7 +974,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun listMedia(
         form: it.vercruysse.lemmyapi.datatypes.ListMedia,
-    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> = notSupported()
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> =
+        api.listMedia(transformer.fromUni(form)).map { PagedResponse(it.images.map(transformer::toUni)) }
 
     /**
      * List all the media known to your instance.
@@ -983,7 +984,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun listMediaAdmin(
         form: it.vercruysse.lemmyapi.datatypes.ListMedia,
-    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> = notSupported()
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> =
+        api.listAllMedia(transformer.fromUni(form)).map { PagedResponse(it.images.map(transformer::toUni)) }
 
     /**
      * Hide a post from list views.
