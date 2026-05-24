@@ -10,6 +10,7 @@ import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.enums.FederationMode
+import it.vercruysse.lemmyapi.enums.ImageMode
 
 @CommonParcelize
 @Serializable
@@ -18,7 +19,7 @@ data class LocalSite(
     val site_id: SiteId,
     val site_setup: Boolean,
     val community_creation_admin_only: Boolean,
-    val require_email_verification: Boolean,
+    val email_verification_required: Boolean,
     val application_question: String? = null,
     val private_instance: Boolean,
     val default_theme: String,
@@ -27,8 +28,6 @@ data class LocalSite(
     val application_email_admins: Boolean,
     val slur_filter_regex: String? = null,
     val federation_enabled: Boolean,
-    val captcha_enabled: Boolean,
-    val captcha_difficulty: String,
     val published_at: String,
     val updated_at: String? = null,
     val registration_mode: RegistrationMode /* "Closed" | "RequireApplication" | "Open" */,
@@ -43,7 +42,7 @@ data class LocalSite(
     val comment_upvotes: FederationMode /* "All" | "Local" | "Disable" */,
     val comment_downvotes: FederationMode /* "All" | "Local" | "Disable" */,
     val default_post_time_range_seconds: Long? = null,
-    val disallow_nsfw_content: Boolean,
+    val nsfw_content_disallowed: Boolean,
     val users: Long,
     val posts: Long,
     val comments: Long,
@@ -52,7 +51,16 @@ data class LocalSite(
     val users_active_week: Long,
     val users_active_month: Long,
     val users_active_half_year: Long,
-    val disable_email_notifications: Boolean,
+    val email_notifications_disabled: Boolean,
     val suggested_multi_community_id: MultiCommunityId? = null,
     val default_items_per_page: Long,
+    val image_mode: ImageMode /* "none" | "store_link_previews" | "proxy_all_images" */,
+    val image_proxy_bypass_domains: String? = null,
+    val image_upload_timeout_seconds: Long,
+    val image_max_thumbnail_size: Long,
+    val image_max_avatar_size: Long,
+    val image_max_banner_size: Long,
+    val image_max_upload_size: Long,
+    val image_allow_video_uploads: Boolean,
+    val image_upload_disabled: Boolean,
     ) : DatatypeRoot, Identity

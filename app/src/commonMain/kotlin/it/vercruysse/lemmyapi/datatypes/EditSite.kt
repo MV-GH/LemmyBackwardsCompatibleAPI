@@ -8,8 +8,11 @@ import it.vercruysse.lemmyapi.enums.ListingType
 import kotlinx.serialization.Serializable
 
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.enums.ImageMode
 
 // TODO: missing fields + mapping
+
+// TODO: icon banner fields prob outdated
 
 @CommonParcelize
 @Serializable
@@ -22,7 +25,7 @@ data class EditSite(
     val enable_downvotes: Boolean? = null,
     val enable_nsfw: Boolean? = null,
     val community_creation_admin_only: Boolean? = null,
-    val require_email_verification: Boolean? = null,
+    val email_verification_required: Boolean? = null,
     val application_question: String? = null,
     val private_instance: Boolean? = null,
     val default_theme: String? = null,
@@ -34,6 +37,8 @@ data class EditSite(
     val default_comment_sort_type: SortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
     val legal_information: String? = null,
     val application_email_admins: Boolean? = null,
+    /** Added in 1.0.0 */
+    val federation_signed_fetch: Boolean? = null,
     val hide_modlog_mod_names: Boolean? = null,
     val discussion_languages: List<LanguageId>? = null,
     val slur_filter_regex: String? = null,
@@ -55,7 +60,9 @@ data class EditSite(
     val rate_limit_import_user_settings_interval_seconds: Long? = null,
     val federation_enabled: Boolean? = null,
     val federation_debug: Boolean? = null,
+    /** Removed in 1.0.0 */
     val captcha_enabled: Boolean? = null,
+    /** Removed in 1.0.0 */
     val captcha_difficulty: String? = null,
     val allowed_instances: List<String>? = null,
     val blocked_instances: List<String>? = null,
@@ -66,4 +73,26 @@ data class EditSite(
     val content_warning: String? = null,
     /** Added in 1.0.0 */
     val suggested_multi_community_id: MultiCommunityId? = null,
+    /** Added in 1.0.0 */
+    val nsfw_content_disallowed: Boolean? = null,
+    /** Added in 1.0.0 */
+    val email_notifications_disabled: Boolean? = null,
+    /** Added in 1.0.0 */
+    val image_mode: ImageMode? /* "none" | "store_link_previews" | "proxy_all_images" */ = null,
+    /** Added in 1.0.0 */
+    val image_proxy_bypass_domains: String? = null,
+    /** Added in 1.0.0 */
+    val image_upload_timeout_seconds: Long? = null,
+    /** Added in 1.0.0 */
+    val image_max_thumbnail_size: Long? = null,
+    /** Added in 1.0.0 */
+    val image_max_avatar_size: Long? = null,
+    /** Added in 1.0.0 */
+    val image_max_banner_size: Long? = null,
+    /** Added in 1.0.0 */
+    val image_max_upload_size: Long? = null,
+    /** Added in 1.0.0 */
+    val image_allow_video_uploads: Boolean? = null,
+    /** Added in 1.0.0 */
+    val image_upload_disabled: Boolean? = null,
 ) : DatatypeRoot
