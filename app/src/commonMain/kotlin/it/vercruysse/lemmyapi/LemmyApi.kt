@@ -146,6 +146,8 @@ object LemmyApi {
                 else -> throw NotSupportedException("Unsupported Lemmy minor version: $version")
             }
 
+            1 -> it.vercruysse.lemmyapi.v1.x0.x0.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
+
             else -> throw NotSupportedException("Unsupported Lemmy major version: $version")
         }
     }

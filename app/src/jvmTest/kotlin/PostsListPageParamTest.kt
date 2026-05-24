@@ -46,7 +46,7 @@ class PostsListPageParamTest {
             // page_cursor takes priority
             // never send pagination_guard
             // work with null and value
-            if (url.encodedPath != "/api/v3/post/list") {
+            if (url.encodedPath != "/api/v3/post/list" && url.encodedPath != "/api/v4/post/list") {
                 success = false
             } else if (url.parameters.contains("page_cursor") && url.parameters.contains("page")) {
                 success = false
@@ -55,11 +55,19 @@ class PostsListPageParamTest {
             }
 
             if (success) {
-                respond(
-                    content = ByteReadChannel("""{"posts": [], "next_page": null}"""),
-                    status = HttpStatusCode.OK,
-                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
-                )
+                if (url.encodedPath.startsWith("/api/v4")) {
+                    respond(
+                        content = ByteReadChannel("""{"items": [], "next_page": null}"""),
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                    )
+                } else {
+                    respond(
+                        content = ByteReadChannel("""{"posts": [], "next_page": null}"""),
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                    )
+                }
             } else {
                 respond(
                     content = ByteReadChannel("Failed validation"),
