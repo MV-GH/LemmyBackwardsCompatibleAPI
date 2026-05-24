@@ -5,6 +5,13 @@ This document lists the changes that you will need to actively handle, through f
 
 ## V1
 
+### Sort types split + `time_range_seconds`
+
+The many `Top*` `SortType` variants (`TopDay`, `TopWeek`, `TopMonth`, `TopYear`, `TopAll`, `TopHour`, `TopSixHour`, `TopTwelveHour`, `TopThreeMonths`, `TopSixMonths`, `TopNineMonths`) have been collapsed into a single `Top` value in v1. Time range is now expressed via `time_range_seconds: Long?` on the query (`GetPosts`, `GetComments`, `ListCommunities`, `ListMultiCommunities`, `Search`).
+
+- On v1, set `sort = SortType.Top` and pass `time_range_seconds` (e.g. `86400` for top day).
+- On pre-v1, the old `Top*` variants are still used; `time_range_seconds` is ignored. The wrapper translates automatically.
+
 ### Image upload / delete compatibility
 
 - Consumers should use `LemmyApiBaseController.uploadImage()` and `LemmyApiBaseController.deleteMedia()`.
@@ -17,6 +24,15 @@ This document lists the changes that you will need to actively handle, through f
 ### Avatar/Icon/Banner
 
 Should now use the dedicated avatar/icon/banner upload/delete endpoints.
+
+### Pagination: `page` replaced by `page_cursor`
+
+`page: Long?` has been removed from all list/query types in v1 (`GetPosts`, `GetComments`, `GetModlog`, `Search`, `ListCommunities`, `ListReports`, `ListNotifications`, `ListMedia`, `ListPersonContent`, `ListPostLikes`, `ListCommentLikes`, `ListRegistrationApplications`).
+
+- On v1, use `page_cursor` for cursor-based pagination.
+- To support pre-v1 instances, populate **both** `page` (for older versions, handled internally) and `page_cursor` (for v1). The wrapper will pass the appropriate one.
+
+
 
 ## 0.19.11
 
@@ -44,18 +60,3 @@ But each has different behaviour. The old behaviour is to hide all voting types 
 - Log out support (invalidates the current JWT)
 - Instance block support
 - 2FA rework, one must now provide a valid 2FA code to enable 2FA. Added routes to support this.
-
-
-
-TODO: cleanup
-
-## 1.0.0 too many to write down...
-https://github.com/LemmyNet/lemmy/issues/6292 tags to CommunityTags
-https://github.com/LemmyNet/lemmy/issues/6291 description to summary
-https://github.com/LemmyNet/lemmy/issues/6150 page back removal
-https://github.com/LemmyNet/lemmy/issues/6062 All enums use snake_case now
-
-TODO:
-media changes
-enum changes
-combined types
