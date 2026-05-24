@@ -5,4 +5,4 @@ import kotlinx.serialization.json.JsonClassDiscriminator
 
 @OptIn(ExperimentalSerializationApi::class)
 @JsonClassDiscriminator("type_")
-internal sealed interface SearchCombinedView
+internal sealed interface ResolveObjectView

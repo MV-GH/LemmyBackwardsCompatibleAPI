@@ -216,7 +216,7 @@ import it.vercruysse.lemmyapi.datatypes.SaveComment as LemmyapiDatatypesSaveComm
 import it.vercruysse.lemmyapi.datatypes.SavePost as LemmyapiDatatypesSavePost
 import it.vercruysse.lemmyapi.datatypes.SaveUserSettings as LemmyapiDatatypesSaveUserSettings
 import it.vercruysse.lemmyapi.datatypes.Search as LemmyapiDatatypesSearch
-import it.vercruysse.lemmyapi.datatypes.SearchCombinedView as LemmyapiDatatypesSearchCombinedView
+import it.vercruysse.lemmyapi.datatypes.ResolveObjectView as LemmyapiDatatypesResolveObjectView
 import it.vercruysse.lemmyapi.datatypes.SearchResponse as LemmyapiDatatypesSearchResponse
 import it.vercruysse.lemmyapi.datatypes.Site as LemmyapiDatatypesSite
 import it.vercruysse.lemmyapi.datatypes.SiteResponse as LemmyapiDatatypesSiteResponse
@@ -447,7 +447,7 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SaveComment as X0DatatypesSaveC
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SavePost as X0DatatypesSavePost
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SaveUserSettings as X0DatatypesSaveUserSettings
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.Search as X0DatatypesSearch
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SearchCombinedView as X0DatatypesSearchCombinedView
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResolveObjectView as X0DatatypesResolveObjectView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SearchResponse as X0DatatypesSearchResponse
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.Site as X0DatatypesSite
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SiteResponse as X0DatatypesSiteResponse
@@ -1456,11 +1456,15 @@ internal class Transformer : MapperGenerator {
         email = d.email,
     )
 
-    override fun toUni(d: X0DatatypesSearchCombinedView): LemmyapiDatatypesSearchCombinedView = super.toUni(d)
+    override fun toUni(d: X0DatatypesResolveObjectView): LemmyapiDatatypesResolveObjectView = super.toUni(d)
 
     override fun toUni(d: X0DatatypesSearchResponse): LemmyapiDatatypesSearchResponse = LemmyapiDatatypesSearchResponse(
         resolve = d.resolve?.let { this.toUni(d = it) },
-        search = d.search.map { this.toUni(d = it) },
+        comments = d.comments.map { this.toUni(d = it) },
+        posts = d.posts.map { this.toUni(d = it) },
+        communities = d.communities.map { this.toUni(d = it) },
+        persons = d.persons.map { this.toUni(d = it) },
+        multi_communities = d.multi_communities.map { this.toUni(d = it) },
         next_page = d.next_page,
         prev_page = d.prev_page,
     )
@@ -2457,18 +2461,16 @@ internal class Transformer : MapperGenerator {
     )
 
     override fun fromUni(d: LemmyapiDatatypesSearch): X0DatatypesSearch = X0DatatypesSearch(
-        q = d.q,
+        search_term = d.search_term,
         community_id = d.community_id,
         community_name = d.community_name,
         creator_id = d.creator_id,
+        creator_username = d.creator_username,
         type_ = d.type_,
-        sort = d.sort,
         time_range_seconds = d.time_range_seconds,
         listing_type = d.listing_type,
         title_only = d.title_only,
         post_url_only = d.post_url_only,
-        liked_only = d.liked_only,
-        disliked_only = d.disliked_only,
         show_nsfw = d.show_nsfw,
         page_cursor = d.page_cursor,
         limit = d.limit,

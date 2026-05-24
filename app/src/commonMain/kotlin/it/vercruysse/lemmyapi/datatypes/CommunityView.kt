@@ -13,4 +13,4 @@ data class CommunityView(
     val community_actions: CommunityActions? = null,
     val can_mod: Boolean,
     val tags: CommunityTagsView,
-) : DatatypeRoot, SearchCombinedView
+) : DatatypeRoot, ResolveObjectView

@@ -4,8 +4,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class SearchResponse(
-    val resolve: SearchCombinedView? = null,
-    val search: List<SearchCombinedView>,
-    val next_page: PaginationCursor? = null,
+    val resolve: ResolveObjectView? = null,
+    val comments: List<CommentView>,
+    val posts: List<PostView>,
+    val communities: List<CommunityView>,
+    val persons: List<PersonView>,
+    val multi_communities: List<MultiCommunityView>,
     val prev_page: PaginationCursor? = null,
+    val next_page: PaginationCursor? = null,
 )

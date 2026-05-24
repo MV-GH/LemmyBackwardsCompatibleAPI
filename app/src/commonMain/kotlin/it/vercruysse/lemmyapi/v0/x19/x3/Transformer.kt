@@ -1036,17 +1036,20 @@ internal class Transformer : MapperGenerator {
                 d.person != null -> toUni(d.person)
                 else -> null
             },
-            search = emptyList(),
+            comments = emptyList(),
+            posts = emptyList(),
+            communities = emptyList(),
+            persons = emptyList(),
+            multi_communities = emptyList(),
         )
 
     override fun toUni(d: X3DatatypesSearchResponse): LemmyapiDatatypesSearchResponse =
         LemmyapiDatatypesSearchResponse(
-            search = buildList {
-                addAll(d.comments.map(this@Transformer::toUni))
-                addAll(d.posts.map(this@Transformer::toUni))
-                addAll(d.communities.map(this@Transformer::toUni))
-                addAll(d.users.map(this@Transformer::toUni))
-            },
+            comments = d.comments.map(this@Transformer::toUni),
+            posts = d.posts.map(this@Transformer::toUni),
+            communities = d.communities.map(this@Transformer::toUni),
+            persons = d.users.map(this@Transformer::toUni),
+            multi_communities = emptyList(),
         )
 
     override fun toUni(d: X3DatatypesSite): LemmyapiDatatypesSite = LemmyapiDatatypesSite(
@@ -1710,12 +1713,11 @@ internal class Transformer : MapperGenerator {
         )
 
     override fun fromUni(d: LemmyapiDatatypesSearch): X3DatatypesSearch = X3DatatypesSearch(
-        q = d.q,
+        q = d.search_term,
         community_id = d.community_id,
         community_name = d.community_name,
         creator_id = d.creator_id,
         type_ = V0SearchType.fromUniNullable(d.type_),
-        sort = V0SortType.fromUniNullable(d.sort),
         listing_type = V0ListingType.fromUniNullable(d.listing_type),
         page = d.page,
         limit = d.limit,
