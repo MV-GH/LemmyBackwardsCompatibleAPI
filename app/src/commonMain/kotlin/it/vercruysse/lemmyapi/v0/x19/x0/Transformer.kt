@@ -89,7 +89,6 @@ import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatat
 import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
 import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
-import it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState as LemmyapiDatatypesInstanceWithFederationState
 import it.vercruysse.lemmyapi.datatypes.Language as LemmyapiDatatypesLanguage
 import it.vercruysse.lemmyapi.datatypes.ListCommunities as LemmyapiDatatypesListCommunities
 import it.vercruysse.lemmyapi.datatypes.ListNotifications as LemmyapiDatatypesListNotifications
@@ -234,7 +233,6 @@ import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetSiteMetadataResponse as X0D
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetSiteResponse as X0DatatypesGetSiteResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.HideCommunity as X0DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.Instance as X0DatatypesInstance
-import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.InstanceWithFederationState as X0DatatypesInstanceWithFederationState
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.Language as X0DatatypesLanguage
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.ListCommentReports as X0DatatypesListCommentReports
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.ListCommunities as X0DatatypesListCommunities
@@ -722,16 +720,6 @@ internal class Transformer : MapperGenerator {
         updated_at = d.updated,
         software = d.software,
         version = d.version,
-    )
-
-    override fun toUni(d: X0DatatypesInstanceWithFederationState): LemmyapiDatatypesInstanceWithFederationState = LemmyapiDatatypesInstanceWithFederationState(
-        id = d.id,
-        domain = d.domain,
-        published_at = d.published,
-        updated_at = d.updated,
-        software = d.software,
-        version = d.version,
-        federation_state = d.federation_state?.let { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesLanguage): LemmyapiDatatypesLanguage = LemmyapiDatatypesLanguage(

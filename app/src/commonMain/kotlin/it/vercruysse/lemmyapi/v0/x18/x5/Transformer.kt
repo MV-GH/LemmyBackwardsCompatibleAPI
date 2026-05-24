@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi.v0.x18.x5
 
 import it.vercruysse.lemmyapi.datatypes.CommentActions
 import it.vercruysse.lemmyapi.datatypes.CommunityActions
-import it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState
 import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
 import it.vercruysse.lemmyapi.datatypes.Notification
 import it.vercruysse.lemmyapi.datatypes.NotificationView
@@ -1017,8 +1016,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
         published_at = addTimezoneOffset(d.published),
         updated_at = d.updated,
     )
-
-    override fun toUniF(d: X5DatatypesInstance): InstanceWithFederationState = super.toUniF(d)
 
     override fun fromUni(d: LemmyapiDatatypesAddAdmin): X5DatatypesAddAdmin = X5DatatypesAddAdmin(
         person_id = d.person_id,

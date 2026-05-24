@@ -91,7 +91,6 @@ import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCo
 import it.vercruysse.lemmyapi.datatypes.HidePosts as LemmyapiDatatypesHidePosts
 import it.vercruysse.lemmyapi.datatypes.ImageDetails as LemmyapiDatatypesImageDetails
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
-import it.vercruysse.lemmyapi.datatypes.InstanceWithFederationState as LemmyapiDatatypesInstanceWithFederationState
 import it.vercruysse.lemmyapi.datatypes.Language as LemmyapiDatatypesLanguage
 import it.vercruysse.lemmyapi.datatypes.LinkMetadata as LemmyapiDatatypesLinkMetadata
 import it.vercruysse.lemmyapi.datatypes.ListCommentLikes as LemmyapiDatatypesListCommentLikes
@@ -248,7 +247,6 @@ import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.HideCommunity as X11Datatypes
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.HidePost as X11DatatypesHidePost
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.ImageDetails as X11DatatypesImageDetails
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.Instance as X11DatatypesInstance
-import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.InstanceWithFederationState as X11DatatypesInstanceWithFederationState
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.Language as X11DatatypesLanguage
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.LinkMetadata as X11DatatypesLinkMetadata
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.ListCommentLikes as X11DatatypesListCommentLikes
@@ -672,16 +670,6 @@ internal class Transformer : MapperGenerator {
             software = d.software,
             version = d.version,
         )
-
-    override fun toUni(d: X11DatatypesInstanceWithFederationState): LemmyapiDatatypesInstanceWithFederationState = LemmyapiDatatypesInstanceWithFederationState(
-        id = d.id,
-        domain = d.domain,
-        published_at = d.published,
-        updated_at = d.updated,
-        software = d.software,
-        version = d.version,
-        federation_state = d.federation_state?.let { this.toUni(d = it) },
-    )
 
     override fun toUni(d: X11DatatypesLanguage): LemmyapiDatatypesLanguage =
         LemmyapiDatatypesLanguage(
