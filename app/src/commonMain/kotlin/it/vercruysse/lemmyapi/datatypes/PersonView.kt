@@ -15,4 +15,4 @@ data class PersonView(
     val person_actions: PersonActions? = null,
     val banned: Boolean,
     val ban_expires_at: String? = null,
-) : DatatypeRoot, SearchCombinedView
+) : DatatypeRoot, ResolveObjectView

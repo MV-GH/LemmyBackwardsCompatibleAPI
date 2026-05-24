@@ -137,7 +137,7 @@ internal interface MapperGenerator {
 
     //    fun toUni(d: ReportCombinedView): already implemented above as when-dispatch
     fun toUni(d: ResendVerificationEmail): it.vercruysse.lemmyapi.datatypes.ResendVerificationEmail
-    fun toUni(d: SearchCombinedView): it.vercruysse.lemmyapi.datatypes.SearchCombinedView = when (d) {
+    fun toUni(d: ResolveObjectView): it.vercruysse.lemmyapi.datatypes.ResolveObjectView = when (d) {
         is CommentView -> toUni(d)
         is CommunityView -> toUni(d)
         is PersonView -> toUni(d)

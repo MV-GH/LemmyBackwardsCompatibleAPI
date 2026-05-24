@@ -10,4 +10,4 @@ internal data class CommunityView(
     val community_actions: CommunityActions? = null,
     val can_mod: Boolean,
     val tags: CommunityTagsView,
-) : SearchCombinedView
+) : ResolveObjectView
