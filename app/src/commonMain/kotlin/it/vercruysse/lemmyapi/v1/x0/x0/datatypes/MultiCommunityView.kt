@@ -10,4 +10,4 @@ internal data class MultiCommunityView(
     val multi: MultiCommunity,
     val follow_state: CommunityFollowerState? /* "accepted" | "pending" | "approval_required" | "denied" */ = null,
     val owner: Person,
-) : SearchCombinedView
+) : ResolveObjectView

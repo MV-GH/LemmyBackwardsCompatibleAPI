@@ -80,7 +80,7 @@ data class SealedInterface(val discriminator: String, val serializable: Boolean 
 // TODO: don't know yet if serializable required but also it breaks the generated code
 val sealedInterfaces = mapOf(
     "PostOrCommentOrPrivateMessage" to SealedInterface("type_"),
-    "SearchCombinedView"            to SealedInterface("type_"),
+    "ResolveObjectView"            to SealedInterface("type_"),
     "ReportCombinedView"            to SealedInterface("type_"),
     "NotificationData"              to SealedInterface("type_", serializable = false),
     "PostCommentCombinedView"       to SealedInterface("type_"),
@@ -93,11 +93,11 @@ val sealedImplementations = mapOf(
     "Comment"                to SealedImpl("comment",          listOf("PostOrCommentOrPrivateMessage")),
     "Post"                   to SealedImpl("post",             listOf("PostOrCommentOrPrivateMessage")),
     "PrivateMessage"         to SealedImpl("private_message",  listOf("PostOrCommentOrPrivateMessage")),
-    "CommentView"            to SealedImpl("comment",          listOf("SearchCombinedView", "NotificationData", "PostCommentCombinedView")),
-    "PostView"               to SealedImpl("post",             listOf("SearchCombinedView", "PostCommentCombinedView")),
-    "CommunityView"          to SealedImpl("community",        listOf("SearchCombinedView")),
-    "PersonView"             to SealedImpl("person",           listOf("SearchCombinedView")),
-    "MultiCommunityView"     to SealedImpl("multi_community",  listOf("SearchCombinedView")),
+    "CommentView"            to SealedImpl("comment",          listOf("ResolveObjectView", "NotificationData", "PostCommentCombinedView")),
+    "PostView"               to SealedImpl("post",             listOf("ResolveObjectView", "PostCommentCombinedView")),
+    "CommunityView"          to SealedImpl("community",        listOf("ResolveObjectView")),
+    "PersonView"             to SealedImpl("person",           listOf("ResolveObjectView")),
+    "MultiCommunityView"     to SealedImpl("multi_community",  listOf("ResolveObjectView")),
     "CommentReportView"      to SealedImpl("comment",          listOf("ReportCombinedView")),
     "PostReportView"         to SealedImpl("post",             listOf("ReportCombinedView")),
     "CommunityReportView"    to SealedImpl("community",        listOf("ReportCombinedView")),
@@ -140,10 +140,10 @@ fun resolveDynamicType(line: String): String {
     val sealedType = when {
         // Post (but not PostView) signals PostOrCommentOrPrivateMessage
         Regex("""\bPost\b(?!View)""").containsMatchIn(line) -> "PostOrCommentOrPrivateMessage"
-        // ModlogView only appears in NotificationData, not SearchCombinedView
+        // ModlogView only appears in NotificationData, not ResolveObjectView
         "ModlogView" in line -> "NotificationData"
-        // CommunityView only appears in SearchCombinedView
-        "CommunityView" in line -> "SearchCombinedView"
+        // CommunityView only appears in ResolveObjectView
+        "CommunityView" in line -> "ResolveObjectView"
         else -> return line
     }
 

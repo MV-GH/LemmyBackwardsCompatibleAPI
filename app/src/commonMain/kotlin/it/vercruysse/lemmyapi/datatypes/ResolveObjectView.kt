@@ -8,4 +8,4 @@ import kotlinx.serialization.json.JsonClassDiscriminator
 @CommonParcelize
 @OptIn(ExperimentalSerializationApi::class)
 @JsonClassDiscriminator("type_")
-sealed interface SearchCombinedView : DatatypeRoot
+sealed interface ResolveObjectView : DatatypeRoot
