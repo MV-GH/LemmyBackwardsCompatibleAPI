@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
-import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.enums.VoteShow
 import kotlinx.serialization.Serializable
@@ -28,10 +28,10 @@ internal data class LocalUser(
     val admin: Boolean,
     val post_listing_mode: PostListingMode /* "list" | "card" | "small_card" */,
     val totp_2fa_enabled: Boolean,
-    val enable_animated_images: Boolean,
+    val animated_images_enabled: Boolean,
     val collapse_bot_comments: Boolean,
     val last_donation_notification_at: String,
-    val enable_private_messages: Boolean,
+    val private_messages_enabled: Boolean,
     val default_comment_sort_type: SortType /* "hot" | "top" | "new" | "old" | "controversial" */,
     val auto_mark_fetched_posts_as_read: Boolean,
     val hide_media: Boolean,

@@ -7,4 +7,5 @@ internal data class RemovePost(
     val post_id: PostId,
     val removed: Boolean,
     val reason: String,
+    val remove_children: Boolean? = null,
 )

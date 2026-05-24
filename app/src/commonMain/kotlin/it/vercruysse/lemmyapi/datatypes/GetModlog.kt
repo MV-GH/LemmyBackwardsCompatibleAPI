@@ -19,6 +19,10 @@ data class GetModlog(
     val post_id: PostId? = null,
     val comment_id: CommentId? = null,
     /** Added in 1.0.0 */
+    val show_bulk: Boolean? = null,
+    /** Added in 1.0.0 */
+    val bulk_action_parent_id: ModlogId? = null,
+    /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
     /** Removed in 1.0.0 */
     val page: Long? = null,

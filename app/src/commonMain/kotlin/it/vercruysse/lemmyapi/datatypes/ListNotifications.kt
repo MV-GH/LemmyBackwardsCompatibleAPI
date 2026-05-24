@@ -10,6 +10,7 @@ import kotlinx.serialization.Serializable
 data class ListNotifications(
     val type_: NotificationDataType /* "All" | "Reply" | "Mention" | "PrivateMessage" | "Subscribed" */,
     val unread_only: Boolean? = null,
+    val creator_id: PersonId? = null,
     /** Removed in 1.0.0 */
     val page: Long? = null,
     /** Added 1.0.0 */

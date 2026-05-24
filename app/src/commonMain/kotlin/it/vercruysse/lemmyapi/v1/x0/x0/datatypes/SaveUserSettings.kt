@@ -1,8 +1,8 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
-import it.vercruysse.lemmyapi.enums.SortType
-import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.PostListingMode
+import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.enums.VoteShow
 import kotlinx.serialization.Serializable
 
@@ -31,8 +31,8 @@ internal data class SaveUserSettings(
     val blocking_keywords: List<String>? = null,
     val open_links_in_new_tab: Boolean? = null,
     val infinite_scroll_enabled: Boolean? = null,
-    val enable_animated_images: Boolean? = null,
-    val enable_private_messages: Boolean? = null,
+    val animated_images_enabled: Boolean? = null,
+    val private_messages_enabled: Boolean? = null,
     val collapse_bot_comments: Boolean? = null,
     val show_score: Boolean? = null,
     val show_upvotes: Boolean? = null,

@@ -338,11 +338,11 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
         client.getResult("account/auth/get_captcha")
 
     /** @POST("account/auth/password_reset") */
-    override suspend fun resetPassword(form: PasswordReset): Result<Unit> =
+    override suspend fun resetPassword(form: ResetPassword): Result<Unit> =
         client.postResult("account/auth/password_reset", form)
 
     /** @POST("account/auth/password_change") */
-    override suspend fun changePasswordAfterReset(form: PasswordChangeAfterReset): Result<Unit> =
+    override suspend fun changePasswordAfterReset(form: ChangePasswordAfterReset): Result<Unit> =
         client.postResult("account/auth/password_change", form)
 
     /** @PUT("account/auth/change_password") */

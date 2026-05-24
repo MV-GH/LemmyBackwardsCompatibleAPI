@@ -657,7 +657,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
             NotificationDataType.PrivateMessage ->
                 api.getPrivateMessages(transformer.fromUniP(form)).map { resp -> PagedResponse(resp.private_messages.map(transformer::toUniPMV)) }
 
-            NotificationDataType.Subscribed -> Result.success(PagedResponse(emptyList()))
+            NotificationDataType.Subscribed, NotificationDataType.ModAction -> Result.success(PagedResponse(emptyList()))
         }
 
     /**
@@ -709,7 +709,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("user/password_reset")
      */
-    override suspend fun resetPassword(form: it.vercruysse.lemmyapi.datatypes.PasswordReset): Result<Unit> =
+    override suspend fun resetPassword(form: it.vercruysse.lemmyapi.datatypes.ResetPassword): Result<Unit> =
         api.resetPassword(transformer.fromUni(form))
 
     /**
@@ -717,7 +717,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("user/password_change")
      */
-    override suspend fun changePasswordAfterReset(form: it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset): Result<Unit> =
+    override suspend fun changePasswordAfterReset(form: it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset): Result<Unit> =
         api.changePasswordAfterReset(transformer.fromUni(form))
 
     /**
@@ -1034,6 +1034,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
         val getPersonDetailsForm = GetPersonDetails(
             username = form.username,
             person_id = form.person_id,
+            community_id = form.community_id,
             page = form.page,
             limit = form.limit,
         )

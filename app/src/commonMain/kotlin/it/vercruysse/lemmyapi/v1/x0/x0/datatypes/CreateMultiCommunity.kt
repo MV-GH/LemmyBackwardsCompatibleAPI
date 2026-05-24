@@ -7,4 +7,5 @@ internal data class CreateMultiCommunity(
     val name: String,
     val title: String? = null,
     val summary: String? = null,
+    val sidebar: String? = null,
 )

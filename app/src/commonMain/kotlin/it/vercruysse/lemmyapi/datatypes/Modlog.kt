@@ -14,4 +14,5 @@ data class Modlog(
     val reason: String? = null,
     val expires_at: String? = null,
     val published_at: String,
+    val bulk_action_parent_id: ModlogId? = null,
 ) : DatatypeRoot

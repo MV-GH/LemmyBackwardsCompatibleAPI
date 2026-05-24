@@ -19,6 +19,10 @@ data class GetPosts(
     val community_id: CommunityId? = null,
     val community_name: String? = null,
     /** Added in 1.0.0 */
+    val creator_id: PersonId? = null,
+    /** Added in 1.0.0 */
+    val creator_username: String? = null,
+    /** Added in 1.0.0 */
     val multi_community_id: MultiCommunityId? = null,
     /** Added in 1.0.0 */
     val multi_community_name: String? = null,
@@ -33,6 +37,12 @@ data class GetPosts(
     val mark_as_read: Boolean? = null,
     /** Added in 1.0.0 */
     val no_comments_only: Boolean? = null,
+    /** Added in 1.0.0 */
+    val search_term: String? = null,
+    /** Added in 1.0.0 */
+    val search_title_only: Boolean? = null,
+    /** Added in 1.0.0 */
+    val search_url_only: Boolean? = null,
     /** The page cursor to the next list, null is valid and considered first list */
     val page_cursor: PaginationCursor? = PAGE_CURSOR_GUARD, // Guard is used to detect when null is set
     /** starts from 1, null is considered not set, deprecated 0.19+, set to support 0.18, removed in 1.0.0 */
