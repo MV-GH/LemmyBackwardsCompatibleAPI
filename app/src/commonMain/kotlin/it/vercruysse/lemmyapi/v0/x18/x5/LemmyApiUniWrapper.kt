@@ -1155,17 +1155,41 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
             )
         }
 
-    override suspend fun deleteUserAvatar(): Result<Unit> = notSupported()
+    override suspend fun deleteUserAvatar(): Result<Unit> =
+        saveUserSettings(it.vercruysse.lemmyapi.datatypes.SaveUserSettings(avatar = ""))
 
-    override suspend fun deleteUserBanner(): Result<Unit> = notSupported()
+    override suspend fun deleteUserBanner(): Result<Unit> =
+        saveUserSettings(it.vercruysse.lemmyapi.datatypes.SaveUserSettings(banner = ""))
 
-    override suspend fun deleteCommunityBanner(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> = notSupported()
+    override suspend fun deleteCommunityBanner(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> =
+        editCommunity(
+            it.vercruysse.lemmyapi.datatypes.EditCommunity(
+                community_id = form.id,
+                banner = "",
+            ),
+        ).map {}
 
-    override suspend fun deleteCommunityIcon(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> = notSupported()
+    override suspend fun deleteCommunityIcon(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> =
+        editCommunity(
+            it.vercruysse.lemmyapi.datatypes.EditCommunity(
+                community_id = form.id,
+                icon = "",
+            ),
+        ).map {}
 
-    override suspend fun deleteSiteBanner(): Result<Unit> = notSupported()
+    override suspend fun deleteSiteBanner(): Result<Unit> =
+        editSite(
+            it.vercruysse.lemmyapi.datatypes.EditSite(
+                banner = "",
+            ),
+        ).map {}
 
-    override suspend fun deleteSiteIcon(): Result<Unit> = notSupported()
+    override suspend fun deleteSiteIcon(): Result<Unit> =
+        editSite(
+            it.vercruysse.lemmyapi.datatypes.EditSite(
+                icon = "",
+            ),
+        ).map {}
 
     override suspend fun deleteMedia(form: it.vercruysse.lemmyapi.datatypes.DeleteImageParams): Result<Unit> =
         pictrsApi.deleteMedia(form)
