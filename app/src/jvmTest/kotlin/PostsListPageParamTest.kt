@@ -101,7 +101,7 @@ class PostsListPageParamTest {
         controllerVersions.forEach {
             runBlocking {
                 val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts())
+                val resp = api.getPosts(GetPosts())
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -112,7 +112,7 @@ class PostsListPageParamTest {
         controllerVersions.forEach {
             runBlocking {
                 val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page = 1))
+                val resp = api.getPosts(GetPosts(page = 1))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -123,7 +123,7 @@ class PostsListPageParamTest {
         controllerVersions.forEach {
             runBlocking {
                 val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page_cursor = "cursor"))
+                val resp = api.getPosts(GetPosts(page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -134,7 +134,7 @@ class PostsListPageParamTest {
         controllerVersions.forEach {
             runBlocking {
                 val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page_cursor = null))
+                val resp = api.getPosts(GetPosts(page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -145,7 +145,7 @@ class PostsListPageParamTest {
         controllerVersions.forEach {
             runBlocking {
                 val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page = 1, page_cursor = "cursor"))
+                val resp = api.getPosts(GetPosts(page = 1, page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -156,7 +156,7 @@ class PostsListPageParamTest {
         controllerVersions.forEach {
             runBlocking {
                 val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page = 1, page_cursor = null))
+                val resp = api.getPosts(GetPosts(page = 1, page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }

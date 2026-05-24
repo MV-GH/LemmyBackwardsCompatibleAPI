@@ -1536,7 +1536,7 @@ internal class Transformer : MapperGenerator {
         creator = this.toUni(d = d.creator),
         creator_banned = d.creator_banned,
         creator_banned_from_community = d.creator_banned_from_community,
-        score = d.let { if (d.is_upvote) 1 else -1 },
+        score = voteBoolToInt(d.is_upvote),
     )
 
     override fun fromUni(d: LemmyapiDatatypesAddAdmin): X0DatatypesAddAdmin = X0DatatypesAddAdmin(
