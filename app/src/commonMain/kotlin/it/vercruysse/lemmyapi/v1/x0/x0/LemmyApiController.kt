@@ -305,6 +305,10 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
     override suspend fun getPersonDetails(form: GetPersonDetails): Result<GetPersonDetailsResponse> =
         client.getResult("person", form)
 
+    /** @GET("person/list") */
+    override suspend fun listPersons(form: ListPersons): Result<PagedResponse<PersonView>> =
+        client.getResult("person/list", form)
+
     /** @GET("person/content") */
     override suspend fun listPersonContent(form: ListPersonContent): Result<PagedResponse<PostCommentCombinedView>> =
         client.getResult("person/content", form)

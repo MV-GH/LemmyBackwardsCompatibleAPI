@@ -28,6 +28,7 @@ import it.vercruysse.lemmyapi.datatypes.BlockCommunity as LemmyapiDatatypesBlock
 import it.vercruysse.lemmyapi.datatypes.BlockPerson as LemmyapiDatatypesBlockPerson
 import it.vercruysse.lemmyapi.datatypes.CaptchaResponse as LemmyapiDatatypesCaptchaResponse
 import it.vercruysse.lemmyapi.datatypes.ChangePassword as LemmyapiDatatypesChangePassword
+import it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
 import it.vercruysse.lemmyapi.datatypes.Comment as LemmyapiDatatypesComment
 import it.vercruysse.lemmyapi.datatypes.CommentReport as LemmyapiDatatypesCommentReport
 import it.vercruysse.lemmyapi.datatypes.CommentReportResponse as LemmyapiDatatypesCommentReportResponse
@@ -106,8 +107,6 @@ import it.vercruysse.lemmyapi.datatypes.LoginResponse as LemmyapiDatatypesLoginR
 import it.vercruysse.lemmyapi.datatypes.LoginToken as LemmyapiDatatypesLoginToken
 import it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead as LemmyapiDatatypesMarkPostAsRead
 import it.vercruysse.lemmyapi.datatypes.MyUserInfo as LemmyapiDatatypesMyUserInfo
-import it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset as LemmyapiDatatypesPasswordChangeAfterReset
-import it.vercruysse.lemmyapi.datatypes.ResetPassword as LemmyapiDatatypesPasswordReset
 import it.vercruysse.lemmyapi.datatypes.Person as LemmyapiDatatypesPerson
 import it.vercruysse.lemmyapi.datatypes.PersonView as LemmyapiDatatypesPersonView
 import it.vercruysse.lemmyapi.datatypes.Post as LemmyapiDatatypesPost
@@ -133,6 +132,7 @@ import it.vercruysse.lemmyapi.datatypes.RegistrationApplicationView as LemmyapiD
 import it.vercruysse.lemmyapi.datatypes.RemoveComment as LemmyapiDatatypesRemoveComment
 import it.vercruysse.lemmyapi.datatypes.RemoveCommunity as LemmyapiDatatypesRemoveCommunity
 import it.vercruysse.lemmyapi.datatypes.RemovePost as LemmyapiDatatypesRemovePost
+import it.vercruysse.lemmyapi.datatypes.ResetPassword as LemmyapiDatatypesPasswordReset
 import it.vercruysse.lemmyapi.datatypes.ResolveCommentReport as LemmyapiDatatypesResolveCommentReport
 import it.vercruysse.lemmyapi.datatypes.ResolveObject as LemmyapiDatatypesResolveObject
 import it.vercruysse.lemmyapi.datatypes.ResolvePostReport as LemmyapiDatatypesResolvePostReport

@@ -194,6 +194,11 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun getPersonDetails(form: it.vercruysse.lemmyapi.datatypes.GetPersonDetails): Result<it.vercruysse.lemmyapi.datatypes.GetPersonDetailsResponse> =
         api.getPersonDetails(transformer.fromUni(form)).map(transformer::toUni)
 
+    override suspend fun listPersons(form: it.vercruysse.lemmyapi.datatypes.ListPersons): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PersonView>> =
+        api.listPersons(transformer.fromUni(form)).map { resp ->
+            PagedResponse(resp.items.map(transformer::toUni))
+        }
+
     override suspend fun register(form: it.vercruysse.lemmyapi.datatypes.Register): Result<it.vercruysse.lemmyapi.datatypes.LoginResponse> =
         api.register(transformer.fromUni(form)).map(transformer::toUni)
 
