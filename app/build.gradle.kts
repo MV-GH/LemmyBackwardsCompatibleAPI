@@ -134,37 +134,6 @@ kotlin {
     }
 }
 
-val publicationsFromLinux = listOf("jvm", "js", "android", "kotlinMultiplatform", "linuxX64", "linuxArm64")
-val publicationsFromWindows = listOf("mingwX64")
-val publicationsFromMac = listOf(
-    "macosArm64",
-    "iosSimulatorArm64", "iosX64", "iosArm64",
-    "watchosSimulatorArm64", "watchosArm32", "watchosArm64", "watchosDeviceArm64",
-)
-
-publishing {
-    publications {
-        matching { it.name in publicationsFromLinux }.all {
-            val targetPublication = this@all
-            tasks.withType<AbstractPublishToMaven>()
-                .matching { it.publication == targetPublication }
-                .configureEach { onlyIf { getHostOsName() == OS.LINUX } }
-        }
-        matching { it.name in publicationsFromWindows }.all {
-            val targetPublication = this@all
-            tasks.withType<AbstractPublishToMaven>()
-                .matching { it.publication == targetPublication }
-                .configureEach { onlyIf { getHostOsName() == OS.WINDOWS } }
-        }
-        matching { it.name in publicationsFromMac }.all {
-            val targetPublication = this@all
-            tasks.withType<AbstractPublishToMaven>()
-                .matching { it.publication == targetPublication }
-                .configureEach { onlyIf { getHostOsName() == OS.MAC } }
-        }
-    }
-}
-
 
 tasks.withType<LintTask> {
     exclude("**/datatypes/**")
@@ -173,20 +142,6 @@ tasks.withType<LintTask> {
 tasks.withType<FormatTask> {
     exclude("**/datatypes/**")
 }
-
-enum class OS {
-    LINUX, WINDOWS, MAC
-}
-
-fun getHostOsName(): OS =
-    System.getProperty("os.name").let { osName ->
-        when {
-            osName == "Linux" -> OS.LINUX
-            osName.startsWith("Windows") -> OS.WINDOWS
-            osName.startsWith("Mac") -> OS.MAC
-            else -> throw GradleException("Unknown OS: $osName")
-        }
-    }
 
 mavenPublishing {
     publishToMavenCentral(true)
