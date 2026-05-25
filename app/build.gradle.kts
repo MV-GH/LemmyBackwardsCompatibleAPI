@@ -148,19 +148,19 @@ publishing {
             val targetPublication = this@all
             tasks.withType<AbstractPublishToMaven>()
                 .matching { it.publication == targetPublication }
-                .configureEach { onlyIf { getHostOsName() == OS.LINUX } }
+                .configureEach { isEnabled = getHostOsName() == OS.LINUX }
         }
         matching { it.name in publicationsFromWindows }.all {
             val targetPublication = this@all
             tasks.withType<AbstractPublishToMaven>()
                 .matching { it.publication == targetPublication }
-                .configureEach { onlyIf { getHostOsName() == OS.WINDOWS } }
+                .configureEach { isEnabled = getHostOsName() == OS.WINDOWS }
         }
         matching { it.name in publicationsFromMac }.all {
             val targetPublication = this@all
             tasks.withType<AbstractPublishToMaven>()
                 .matching { it.publication == targetPublication }
-                .configureEach { onlyIf { getHostOsName() == OS.MAC } }
+                .configureEach { isEnabled = getHostOsName() == OS.MAC }
         }
     }
 }
