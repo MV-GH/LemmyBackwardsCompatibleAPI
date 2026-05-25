@@ -77,7 +77,7 @@ kotlin {
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-            api("io.github.z4kn4fein:semver:2.0.0")
+            api("io.github.z4kn4fein:semver:3.1.0")
         }
 
         commonTest.dependencies {
