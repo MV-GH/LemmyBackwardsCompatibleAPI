@@ -142,25 +142,17 @@ val publicationsFromMac = listOf(
     "watchosSimulatorArm64", "watchosArm32", "watchosArm64", "watchosDeviceArm64",
 )
 
-publishing {
-    publications {
-        matching { it.name in publicationsFromLinux }.all {
-            val targetPublication = this@all
-            tasks.withType<AbstractPublishToMaven>()
-                .matching { it.publication == targetPublication }
-                .configureEach { isEnabled = getHostOsName() == OS.LINUX }
-        }
-        matching { it.name in publicationsFromWindows }.all {
-            val targetPublication = this@all
-            tasks.withType<AbstractPublishToMaven>()
-                .matching { it.publication == targetPublication }
-                .configureEach { isEnabled = getHostOsName() == OS.WINDOWS }
-        }
-        matching { it.name in publicationsFromMac }.all {
-            val targetPublication = this@all
-            tasks.withType<AbstractPublishToMaven>()
-                .matching { it.publication == targetPublication }
-                .configureEach { isEnabled = getHostOsName() == OS.MAC }
+afterEvaluate {
+    val publishable = when (getHostOsName()) {
+        OS.LINUX -> publicationsFromLinux.toSet()
+        OS.WINDOWS -> publicationsFromWindows.toSet()
+        OS.MAC -> publicationsFromMac.toSet()
+    }
+
+    tasks.withType<AbstractPublishToMaven>().configureEach {
+        val pubName = publication?.name ?: return@configureEach
+        if (pubName !in publishable) {
+            isEnabled = false
         }
     }
 }
