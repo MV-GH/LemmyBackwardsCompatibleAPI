@@ -29,6 +29,7 @@ val globalFieldEnums = mapOf(
     "subscribed" to "SubscribedType",
     "feature_type" to "PostFeatureType",
     "post_listing_mode" to "PostListingMode",
+    "default_comment_sort_type" to "CommentSortType",
     "sort_type" to "SortType",
     "visibility" to "CommunityVisibility",
     "follow_state" to "CommunityFollowerState",

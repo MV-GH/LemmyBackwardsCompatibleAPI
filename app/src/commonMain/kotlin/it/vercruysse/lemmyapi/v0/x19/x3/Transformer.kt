@@ -8,6 +8,7 @@ import it.vercruysse.lemmyapi.datatypes.Notification
 import it.vercruysse.lemmyapi.datatypes.NotificationView
 import it.vercruysse.lemmyapi.datatypes.PersonActions
 import it.vercruysse.lemmyapi.datatypes.PostActions
+import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.CommunityFollowerState
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import it.vercruysse.lemmyapi.enums.FederationMode
@@ -434,7 +435,7 @@ internal class Transformer : MapperGenerator {
             oauth_registration = false,
             email_notifications_disabled = false,
             suggested_multi_community_id = null,
-            default_comment_sort_type = SortType.Active,
+            default_comment_sort_type = CommentSortType.Hot,
             default_post_time_range_seconds = null,
             post_upvotes = FederationMode.All,
             post_downvotes = if (d.enable_downvotes) FederationMode.All else FederationMode.Disable,
@@ -799,7 +800,7 @@ internal class Transformer : MapperGenerator {
             hide_media = false,
             show_downvotes = VoteShow.Show,
             private_messages_enabled = true,
-            default_comment_sort_type = SortType.Active,
+            default_comment_sort_type = CommentSortType.Hot,
             auto_mark_fetched_posts_as_read = false,
             default_post_time_range_seconds = null,
             default_items_per_page = 20,

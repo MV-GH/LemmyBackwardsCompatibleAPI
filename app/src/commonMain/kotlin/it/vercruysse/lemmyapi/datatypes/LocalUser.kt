@@ -3,6 +3,7 @@ package it.vercruysse.lemmyapi.datatypes
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
+import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
@@ -37,7 +38,7 @@ data class LocalUser(
     val private_messages_enabled: Boolean,
     val collapse_bot_comments: Boolean,
     /** Added in 1.0.0 */
-    val default_comment_sort_type: SortType,
+    val default_comment_sort_type: CommentSortType,
     /** Added in 1.0.0 */
     val auto_mark_fetched_posts_as_read: Boolean,
     /** Added in 0.19.11 */

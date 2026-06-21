@@ -3,6 +3,7 @@ package it.vercruysse.lemmyapi.datatypes
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
+import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.ListingType
@@ -34,7 +35,7 @@ data class LocalSite(
     val federation_signed_fetch: Boolean,
     val default_post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
     val default_post_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */,
-    val default_comment_sort_type: SortType /* "Hot" | "Top" | "New" | "Old" | "Controversial" */,
+    val default_comment_sort_type: CommentSortType /* "Hot" | "Top" | "New" | "Old" | "Controversial" */,
     val oauth_registration: Boolean,
     val post_upvotes: FederationMode /* "All" | "Local" | "Disable" */,
     val post_downvotes: FederationMode /* "All" | "Local" | "Disable" */,
