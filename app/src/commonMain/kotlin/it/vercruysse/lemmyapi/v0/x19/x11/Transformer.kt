@@ -7,12 +7,12 @@ import it.vercruysse.lemmyapi.datatypes.Notification
 import it.vercruysse.lemmyapi.datatypes.NotificationView
 import it.vercruysse.lemmyapi.datatypes.PersonActions
 import it.vercruysse.lemmyapi.datatypes.PostActions
+import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.CommunityFollowerState
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.NotificationType
-import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.enums.VoteShow
 import it.vercruysse.lemmyapi.utils.toAt
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
@@ -727,7 +727,7 @@ internal class Transformer : MapperGenerator {
             oauth_registration = false,
             email_notifications_disabled = false,
             suggested_multi_community_id = null,
-            default_comment_sort_type = SortType.Active,
+            default_comment_sort_type = CommentSortType.Hot,
             default_post_time_range_seconds = null,
             post_upvotes = FederationMode.All,
             post_downvotes = if (d.enable_downvotes) FederationMode.All else FederationMode.Disable,
@@ -811,7 +811,7 @@ internal class Transformer : MapperGenerator {
             show_upvote_percentage = e.upvote_percentage,
             show_downvotes = if (e.downvotes) VoteShow.Show else VoteShow.Hide,
             auto_mark_fetched_posts_as_read = false,
-            default_comment_sort_type = SortType.Active,
+            default_comment_sort_type = CommentSortType.Hot,
             private_messages_enabled = true,
             hide_media = false,
             default_post_time_range_seconds = null,

@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.ListingType
@@ -23,7 +24,7 @@ internal data class EditSite(
     val default_post_sort_type: SortType? /* "active" | "hot" | "new" | "old" | "top" | "most_comments" | "new_comments" | "controversial" | "scaled" */ = null,
     val default_post_time_range_seconds: Long? = null,
     val default_items_per_page: Long? = null,
-    val default_comment_sort_type: SortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
+    val default_comment_sort_type: CommentSortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
     val legal_information: String? = null,
     val application_email_admins: Boolean? = null,
     val federation_signed_fetch: Boolean? = null,

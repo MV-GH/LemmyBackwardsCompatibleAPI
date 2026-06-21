@@ -2,6 +2,7 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.ListingType
@@ -27,7 +28,8 @@ data class CreateSite(
     val default_post_time_range_seconds: Long? = null,
     /** Added in 1.0.0 */
     val default_items_per_page: Long? = null,
-    val default_comment_sort_type: SortType? /* "Hot" | "Top" | "New" | "Old" | "Controversial" */ = null,
+    /** Added in 1.0.0 */
+    val default_comment_sort_type: CommentSortType? /* "Hot" | "Top" | "New" | "Old" | "Controversial" */ = null,
     val legal_information: String? = null,
     val application_email_admins: Boolean? = null,
     /** Added in 1.0.0 */

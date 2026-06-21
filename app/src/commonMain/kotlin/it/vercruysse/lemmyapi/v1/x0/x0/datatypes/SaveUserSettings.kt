@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
+import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
@@ -16,7 +17,7 @@ internal data class SaveUserSettings(
     val default_post_sort_type: SortType? /* "active" | "hot" | "new" | "old" | "top" | "most_comments" | "new_comments" | "controversial" | "scaled" */ = null,
     val default_post_time_range_seconds: Long? = null,
     val default_items_per_page: Long? = null,
-    val default_comment_sort_type: SortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
+    val default_comment_sort_type: CommentSortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
     val interface_language: String? = null,
     val display_name: String? = null,
     val email: SensitiveString? = null,
