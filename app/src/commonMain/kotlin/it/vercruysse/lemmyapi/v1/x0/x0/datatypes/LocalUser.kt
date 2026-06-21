@@ -3,6 +3,7 @@ package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
+import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.VoteShow
 import kotlinx.serialization.Serializable
 
@@ -32,7 +33,7 @@ internal data class LocalUser(
     val collapse_bot_comments: Boolean,
     val last_donation_notification_at: String,
     val private_messages_enabled: Boolean,
-    val default_comment_sort_type: SortType /* "hot" | "top" | "new" | "old" | "controversial" */,
+    val default_comment_sort_type: CommentSortType,
     val auto_mark_fetched_posts_as_read: Boolean,
     val hide_media: Boolean,
     val default_post_time_range_seconds: Long? = null,

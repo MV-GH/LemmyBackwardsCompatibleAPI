@@ -8,6 +8,7 @@ import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.RegistrationMode
 import it.vercruysse.lemmyapi.enums.SortType
+import it.vercruysse.lemmyapi.enums.CommentSortType
 import kotlinx.serialization.Serializable
 
 @CommonParcelize
@@ -27,7 +28,7 @@ data class CreateSite(
     val default_post_time_range_seconds: Long? = null,
     /** Added in 1.0.0 */
     val default_items_per_page: Long? = null,
-    val default_comment_sort_type: SortType? /* "Hot" | "Top" | "New" | "Old" | "Controversial" */ = null,
+    val default_comment_sort_type: CommentSortType? = null,
     val legal_information: String? = null,
     val application_email_admins: Boolean? = null,
     /** Added in 1.0.0 */

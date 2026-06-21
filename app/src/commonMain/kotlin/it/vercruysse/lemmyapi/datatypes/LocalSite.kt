@@ -34,7 +34,7 @@ data class LocalSite(
     val federation_signed_fetch: Boolean,
     val default_post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
     val default_post_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */,
-    val default_comment_sort_type: SortType /* "Hot" | "Top" | "New" | "Old" | "Controversial" */,
+    val default_comment_sort_type: CommentSortType? = null,
     val oauth_registration: Boolean,
     val post_upvotes: FederationMode /* "All" | "Local" | "Disable" */,
     val post_downvotes: FederationMode /* "All" | "Local" | "Disable" */,

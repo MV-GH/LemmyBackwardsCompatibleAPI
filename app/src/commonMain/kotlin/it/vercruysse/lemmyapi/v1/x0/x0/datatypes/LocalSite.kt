@@ -30,7 +30,7 @@ internal data class LocalSite(
     val federation_signed_fetch: Boolean,
     val default_post_listing_mode: PostListingMode /* "list" | "card" | "small_card" */,
     val default_post_sort_type: SortType /* "active" | "hot" | "new" | "old" | "top" | "most_comments" | "new_comments" | "controversial" | "scaled" */,
-    val default_comment_sort_type: SortType /* "hot" | "top" | "new" | "old" | "controversial" */,
+    val default_comment_sort_type: CommentSortType,
     val oauth_registration: Boolean,
     val post_upvotes: FederationMode /* "all" | "local" | "disable" */,
     val post_downvotes: FederationMode /* "all" | "local" | "disable" */,

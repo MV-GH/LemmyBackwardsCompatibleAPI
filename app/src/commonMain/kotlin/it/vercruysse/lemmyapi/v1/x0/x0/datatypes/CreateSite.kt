@@ -23,7 +23,7 @@ internal data class CreateSite(
     val default_post_sort_type: SortType? /* "active" | "hot" | "new" | "old" | "top" | "most_comments" | "new_comments" | "controversial" | "scaled" */ = null,
     val default_post_time_range_seconds: Long? = null,
     val default_items_per_page: Long? = null,
-    val default_comment_sort_type: SortType? /* "hot" | "top" | "new" | "old" | "controversial" */ = null,
+    val default_comment_sort_type: CommentSortType? = null,
     val legal_information: String? = null,
     val application_email_admins: Boolean? = null,
     val discussion_languages: List<LanguageId>? = null,
