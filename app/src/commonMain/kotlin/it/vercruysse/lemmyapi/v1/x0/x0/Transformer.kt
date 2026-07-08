@@ -45,6 +45,8 @@ import it.vercruysse.lemmyapi.datatypes.CreateCommunity as LemmyapiDatatypesCrea
 import it.vercruysse.lemmyapi.datatypes.CreateCommunityReport as LemmyapiDatatypesCreateCommunityReport
 import it.vercruysse.lemmyapi.datatypes.CreateCommunityTag as LemmyapiDatatypesCreateCommunityTag
 import it.vercruysse.lemmyapi.datatypes.CreateCustomEmoji as LemmyapiDatatypesCreateCustomEmoji
+import it.vercruysse.lemmyapi.datatypes.CreateInvitation as LemmyapiDatatypesCreateInvitation
+import it.vercruysse.lemmyapi.datatypes.CreateInvitationResponse as LemmyapiDatatypesCreateInvitationResponse
 import it.vercruysse.lemmyapi.datatypes.CreateMultiCommunity as LemmyapiDatatypesCreateMultiCommunity
 import it.vercruysse.lemmyapi.datatypes.CreateOAuthProvider as LemmyapiDatatypesCreateOAuthProvider
 import it.vercruysse.lemmyapi.datatypes.CreateOrDeleteMultiCommunityEntry as LemmyapiDatatypesCreateOrDeleteMultiCommunityEntry
@@ -127,6 +129,7 @@ import it.vercruysse.lemmyapi.datatypes.ListCommunities as LemmyapiDatatypesList
 import it.vercruysse.lemmyapi.datatypes.ListCommunityPendingFollows as LemmyapiDatatypesListCommunityPendingFollows
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojis as LemmyapiDatatypesListCustomEmojis
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse as LemmyapiDatatypesListCustomEmojisResponse
+import it.vercruysse.lemmyapi.datatypes.ListInvitations as LemmyapiDatatypesListInvitations
 import it.vercruysse.lemmyapi.datatypes.ListLoginsResponse as LemmyapiDatatypesListLoginsResponse
 import it.vercruysse.lemmyapi.datatypes.ListMedia as LemmyapiDatatypesListMedia
 import it.vercruysse.lemmyapi.datatypes.ListMultiCommunities as LemmyapiDatatypesListMultiCommunities
@@ -147,6 +150,7 @@ import it.vercruysse.lemmyapi.datatypes.LocalSite as LemmyapiDatatypesLocalSite
 import it.vercruysse.lemmyapi.datatypes.LocalSiteRateLimit as LemmyapiDatatypesLocalSiteRateLimit
 import it.vercruysse.lemmyapi.datatypes.LocalSiteUrlBlocklist as LemmyapiDatatypesLocalSiteUrlBlocklist
 import it.vercruysse.lemmyapi.datatypes.LocalUser as LemmyapiDatatypesLocalUser
+import it.vercruysse.lemmyapi.datatypes.LocalUserInvite as LemmyapiDatatypesLocalUserInvite
 import it.vercruysse.lemmyapi.datatypes.LocalUserView as LemmyapiDatatypesLocalUserView
 import it.vercruysse.lemmyapi.datatypes.LockComment as LemmyapiDatatypesLockComment
 import it.vercruysse.lemmyapi.datatypes.LockPost as LemmyapiDatatypesLockPost
@@ -213,6 +217,7 @@ import it.vercruysse.lemmyapi.datatypes.ResolveObject as LemmyapiDatatypesResolv
 import it.vercruysse.lemmyapi.datatypes.ResolveObjectView as LemmyapiDatatypesResolveObjectView
 import it.vercruysse.lemmyapi.datatypes.ResolvePostReport as LemmyapiDatatypesResolvePostReport
 import it.vercruysse.lemmyapi.datatypes.ResolvePrivateMessageReport as LemmyapiDatatypesResolvePrivateMessageReport
+import it.vercruysse.lemmyapi.datatypes.RevokeInvitation as LemmyapiDatatypesRevokeInvitation
 import it.vercruysse.lemmyapi.datatypes.SaveComment as LemmyapiDatatypesSaveComment
 import it.vercruysse.lemmyapi.datatypes.SavePost as LemmyapiDatatypesSavePost
 import it.vercruysse.lemmyapi.datatypes.SaveUserSettings as LemmyapiDatatypesSaveUserSettings
@@ -276,6 +281,8 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CreateCommunity as X0DatatypesC
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CreateCommunityReport as X0DatatypesCreateCommunityReport
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CreateCommunityTag as X0DatatypesCreateCommunityTag
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CreateCustomEmoji as X0DatatypesCreateCustomEmoji
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CreateInvitation as X0DatatypesCreateInvitation
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CreateInvitationResponse as X0DatatypesCreateInvitationResponse
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CreateMultiCommunity as X0DatatypesCreateMultiCommunity
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CreateOAuthProvider as X0DatatypesCreateOAuthProvider
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.CreateOrDeleteMultiCommunityEntry as X0DatatypesCreateOrDeleteMultiCommunityEntry
@@ -358,6 +365,7 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListCommunities as X0DatatypesL
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListCommunityPendingFollows as X0DatatypesListCommunityPendingFollows
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListCustomEmojis as X0DatatypesListCustomEmojis
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListCustomEmojisResponse as X0DatatypesListCustomEmojisResponse
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListInvitations as X0DatatypesListInvitations
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListLoginsResponse as X0DatatypesListLoginsResponse
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListMedia as X0DatatypesListMedia
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ListMultiCommunities as X0DatatypesListMultiCommunities
@@ -378,6 +386,7 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.LocalSite as X0DatatypesLocalSi
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.LocalSiteRateLimit as X0DatatypesLocalSiteRateLimit
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.LocalSiteUrlBlocklist as X0DatatypesLocalSiteUrlBlocklist
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.LocalUser as X0DatatypesLocalUser
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.LocalUserInvite as X0DatatypesLocalUserInvite
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.LocalUserView as X0DatatypesLocalUserView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.LockComment as X0DatatypesLockComment
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.LockPost as X0DatatypesLockPost
@@ -444,6 +453,7 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResolveObject as X0DatatypesRes
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResolveObjectView as X0DatatypesResolveObjectView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResolvePostReport as X0DatatypesResolvePostReport
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResolvePrivateMessageReport as X0DatatypesResolvePrivateMessageReport
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.RevokeInvitation as X0DatatypesRevokeInvitation
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SaveComment as X0DatatypesSaveComment
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SavePost as X0DatatypesSavePost
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SaveUserSettings as X0DatatypesSaveUserSettings
@@ -544,6 +554,10 @@ internal class Transformer : MapperGenerator {
         png = d.png,
         wav = d.wav,
         uuid = d.uuid,
+    )
+
+    override fun toUni(d: X0DatatypesCreateInvitationResponse): LemmyapiDatatypesCreateInvitationResponse = LemmyapiDatatypesCreateInvitationResponse(
+        invite = this.toUni(d = d.invite),
     )
 
     override fun toUni(d: X0DatatypesComment): LemmyapiDatatypesComment = LemmyapiDatatypesComment(
@@ -1076,6 +1090,16 @@ internal class Transformer : MapperGenerator {
         person = this.toUni(d = d.person),
         banned = d.banned,
         ban_expires_at = d.ban_expires_at,
+    )
+
+    override fun toUni(d: X0DatatypesLocalUserInvite): LemmyapiDatatypesLocalUserInvite = LemmyapiDatatypesLocalUserInvite(
+        id = d.id,
+        token = d.token,
+        local_user_id = d.local_user_id,
+        max_uses = d.max_uses,
+        uses_count = d.uses_count,
+        expires_at = d.expires_at,
+        published_at = d.published_at,
     )
 
     override fun toUni(d: X0DatatypesLoginResponse): LemmyapiDatatypesLoginResponse = LemmyapiDatatypesLoginResponse(
@@ -1710,6 +1734,11 @@ internal class Transformer : MapperGenerator {
         keywords = d.keywords,
     )
 
+    override fun fromUni(d: LemmyapiDatatypesCreateInvitation): X0DatatypesCreateInvitation = X0DatatypesCreateInvitation(
+        max_uses = d.max_uses,
+        expires_at = d.expires_at,
+    )
+
     override fun fromUni(d: LemmyapiDatatypesCreateMultiCommunity): X0DatatypesCreateMultiCommunity = X0DatatypesCreateMultiCommunity(
         name = d.name,
         title = d.title,
@@ -2198,6 +2227,11 @@ internal class Transformer : MapperGenerator {
         category = d.category,
     )
 
+    override fun fromUni(d: LemmyapiDatatypesListInvitations): X0DatatypesListInvitations = X0DatatypesListInvitations(
+        page_cursor = d.page_cursor,
+        limit = d.limit,
+    )
+
     override fun fromUni(d: LemmyapiDatatypesListMedia): X0DatatypesListMedia = X0DatatypesListMedia(
         page_cursor = d.page_cursor,
         limit = d.limit,
@@ -2429,6 +2463,10 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesResolvePrivateMessageReport): X0DatatypesResolvePrivateMessageReport = X0DatatypesResolvePrivateMessageReport(
         report_id = d.report_id,
         resolved = d.resolved,
+    )
+
+    override fun fromUni(d: LemmyapiDatatypesRevokeInvitation): X0DatatypesRevokeInvitation = X0DatatypesRevokeInvitation(
+        token = d.token,
     )
 
     override fun fromUni(d: LemmyapiDatatypesSaveComment): X0DatatypesSaveComment = X0DatatypesSaveComment(

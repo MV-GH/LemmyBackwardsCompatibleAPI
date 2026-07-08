@@ -441,6 +441,18 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
     override suspend fun listPersonLiked(form: ListPersonLiked): Result<PagedResponse<PostCommentCombinedView>> =
         client.getResult("account/liked", form)
 
+    /** @POST("account/invite") */
+    override suspend fun createRegistrationInvitation(form: CreateInvitation): Result<CreateInvitationResponse> =
+        client.postResult("account/invite", form)
+
+    /** @DELETE("account/invite") */
+    override suspend fun revokeRegistrationInvitation(form: RevokeInvitation): Result<Unit> =
+        client.deleteResult("account/invite", form)
+
+    /** @GET("account/invite") */
+    override suspend fun listRegistrationInvitations(form: ListInvitations): Result<PagedResponse<LocalUserInvite>> =
+        client.getResult("account/invite", form)
+
     /** @GET("account/media/list") */
     override suspend fun listMedia(form: ListMedia): Result<PagedResponse<LocalImageView>> =
         client.getResult("account/media/list", form)

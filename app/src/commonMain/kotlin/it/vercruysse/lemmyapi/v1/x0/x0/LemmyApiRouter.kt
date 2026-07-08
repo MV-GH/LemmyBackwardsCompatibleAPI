@@ -314,6 +314,15 @@ internal abstract class LemmyApiRouter(client: HttpClient, auth: String?) : Auth
     /** @GET("account/liked") */
     abstract suspend fun listPersonLiked(form: ListPersonLiked): Result<PagedResponse<PostCommentCombinedView>>
 
+    /** @POST("account/invite") */
+    abstract suspend fun createRegistrationInvitation(form: CreateInvitation): Result<CreateInvitationResponse>
+
+    /** @DELETE("account/invite") */
+    abstract suspend fun revokeRegistrationInvitation(form: RevokeInvitation): Result<Unit>
+
+    /** @GET("account/invite") */
+    abstract suspend fun listRegistrationInvitations(form: ListInvitations): Result<PagedResponse<LocalUserInvite>>
+
     /** @GET("account/media/list") */
     abstract suspend fun listMedia(form: ListMedia): Result<PagedResponse<LocalImageView>>
 

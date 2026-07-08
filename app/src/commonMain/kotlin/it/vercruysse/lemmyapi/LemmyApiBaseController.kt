@@ -530,6 +530,27 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
     abstract suspend fun addAdmin(form: AddAdmin): Result<AddAdminResponse>
 
     /**
+     * Create a new registration invitation.
+     *
+     * @POST("account/invite")
+     */
+    abstract suspend fun createRegistrationInvitation(form: CreateInvitation): Result<CreateInvitationResponse>
+
+    /**
+     * Revoke a previously created registration invitation.
+     *
+     * @DELETE("account/invite")
+     */
+    abstract suspend fun revokeRegistrationInvitation(form: RevokeInvitation): Result<Unit>
+
+    /**
+     * List previously created registration invitations.
+     *
+     * @GET("account/invite")
+     */
+    abstract suspend fun listRegistrationInvitations(form: ListInvitations): Result<PagedResponse<LocalUserInvite>>
+
+    /**
      * List the registration applications.
      *
      * @GET("admin/registration_application/list")

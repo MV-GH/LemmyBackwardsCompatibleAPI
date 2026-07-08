@@ -1236,4 +1236,10 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun imageHealth(): Result<Unit> = notSupported()
 
     override suspend fun listPersons(form: it.vercruysse.lemmyapi.datatypes.ListPersons): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PersonView>> = notSupported()
+
+    override suspend fun createRegistrationInvitation(form: it.vercruysse.lemmyapi.datatypes.CreateInvitation): Result<it.vercruysse.lemmyapi.datatypes.CreateInvitationResponse> = notSupported()
+
+    override suspend fun revokeRegistrationInvitation(form: it.vercruysse.lemmyapi.datatypes.RevokeInvitation): Result<Unit> = notSupported()
+
+    override suspend fun listRegistrationInvitations(form: it.vercruysse.lemmyapi.datatypes.ListInvitations): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalUserInvite>> = notSupported()
 }
