@@ -29,6 +29,8 @@ data class SaveUserSettings(
     val bio: String? = null,
     val matrix_user_id: String? = null,
     val show_avatars: Boolean? = null,
+    /** Added in 1.0.0 */
+    val show_media: Boolean? = null,
     val send_notifications_to_email: Boolean? = null,
     val bot_account: Boolean? = null,
     val show_bot_accounts: Boolean? = null,
@@ -48,7 +50,7 @@ data class SaveUserSettings(
     /** Added in 1.0.0 */
     val auto_mark_fetched_posts_as_read: Boolean? = null,
     /** Added in 1.0.0 */
-    val hide_media: Boolean? = null,
+    val hide_posts_with_media: Boolean? = null,
     /** Added in 1.0.0 */
     val show_person_votes: Boolean? = null,
 ) : DatatypeRoot

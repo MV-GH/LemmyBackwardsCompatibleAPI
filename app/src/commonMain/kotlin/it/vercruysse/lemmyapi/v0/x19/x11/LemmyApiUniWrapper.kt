@@ -32,20 +32,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
             pictrsApi.auth = value
         }
 
-    private suspend fun uploadAndApplyImage(
-        image: ByteArray,
-        applyImage: suspend (String) -> Result<Unit>,
-    ): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> = runCatching {
-        val uploadResponse = uploadImage(image).getOrThrow()
-        try {
-            applyImage(uploadResponse.image_url).getOrThrow()
-            uploadResponse
-        } catch (e: Throwable) {
-            deleteMedia(it.vercruysse.lemmyapi.datatypes.DeleteImageParams(uploadResponse.delete_filename)).getOrNull()
-            throw e
-        }
-    }
-
     /**
      * Gets the site, and your user data.
      *

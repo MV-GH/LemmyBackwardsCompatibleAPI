@@ -610,6 +610,7 @@ internal class Transformer : MapperGenerator {
         creator_ban_expires_at = d.creator_ban_expires_at,
         creator_banned_from_community = d.creator_banned_from_community,
         creator_community_ban_expires_at = d.creator_community_ban_expires_at,
+        tags = d.tags.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesCommentResponse): LemmyapiDatatypesCommentResponse = LemmyapiDatatypesCommentResponse(
@@ -855,6 +856,7 @@ internal class Transformer : MapperGenerator {
     override fun toUni(d: X0DatatypesGetPostResponse): LemmyapiDatatypesGetPostResponse = LemmyapiDatatypesGetPostResponse(
         post_view = this.toUni(d = d.post_view),
         community_view = this.toUni(d = d.community_view),
+        moderators = d.moderators.map { this.toUni(d = it) },
         cross_posts = d.cross_posts.map { this.toUni(d = it) },
     )
 
@@ -1000,6 +1002,7 @@ internal class Transformer : MapperGenerator {
         image_max_upload_size = d.image_max_upload_size,
         image_allow_video_uploads = d.image_allow_video_uploads,
         image_upload_disabled = d.image_upload_disabled,
+        max_invites_per_user_allowed = d.max_invites_per_user_allowed,
     )
 
     override fun toUni(d: X0DatatypesLocalSiteRateLimit): LemmyapiDatatypesLocalSiteRateLimit = LemmyapiDatatypesLocalSiteRateLimit(
@@ -1056,7 +1059,7 @@ internal class Transformer : MapperGenerator {
         default_comment_sort_type = d.default_comment_sort_type,
         auto_mark_fetched_posts_as_read = d.auto_mark_fetched_posts_as_read,
         last_donation_notification_at = d.last_donation_notification_at,
-        hide_media = d.hide_media,
+        hide_posts_with_media = d.hide_posts_with_media,
         default_post_time_range_seconds = d.default_post_time_range_seconds,
         show_score = d.show_score,
         show_upvotes = d.show_upvotes,
@@ -1064,6 +1067,8 @@ internal class Transformer : MapperGenerator {
         show_upvote_percentage = d.show_upvote_percentage,
         show_person_votes = d.show_person_votes,
         default_items_per_page = d.default_items_per_page,
+        invited_by_local_user_id = d.invited_by_local_user_id,
+        show_media = d.show_media,
     )
 
     override fun toUni(d: X0DatatypesLocalUserView): LemmyapiDatatypesLocalUserView = LemmyapiDatatypesLocalUserView(
@@ -1100,6 +1105,7 @@ internal class Transformer : MapperGenerator {
         expires_at = d.expires_at,
         published_at = d.published_at,
         bulk_action_parent_id = d.bulk_action_parent_id,
+        child_count = d.child_count,
     )
 
     override fun toUni(d: X0DatatypesModlogView): LemmyapiDatatypesModlogView = LemmyapiDatatypesModlogView(
@@ -1346,6 +1352,7 @@ internal class Transformer : MapperGenerator {
         creator_ban_expires_at = d.creator_ban_expires_at,
         creator_banned_from_community = d.creator_banned_from_community,
         creator_community_ban_expires_at = d.creator_community_ban_expires_at,
+        tags = d.tags.map { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesPostResponse): LemmyapiDatatypesPostResponse = LemmyapiDatatypesPostResponse(
@@ -1676,8 +1683,6 @@ internal class Transformer : MapperGenerator {
         title = d.title,
         sidebar = d.sidebar,
         summary = d.summary,
-        icon = d.icon,
-        banner = d.banner,
         nsfw = d.nsfw,
         posting_restricted_to_mods = d.posting_restricted_to_mods,
         discussion_languages = d.discussion_languages,
@@ -1828,6 +1833,7 @@ internal class Transformer : MapperGenerator {
         image_max_upload_size = d.image_max_upload_size,
         image_allow_video_uploads = d.image_allow_video_uploads,
         image_upload_disabled = d.image_upload_disabled,
+        max_invites_per_user_allowed = d.max_invites_per_user_allowed,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateTagline): X0DatatypesCreateTagline = X0DatatypesCreateTagline(
@@ -2025,6 +2031,7 @@ internal class Transformer : MapperGenerator {
         image_max_upload_size = d.image_max_upload_size,
         image_allow_video_uploads = d.image_allow_video_uploads,
         image_upload_disabled = d.image_upload_disabled,
+        max_invites_per_user_allowed = d.max_invites_per_user_allowed,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditTagline): X0DatatypesEditTagline = X0DatatypesEditTagline(
@@ -2127,12 +2134,13 @@ internal class Transformer : MapperGenerator {
         show_hidden = d.show_hidden,
         show_read = d.show_read,
         show_nsfw = d.show_nsfw,
-        hide_media = d.hide_media,
+        hide_posts_with_media = d.hide_posts_with_media,
         mark_as_read = d.mark_as_read,
         no_comments_only = d.no_comments_only,
         search_term = d.search_term,
         search_title_only = d.search_title_only,
         search_url_only = d.search_url_only,
+        tag_id = d.tag_id,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
@@ -2252,6 +2260,7 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUni(d: LemmyapiDatatypesListPersonSaved): X0DatatypesListPersonSaved = X0DatatypesListPersonSaved(
         type_ = d.type_,
+        search_term = d.search_term,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
@@ -2273,6 +2282,7 @@ internal class Transformer : MapperGenerator {
         type_ = d.type_,
         post_id = d.post_id,
         community_id = d.community_id,
+        sort = d.sort,
         page_cursor = d.page_cursor,
         limit = d.limit,
         show_community_rule_violations = d.show_community_rule_violations,
@@ -2370,6 +2380,7 @@ internal class Transformer : MapperGenerator {
         honeypot = d.honeypot,
         answer = d.answer,
         stay_logged_in = d.stay_logged_in,
+        token = d.token,
     )
 
     override fun fromUni(d: LemmyapiDatatypesRemoveComment): X0DatatypesRemoveComment = X0DatatypesRemoveComment(
@@ -2446,6 +2457,7 @@ internal class Transformer : MapperGenerator {
         bio = d.bio,
         matrix_user_id = d.matrix_user_id,
         show_avatars = d.show_avatars,
+        show_media = d.show_media,
         send_notifications_to_email = d.send_notifications_to_email,
         bot_account = d.bot_account,
         show_bot_accounts = d.show_bot_accounts,
@@ -2462,7 +2474,7 @@ internal class Transformer : MapperGenerator {
         show_downvotes = d.show_downvotes,
         show_upvote_percentage = d.show_upvote_percentage,
         auto_mark_fetched_posts_as_read = d.auto_mark_fetched_posts_as_read,
-        hide_media = d.hide_media,
+        hide_posts_with_media = d.hide_posts_with_media,
         show_person_votes = d.show_person_votes,
     )
 

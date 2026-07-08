@@ -46,7 +46,7 @@ internal data class EditSite(
     val rate_limit_import_user_settings_interval_seconds: Long? = null,
     val federation_enabled: Boolean? = null,
     val blocked_urls: List<String>? = null,
-    val registration_mode: RegistrationMode? /* "closed" | "require_application" | "open" */ = null,
+    val registration_mode: RegistrationMode? /* "closed" | "require_application" | "require_invitation" | "open" */ = null,
     val reports_email_admins: Boolean? = null,
     val content_warning: String? = null,
     val oauth_registration: Boolean? = null,
@@ -66,4 +66,5 @@ internal data class EditSite(
     val image_max_upload_size: Long? = null,
     val image_allow_video_uploads: Boolean? = null,
     val image_upload_disabled: Boolean? = null,
+    val max_invites_per_user_allowed: Long? = null,
 )
