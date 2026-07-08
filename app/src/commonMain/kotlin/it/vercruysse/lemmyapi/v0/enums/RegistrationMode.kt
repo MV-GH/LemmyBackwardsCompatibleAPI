@@ -21,9 +21,14 @@ internal enum class RegistrationMode {
         fun fromUniNullable(uni: UniRegistrationMode?): RegistrationMode? =
             when (uni) {
                 null -> null
+
                 UniRegistrationMode.Closed -> Closed
+
                 UniRegistrationMode.RequireApplication -> RequireApplication
-                UniRegistrationMode.RequireInvitation -> null // Not supported before 1.0.0
+
+                UniRegistrationMode.RequireInvitation -> null
+
+                // Not supported before 1.0.0
                 UniRegistrationMode.Open -> Open
             }
 
