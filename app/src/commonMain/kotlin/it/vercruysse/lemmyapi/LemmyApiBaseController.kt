@@ -14,6 +14,21 @@ abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version
         auth,
     ),
     OldRoutes {
+
+    suspend fun uploadAndApplyImage(
+        image: ByteArray,
+        applyImage: suspend (String) -> Result<Unit>,
+    ): Result<UploadImageResponse> = runCatching {
+        val uploadResponse = uploadImage(image).getOrThrow()
+        try {
+            applyImage(uploadResponse.image_url).getOrThrow()
+            uploadResponse
+        } catch (e: Throwable) {
+            deleteMedia(DeleteImageParams(uploadResponse.delete_filename)).getOrNull()
+            throw e
+        }
+    }
+
     /**
      * Gets the site, and your user data.
      *
