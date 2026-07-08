@@ -327,6 +327,17 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
             PagedResponse(resp.items.map(transformer::toUni))
         }
 
+    override suspend fun createRegistrationInvitation(form: it.vercruysse.lemmyapi.datatypes.CreateInvitation): Result<it.vercruysse.lemmyapi.datatypes.CreateInvitationResponse> =
+        api.createRegistrationInvitation(transformer.fromUni(form)).map(transformer::toUni)
+
+    override suspend fun revokeRegistrationInvitation(form: it.vercruysse.lemmyapi.datatypes.RevokeInvitation): Result<Unit> =
+        api.revokeRegistrationInvitation(transformer.fromUni(form))
+
+    override suspend fun listRegistrationInvitations(form: it.vercruysse.lemmyapi.datatypes.ListInvitations): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalUserInvite>> =
+        api.listRegistrationInvitations(transformer.fromUni(form)).map { resp ->
+            PagedResponse(resp.items.map(transformer::toUni))
+        }
+
     override suspend fun listMedia(form: it.vercruysse.lemmyapi.datatypes.ListMedia): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> =
         api.listMedia(transformer.fromUni(form)).map { resp ->
             PagedResponse(resp.items.map(transformer::toUni))
