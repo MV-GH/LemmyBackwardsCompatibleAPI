@@ -12,7 +12,7 @@ data class CommunityReport(
     val creator_id: PersonId,
     val community_id: CommunityId,
     val original_community_name: String,
-    val original_community_title: String,
+    val original_community_title: String? = null,
     val original_community_summary: String? = null,
     val original_community_sidebar: String? = null,
     val original_community_icon: String? = null,

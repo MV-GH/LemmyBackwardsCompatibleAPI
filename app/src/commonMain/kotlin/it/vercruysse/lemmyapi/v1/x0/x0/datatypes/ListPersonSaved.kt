@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class ListPersonSaved(
     val type_: PersonContentType? /* "all" | "comments" | "posts" */ = null,
+    val search_term: String? = null,
     val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
 )

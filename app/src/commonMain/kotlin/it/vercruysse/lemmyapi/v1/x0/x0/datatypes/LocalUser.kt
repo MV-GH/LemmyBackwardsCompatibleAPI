@@ -35,7 +35,7 @@ internal data class LocalUser(
     val private_messages_enabled: Boolean,
     val default_comment_sort_type: CommentSortType /* "hot" | "top" | "new" | "old" | "controversial" */,
     val auto_mark_fetched_posts_as_read: Boolean,
-    val hide_media: Boolean,
+    val hide_posts_with_media: Boolean,
     val default_post_time_range_seconds: Long? = null,
     val show_score: Boolean,
     val show_upvotes: Boolean,
@@ -43,4 +43,6 @@ internal data class LocalUser(
     val show_upvote_percentage: Boolean,
     val show_person_votes: Boolean,
     val default_items_per_page: Long,
+    val invited_by_local_user_id: LocalUserId? = null,
+    val show_media: Boolean,
 )
