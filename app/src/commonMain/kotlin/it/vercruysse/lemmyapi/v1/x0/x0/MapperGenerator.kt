@@ -13,6 +13,7 @@ internal interface MapperGenerator {
     fun toUni(d: AuthenticateWithOauth): it.vercruysse.lemmyapi.datatypes.AuthenticateWithOauth
     fun toUni(d: CaptchaResponse): it.vercruysse.lemmyapi.datatypes.CaptchaResponse
     fun toUni(d: Comment): it.vercruysse.lemmyapi.datatypes.Comment
+    fun toUni(d: CreateInvitationResponse): it.vercruysse.lemmyapi.datatypes.CreateInvitationResponse
     fun toUni(d: CommentActions): it.vercruysse.lemmyapi.datatypes.CommentActions
     fun toUni(d: CommentReport): it.vercruysse.lemmyapi.datatypes.CommentReport
     fun toUni(d: CommentReportResponse): it.vercruysse.lemmyapi.datatypes.CommentReportResponse
@@ -67,6 +68,7 @@ internal interface MapperGenerator {
     fun toUni(d: LocalSiteRateLimit): it.vercruysse.lemmyapi.datatypes.LocalSiteRateLimit
     fun toUni(d: LocalSiteUrlBlocklist): it.vercruysse.lemmyapi.datatypes.LocalSiteUrlBlocklist
     fun toUni(d: LocalUser): it.vercruysse.lemmyapi.datatypes.LocalUser
+    fun toUni(d: LocalUserInvite): it.vercruysse.lemmyapi.datatypes.LocalUserInvite
     fun toUni(d: LocalUserView): it.vercruysse.lemmyapi.datatypes.LocalUserView
     fun toUni(d: LoginResponse): it.vercruysse.lemmyapi.datatypes.LoginResponse
     fun toUni(d: LoginToken): it.vercruysse.lemmyapi.datatypes.LoginToken
@@ -180,6 +182,7 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateCommunityReport): CreateCommunityReport
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateCommunityTag): CreateCommunityTag
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateCustomEmoji): CreateCustomEmoji
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateInvitation): CreateInvitation
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateMultiCommunity): CreateMultiCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateOAuthProvider): CreateOAuthProvider
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.CreateOrDeleteMultiCommunityEntry): CreateOrDeleteMultiCommunityEntry
@@ -236,6 +239,7 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCommunities): ListCommunities
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCommunityPendingFollows): ListCommunityPendingFollows
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCustomEmojis): ListCustomEmojis
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListInvitations): ListInvitations
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListMedia): ListMedia
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListMultiCommunities): ListMultiCommunities
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListNotifications): ListNotifications
@@ -273,6 +277,7 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolveObject): ResolveObject
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolvePostReport): ResolvePostReport
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ResolvePrivateMessageReport): ResolvePrivateMessageReport
+    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.RevokeInvitation): RevokeInvitation
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.SaveComment): SaveComment
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.SavePost): SavePost
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.SaveUserSettings): SaveUserSettings
