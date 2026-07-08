@@ -1168,8 +1168,6 @@ internal class Transformer : MapperGenerator {
             name = d.name,
             title = d.title,
             description = d.summary,
-            icon = d.icon,
-            banner = d.banner,
             nsfw = d.nsfw,
             posting_restricted_to_mods = d.posting_restricted_to_mods,
             discussion_languages = d.discussion_languages,
