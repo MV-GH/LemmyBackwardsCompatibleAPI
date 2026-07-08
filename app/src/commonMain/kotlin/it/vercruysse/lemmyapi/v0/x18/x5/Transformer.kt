@@ -327,7 +327,8 @@ internal class Transformer(var auth: String) : MapperGenerator {
             show_downvotes = VoteShow.Show,
             show_person_votes = d.show_scores,
             show_upvote_percentage = d.show_scores,
-            hide_media = false,
+            hide_posts_with_media = false,
+            show_media = true,
             private_messages_enabled = true,
             default_comment_sort_type = CommentSortType.Hot,
             auto_mark_fetched_posts_as_read = false,
@@ -507,6 +508,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             image_max_upload_size = 0,
             image_allow_video_uploads = false,
             image_upload_disabled = false,
+            max_invites_per_user_allowed = 0,
         )
 
     override fun toUni(d: X5DatatypesPersonView, is_admin: Boolean): LemmyapiDatatypesPersonView =

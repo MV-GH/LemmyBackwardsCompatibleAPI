@@ -30,7 +30,7 @@ data class LocalSite(
     val federation_enabled: Boolean,
     val published_at: String,
     val updated_at: String? = null,
-    val registration_mode: RegistrationMode /* "Closed" | "RequireApplication" | "Open" */,
+    val registration_mode: RegistrationMode /* "Closed" | "RequireApplication" | "RequireInvitation" | "Open" */,
     val reports_email_admins: Boolean,
     val federation_signed_fetch: Boolean,
     val default_post_listing_mode: PostListingMode /* "List" | "Card" | "SmallCard" */,
@@ -63,4 +63,6 @@ data class LocalSite(
     val image_max_upload_size: Long,
     val image_allow_video_uploads: Boolean,
     val image_upload_disabled: Boolean,
+    /** Added in 1.0.0 */
+    val max_invites_per_user_allowed: Long,
 ) : DatatypeRoot, Identity

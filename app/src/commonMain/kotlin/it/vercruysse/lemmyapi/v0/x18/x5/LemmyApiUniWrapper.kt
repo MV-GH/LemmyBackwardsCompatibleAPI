@@ -38,6 +38,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
             pictrsApi.auth = value
         }
 
+    // TODO to super
     private suspend fun uploadAndApplyImage(
         image: ByteArray,
         applyImage: suspend (String) -> Result<Unit>,

@@ -444,6 +444,7 @@ internal class Transformer : MapperGenerator {
             image_max_upload_size = 0,
             image_allow_video_uploads = false,
             image_upload_disabled = false,
+            max_invites_per_user_allowed = 0,
         )
 
     override fun toUni(d: X0DatatypesPostReportView): LemmyapiDatatypesPostReportView =
@@ -779,7 +780,8 @@ internal class Transformer : MapperGenerator {
             show_person_votes = d.show_scores,
             show_upvote_percentage = d.show_scores,
             show_downvotes = VoteShow.Show,
-            hide_media = false,
+            hide_posts_with_media = false,
+            show_media = true,
             default_comment_sort_type = CommentSortType.Hot,
             private_messages_enabled = true,
             auto_mark_fetched_posts_as_read = false,

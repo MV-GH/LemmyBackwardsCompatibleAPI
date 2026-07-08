@@ -22,4 +22,5 @@ internal data class CommentReportView(
     val creator_ban_expires_at: String? = null,
     val creator_banned_from_community: Boolean,
     val creator_community_ban_expires_at: String? = null,
+    val tags: CommunityTagsView,
 ) : ReportCombinedView

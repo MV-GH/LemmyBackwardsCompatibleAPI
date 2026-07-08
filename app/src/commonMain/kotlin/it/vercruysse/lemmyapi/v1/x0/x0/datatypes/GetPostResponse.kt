@@ -7,4 +7,5 @@ internal data class GetPostResponse(
     val post_view: PostView,
     val community_view: CommunityView,
     val cross_posts: List<PostView>,
+    val moderators: List<CommunityModeratorView>,
 )

@@ -15,4 +15,6 @@ data class Modlog(
     val expires_at: String? = null,
     val published_at: String,
     val bulk_action_parent_id: ModlogId? = null,
+    /** Added in 1.0.0 */
+    val child_count: Long? = null,
 ) : DatatypeRoot

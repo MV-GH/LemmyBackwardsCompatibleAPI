@@ -24,4 +24,6 @@ data class PostReportView(
     val creator_ban_expires_at: String? = null,
     val creator_banned_from_community: Boolean,
     val creator_community_ban_expires_at: String? = null,
+    /** Added in 1.0.0 */
+    val tags: CommunityTagsView = emptyList(),
 ) : DatatypeRoot, ReportCombinedView

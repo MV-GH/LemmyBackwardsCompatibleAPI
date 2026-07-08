@@ -30,7 +30,7 @@ data class GetPosts(
     /** Added in 0.19.6 */
     val show_nsfw: Boolean? = null,
     /** Added in 1.0.0 */
-    val hide_media: Boolean? = null,
+    val hide_posts_with_media: Boolean? = null,
     /** Added in 1.0.0 */
     val mark_as_read: Boolean? = null,
     /** Added in 1.0.0 */
@@ -41,6 +41,8 @@ data class GetPosts(
     val search_title_only: Boolean? = null,
     /** Added in 1.0.0 */
     val search_url_only: Boolean? = null,
+    /** Added in 1.0.0 */
+    val tag_id: CommunityTagId? = null,
     /** The page cursor to the next list, null is valid and considered first list */
     val page_cursor: PaginationCursor? = PAGE_CURSOR_GUARD, // Guard is used to detect when null is set
     /** starts from 1, null is considered not set, deprecated 0.19+, set to support 0.18, removed in 1.0.0 */

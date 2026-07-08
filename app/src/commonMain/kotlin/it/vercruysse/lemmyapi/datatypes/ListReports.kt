@@ -2,6 +2,7 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.enums.ReportSortType
 import it.vercruysse.lemmyapi.enums.ReportType
 import kotlinx.serialization.Serializable
 
@@ -17,6 +18,8 @@ data class ListReports(
     /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
+    /** Added in 1.0.0 */
+    val sort: ReportSortType? = null,
     /** Added in 1.0.0 */
     val show_community_rule_violations: Boolean? = null,
     /** Added in 1.0.0 */

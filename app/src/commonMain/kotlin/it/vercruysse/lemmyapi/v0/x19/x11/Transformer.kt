@@ -750,6 +750,7 @@ internal class Transformer : MapperGenerator {
             image_max_upload_size = 0,
             image_allow_video_uploads = false,
             image_upload_disabled = false,
+            max_invites_per_user_allowed = 0,
         )
 
     override fun toUni(d: X11DatatypesLocalSiteRateLimit): LemmyapiDatatypesLocalSiteRateLimit =
@@ -813,7 +814,8 @@ internal class Transformer : MapperGenerator {
             auto_mark_fetched_posts_as_read = false,
             default_comment_sort_type = CommentSortType.Hot,
             private_messages_enabled = true,
-            hide_media = false,
+            hide_posts_with_media = false,
+            show_media = true,
             default_post_time_range_seconds = null,
             default_items_per_page = 20,
             totp_2fa_enabled = d.totp_2fa_enabled,

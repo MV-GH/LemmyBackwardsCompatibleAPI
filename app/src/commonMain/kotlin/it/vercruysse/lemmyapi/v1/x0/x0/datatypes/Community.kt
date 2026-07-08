@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 internal data class Community(
     val id: CommunityId,
     val name: String,
-    val title: String,
+    val title: String? = null,
     val sidebar: String? = null,
     val removed: Boolean,
     val published_at: String,

@@ -14,4 +14,5 @@ internal data class Register(
     val honeypot: String? = null,
     val answer: String? = null,
     val stay_logged_in: Boolean? = null,
+    val token: String? = null,
 )

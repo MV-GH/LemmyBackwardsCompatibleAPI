@@ -18,4 +18,6 @@ data class Register(
     val answer: String? = null,
     /** Added in 1.0.0 */
     val stay_logged_in: Boolean? = null,
+    /** Added in 1.0.0 */
+    val token: String? = null,
 ) : DatatypeRoot

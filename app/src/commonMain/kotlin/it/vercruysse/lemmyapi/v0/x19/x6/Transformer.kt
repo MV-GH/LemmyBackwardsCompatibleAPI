@@ -749,6 +749,7 @@ internal class Transformer : MapperGenerator {
             image_max_upload_size = 0,
             image_allow_video_uploads = false,
             image_upload_disabled = false,
+            max_invites_per_user_allowed = 0,
         )
 
     override fun toUni(d: X6DatatypesLocalSiteRateLimit): LemmyapiDatatypesLocalSiteRateLimit =
@@ -809,7 +810,8 @@ internal class Transformer : MapperGenerator {
             show_person_votes = e.score,
             show_upvote_percentage = e.upvote_percentage,
             show_downvotes = if (e.downvotes) VoteShow.Show else VoteShow.Hide,
-            hide_media = false,
+            hide_posts_with_media = false,
+            show_media = true,
             private_messages_enabled = true,
             default_comment_sort_type = CommentSortType.Hot,
             auto_mark_fetched_posts_as_read = false,

@@ -68,7 +68,7 @@ data class EditSite(
     val blocked_urls: List<String>? = null,
     /** Removed in 1.0.0 */
     val taglines: List<String>? = null,
-    val registration_mode: RegistrationMode? /* "Closed" | "RequireApplication" | "Open" */ = null,
+    val registration_mode: RegistrationMode? /* "Closed" | "RequireApplication" | "RequireInvitation" | "Open" */ = null,
     val reports_email_admins: Boolean? = null,
     val content_warning: String? = null,
     /** Added in 1.0.0 */
@@ -105,4 +105,6 @@ data class EditSite(
     val image_allow_video_uploads: Boolean? = null,
     /** Added in 1.0.0 */
     val image_upload_disabled: Boolean? = null,
+    /** Added in 1.0.0 */
+    val max_invites_per_user_allowed: Long? = null,
 ) : DatatypeRoot

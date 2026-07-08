@@ -56,7 +56,7 @@ val fileFieldEnumOverrides = mapOf(
     "ListPersonSaved"           to mapOf("type_" to "PersonContentType"),
     "ListPersonLiked"           to mapOf("type_" to "PersonContentType"),
     "ListNotifications"         to mapOf("type_" to "NotificationDataType"),
-    "ListReports"               to mapOf("type_" to "ReportType"),
+    "ListReports"               to mapOf("type_" to "ReportType", "sort" to "ReportSortType"),
     "Search"                    to mapOf("type_" to "SearchType"),
     "SearchResponse"            to mapOf("type_" to "SearchType"),
     "GetModlog"                 to mapOf("type_" to "ModlogActionType"),
@@ -331,7 +331,7 @@ fun downloadTypes(
 }
 
 fun main() {
-    // Future version 1.0.0-beta.0
-    downloadTypes("1.0.0-beta.0", "v1/x0/x0")
+    // Future version 1.0.0-beta.1
+    downloadTypes("1.0.0-beta.1", "v1/x0/x0")
     exitProcess(0)
 }

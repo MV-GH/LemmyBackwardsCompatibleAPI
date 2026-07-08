@@ -44,7 +44,7 @@ data class LocalUser(
     /** Added in 0.19.11 */
     val last_donation_notification_at: String,
     /** Added in 1.0.0 */
-    val hide_media: Boolean,
+    val hide_posts_with_media: Boolean? = null,
     /** Added in 1.0.0 */
     val default_post_time_range_seconds: Long? = null,
     val show_score: Boolean,
@@ -55,4 +55,8 @@ data class LocalUser(
     val show_person_votes: Boolean,
     /** Added in 1.0.0 */
     val default_items_per_page: Long,
+    /** Added in 1.0.0 */
+    val invited_by_local_user_id: LocalUserId? = null,
+    /** Added in 1.0.0 */
+    val show_media: Boolean,
 ) : DatatypeRoot, Identity
