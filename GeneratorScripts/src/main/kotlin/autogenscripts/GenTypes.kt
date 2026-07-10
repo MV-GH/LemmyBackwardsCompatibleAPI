@@ -14,7 +14,7 @@ const val ROOT_PACKAGE_PATH = "it/vercruysse/lemmyapi/"
 const val ROOT_PACKAGE = "it.vercruysse.lemmyapi."
 const val ENUMS_PACKAGE = "enums."
 
-val filesThatShouldNotBeAdded = setOf("SuccessResponse", "OpenGraphData", "AllLemmyErrors", "NodeInfo", "NodeInfoServices", "NodeInfoSoftware", "NodeInfoUsage", "NodeInfoUsers")
+val filesThatShouldNotBeAdded = setOf("SuccessResponse", "OpenGraphData", "AllLemmyErrors", "NodeInfo", "NodeInfoServices", "NodeInfoSoftware", "NodeInfoUsage", "NodeInfoUsers", "DeleteUserForm")
 val propsThatShouldBeInt = setOf("my_vote")
 
 // ============================================================
