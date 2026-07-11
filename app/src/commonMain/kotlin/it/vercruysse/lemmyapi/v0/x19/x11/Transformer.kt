@@ -13,6 +13,7 @@ import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.NotificationType
+import it.vercruysse.lemmyapi.enums.VoteAction
 import it.vercruysse.lemmyapi.enums.VoteShow
 import it.vercruysse.lemmyapi.utils.toAt
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
@@ -411,7 +412,7 @@ internal class Transformer : MapperGenerator {
             creator_is_admin = d.creator_is_admin,
             creator_banned = d.creator.banned,
             person_actions = PersonActions(if (d.creator_blocked) "" else null),
-            comment_actions = CommentActions(d.my_vote, null, if (d.saved) "" else null),
+            comment_actions = CommentActions(VoteAction.from(d.my_vote), null, if (d.saved) "" else null),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
         )
 
@@ -434,7 +435,7 @@ internal class Transformer : MapperGenerator {
             creator_ban_expires_at = d.creator.ban_expires,
             can_mod = false,
             person_actions = PersonActions(if (d.creator_blocked) "" else null),
-            comment_actions = CommentActions(d.my_vote, null, if (d.saved) "" else null),
+            comment_actions = CommentActions(VoteAction.from(d.my_vote), null, if (d.saved) "" else null),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
         )
 
@@ -584,7 +585,7 @@ internal class Transformer : MapperGenerator {
             creator_ban_expires_at = d.creator.ban_expires,
             can_mod = false,
             person_actions = PersonActions(if (d.creator_blocked) "" else null),
-            comment_actions = CommentActions(d.my_vote, null, if (d.saved) "" else null),
+            comment_actions = CommentActions(VoteAction.from(d.my_vote), null, if (d.saved) "" else null),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
         )
 
@@ -617,7 +618,7 @@ internal class Transformer : MapperGenerator {
             creator_ban_expires_at = d.creator.ban_expires,
             can_mod = false,
             person_actions = PersonActions(if (d.creator_blocked) "" else null),
-            comment_actions = CommentActions(d.my_vote, null, if (d.saved) "" else null),
+            comment_actions = CommentActions(VoteAction.from(d.my_vote), null, if (d.saved) "" else null),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
         )
 
@@ -952,7 +953,7 @@ internal class Transformer : MapperGenerator {
             creator = this.toUni(d = d.creator),
             post_creator = this.toUni(d = d.post_creator),
             resolver = d.resolver?.let { this.toUni(d = it) },
-            post_actions = PostActions(toAt(d.read), null, d.counts.comments - d.unread_comments, toAt(d.saved), null, d.my_vote, toAt(d.hidden)),
+            post_actions = PostActions(toAt(d.read), null, d.counts.comments - d.unread_comments, toAt(d.saved), null, VoteAction.from(d.my_vote), toAt(d.hidden)),
             person_actions = PersonActions(toAt(d.creator_blocked)),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
             creator_banned_from_community = d.creator_banned_from_community,
@@ -972,7 +973,7 @@ internal class Transformer : MapperGenerator {
             creator = this.toUni(d = d.creator),
             community = this.toUni(d = d.community, counts = X11DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
             image_details = d.image_details?.let { this.toUni(d = it) },
-            post_actions = PostActions(toAt(d.read), null, d.counts.comments - d.unread_comments, toAt(d.saved), null, d.my_vote, toAt(d.hidden)),
+            post_actions = PostActions(toAt(d.read), null, d.counts.comments - d.unread_comments, toAt(d.saved), null, VoteAction.from(d.my_vote), toAt(d.hidden)),
             person_actions = PersonActions(toAt(d.creator_blocked)),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
             tags = emptyList(),
@@ -1139,7 +1140,7 @@ internal class Transformer : MapperGenerator {
             creator = this.toUni(d = d.creator),
             creator_banned = d.creator.banned,
             creator_banned_from_community = d.creator_banned_from_community,
-            score = d.score,
+            vote = VoteAction.from(d.score),
         )
 
     override fun fromUni(d: LemmyapiDatatypesAddAdmin): X11DatatypesAddAdmin = X11DatatypesAddAdmin(
@@ -1215,7 +1216,7 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesCreateCommentLike): X11DatatypesCreateCommentLike =
         X11DatatypesCreateCommentLike(
             comment_id = d.comment_id,
-            score = d.score.toLong(),
+            score = d.vote.value.toLong(),
         )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommentReport): X11DatatypesCreateCommentReport =
@@ -1260,7 +1261,7 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesCreatePostLike): X11DatatypesCreatePostLike =
         X11DatatypesCreatePostLike(
             post_id = d.post_id,
-            score = d.score.toLong(),
+            score = d.vote.value.toLong(),
         )
 
     override fun fromUni(d: LemmyapiDatatypesCreatePostReport): X11DatatypesCreatePostReport =

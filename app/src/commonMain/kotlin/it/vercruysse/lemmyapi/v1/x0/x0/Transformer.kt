@@ -236,6 +236,7 @@ import it.vercruysse.lemmyapi.datatypes.UserBlockInstancePersonsParams as Lemmya
 import it.vercruysse.lemmyapi.datatypes.UserSettingsBackup as LemmyapiDatatypesUserSettingsBackup
 import it.vercruysse.lemmyapi.datatypes.VerifyEmail as LemmyapiDatatypesVerifyEmail
 import it.vercruysse.lemmyapi.datatypes.VoteView as LemmyapiDatatypesVoteView
+import it.vercruysse.lemmyapi.enums.VoteAction
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AddAdmin as X0DatatypesAddAdmin
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AddAdminResponse as X0DatatypesAddAdminResponse
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AddModToCommunity as X0DatatypesAddModToCommunity
@@ -481,11 +482,6 @@ internal class Transformer : MapperGenerator {
         true -> 1
         false -> -1
     }
-    fun voteIntToBool(d: Int): Boolean = when (d) {
-        1 -> true
-        -1 -> false
-        else -> throw IllegalArgumentException("Invalid vote value: $d")
-    }
     fun voteIntToTriBool(d: Int): Boolean? = when (d) {
         1 -> true
         -1 -> false
@@ -585,7 +581,7 @@ internal class Transformer : MapperGenerator {
     )
 
     override fun toUni(d: X0DatatypesCommentActions): LemmyapiDatatypesCommentActions = LemmyapiDatatypesCommentActions(
-        like_score = voteTriBoolToInt(d.vote_is_upvote),
+        vote = VoteAction.from(voteTriBoolToInt(d.vote_is_upvote)),
         voted_at = d.voted_at,
         saved_at = d.saved_at,
     )
@@ -1334,7 +1330,7 @@ internal class Transformer : MapperGenerator {
         voted_at = d.voted_at,
         hidden_at = d.hidden_at,
         notifications = d.notifications,
-        like_score = voteTriBoolToInt(d.vote_is_upvote),
+        vote = VoteAction.from(voteTriBoolToInt(d.vote_is_upvote)),
     )
 
     override fun toUni(d: X0DatatypesPostCommentCombinedView): LemmyapiDatatypesPostCommentCombinedView = super.toUni(d)
@@ -1584,7 +1580,7 @@ internal class Transformer : MapperGenerator {
         creator = this.toUni(d = d.creator),
         creator_banned = d.creator_banned,
         creator_banned_from_community = d.creator_banned_from_community,
-        score = voteBoolToInt(d.is_upvote),
+        vote = VoteAction.from(voteBoolToInt(d.is_upvote)),
     )
 
     override fun fromUni(d: LemmyapiDatatypesAddAdmin): X0DatatypesAddAdmin = X0DatatypesAddAdmin(
@@ -1688,7 +1684,7 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommentLike): X0DatatypesCreateCommentLike = X0DatatypesCreateCommentLike(
         comment_id = d.comment_id,
-        is_upvote = voteIntToTriBool(d.score),
+        is_upvote = voteIntToTriBool(d.vote.value),
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommentReport): X0DatatypesCreateCommentReport = X0DatatypesCreateCommentReport(
@@ -1783,7 +1779,7 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUni(d: LemmyapiDatatypesCreatePostLike): X0DatatypesCreatePostLike = X0DatatypesCreatePostLike(
         post_id = d.post_id,
-        is_upvote = voteIntToTriBool(d.score),
+        is_upvote = voteIntToTriBool(d.vote.value),
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreatePostReport): X0DatatypesCreatePostReport = X0DatatypesCreatePostReport(

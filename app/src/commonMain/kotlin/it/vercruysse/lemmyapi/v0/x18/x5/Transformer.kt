@@ -15,6 +15,7 @@ import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
+import it.vercruysse.lemmyapi.enums.VoteAction
 import it.vercruysse.lemmyapi.enums.VoteShow
 import it.vercruysse.lemmyapi.utils.toAt
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.LocalUser
@@ -383,7 +384,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             creator_is_admin = false,
             creator_banned = d.creator.banned,
             resolver = d.resolver?.let { this.toUni(d = it) },
-            comment_actions = CommentActions(d.my_vote, null, null),
+            comment_actions = CommentActions(VoteAction.from(d.my_vote), null, null),
         )
 
     override fun toUni(d: X5DatatypesCommentView): LemmyapiDatatypesCommentView =
@@ -400,7 +401,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             creator_ban_expires_at = addTimezoneOffsetNullable(d.creator.ban_expires),
             can_mod = false,
             person_actions = PersonActions(if (d.creator_blocked) "" else null),
-            comment_actions = CommentActions(d.my_vote, null, if (d.saved) "" else null),
+            comment_actions = CommentActions(VoteAction.from(d.my_vote), null, if (d.saved) "" else null),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
         )
 
@@ -527,7 +528,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             community = this.toUni(d = d.community, counts = X5DatatypesCommunityAggregates(-1, -1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
             creator = this.toUni(d = d.creator),
             post_creator = this.toUni(d = d.post_creator),
-            post_actions = PostActions(null, null, null, null, null, d.my_vote, null),
+            post_actions = PostActions(null, null, null, null, null, VoteAction.from(d.my_vote), null),
             person_actions = null,
             community_actions = null,
             resolver = d.resolver?.let { this.toUni(d = it) },
@@ -541,7 +542,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         post = this.toUni(d = d.post, d.counts),
         creator = this.toUni(d = d.creator),
         community = this.toUni(d = d.community, counts = X5DatatypesCommunityAggregates(-1, -1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
-        post_actions = PostActions(toAt(d.read), null, d.counts.comments - d.unread_comments, toAt(d.saved), null, d.my_vote, null),
+        post_actions = PostActions(toAt(d.read), null, d.counts.comments - d.unread_comments, toAt(d.saved), null, VoteAction.from(d.my_vote), null),
         person_actions = PersonActions(toAt(d.creator_blocked)),
         community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
         tags = emptyList(),
@@ -721,7 +722,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             creator_ban_expires_at = addTimezoneOffsetNullable(d.creator.ban_expires),
             can_mod = false,
             person_actions = PersonActions(if (d.creator_blocked) "" else null),
-            comment_actions = CommentActions(d.my_vote, null, if (d.saved) "" else null),
+            comment_actions = CommentActions(VoteAction.from(d.my_vote), null, if (d.saved) "" else null),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
         )
 
@@ -754,7 +755,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             creator_ban_expires_at = addTimezoneOffsetNullable(d.creator.ban_expires),
             can_mod = false,
             person_actions = PersonActions(if (d.creator_blocked) "" else null),
-            comment_actions = CommentActions(d.my_vote, null, if (d.saved) "" else null),
+            comment_actions = CommentActions(VoteAction.from(d.my_vote), null, if (d.saved) "" else null),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
         )
 
@@ -1095,7 +1096,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesCreateCommentLike): X5DatatypesCreateCommentLike =
         X5DatatypesCreateCommentLike(
             comment_id = d.comment_id,
-            score = d.score,
+            score = d.vote.value,
             auth = auth,
         )
 
@@ -1142,7 +1143,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesCreatePostLike): X5DatatypesCreatePostLike =
         X5DatatypesCreatePostLike(
             post_id = d.post_id,
-            score = d.score,
+            score = d.vote.value,
             auth = auth,
         )
 
