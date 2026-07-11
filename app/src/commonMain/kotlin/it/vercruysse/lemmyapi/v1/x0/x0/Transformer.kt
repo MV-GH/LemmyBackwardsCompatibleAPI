@@ -1,5 +1,6 @@
 package it.vercruysse.lemmyapi.v1.x0.x0
 
+import it.vercruysse.lemmyapi.enums.VoteAction
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
 import it.vercruysse.lemmyapi.datatypes.AddAdminResponse as LemmyapiDatatypesAddAdminResponse
 import it.vercruysse.lemmyapi.datatypes.AddModToCommunity as LemmyapiDatatypesAddModToCommunity
@@ -236,7 +237,6 @@ import it.vercruysse.lemmyapi.datatypes.UserBlockInstancePersonsParams as Lemmya
 import it.vercruysse.lemmyapi.datatypes.UserSettingsBackup as LemmyapiDatatypesUserSettingsBackup
 import it.vercruysse.lemmyapi.datatypes.VerifyEmail as LemmyapiDatatypesVerifyEmail
 import it.vercruysse.lemmyapi.datatypes.VoteView as LemmyapiDatatypesVoteView
-import it.vercruysse.lemmyapi.enums.VoteAction
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AddAdmin as X0DatatypesAddAdmin
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AddAdminResponse as X0DatatypesAddAdminResponse
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AddModToCommunity as X0DatatypesAddModToCommunity
