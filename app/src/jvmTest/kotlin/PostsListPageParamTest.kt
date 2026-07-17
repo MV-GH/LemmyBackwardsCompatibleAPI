@@ -104,7 +104,7 @@ class PostsListPageParamTest {
     fun `default form`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.create("lemmy.ml", it).getOrThrow()
+                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
                 val resp = api.getPosts(GetPosts())
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -115,7 +115,7 @@ class PostsListPageParamTest {
     fun `just page`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.create("lemmy.ml", it).getOrThrow()
+                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
                 val resp = api.getPosts(GetPosts(page = 1))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -126,7 +126,7 @@ class PostsListPageParamTest {
     fun `just cursor`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.create("lemmy.ml", it).getOrThrow()
+                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
                 val resp = api.getPosts(GetPosts(page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -137,7 +137,7 @@ class PostsListPageParamTest {
     fun `page cursor null`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.create("lemmy.ml", it).getOrThrow()
+                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
                 val resp = api.getPosts(GetPosts(page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -148,7 +148,7 @@ class PostsListPageParamTest {
     fun `both page and cursor`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.create("lemmy.ml", it).getOrThrow()
+                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
                 val resp = api.getPosts(GetPosts(page = 1, page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -159,7 +159,7 @@ class PostsListPageParamTest {
     fun `both page and cursor null`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.create("lemmy.ml", it).getOrThrow()
+                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
                 val resp = api.getPosts(GetPosts(page = 1, page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }

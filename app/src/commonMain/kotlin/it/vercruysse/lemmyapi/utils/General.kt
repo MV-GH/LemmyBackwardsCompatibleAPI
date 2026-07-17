@@ -4,6 +4,7 @@ import io.github.z4kn4fein.semver.Version
 import io.github.z4kn4fein.semver.toVersion
 import io.ktor.http.*
 import kotlinx.serialization.json.*
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * Check if a version is between two other versions.
@@ -79,3 +80,12 @@ internal fun constructBaseUrl(instance: String): String {
 }
 
 internal fun toAt(bool: Boolean): String? = if (bool) "" else null
+
+internal inline fun <T> runCatchingPreservingCancellation(block: () -> T): Result<T> =
+    try {
+        Result.success(block())
+    } catch (exception: CancellationException) {
+        throw exception
+    } catch (throwable: Throwable) {
+        Result.failure(throwable)
+    }

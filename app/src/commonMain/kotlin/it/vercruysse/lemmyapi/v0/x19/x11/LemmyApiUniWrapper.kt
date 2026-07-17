@@ -18,11 +18,16 @@ import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetPersonDetails
 
-internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
+internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(actualVersion, baseUrl, auth) {
     private val api = LemmyApiController(client, auth)
     private val pictrsApi = PictrsService(client, auth)
     private val transformer = Transformer()
+
+    override fun close() {
+        api.close()
+        client.close()
+    }
 
     override var auth: String?
         get() = super.auth

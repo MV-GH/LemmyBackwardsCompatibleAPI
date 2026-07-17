@@ -5,7 +5,7 @@
 
 ```
 LemmyApiFactory (optional caller-owned HttpClient)
-  └─ create(instance, version) → LemmyApiBaseController
+  └─ createForVersion(instance, version) → LemmyApiBaseController
         │
         └─ version-specific LemmyApiUniWrapper  (implements LemmyApiBaseController)
               ├─ LemmyApiController              (raw Ktor HTTP calls, version-specific datatypes)

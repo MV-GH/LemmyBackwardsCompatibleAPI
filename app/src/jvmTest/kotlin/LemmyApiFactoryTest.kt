@@ -36,7 +36,7 @@ class LemmyApiFactoryTest {
         }
         val factory = LemmyApiFactory(suppliedClient)
 
-        val controller = factory.create("lemmy.world", "0.19.11").getOrThrow()
+        val controller = factory.createForVersion("lemmy.world", "0.19.11").getOrThrow()
         controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts()).getOrThrow()
 
         assertEquals(listOf("retained"), requests)
@@ -79,6 +79,46 @@ class LemmyApiFactoryTest {
         suppliedClient.close()
 
         assertFailsWith(CancellationException::class) { suppliedClient.get("https://lemmy.world").status }
+    }
+
+    @Test
+    fun `version discovery preserves coroutine cancellation`() = runBlocking<Unit> {
+        val suppliedClient = HttpClient(
+            MockEngine {
+                throw CancellationException("cancelled")
+            },
+        )
+        val factory = LemmyApiFactory(suppliedClient)
+
+        assertFailsWith<CancellationException> {
+            factory.create("lemmy.world")
+        }
+
+        factory.close()
+        suppliedClient.close()
+    }
+
+    @Test
+    fun `close releases clients used by created controllers`() = runBlocking<Unit> {
+        val suppliedClient = HttpClient(
+            MockEngine {
+                respond(
+                    content = """{"posts": [], "next_page": null}""",
+                    status = HttpStatusCode.OK,
+                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                )
+            },
+        )
+        val factory = LemmyApiFactory(suppliedClient)
+        val controller = factory.createForVersion("lemmy.world", "0.19.11").getOrThrow()
+
+        factory.close()
+
+        assertFailsWith<CancellationException> {
+            controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts()).getOrThrow()
+        }
+        assertEquals(HttpStatusCode.OK, suppliedClient.get("https://lemmy.world").status)
+        suppliedClient.close()
     }
 
     private companion object {
