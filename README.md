@@ -29,7 +29,7 @@ Built with **Ktor** (HTTP), **kotlinx.serialization** (JSON), and targets JVM, A
 
 ```kotlin
 val factory = LemmyApiFactory()
-val api = factory.create("voyager.lemmy.ml", auth)
+val api = factory.create("voyager.lemmy.ml", auth).getOrThrow()
 
 api.getSite()
 
@@ -51,10 +51,11 @@ val httpClient = HttpClient(OkHttp) {
     install(Logging)
 }
 val factory = LemmyApiFactory(httpClient)
-val api = factory.create("voyager.lemmy.ml")
+val api = factory.create("voyager.lemmy.ml").getOrThrow()
 ```
 
-Keep the factory open while using controllers created by it. Closing the factory releases its derived clients. A supplied `HttpClient` remains caller-owned and must be closed by the caller; when no client is supplied, the factory owns and closes its default client.
+Keep the factory open while using controllers created by it. Controllers are `AutoCloseable` and can be closed individually; closing the factory closes every controller it created. A supplied `HttpClient` remains caller-owned and must be closed by the caller; when no client is supplied, the factory owns and closes its default client.
+
 
 ## Installation
 
@@ -67,7 +68,7 @@ It is currently in beta.
 
 ```
 LemmyApiFactory (optional caller-owned HttpClient)
-  └─ create(instance, version) → LemmyApiBaseController
+  └─ createForVersion(instance, version) → LemmyApiBaseController
         │
         └─ version-specific LemmyApiUniWrapper  (implements LemmyApiBaseController)
               ├─ LemmyApiController              (raw Ktor HTTP calls, version-specific datatypes)
