@@ -6,9 +6,8 @@ import it.vercruysse.lemmyapi.datatypes.*
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
-abstract class LemmyApiBaseController(client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String?) :
+abstract class LemmyApiBaseController(actualVersion: Version, baseUrl: String, override var auth: String?) :
     LemmyApiBase(
-        client,
         actualVersion,
         baseUrl,
         auth,

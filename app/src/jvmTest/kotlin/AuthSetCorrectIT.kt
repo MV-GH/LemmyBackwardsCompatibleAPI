@@ -4,8 +4,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockExtension
 import com.marcinziolo.kotlin.wiremock.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
-import it.vercruysse.lemmyapi.LemmyApi
-import it.vercruysse.lemmyapi.setDefaultClientConfig
+import it.vercruysse.lemmyapi.LemmyApiFactory
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -22,7 +21,7 @@ class AuthSetCorrectIT {
 
     @Test
     fun `Changing auth should propagate everywhere`() {
-        LemmyApi.setDefaultClientConfig {
+        val httpClient = io.ktor.client.HttpClient {
             install(Logging) {
                 logger = object : Logger {
                     override fun log(message: String) {
@@ -32,7 +31,8 @@ class AuthSetCorrectIT {
                 level = LogLevel.ALL
             }
         }
-        val controller = LemmyApi.getLemmyApi(instance = "${wm.baseUrl()}/lemmy.world", version = "0.19.1", auth = "auth")
+        val factory = LemmyApiFactory(httpClient)
+        val controller = factory.create(instance = "${wm.baseUrl()}/lemmy.world", version = "0.19.1", auth = "auth")
 
         // Given
         wm.get {
@@ -53,6 +53,8 @@ class AuthSetCorrectIT {
             method = RequestMethod.GET
             headers contains HttpHeaders.Authorization equalTo "Bearer auth"
         }
+        factory.close()
+        httpClient.close()
 
         controller.auth = "newAuth"
 

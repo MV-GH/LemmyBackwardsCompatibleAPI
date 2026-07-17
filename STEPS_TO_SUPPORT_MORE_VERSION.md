@@ -14,7 +14,7 @@ This document helps you with the changes you need to do to add more support for 
   - Store a version of the MapperGenerator interface
 - Create a new LemmyApiUniWrapper, by copying the previous one and adapting it
     - Make sure you point to the right version of the MapperGenerator
-- Add correct mapping in LemmyApi for the new LemmyApi implementation
+- Add correct mapping in LemmyApiFactory for the new LemmyApi implementation
 - Add a new version to JvmTests\controllers.kt
 - Add FeatureFlags
   - Update `ACTIVE_CHANGES.md` with the new FeatureFlags

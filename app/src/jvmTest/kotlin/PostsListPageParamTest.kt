@@ -10,8 +10,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.ByteReadChannel
-import it.vercruysse.lemmyapi.LemmyApi
-import it.vercruysse.lemmyapi.coreHttpClient
+import it.vercruysse.lemmyapi.LemmyApiFactory
 import it.vercruysse.lemmyapi.datatypes.GetPosts
 import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
 import it.vercruysse.lemmyapi.ktorJson
@@ -27,14 +26,19 @@ class PostsListPageParamTest {
         @BeforeAll
         @JvmStatic
         fun setUp() {
-            LemmyApi.defaultClient = getMockClient()
+            mockClient = getMockClient()
+            factory = LemmyApiFactory(mockClient)
         }
 
         @AfterAll
         @JvmStatic
         fun tearDown() {
-            LemmyApi.defaultClient = coreHttpClient
+            factory.close()
+            mockClient.close()
         }
+
+        private lateinit var mockClient: HttpClient
+        private lateinit var factory: LemmyApiFactory
 
         private fun getValidationMocKEngine(): MockEngine = MockEngine { request ->
             val url = request.url
@@ -100,7 +104,7 @@ class PostsListPageParamTest {
     fun `default form`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
+                val api = factory.create("lemmy.ml", it)
                 val resp = api.getPosts(GetPosts())
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -111,7 +115,7 @@ class PostsListPageParamTest {
     fun `just page`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
+                val api = factory.create("lemmy.ml", it)
                 val resp = api.getPosts(GetPosts(page = 1))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -122,7 +126,7 @@ class PostsListPageParamTest {
     fun `just cursor`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
+                val api = factory.create("lemmy.ml", it)
                 val resp = api.getPosts(GetPosts(page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -133,7 +137,7 @@ class PostsListPageParamTest {
     fun `page cursor null`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
+                val api = factory.create("lemmy.ml", it)
                 val resp = api.getPosts(GetPosts(page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -144,7 +148,7 @@ class PostsListPageParamTest {
     fun `both page and cursor`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
+                val api = factory.create("lemmy.ml", it)
                 val resp = api.getPosts(GetPosts(page = 1, page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -155,7 +159,7 @@ class PostsListPageParamTest {
     fun `both page and cursor null`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
+                val api = factory.create("lemmy.ml", it)
                 val resp = api.getPosts(GetPosts(page = 1, page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
