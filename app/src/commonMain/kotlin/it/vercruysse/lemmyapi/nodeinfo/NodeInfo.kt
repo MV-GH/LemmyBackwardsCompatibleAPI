@@ -1,4 +1,4 @@
-package it.vercruysse.lemmyapi.dto
+package it.vercruysse.lemmyapi.nodeinfo
 
 import kotlinx.serialization.Serializable
 

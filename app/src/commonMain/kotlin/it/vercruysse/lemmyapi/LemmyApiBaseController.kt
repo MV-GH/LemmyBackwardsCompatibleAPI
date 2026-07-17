@@ -1,7 +1,6 @@
 package it.vercruysse.lemmyapi
 
 import io.github.z4kn4fein.semver.Version
-import io.ktor.client.*
 import it.vercruysse.lemmyapi.datatypes.*
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings

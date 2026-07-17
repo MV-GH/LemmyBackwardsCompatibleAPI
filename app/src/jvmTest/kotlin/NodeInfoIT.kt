@@ -3,7 +3,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockExtension
 import com.marcinziolo.kotlin.wiremock.equalTo
 import com.marcinziolo.kotlin.wiremock.get
 import com.marcinziolo.kotlin.wiremock.returnsJson
-import it.vercruysse.lemmyapi.LemmyApiFactory
+import it.vercruysse.lemmyapi.nodeinfo.NodeInfoClient
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
@@ -48,8 +48,8 @@ class NodeInfoIT {
         }
 
         val nodeInfo = runBlocking {
-            LemmyApiFactory().use { factory ->
-                factory.getNodeInfo(wm.baseUrl()).getOrThrow()
+            NodeInfoClient().use { client ->
+                client.getNodeInfo(wm.baseUrl()).getOrThrow()
             }
         }
 
