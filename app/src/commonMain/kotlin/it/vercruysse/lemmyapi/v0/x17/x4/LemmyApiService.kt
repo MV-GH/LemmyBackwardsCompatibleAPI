@@ -1,6 +1,5 @@
 package it.vercruysse.lemmyapi.v0.x17.x4
 
-import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult

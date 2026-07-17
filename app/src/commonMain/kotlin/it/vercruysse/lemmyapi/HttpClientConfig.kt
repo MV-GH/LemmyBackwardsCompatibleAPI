@@ -15,7 +15,7 @@ internal fun HttpClient.withLemmyApiConfig(): HttpClient = config {
     expectSuccess = true
 
     install(ContentNegotiation) {
-        json(ktorJson)
+        json(IGNORE_UNKNOWN_KEYS_JSON)
     }
 
     HttpResponseValidator {
@@ -29,11 +29,11 @@ internal fun HttpClient.withLemmyApiConfig(): HttpClient = config {
 
             if (exceptionResponseText.isNotEmpty() && contentType?.match(ContentType.Application.Json) == true) {
                 try {
-                    val errorResponse = lenientJson.decodeFromString<ErrorResponse>(exceptionResponseText)
+                    val errorResponse = IGNORE_UNKNOWN_KEYS_JSON.decodeFromString<ErrorResponse>(exceptionResponseText)
                     throw LemmyBadRequestException(
                         exceptionResponse.call.response.status.value,
-                        errorResponse.msg,
-                        exceptionResponse,
+                        errorResponse.id,
+                        errorResponse.message,
                     )
                     // Don't throw if it's not an ErrorResponse
                 } catch (_: SerializationException) {
@@ -49,15 +49,15 @@ internal fun HttpClientConfig<*>.installRequiredPlugins() {
     }
 
     install(HttpTimeout) {
-        requestTimeoutMillis = TIMEOUT_MS
-        socketTimeoutMillis = TIMEOUT_MS
-        connectTimeoutMillis = TIMEOUT_MS / 2
+        requestTimeoutMillis = DEFAULT_TIMEOUT_MS
+        socketTimeoutMillis = DEFAULT_TIMEOUT_MS
+        connectTimeoutMillis = DEFAULT_TIMEOUT_MS / 2
     }
 
     install(HttpRequestRetry) {
         maxRetries = 5
-        retryIf { _, response ->
-            response.status.value >= 500
+        retryIf { req, response ->
+            response.status.value >= 500 && req.method == HttpMethod.Get
         }
         exponentialDelay()
     }

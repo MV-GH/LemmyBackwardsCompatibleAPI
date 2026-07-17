@@ -5,9 +5,9 @@ import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
+import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.installRequiredPlugins
-import it.vercruysse.lemmyapi.lenientJson
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
@@ -92,6 +92,6 @@ private fun HttpClient.withLemmyNodeInfoConfig(): HttpClient = config {
     expectSuccess = true
 
     install(ContentNegotiation) {
-        json(lenientJson)
+        json(IGNORE_UNKNOWN_KEYS_JSON)
     }
 }
