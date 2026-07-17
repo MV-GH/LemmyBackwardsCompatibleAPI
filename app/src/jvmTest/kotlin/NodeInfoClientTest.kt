@@ -9,7 +9,6 @@ import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfo
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfoClient
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

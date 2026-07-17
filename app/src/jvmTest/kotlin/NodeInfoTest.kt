@@ -1,13 +1,10 @@
 import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfo
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonDecodingException
 import kotlinx.serialization.json.JsonException
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 class NodeInfoTest {
 
