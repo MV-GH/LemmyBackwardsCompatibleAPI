@@ -1,6 +1,11 @@
-import it.vercruysse.lemmyapi.lenientJson
+import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfo
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonDecodingException
+import kotlinx.serialization.json.JsonException
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -27,13 +32,14 @@ class NodeInfoTest {
         }
         """.trimIndent()
 
-        val nodeInfo = lenientJson.decodeFromString<NodeInfo>(nodeInfoJson)
+        val nodeInfo = IGNORE_UNKNOWN_KEYS_JSON.decodeFromString<NodeInfo>(nodeInfoJson)
         assertNotNull(nodeInfo)
         assertNotNull(nodeInfo.protocols)
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Test
-    fun `NodeInfo should allow protocol field as null`() {
+    fun `NodeInfo fails when protocols field is null`() {
         val nodeInfoJson = """{
             "version": "2.0",
             "software": {
@@ -54,9 +60,6 @@ class NodeInfoTest {
         }
         """.trimIndent()
 
-        val nodeInfo = lenientJson.decodeFromString<NodeInfo>(nodeInfoJson)
-        assertNotNull(nodeInfo)
-        assertNotNull(nodeInfo.protocols)
-        assertTrue { nodeInfo.protocols.isEmpty() }
+        assertFailsWith<JsonException> {  IGNORE_UNKNOWN_KEYS_JSON.decodeFromString<NodeInfo>(nodeInfoJson) }
     }
 }

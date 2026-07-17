@@ -17,6 +17,7 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
  * And whatever other problems show up.
  *
  */
+@Suppress("unused") // Keeping for historical context
 internal class LemmyApiService(val client: HttpClient) : LemmyApiRouter {
     /**
      * Gets the site, and your user data.

@@ -8,6 +8,7 @@ import io.ktor.http.*
 import it.vercruysse.lemmyapi.AuthProvider
 import it.vercruysse.lemmyapi.datatypes.DeleteImageParams
 import it.vercruysse.lemmyapi.datatypes.UploadImageResponse
+import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import kotlinx.serialization.Serializable
 
 internal class PictrsService(
@@ -20,7 +21,7 @@ internal class PictrsService(
      *
      * @POST(/pictrs/image)
      */
-    suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> = runCatching {
+    suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> = runCatchingPreservingCancellation {
         val resp = client.post("/pictrs/image") {
             currentAuth()?.let { cookie("jwt", it) }
             setBody(createFormData(image))
@@ -45,7 +46,7 @@ internal class PictrsService(
      *
      * @GET(/pictrs/image/delete/{delete_token}/{file})
      */
-    suspend fun deleteMedia(form: DeleteImageParams): Result<Unit> = runCatching {
+    suspend fun deleteMedia(form: DeleteImageParams): Result<Unit> = runCatchingPreservingCancellation {
         require(form.filename.startsWith("/pictrs/image/delete/")) {
             "For pre-v1 Lemmy, deleteMedia filename must be /pictrs/image/delete/{delete_token}/{file}"
         }

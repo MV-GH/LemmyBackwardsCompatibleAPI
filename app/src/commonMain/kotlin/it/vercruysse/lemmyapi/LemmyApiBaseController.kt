@@ -4,6 +4,7 @@ import io.github.z4kn4fein.semver.Version
 import it.vercruysse.lemmyapi.datatypes.*
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
+import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
 // TODO: better solution for auth and AutoCloseable?
 abstract class LemmyApiBaseController(actualVersion: Version, baseUrl: String, override var auth: String?) :
@@ -18,7 +19,7 @@ abstract class LemmyApiBaseController(actualVersion: Version, baseUrl: String, o
     suspend fun uploadAndApplyImage(
         image: ByteArray,
         applyImage: suspend (String) -> Result<Unit>,
-    ): Result<UploadImageResponse> = runCatching {
+    ): Result<UploadImageResponse> = runCatchingPreservingCancellation {
         val uploadResponse = uploadImage(image).getOrThrow()
         try {
             applyImage(uploadResponse.image_url).getOrThrow()

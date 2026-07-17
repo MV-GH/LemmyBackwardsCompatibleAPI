@@ -16,6 +16,7 @@ import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.enums.NotificationDataType
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.pictrs.PictrsService
+import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCaptcha
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetPersonDetails
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetReportCount
@@ -408,7 +409,7 @@ internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion:
             }
 
             it.vercruysse.lemmyapi.enums.ReportType.All -> {
-                runCatching {
+                runCatchingPreservingCancellation {
                     val postsResp = api.listPostReports(transformer.fromUniP(form)).getOrThrow()
                     val commentsResp = api.listCommentReports(transformer.fromUniC(form)).getOrThrow()
                     val privateMessagesResp = api.listPrivateMessageReports(transformer.fromUniPm(form)).getOrThrow()
@@ -647,7 +648,7 @@ internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion:
      */
     override suspend fun listNotifications(form: ListNotifications): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.NotificationView>> = when (form.type_) {
         NotificationDataType.All ->
-            runCatching {
+            runCatchingPreservingCancellation {
                 val replies = api.getReplies(transformer.fromUniR(form)).getOrThrow().replies.map(transformer::toUni)
                 val mentionReplies = api.getPersonMentions(transformer.fromUniM(form)).getOrThrow().mentions.map(transformer::toUni)
                 val privateMessages = api.getPrivateMessages(transformer.fromUniP(form)).getOrThrow().private_messages.map(transformer::toUniPMV)
@@ -776,7 +777,7 @@ internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion:
      * Get your unread counts
      *
      */
-    override suspend fun getUnreadCounts(): Result<UnreadCountsResponse> = runCatching {
+    override suspend fun getUnreadCounts(): Result<UnreadCountsResponse> = runCatchingPreservingCancellation {
         val d = api.getUnreadCount(GetUnreadCount(auth ?: "")).getOrThrow()
         val reportCount = api.getReportCount(GetReportCount(null, auth ?: "")).getOrNull()
         val applicationCount = api.getUnreadRegistrationApplicationCount(GetUnreadRegistrationApplicationCount(auth ?: "")).getOrNull()

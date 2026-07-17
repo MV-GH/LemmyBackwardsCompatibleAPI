@@ -10,10 +10,10 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.ByteReadChannel
+import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
 import it.vercruysse.lemmyapi.LemmyApiFactory
 import it.vercruysse.lemmyapi.datatypes.GetPosts
 import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
-import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll

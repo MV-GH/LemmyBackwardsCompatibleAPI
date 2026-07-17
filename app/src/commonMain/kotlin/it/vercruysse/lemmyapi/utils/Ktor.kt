@@ -9,7 +9,7 @@ import io.ktor.http.*
 suspend inline fun <reified R> HttpClient.deleteResult(
     urlString: String,
     builder: HttpRequestBuilder.() -> Unit = {},
-): Result<R> = runCatching { delete(urlString, builder).body() }
+): Result<R> = runCatchingPreservingCancellation { delete(urlString, builder).body() }
 
 suspend inline fun <reified R, reified T> HttpClient.deleteResult(
     urlString: String,
@@ -19,17 +19,17 @@ suspend inline fun <reified R, reified T> HttpClient.deleteResult(
 suspend inline fun <reified R> HttpClient.getResult(
     urlString: String,
     builder: HttpRequestBuilder.() -> Unit = {},
-): Result<R> = runCatching { get(urlString, builder).body() }
+): Result<R> = runCatchingPreservingCancellation { get(urlString, builder).body() }
 
 suspend inline fun <reified R> HttpClient.putResult(
     urlString: String,
     builder: HttpRequestBuilder.() -> Unit = {},
-): Result<R> = runCatching { put(urlString, builder).body() }
+): Result<R> = runCatchingPreservingCancellation { put(urlString, builder).body() }
 
 suspend inline fun <reified R> HttpClient.postResult(
     urlString: String,
     builder: HttpRequestBuilder.() -> Unit = {},
-): Result<R> = runCatching { post(urlString, builder).body() }
+): Result<R> = runCatchingPreservingCancellation { post(urlString, builder).body() }
 
 suspend inline fun <reified R, reified T> HttpClient.getResult(
     urlString: String,
@@ -50,7 +50,7 @@ suspend inline fun <reified R> HttpClient.postUploadResult(
     urlString: String,
     image: ByteArray,
     builder: HttpRequestBuilder.() -> Unit = {},
-): Result<R> = runCatching {
+): Result<R> = runCatchingPreservingCancellation {
     post(urlString) {
         setBody(
             MultiPartFormDataContent(
