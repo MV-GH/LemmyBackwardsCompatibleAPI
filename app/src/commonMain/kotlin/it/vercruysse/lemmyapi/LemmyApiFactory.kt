@@ -1,9 +1,7 @@
 package it.vercruysse.lemmyapi
 
-import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfoClient
-import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
 class LemmyApiFactory(httpClient: HttpClient? = null) : AutoCloseable {
@@ -11,9 +9,6 @@ class LemmyApiFactory(httpClient: HttpClient? = null) : AutoCloseable {
     private val transport = httpClient ?: HttpClient()
     private val apiClient = transport.withLemmyApiConfig()
     private val nodeInfoClient = NodeInfoClient(transport)
-
-    private fun getApiVersion(version: io.github.z4kn4fein.semver.Version): String =
-        if (version.major == 0) "v3" else "v4"
 
     /**
      * Creates a controller after discovering the Lemmy version.
@@ -47,19 +42,14 @@ class LemmyApiFactory(httpClient: HttpClient? = null) : AutoCloseable {
         instance: String,
         version: String,
         auth: String? = null,
-    ): Result<LemmyApiBaseController> =
-        runCatchingPreservingCancellation {
-            val baseUrlInstance = constructBaseUrl(instance) // TODO duplicate constructBaseURL see NodeINFO
-            val semverV = version.toVersion(false)
-            LemmyApiWrapperFactory.create(
-                apiClient,
-                "$baseUrlInstance/api/${getApiVersion(semverV)}",
-                semverV,
-                version,
-                baseUrlInstance,
-                auth,
-            )
-        }
+    ): Result<LemmyApiBaseController> = runCatchingPreservingCancellation {
+        LemmyApiWrapperFactory.create(
+            apiClient,
+            instance,
+            version,
+            auth,
+        )
+    }
 
     /**
      * Closes clients owned by this factory. A supplied HTTP client remains caller-owned.

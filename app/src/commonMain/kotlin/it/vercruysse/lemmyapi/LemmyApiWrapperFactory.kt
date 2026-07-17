@@ -1,19 +1,26 @@
 package it.vercruysse.lemmyapi
 
-import io.github.z4kn4fein.semver.Version
+import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.exception.NotSupportedException
+import it.vercruysse.lemmyapi.utils.constructBaseUrl
 
 internal object LemmyApiWrapperFactory {
+
+    private fun getApiVersion(version: io.github.z4kn4fein.semver.Version): String =
+        if (version.major == 0) "v3" else "v4"
+
     fun create(
         client: HttpClient,
-        apiBaseUrl: String,
-        version: Version,
+        instance: String,
         versionString: String,
-        baseUrlInstance: String,
         auth: String?,
-    ): LemmyApiBaseController =
-        when (version.major) {
+    ): LemmyApiBaseController {
+        val baseUrlInstance = constructBaseUrl(instance) // TODO duplicate constructBaseURL see NodeINFO
+        val version = versionString.toVersion(false)
+        val apiBaseUrl = "$baseUrlInstance/api/${getApiVersion(version)}"
+
+        return when (version.major) {
             0 -> when (version.minor) {
                 18 -> it.vercruysse.lemmyapi.v0.x18.x5.LemmyApiUniWrapper(client, apiBaseUrl, version, baseUrlInstance, auth)
 
@@ -35,8 +42,9 @@ internal object LemmyApiWrapperFactory {
                 else -> throw NotSupportedException("Unsupported Lemmy minor version: $versionString")
             }
 
-            1 -> it.vercruysse.lemmyapi.v1.x0.x0.LemmyApiUniWrapper(client, apiBaseUrl, version, baseUrlInstance, auth)
+            1 -> it.vercruysse.lemmyapi.v1.x0.x0.LemmyApiUniWrapper(client, apiBaseUrl, version, auth)
 
             else -> throw NotSupportedException("Unsupported Lemmy major version: $versionString")
         }
+    }
 }

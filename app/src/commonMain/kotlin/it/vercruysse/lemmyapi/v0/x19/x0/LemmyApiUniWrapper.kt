@@ -21,7 +21,7 @@ import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonDetails
 
 internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, actualVersion: Version, baseUrl: String, auth: String?) :
-    LemmyApiBaseController(actualVersion, baseUrl, auth) {
+    LemmyApiBaseController(actualVersion, auth) {
     private val api = LemmyApiController(LemmyRequestClient(client, apiBaseUrl) { this.auth })
     private val pictrsApi = PictrsService(client, baseUrl) { this.auth }
     private val transformer = Transformer()

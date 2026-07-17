@@ -10,7 +10,6 @@ import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
 abstract class LemmyApiBaseController(
     val version: Version,
-    val baseUrl: String,
     open var auth: String?,
 ) :
     UniRoutes,
