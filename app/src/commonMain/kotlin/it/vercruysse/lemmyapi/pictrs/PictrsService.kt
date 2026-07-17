@@ -13,6 +13,7 @@ import kotlinx.serialization.Serializable
 
 internal class PictrsService(
     private val client: HttpClient,
+    private val baseUrl: String,
     private val authProvider: AuthProvider,
 ) {
 
@@ -22,7 +23,7 @@ internal class PictrsService(
      * @POST(/pictrs/image)
      */
     suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> = runCatchingPreservingCancellation {
-        val resp = client.post("/pictrs/image") {
+        val resp = client.post("$baseUrl/pictrs/image") {
             currentAuth()?.let { cookie("jwt", it) }
             setBody(createFormData(image))
         }
@@ -51,7 +52,7 @@ internal class PictrsService(
             "For pre-v1 Lemmy, deleteMedia filename must be /pictrs/image/delete/{delete_token}/{file}"
         }
 
-        client.get(form.filename) {
+        client.get("$baseUrl/${form.filename.removePrefix("/")}") {
             currentAuth()?.let { cookie("jwt", it) }
         }.body()
     }

@@ -1,6 +1,6 @@
 package it.vercruysse.lemmyapi.v1.x0.x0
 
-import io.ktor.client.HttpClient
+import it.vercruysse.lemmyapi.LemmyRequestClient
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.utils.addQueryParams
@@ -11,7 +11,7 @@ import it.vercruysse.lemmyapi.utils.postUploadResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.*
 
-internal class LemmyApiController(private val client: HttpClient) : LemmyApiRouter {
+internal class LemmyApiController(private val client: LemmyRequestClient) : LemmyApiRouter {
 
     /** @GET("site") */
     override suspend fun getSite(): Result<GetSiteResponse> =

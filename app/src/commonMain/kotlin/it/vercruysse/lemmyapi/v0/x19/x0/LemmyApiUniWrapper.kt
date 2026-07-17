@@ -3,6 +3,7 @@ package it.vercruysse.lemmyapi.v0.x19.x0
 import io.github.z4kn4fein.semver.Version
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.LemmyApiBaseController
+import it.vercruysse.lemmyapi.LemmyRequestClient
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojis
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
 import it.vercruysse.lemmyapi.datatypes.ListLoginsResponse
@@ -18,19 +19,12 @@ import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonDetails
-import it.vercruysse.lemmyapi.withBearerAuth
 
-internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
+internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(actualVersion, baseUrl, auth) {
-    private val apiClient = client.withBearerAuth { this.auth }
-    private val api = LemmyApiController(apiClient)
-    private val pictrsApi = PictrsService(client) { this.auth }
+    private val api = LemmyApiController(LemmyRequestClient(client, apiBaseUrl) { this.auth })
+    private val pictrsApi = PictrsService(client, baseUrl) { this.auth }
     private val transformer = Transformer()
-
-    override fun close() {
-        apiClient.close()
-        client.close()
-    }
 
     /**
      * Gets the site, and your user data.

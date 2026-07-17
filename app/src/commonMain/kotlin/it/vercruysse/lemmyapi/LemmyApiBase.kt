@@ -6,6 +6,8 @@ import it.vercruysse.lemmyapi.enums.VersionTracker
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 
 // Wanted to keep this as an interface, but interfaces can't keep state
+// TODO: remove auth and baseUrl
+// TODO: prob move this a layer lower once routes have been moved
 abstract class LemmyApiBase(
     val version: Version,
     val baseUrl: String,
@@ -22,6 +24,7 @@ abstract class LemmyApiBase(
      *
      * @return A list of supported entries
      */
+    // TODO: add used coverage
     inline fun <reified T> getSupportedEntries(): List<T> where T : Enum<T>, T : VersionTracker = getSupportedEntries(version)
 
     protected inline fun <reified T> notSupported(): Result<T> = Result.failure(

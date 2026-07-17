@@ -57,6 +57,6 @@ class NodeInfoTest {
         }
         """.trimIndent()
 
-        assertFailsWith<JsonException> {  IGNORE_UNKNOWN_KEYS_JSON.decodeFromString<NodeInfo>(nodeInfoJson) }
+        assertFailsWith<JsonException> { IGNORE_UNKNOWN_KEYS_JSON.decodeFromString<NodeInfo>(nodeInfoJson) }
     }
 }
