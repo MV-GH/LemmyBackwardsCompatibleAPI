@@ -1,6 +1,5 @@
 package it.vercruysse.lemmyapi.v0.x17.x4
 
-import io.github.z4kn4fein.semver.Version
 import io.ktor.client.*
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
@@ -18,8 +17,8 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
  * And whatever other problems show up.
  *
  */
-internal class LemmyApiService(val client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String? = null) :
-    LemmyApi(actualVersion, baseUrl, auth) {
+@Suppress("unused") // Keeping for historical context
+internal class LemmyApiService(val client: HttpClient) : LemmyApiRouter {
     /**
      * Gets the site, and your user data.
      *

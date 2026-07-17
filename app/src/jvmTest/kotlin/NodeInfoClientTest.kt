@@ -5,7 +5,7 @@ import io.ktor.client.request.get
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
-import it.vercruysse.lemmyapi.lenientJson
+import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfo
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfoClient
 import kotlinx.coroutines.runBlocking
@@ -18,7 +18,7 @@ class NodeInfoClientTest {
 
     @Test
     fun `get Lemmy version rejects another software`() {
-        val nodeInfo = lenientJson.decodeFromString<NodeInfo>(NODE_INFO.replace("Lemmy", "Mastodon"))
+        val nodeInfo = IGNORE_UNKNOWN_KEYS_JSON.decodeFromString<NodeInfo>(NODE_INFO.replace("Lemmy", "Mastodon"))
 
         NodeInfoClient().use { client ->
             assertTrue(client.getLemmyVersion(nodeInfo).isFailure)

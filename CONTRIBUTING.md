@@ -43,7 +43,7 @@ The `it.vercruysse.lemmyapi.datatypes` package represents the **1.0.0 Lemmy API*
 
 When adding or updating an older-version implementation:
 
-1. **Reference `v0.x18.x5`** — it is always kept up-to-date with the unified interface. Copy its `LemmyApiUniWrapper.kt` pattern.
+1. **Reference `v0.x19.x11`** — it is kept up-to-date with the unified interface. Copy its `LemmyApiUniWrapper.kt` pattern.
 2. `MapperGenerator.kt` return types must use **unified** types only.
 3. `Transformer.kt` must not import deleted unified types.
 4. `LemmyApiUniWrapper.kt` must implement **every** abstract method from `LemmyApiBaseController`. Missing features use `notSupported()`.

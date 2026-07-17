@@ -16,27 +16,23 @@ import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.enums.NotificationDataType
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.pictrs.PictrsService
+import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPersonDetails
+import it.vercruysse.lemmyapi.withBearerAuth
 
 // Based on tags/0.19.3-alpha.6
 internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(actualVersion, baseUrl, auth) {
-    private val api = LemmyApiController(client, auth)
-    private val pictrsApi = PictrsService(client, auth)
+    private val apiClient = client.withBearerAuth { this.auth }
+    private val api = LemmyApiController(apiClient)
+    private val pictrsApi = PictrsService(client) { this.auth }
     private val transformer = Transformer()
 
+    // TODO: should original client be closed?
     override fun close() {
-        api.close()
+        apiClient.close()
         client.close()
     }
-
-    override var auth: String?
-        get() = super.auth
-        set(value) {
-            super.auth = value
-            api.auth = value
-            pictrsApi.auth = value
-        }
 
     /**
      * Gets the site, and your user data.
@@ -390,7 +386,7 @@ internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion:
             }
 
             it.vercruysse.lemmyapi.enums.ReportType.All -> {
-                runCatching {
+                runCatchingPreservingCancellation {
                     val postsResp = api.listPostReports(transformer.fromUniP(form)).getOrThrow()
                     val commentsResp = api.listCommentReports(transformer.fromUniC(form)).getOrThrow()
                     val privateMessagesResp = api.listPrivateMessageReports(transformer.fromUniPm(form)).getOrThrow()
@@ -628,7 +624,7 @@ internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion:
     override suspend fun listNotifications(form: ListNotifications): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.NotificationView>> =
         when (form.type_) {
             NotificationDataType.All ->
-                runCatching {
+                runCatchingPreservingCancellation {
                     val replies = api.getReplies(transformer.fromUniR(form)).getOrThrow().replies.map(transformer::toUni)
                     val mentionReplies = api.getPersonMentions(transformer.fromUniM(form)).getOrThrow().mentions.map(transformer::toUni)
                     val privateMessages = api.getPrivateMessages(transformer.fromUniP(form)).getOrThrow().private_messages.map(transformer::toUniPMV)
@@ -739,7 +735,7 @@ internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion:
     ): Result<it.vercruysse.lemmyapi.datatypes.LoginResponse> =
         api.changePassword(transformer.fromUni(form)).map(transformer::toUni)
 
-    override suspend fun getUnreadCounts(): Result<UnreadCountsResponse> = runCatching {
+    override suspend fun getUnreadCounts(): Result<UnreadCountsResponse> = runCatchingPreservingCancellation {
         val d = api.getUnreadCount().getOrThrow()
         val reportCount = api.getReportCount(it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetReportCount()).getOrNull()
         val applicationCount = api.getUnreadRegistrationApplicationCount().getOrNull()

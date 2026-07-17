@@ -81,6 +81,7 @@ internal fun constructBaseUrl(instance: String): String {
 
 internal fun toAt(bool: Boolean): String? = if (bool) "" else null
 
+@PublishedApi
 internal inline fun <T> runCatchingPreservingCancellation(block: () -> T): Result<T> =
     try {
         Result.success(block())

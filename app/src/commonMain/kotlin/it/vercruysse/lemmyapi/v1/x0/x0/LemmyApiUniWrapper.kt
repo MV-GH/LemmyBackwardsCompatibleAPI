@@ -13,23 +13,18 @@ import it.vercruysse.lemmyapi.datatypes.PagedResponse
 import it.vercruysse.lemmyapi.datatypes.UnreadCountsResponse
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
+import it.vercruysse.lemmyapi.withBearerAuth
 
 internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(actualVersion, baseUrl, auth) {
-    private val api = LemmyApiController(client, auth)
+    private val apiClient = client.withBearerAuth { this.auth }
+    private val api = LemmyApiController(apiClient)
     private val transformer = Transformer()
 
     override fun close() {
-        api.close()
+        apiClient.close()
         client.close()
     }
-
-    override var auth: String?
-        get() = super.auth
-        set(value) {
-            super.auth = value
-            api.auth = value
-        }
 
     override suspend fun getSite(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> =
         api.getSite().map(transformer::toUni)

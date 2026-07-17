@@ -11,11 +11,7 @@ import it.vercruysse.lemmyapi.utils.postUploadResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.*
 
-internal class LemmyApiController(client: HttpClient, auth: String?) :
-    LemmyApiRouter(
-        client,
-        auth,
-    ) {
+internal class LemmyApiController(private val client: HttpClient) : LemmyApiRouter {
 
     /** @GET("site") */
     override suspend fun getSite(): Result<GetSiteResponse> =
