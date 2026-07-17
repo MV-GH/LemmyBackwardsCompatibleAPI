@@ -6,15 +6,13 @@ import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
-// TODO: better solution for auth and AutoCloseable?
 abstract class LemmyApiBaseController(actualVersion: Version, baseUrl: String, override var auth: String?) :
     LemmyApiBase(
         actualVersion,
         baseUrl,
         auth,
     ),
-    OldRoutes,
-    AutoCloseable {
+    OldRoutes {
 
     suspend fun uploadAndApplyImage(
         image: ByteArray,
@@ -29,6 +27,8 @@ abstract class LemmyApiBaseController(actualVersion: Version, baseUrl: String, o
             throw e
         }
     }
+
+    // TODO: Move these routes to UniRoutes but preserve Git History
 
     /**
      * Gets the site, and your user data.
