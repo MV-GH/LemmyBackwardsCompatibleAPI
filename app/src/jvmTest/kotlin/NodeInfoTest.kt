@@ -1,5 +1,5 @@
-import it.vercruysse.lemmyapi.dto.NodeInfo
 import it.vercruysse.lemmyapi.lenientJson
+import it.vercruysse.lemmyapi.nodeinfo.NodeInfo
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
