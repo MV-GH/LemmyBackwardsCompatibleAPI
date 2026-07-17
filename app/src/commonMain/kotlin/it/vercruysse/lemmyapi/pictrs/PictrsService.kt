@@ -5,11 +5,15 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
+import it.vercruysse.lemmyapi.AuthProvider
 import it.vercruysse.lemmyapi.datatypes.DeleteImageParams
 import it.vercruysse.lemmyapi.datatypes.UploadImageResponse
 import kotlinx.serialization.Serializable
 
-internal class PictrsService(private val client: HttpClient, var auth: String?) {
+internal class PictrsService(
+    private val client: HttpClient,
+    private val authProvider: AuthProvider,
+) {
 
     /**
      * Upload an image to the server.
@@ -18,7 +22,7 @@ internal class PictrsService(private val client: HttpClient, var auth: String?) 
      */
     suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> = runCatching {
         val resp = client.post("/pictrs/image") {
-            auth?.let { cookie("jwt", it) }
+            currentAuth()?.let { cookie("jwt", it) }
             setBody(createFormData(image))
         }
 
@@ -47,9 +51,11 @@ internal class PictrsService(private val client: HttpClient, var auth: String?) 
         }
 
         client.get(form.filename) {
-            auth?.let { cookie("jwt", it) }
+            currentAuth()?.let { cookie("jwt", it) }
         }.body()
     }
+
+    private fun currentAuth(): String? = authProvider()
 
     private fun createFormData(image: ByteArray): MultiPartFormDataContent =
         MultiPartFormDataContent(

@@ -62,3 +62,14 @@ internal fun HttpClientConfig<*>.installRequiredPlugins() {
         exponentialDelay()
     }
 }
+
+internal typealias AuthProvider = () -> String?
+
+internal fun HttpClient.withBearerAuth(authProvider: AuthProvider): HttpClient = config {
+    defaultRequest {
+        headers.remove(HttpHeaders.Authorization)
+        authProvider()?.let { token ->
+            headers[HttpHeaders.Authorization] = "Bearer $token"
+        }
+    }
+}

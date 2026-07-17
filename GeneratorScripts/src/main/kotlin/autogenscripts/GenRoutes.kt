@@ -36,13 +36,13 @@ ${summary?.lines()?.joinToString("\n") { "         * ${it.trim()}" } ?: ""}
          *
          * @${method.name}("$path")
          */
-        abstract suspend fun $operationId(${if (paramsOrBody != null) "form: $paramsOrBody" else ""}): Result<${response ?: "Unit"}>
+        suspend fun $operationId(${if (paramsOrBody != null) "form: $paramsOrBody" else ""}): Result<${response ?: "Unit"}>
     """.replaceIndent("    ")
 }
 
 fun RouteInfo.toImpl(): String {
     return this.toInterface()
-        .replace("abstract suspend fun", "override suspend fun")
+        .replace("suspend fun", "override suspend fun")
         .plus(" =\n        client.${method.name.lowercase()}Result(\"$path\"${if (paramsOrBody != null) ", form" else ""})")
 }
 
@@ -129,7 +129,7 @@ fun genRouteAbstractInterface(routes: List<RouteInfo>) {
     val fileInterface = File("temp", "LemmyApiRouter.kt")
     fileInterface.createNewFile()
 
-    fileInterface.writeText("\nabstract class LemmyApiRouter : LemmyApiBase {\n\n")
+    fileInterface.writeText("\ninterface LemmyApiRouter {\n")
 
     for (route in routes) {
         fileInterface.appendText(route.toInterface() + "\n\n")

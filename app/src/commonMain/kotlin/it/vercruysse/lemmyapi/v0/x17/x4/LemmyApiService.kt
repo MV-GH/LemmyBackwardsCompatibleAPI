@@ -18,8 +18,7 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
  * And whatever other problems show up.
  *
  */
-internal class LemmyApiService(val client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String? = null) :
-    LemmyApi(actualVersion, baseUrl, auth) {
+internal class LemmyApiService(val client: HttpClient) : LemmyApiRouter {
     /**
      * Gets the site, and your user data.
      *

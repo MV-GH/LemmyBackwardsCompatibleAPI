@@ -26,8 +26,8 @@ import kotlin.map
 
 internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(actualVersion, baseUrl, auth) {
-    private val api = LemmyApiController(client, actualVersion, baseUrl, auth)
-    private val pictrsApi = PictrsService(client, auth)
+    private val api = LemmyApiController(client)
+    private val pictrsApi = PictrsService(client) { this.auth }
     private val transformer = Transformer(auth ?: "")
 
     override fun close() = client.close()
@@ -36,8 +36,7 @@ internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion:
         get() = super.auth
         set(value) {
             super.auth = value
-            api.auth = value
-            pictrsApi.auth = value
+            transformer.auth = value ?: ""
         }
 
     // START

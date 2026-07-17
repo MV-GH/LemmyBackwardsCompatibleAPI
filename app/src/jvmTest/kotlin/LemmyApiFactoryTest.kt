@@ -13,6 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
+import kotlin.test.assertNull
 
 class LemmyApiFactoryTest {
 
@@ -118,6 +119,56 @@ class LemmyApiFactoryTest {
             controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts()).getOrThrow()
         }
         assertEquals(HttpStatusCode.OK, suppliedClient.get("https://lemmy.world").status)
+        suppliedClient.close()
+    }
+
+    @Test
+    fun `version one controller reads current authentication`() = runBlocking {
+        val authorizationHeaders = mutableListOf<String?>()
+        val suppliedClient = HttpClient(
+            MockEngine { request ->
+                authorizationHeaders += request.headers[HttpHeaders.Authorization]
+                respond(
+                    content = "{}",
+                    status = HttpStatusCode.OK,
+                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                )
+            },
+        )
+        val factory = LemmyApiFactory(suppliedClient)
+        val controller = factory.createForVersion("lemmy.world", "1.0.0", "initial").getOrThrow()
+
+        controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts())
+        controller.auth = "replacement"
+        controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts())
+        controller.auth = null
+        controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts())
+
+        assertEquals(listOf("Bearer initial", "Bearer replacement", null), authorizationHeaders)
+        factory.close()
+        suppliedClient.close()
+    }
+
+    @Test
+    fun `version zero eighteen does not add bearer authentication`() = runBlocking {
+        var authorizationHeader: String? = "not requested"
+        val suppliedClient = HttpClient(
+            MockEngine { request ->
+                authorizationHeader = request.headers[HttpHeaders.Authorization]
+                respond(
+                    content = "{}",
+                    status = HttpStatusCode.OK,
+                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                )
+            },
+        )
+        val factory = LemmyApiFactory(suppliedClient)
+        val controller = factory.createForVersion("lemmy.world", "0.18.5", "legacy-token").getOrThrow()
+
+        controller.getSite()
+
+        assertNull(authorizationHeader)
+        factory.close()
         suppliedClient.close()
     }
 

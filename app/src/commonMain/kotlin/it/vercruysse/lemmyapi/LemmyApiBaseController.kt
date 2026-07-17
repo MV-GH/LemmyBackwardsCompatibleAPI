@@ -5,6 +5,7 @@ import it.vercruysse.lemmyapi.datatypes.*
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
+// TODO: better solution for auth and AutoCloseable?
 abstract class LemmyApiBaseController(actualVersion: Version, baseUrl: String, override var auth: String?) :
     LemmyApiBase(
         actualVersion,

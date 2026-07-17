@@ -1,3 +1,5 @@
+import com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor
+import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.http.RequestMethod
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
@@ -75,6 +77,22 @@ class AuthSetCorrectIT {
             headers contains HttpHeaders.Authorization equalTo "Bearer newAuth"
             method = RequestMethod.GET
         }
+
+        controller.auth = null
+        wm.get {
+            url equalTo "/api/v3/site"
+        } returnsJson {
+            body = "{}"
+        }
+
+        runBlocking {
+            controller.getSite()
+        }
+
+        wm.verify(
+            getRequestedFor(urlEqualTo("/api/v3/site"))
+                .withoutHeader(HttpHeaders.Authorization),
+        )
 
         factory.close()
         httpClient.close()

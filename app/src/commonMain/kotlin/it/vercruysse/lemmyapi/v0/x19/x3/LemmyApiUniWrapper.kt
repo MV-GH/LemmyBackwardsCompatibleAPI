@@ -17,26 +17,21 @@ import it.vercruysse.lemmyapi.enums.NotificationDataType
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPersonDetails
+import it.vercruysse.lemmyapi.withBearerAuth
 
 // Based on tags/0.19.3-alpha.6
 internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(actualVersion, baseUrl, auth) {
-    private val api = LemmyApiController(client, auth)
-    private val pictrsApi = PictrsService(client, auth)
+    private val apiClient = client.withBearerAuth { this.auth }
+    private val api = LemmyApiController(apiClient)
+    private val pictrsApi = PictrsService(client) { this.auth }
     private val transformer = Transformer()
 
+    // TODO: should original client be closed?
     override fun close() {
-        api.close()
+        apiClient.close()
         client.close()
     }
-
-    override var auth: String?
-        get() = super.auth
-        set(value) {
-            super.auth = value
-            api.auth = value
-            pictrsApi.auth = value
-        }
 
     /**
      * Gets the site, and your user data.
