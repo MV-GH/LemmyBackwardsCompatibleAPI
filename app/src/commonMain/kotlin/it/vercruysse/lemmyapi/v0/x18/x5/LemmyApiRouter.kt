@@ -1,7 +1,6 @@
 package it.vercruysse.lemmyapi.v0.x18.x5
 
 import io.github.z4kn4fein.semver.Version
-import io.ktor.client.*
 import it.vercruysse.lemmyapi.LemmyApiBase
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
 

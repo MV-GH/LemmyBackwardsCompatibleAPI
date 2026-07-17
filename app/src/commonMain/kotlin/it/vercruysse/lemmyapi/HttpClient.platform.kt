@@ -43,16 +43,7 @@ internal fun HttpClient.withLemmyApiConfig(): HttpClient = config {
     }
 }
 
-internal fun HttpClient.withLemmyNodeInfoConfig(): HttpClient = config {
-    installRequiredPlugins()
-    expectSuccess = true
-
-    install(ContentNegotiation) {
-        json(lenientJson)
-    }
-}
-
-private fun HttpClientConfig<*>.installRequiredPlugins() {
+internal fun HttpClientConfig<*>.installRequiredPlugins() {
     install(UserAgent) {
         agent = "LemmyKotlinApi"
     }

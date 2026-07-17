@@ -36,7 +36,7 @@ class LemmyApiFactoryTest {
         }
         val factory = LemmyApiFactory(suppliedClient)
 
-        val controller = factory.create("lemmy.world", "0.19.11")
+        val controller = factory.create("lemmy.world", "0.19.11").getOrThrow()
         controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts()).getOrThrow()
 
         assertEquals(listOf("retained"), requests)
@@ -60,11 +60,10 @@ class LemmyApiFactoryTest {
         )
         val factory = LemmyApiFactory(suppliedClient)
 
-        val controller = factory.create("lemmy.world")
-        controller.getNodeInfo().getOrThrow()
+        val controller = factory.create("lemmy.world").getOrThrow()
 
         assertIs<it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper>(controller)
-        assertEquals(2, requestCount)
+        assertEquals(1, requestCount)
         factory.close()
         suppliedClient.close()
     }

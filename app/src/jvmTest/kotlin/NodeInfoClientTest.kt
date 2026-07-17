@@ -1,0 +1,99 @@
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
+import io.ktor.client.request.get
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.headersOf
+import it.vercruysse.lemmyapi.lenientJson
+import it.vercruysse.lemmyapi.nodeinfo.NodeInfo
+import it.vercruysse.lemmyapi.nodeinfo.NodeInfoClient
+import kotlinx.coroutines.runBlocking
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+
+class NodeInfoClientTest {
+
+    @Test
+    fun `get Lemmy version rejects another software`() {
+        val nodeInfo = lenientJson.decodeFromString<NodeInfo>(NODE_INFO.replace("Lemmy", "Mastodon"))
+
+        NodeInfoClient().use { client ->
+            assertTrue(client.getLemmyVersion(nodeInfo).isFailure)
+        }
+    }
+
+    @Test
+    fun `remote predicates return successful false values for valid documents`() = runBlocking {
+        val suppliedClient = nodeInfoHttpClient(NODE_INFO.replace("Lemmy", "Mastodon").replace("activitypub", "diaspora"))
+
+        NodeInfoClient(suppliedClient).use { client ->
+            val isFediverse = client.isFediverse("lemmy.world")
+            val isLemmy = client.isLemmyInstance("lemmy.world")
+
+            assertTrue(isFediverse.isSuccess)
+            assertFalse(isFediverse.getOrThrow())
+            assertTrue(isLemmy.isSuccess)
+            assertFalse(isLemmy.getOrThrow())
+        }
+        suppliedClient.close()
+    }
+
+    @Test
+    fun `remote predicates preserve retrieval failures`() = runBlocking {
+        val suppliedClient = HttpClient(
+            MockEngine {
+                respond(
+                    content = "Not found",
+                    status = HttpStatusCode.NotFound,
+                )
+            },
+        )
+
+        NodeInfoClient(suppliedClient).use { client ->
+            assertTrue(client.isFediverse("lemmy.world").isFailure)
+            assertTrue(client.isLemmyInstance("lemmy.world").isFailure)
+        }
+        suppliedClient.close()
+    }
+
+    @Test
+    fun `close does not close supplied client`() = runBlocking {
+        val suppliedClient = nodeInfoHttpClient(NODE_INFO)
+        val client = NodeInfoClient(suppliedClient)
+
+        client.close()
+
+        assertEquals(HttpStatusCode.OK, suppliedClient.get("https://lemmy.world").status)
+        suppliedClient.close()
+    }
+
+    private fun nodeInfoHttpClient(responseBody: String): HttpClient =
+        HttpClient(
+            MockEngine {
+                respond(
+                    content = responseBody,
+                    status = HttpStatusCode.OK,
+                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                )
+            },
+        )
+
+    private companion object {
+        val NODE_INFO =
+            """{
+                "version": "2.0",
+                "software": {"name": "Lemmy", "version": "0.19.11"},
+                "protocols": ["activitypub"],
+                "openRegistrations": true,
+                "usage": {
+                    "users": {"total": 1, "activeHalfyear": 1, "activeMonth": 1},
+                    "localPosts": 1,
+                    "localComments": 1
+                }
+            }
+            """.trimIndent()
+    }
+}

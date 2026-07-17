@@ -32,7 +32,7 @@ class AuthSetCorrectIT {
             }
         }
         val factory = LemmyApiFactory(httpClient)
-        val controller = factory.create(instance = "${wm.baseUrl()}/lemmy.world", version = "0.19.1", auth = "auth")
+        val controller = factory.create(instance = "${wm.baseUrl()}/lemmy.world", version = "0.19.1", auth = "auth").getOrThrow()
 
         // Given
         wm.get {
