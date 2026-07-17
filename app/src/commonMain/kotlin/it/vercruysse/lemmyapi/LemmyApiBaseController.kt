@@ -11,7 +11,8 @@ abstract class LemmyApiBaseController(actualVersion: Version, baseUrl: String, o
         baseUrl,
         auth,
     ),
-    OldRoutes {
+    OldRoutes,
+    AutoCloseable {
 
     suspend fun uploadAndApplyImage(
         image: ByteArray,

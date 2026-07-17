@@ -10,7 +10,7 @@ import io.ktor.http.*
  * @param httpClient The HttpClient to use for requests
  * @param auth The authentication token to use for requests
  */
-internal abstract class AuthBaseClient(httpClient: HttpClient, var auth: String?) {
+internal abstract class AuthBaseClient(httpClient: HttpClient, var auth: String?) : AutoCloseable {
 
     open val client = httpClient.config {
         defaultRequest {
@@ -19,4 +19,6 @@ internal abstract class AuthBaseClient(httpClient: HttpClient, var auth: String?
             }
         }
     }
+
+    override fun close() = client.close()
 }

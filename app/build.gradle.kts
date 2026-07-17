@@ -67,11 +67,11 @@ kotlin {
 
 
     sourceSets {
-        val ktorVersion = "3.5.0"
+        val ktorVersion = "3.5.1"
 
 
         commonMain.dependencies {
-            implementation("io.ktor:ktor-client-core:$ktorVersion")
+            api("io.ktor:ktor-client-core:$ktorVersion")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
@@ -93,10 +93,10 @@ kotlin {
 
         jvmTest.dependencies {
             implementation(kotlin("reflect"))
-            implementation("io.mockk:mockk:1.14.9")
+            implementation("io.mockk:mockk:1.14.11")
             implementation("org.wiremock:wiremock:3.13.2")
             implementation("com.marcinziolo:kotlin-wiremock:2.1.1")
-            implementation("ch.qos.logback:logback-classic:1.5.32")
+            implementation("ch.qos.logback:logback-classic:1.5.38")
             implementation("io.ktor:ktor-client-mock:$ktorVersion")
         }
 

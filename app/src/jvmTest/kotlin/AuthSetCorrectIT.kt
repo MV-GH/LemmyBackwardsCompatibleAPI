@@ -32,7 +32,7 @@ class AuthSetCorrectIT {
             }
         }
         val factory = LemmyApiFactory(httpClient)
-        val controller = factory.create(instance = "${wm.baseUrl()}/lemmy.world", version = "0.19.1", auth = "auth").getOrThrow()
+        val controller = factory.createForVersion(instance = "${wm.baseUrl()}/lemmy.world", version = "0.19.1", auth = "auth").getOrThrow()
 
         // Given
         wm.get {
@@ -53,8 +53,6 @@ class AuthSetCorrectIT {
             method = RequestMethod.GET
             headers contains HttpHeaders.Authorization equalTo "Bearer auth"
         }
-        factory.close()
-        httpClient.close()
 
         controller.auth = "newAuth"
 
@@ -77,5 +75,8 @@ class AuthSetCorrectIT {
             headers contains HttpHeaders.Authorization equalTo "Bearer newAuth"
             method = RequestMethod.GET
         }
+
+        factory.close()
+        httpClient.close()
     }
 }

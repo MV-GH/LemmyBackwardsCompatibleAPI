@@ -9,6 +9,7 @@ import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.installRequiredPlugins
 import it.vercruysse.lemmyapi.lenientJson
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
+import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
 class NodeInfoClient(httpClient: HttpClient? = null) : AutoCloseable {
     private val ownsHttpClient = httpClient == null
@@ -19,7 +20,7 @@ class NodeInfoClient(httpClient: HttpClient? = null) : AutoCloseable {
      * Gets the NodeInfo document of an instance.
      */
     suspend fun getNodeInfo(instance: String): Result<NodeInfo> =
-        runCatching {
+        runCatchingPreservingCancellation {
             client
                 .get("${constructBaseUrl(instance)}/nodeinfo/2.0.json")
                 .body<NodeInfo>()
@@ -48,7 +49,10 @@ class NodeInfoClient(httpClient: HttpClient? = null) : AutoCloseable {
      * Returns a failure if NodeInfo retrieval fails or the instance is not Lemmy.
      */
     suspend fun getLemmyVersion(instance: String): Result<String> =
-        getNodeInfo(instance).mapCatching { nodeInfo -> getLemmyVersion(nodeInfo).getOrThrow() }
+        getNodeInfo(instance).fold(
+            onSuccess = ::getLemmyVersion,
+            onFailure = { Result.failure(it) },
+        )
 
     /**
      * Returns whether an instance supports the ActivityPub protocol.

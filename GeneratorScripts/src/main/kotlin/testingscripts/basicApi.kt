@@ -8,7 +8,7 @@ fun script1() {
 
 //        val semver = "1.0.0-nightly-2026-05-23".toVersion()
 //        println(semver)
-//        val api = LemmyApiFactory().create("voyager.lemmy.ml", "1.0.0")
+//        val api = LemmyApiFactory().createForVersion("voyager.lemmy.ml", "1.0.0")
 //        println(api.version)
 //        println(api.getSite())
 //        println(api.getPosts(GetPosts()))

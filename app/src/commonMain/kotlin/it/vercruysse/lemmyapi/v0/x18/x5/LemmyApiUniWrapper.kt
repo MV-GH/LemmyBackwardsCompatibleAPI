@@ -24,11 +24,13 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadRegistrationApplicati
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.MarkPostAsRead
 import kotlin.map
 
-internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
+internal class LemmyApiUniWrapper(private val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiBaseController(actualVersion, baseUrl, auth) {
     private val api = LemmyApiController(client, actualVersion, baseUrl, auth)
     private val pictrsApi = PictrsService(client, auth)
     private val transformer = Transformer(auth ?: "")
+
+    override fun close() = client.close()
 
     override var auth: String?
         get() = super.auth
