@@ -25,7 +25,6 @@ abstract class LemmyApiBaseController(
      *
      * @return A list of supported entries
      */
-    // TODO: add used coverage
     inline fun <reified T> getSupportedEntries(): List<T> where T : Enum<T>, T : VersionTracker = getSupportedEntries(version)
 
     protected inline fun <reified T> notSupported(): Result<T> = Result.failure(

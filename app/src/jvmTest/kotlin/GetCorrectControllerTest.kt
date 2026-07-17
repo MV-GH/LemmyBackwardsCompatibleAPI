@@ -1,6 +1,7 @@
 import io.github.z4kn4fein.semver.toVersion
 import it.vercruysse.lemmyapi.LemmyApiFactory
 import it.vercruysse.lemmyapi.MINIMUM_API_VERSION
+import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
@@ -53,6 +54,17 @@ class GetCorrectControllerTest {
 
             assertTrue(invalidVersion.isFailure)
             assertIs<NotSupportedException>(unsupportedVersion.exceptionOrNull())
+        }
+    }
+
+    @Test
+    fun `getSupportedEntries uses the controller version`() {
+        LemmyApiFactory().use { factory ->
+            val oldController = factory.createForVersion("lemmy.world", "0.18.5").getOrThrow()
+            val newController = factory.createForVersion("lemmy.world", "0.19.0").getOrThrow()
+
+            assertTrue(SortType.Scaled !in oldController.getSupportedEntries<SortType>())
+            assertTrue(SortType.Scaled in newController.getSupportedEntries<SortType>())
         }
     }
 }
