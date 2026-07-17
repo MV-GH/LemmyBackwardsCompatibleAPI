@@ -25,7 +25,7 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.MarkPostAsRead
 import kotlin.map
 
 internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
-    LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
+    LemmyApiBaseController(actualVersion, baseUrl, auth) {
     private val api = LemmyApiController(client, actualVersion, baseUrl, auth)
     private val pictrsApi = PictrsService(client, auth)
     private val transformer = Transformer(auth ?: "")

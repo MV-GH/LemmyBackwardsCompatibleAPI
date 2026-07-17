@@ -19,7 +19,7 @@ import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.GetPersonDetails
 
 internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
-    LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
+    LemmyApiBaseController(actualVersion, baseUrl, auth) {
     private val api = LemmyApiController(client, auth)
     private val pictrsApi = PictrsService(client, auth)
     private val transformer = Transformer()

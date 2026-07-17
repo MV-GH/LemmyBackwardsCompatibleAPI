@@ -15,7 +15,7 @@ import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
 internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
-    LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
+    LemmyApiBaseController(actualVersion, baseUrl, auth) {
     private val api = LemmyApiController(client, auth)
     private val transformer = Transformer()
 
