@@ -12,6 +12,7 @@ import kotlin.coroutines.cancellation.CancellationException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNull
 
@@ -123,6 +124,16 @@ class LemmyApiFactoryTest {
     }
 
     @Test
+    fun `created controllers do not own HTTP resources`() {
+        val factory = LemmyApiFactory()
+        val controller = factory.createForVersion("lemmy.world", "0.19.11").getOrThrow()
+
+        assertFalse(controller is AutoCloseable)
+
+        factory.close()
+    }
+
+    @Test
     fun `version one controller reads current authentication`() = runBlocking {
         val authorizationHeaders = mutableListOf<String?>()
         val suppliedClient = HttpClient(
@@ -151,10 +162,12 @@ class LemmyApiFactoryTest {
 
     @Test
     fun `version zero eighteen does not add bearer authentication`() = runBlocking {
-        var authorizationHeader: String? = "not requested"
+        val authorizationHeaders = mutableListOf<String?>()
+        val authParameters = mutableListOf<String?>()
         val suppliedClient = HttpClient(
             MockEngine { request ->
-                authorizationHeader = request.headers[HttpHeaders.Authorization]
+                authorizationHeaders += request.headers[HttpHeaders.Authorization]
+                authParameters += request.url.parameters["auth"]
                 respond(
                     content = "{}",
                     status = HttpStatusCode.OK,
@@ -166,8 +179,13 @@ class LemmyApiFactoryTest {
         val controller = factory.createForVersion("lemmy.world", "0.18.5", "legacy-token").getOrThrow()
 
         controller.getSite()
+        controller.auth = "replacement"
+        controller.getSite()
+        controller.auth = null
+        controller.getSite()
 
-        assertNull(authorizationHeader)
+        assertEquals(listOf<String?>(null, null, null), authorizationHeaders)
+        assertEquals(listOf("legacy-token", "replacement", null), authParameters)
         factory.close()
         suppliedClient.close()
     }

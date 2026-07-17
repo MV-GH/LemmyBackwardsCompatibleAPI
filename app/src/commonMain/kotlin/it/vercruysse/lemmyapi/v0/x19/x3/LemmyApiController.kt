@@ -1,6 +1,6 @@
 package it.vercruysse.lemmyapi.v0.x19.x3
 
-import io.ktor.client.HttpClient
+import it.vercruysse.lemmyapi.LemmyRequestClient
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.utils.getResult
@@ -8,7 +8,7 @@ import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.*
 
-internal class LemmyApiController(private val client: HttpClient) : LemmyApiRouter {
+internal class LemmyApiController(private val client: LemmyRequestClient) : LemmyApiRouter {
 
     /**
      * Gets the site, and your user data.

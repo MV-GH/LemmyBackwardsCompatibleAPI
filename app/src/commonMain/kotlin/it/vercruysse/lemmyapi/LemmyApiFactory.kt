@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi
 
 import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.*
-import io.ktor.client.plugins.*
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfoClient
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
@@ -12,13 +11,6 @@ class LemmyApiFactory(httpClient: HttpClient? = null) : AutoCloseable {
     private val transport = httpClient ?: HttpClient()
     private val apiClient = transport.withLemmyApiConfig()
     private val nodeInfoClient = NodeInfoClient(transport)
-    private val controllers = mutableListOf<LemmyApiBaseController>()
-
-    private fun getKtorClient(baseUrl: String): HttpClient = apiClient.config {
-        defaultRequest {
-            url(baseUrl)
-        }
-    }
 
     private fun getApiVersion(version: io.github.z4kn4fein.semver.Version): String =
         if (version.major == 0) "v3" else "v4"
@@ -59,23 +51,21 @@ class LemmyApiFactory(httpClient: HttpClient? = null) : AutoCloseable {
         runCatchingPreservingCancellation {
             val baseUrlInstance = constructBaseUrl(instance) // TODO duplicate constructBaseURL see NodeINFO
             val semverV = version.toVersion(false)
-            val apiVersion = getApiVersion(semverV)
-            val client = getKtorClient("$baseUrlInstance/api/$apiVersion/")
-
-            try {
-                LemmyApiWrapperFactory.create(client, semverV, version, baseUrlInstance, auth).also(controllers::add)
-            } catch (throwable: Throwable) {
-                client.close()
-                throw throwable
-            }
+            LemmyApiWrapperFactory.create(
+                apiClient,
+                "$baseUrlInstance/api/${getApiVersion(semverV)}",
+                semverV,
+                version,
+                baseUrlInstance,
+                auth,
+            )
         }
 
     /**
-     * Closes clients derived by this factory. A supplied HTTP client remains caller-owned.
+     * Closes clients owned by this factory. A supplied HTTP client remains caller-owned.
+     * Controllers created by this factory must not outlive it.
      */
     override fun close() {
-        controllers.forEach(LemmyApiBaseController::close)
-        controllers.clear()
         nodeInfoClient.close()
         apiClient.close()
         if (ownsHttpClient) {

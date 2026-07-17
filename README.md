@@ -54,7 +54,7 @@ val factory = LemmyApiFactory(httpClient)
 val api = factory.create("voyager.lemmy.ml").getOrThrow()
 ```
 
-Keep the factory open while using controllers created by it. Controllers are `AutoCloseable` and can be closed individually; closing the factory closes every controller it created. A supplied `HttpClient` remains caller-owned and must be closed by the caller; when no client is supplied, the factory owns and closes its default client.
+Keep the factory open while using controllers created by it. A supplied `HttpClient` remains caller-owned and must be closed by the caller; when no client is supplied, the factory owns and closes its default client.
 
 
 ## Installation
