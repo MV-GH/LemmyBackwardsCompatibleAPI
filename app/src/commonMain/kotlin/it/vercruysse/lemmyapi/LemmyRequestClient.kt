@@ -11,11 +11,10 @@ import it.vercruysse.lemmyapi.utils.postUploadResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.utils.setJsonBody
 
-// TODO: prob remove internal from props
 internal class LemmyRequestClient(
-    @PublishedApi internal val client: HttpClient,
-    @PublishedApi internal val apiBaseUrl: String,
-    @PublishedApi internal val authProvider: AuthProvider?,
+    val client: HttpClient,
+    val apiBaseUrl: String,
+    val authProvider: AuthProvider?,
 ) {
     suspend inline fun <reified R, reified T> deleteResult(path: String, body: T): Result<R> =
         client.deleteResult(resolve(path)) {
