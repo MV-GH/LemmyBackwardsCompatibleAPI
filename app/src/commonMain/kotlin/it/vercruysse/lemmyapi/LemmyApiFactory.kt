@@ -9,14 +9,17 @@ import it.vercruysse.lemmyapi.dto.NodeInfo
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 
-object LemmyApi {
-    var defaultClient = coreHttpClient
+class LemmyApiFactory(httpClient: HttpClient? = null) : AutoCloseable {
+    private val ownsHttpClient = httpClient == null
+    private val transport = httpClient ?: HttpClient()
+    private val apiClient = transport.withLemmyApiConfig()
+    private val nodeInfoClient = transport.withLemmyNodeInfoConfig()
 
     /**
-     * Overrides the config for the default HTTP Client.
+     * Adds the instance API base URL to the required client configuration.
      */
-    internal fun getKtorClient(baseUrl: String): HttpClient =
-        defaultClient.config {
+    private fun getKtorClient(baseUrl: String): HttpClient =
+        apiClient.config {
             defaultRequest {
                 url(baseUrl)
             }
@@ -25,9 +28,9 @@ object LemmyApi {
     /**
      * Gets the node info of a Lemmy instance
      */
-    suspend fun getNodeInfo(instance: String, httpClient: HttpClient = lenientClient): Result<NodeInfo> =
+    suspend fun getNodeInfo(instance: String): Result<NodeInfo> =
         runCatching {
-            httpClient
+            nodeInfoClient
                 .get("${constructBaseUrl(instance)}/nodeinfo/2.0.json")
                 .body<NodeInfo>()
         }
@@ -95,7 +98,7 @@ object LemmyApi {
     fun isLemmyInstance(nodeInfo: NodeInfo): Boolean = nodeInfo.software.name.lowercase() == "lemmy"
 
     /**
-     * Returns a LemmyApi instance.
+     * Creates a controller after discovering the Lemmy version.
      *
      * Throws several errors if the Instance isn't available or a Lemmy host or supported.
      *
@@ -103,16 +106,16 @@ object LemmyApi {
      * on the version of the Lemmy Server instance.
      */
 
-    suspend fun getLemmyApi(
+    suspend fun create(
         instance: String,
         auth: String? = null,
     ): LemmyApiBaseController {
         val version = getLemmyVersion(instance)
-        return getLemmyApi(instance, version, auth)
+        return create(instance, version, auth)
     }
 
     /**
-     * Returns a LemmyApi instance.
+     * Creates a controller for a known Lemmy version.
      *
      * @throws NotSupportedException if the instance isn't supported.
      *
@@ -121,7 +124,7 @@ object LemmyApi {
      * Use the Feature Flags before using certain endpoints as they can be or not available depending
      * on the version of the Lemmy Server instance.
      */
-    fun getLemmyApi(
+    fun create(
         instance: String,
         version: String,
         auth: String? = null,
@@ -153,6 +156,16 @@ object LemmyApi {
         }
     }
 
-    // Good enough approximation for now
     private fun getApiVersion(version: io.github.z4kn4fein.semver.Version): String = if (version.major == 0) "v3" else "v4"
+
+    /**
+     * Closes clients derived by this factory. A supplied HTTP client remains caller-owned.
+     */
+    override fun close() {
+        nodeInfoClient.close()
+        apiClient.close()
+        if (ownsHttpClient) {
+            transport.close()
+        }
+    }
 }

@@ -1,9 +1,7 @@
 package it.vercruysse.lemmyapi.v0.x17.x4
 
 import io.github.z4kn4fein.semver.Version
-import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.*
-import it.vercruysse.lemmyapi.LemmyApi.getKtorClient
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
@@ -21,7 +19,7 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
  *
  */
 internal class LemmyApiService(val client: HttpClient, actualVersion: Version, baseUrl: String, override var auth: String? = null) :
-    LemmyApi(client, actualVersion, baseUrl, auth) {
+    LemmyApi(actualVersion, baseUrl, auth) {
     /**
      * Gets the site, and your user data.
      *
@@ -652,12 +650,4 @@ internal class LemmyApiService(val client: HttpClient, actualVersion: Version, b
      * @POST("custom_emoji/delete")
      */
     override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> = client.postResult("custom_emoji/delete", form)
-}
-
-suspend fun main() {
-    val api = LemmyApiService(getKtorClient("https://animoe.xyz/api/v3/"), "0.17.4".toVersion(), "") // v0.17.4
-    println(api.version)
-    println(api.getSite(GetSite()).getOrThrow())
-    // Throws because apparently enums are full lowercase in v0.17.4 D:
-    // Caused by: kotlinx.serialization.SerializationException: it.vercruysse.lemmyapi.dto.RegistrationMode does not contain element with name 'requireapplication' at path $.site_view.local_site.registration_mode
 }

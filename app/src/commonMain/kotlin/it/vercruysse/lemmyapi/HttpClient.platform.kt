@@ -10,30 +10,8 @@ import it.vercruysse.lemmyapi.dto.ErrorResponse
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import kotlinx.serialization.SerializationException
 
-val baseClient: HttpClient = HttpClient {
-    install(UserAgent) {
-        agent = "LemmyKotlinApi"
-    }
-
-    install(HttpTimeout) {
-        requestTimeoutMillis = TIMEOUT_MS
-        socketTimeoutMillis = TIMEOUT_MS
-        connectTimeoutMillis = TIMEOUT_MS / 2
-    }
-
-    install(HttpRequestRetry) {
-        maxRetries = 5
-        retryIf { _, response ->
-            response.status.value >= 500
-        }
-        exponentialDelay()
-    }
-}
-
-/**
- * This client contains all the core configuration for LemmyAPI
- */
-val coreHttpClient = baseClient.config {
+internal fun HttpClient.withLemmyApiConfig(): HttpClient = config {
+    installRequiredPlugins()
     expectSuccess = true
 
     install(ContentNegotiation) {
@@ -65,10 +43,31 @@ val coreHttpClient = baseClient.config {
     }
 }
 
-val lenientClient = baseClient.config {
+internal fun HttpClient.withLemmyNodeInfoConfig(): HttpClient = config {
+    installRequiredPlugins()
     expectSuccess = true
 
     install(ContentNegotiation) {
         json(lenientJson)
+    }
+}
+
+private fun HttpClientConfig<*>.installRequiredPlugins() {
+    install(UserAgent) {
+        agent = "LemmyKotlinApi"
+    }
+
+    install(HttpTimeout) {
+        requestTimeoutMillis = TIMEOUT_MS
+        socketTimeoutMillis = TIMEOUT_MS
+        connectTimeoutMillis = TIMEOUT_MS / 2
+    }
+
+    install(HttpRequestRetry) {
+        maxRetries = 5
+        retryIf { _, response ->
+            response.status.value >= 500
+        }
+        exponentialDelay()
     }
 }

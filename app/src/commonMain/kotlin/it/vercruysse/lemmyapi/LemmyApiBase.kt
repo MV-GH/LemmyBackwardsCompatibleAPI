@@ -1,14 +1,16 @@
 package it.vercruysse.lemmyapi
 
 import io.github.z4kn4fein.semver.Version
-import io.ktor.client.*
-import it.vercruysse.lemmyapi.dto.NodeInfo
 import it.vercruysse.lemmyapi.dto.getSupportedEntries
 import it.vercruysse.lemmyapi.enums.VersionTracker
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 
 // Wanted to keep this as an interface, but interfaces can't keep state
-abstract class LemmyApiBase(httpClient: HttpClient, val version: Version, val baseUrl: String, open var auth: String?) {
+abstract class LemmyApiBase(
+    val version: Version,
+    val baseUrl: String,
+    open var auth: String?,
+) {
     @Suppress("PropertyName")
     val FF = FeatureFlags(version)
 
@@ -21,8 +23,6 @@ abstract class LemmyApiBase(httpClient: HttpClient, val version: Version, val ba
      * @return A list of supported entries
      */
     inline fun <reified T> getSupportedEntries(): List<T> where T : Enum<T>, T : VersionTracker = getSupportedEntries(version)
-
-    suspend fun getNodeInfo(): Result<NodeInfo> = LemmyApi.getNodeInfo(baseUrl)
 
     protected inline fun <reified T> notSupported(): Result<T> = Result.failure(
         NotSupportedException(

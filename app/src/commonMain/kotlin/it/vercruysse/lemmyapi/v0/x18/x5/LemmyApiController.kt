@@ -9,7 +9,6 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
 
 internal class LemmyApiController(val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
     LemmyApiRouter(
-        client,
         actualVersion,
         baseUrl,
         auth,
