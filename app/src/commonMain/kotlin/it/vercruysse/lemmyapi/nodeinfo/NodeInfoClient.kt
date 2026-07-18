@@ -2,15 +2,11 @@ package it.vercruysse.lemmyapi.nodeinfo
 
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
-import io.ktor.serialization.kotlinx.json.*
-import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
 import it.vercruysse.lemmyapi.LemmyApiOptions
 import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.installRequiredPlugins
-import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
 class NodeInfoClient(

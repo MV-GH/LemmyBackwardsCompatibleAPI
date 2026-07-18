@@ -2,6 +2,7 @@ package it.vercruysse.lemmyapi
 
 import io.github.z4kn4fein.semver.Version
 import io.github.z4kn4fein.semver.toVersion
+import io.github.z4kn4fein.semver.withoutSuffixes
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -17,13 +18,15 @@ data class LemmyInstance(val url: String) {
 }
 
 data class LemmyVersion(val value: String) {
-    // TODO: think about this published only bc of the getSupportedEntries
+
     @PublishedApi
     internal val semanticVersion: Version = try {
         value.toVersion(strict = false)
     } catch (exception: Exception) {
         throw IllegalArgumentException("Invalid Lemmy version: $value", exception)
     }
+
+    internal val semVersionNoSuffix = semanticVersion.withoutSuffixes()
 
     override fun toString(): String = value
 }

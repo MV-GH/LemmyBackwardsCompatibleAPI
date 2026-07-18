@@ -2,9 +2,9 @@ package it.vercruysse.lemmyapi
 
 import it.vercruysse.lemmyapi.datatypes.DeleteImageParams
 import it.vercruysse.lemmyapi.datatypes.UploadImageResponse
-import it.vercruysse.lemmyapi.dto.getSupportedEntries
 import it.vercruysse.lemmyapi.enums.VersionTracker
 import it.vercruysse.lemmyapi.exception.NotSupportedException
+import it.vercruysse.lemmyapi.utils.getSupportedEntries
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
 abstract class LemmyApiBaseController(

@@ -8,7 +8,7 @@ import io.github.z4kn4fein.semver.withoutSuffixes
  */
 @Suppress("unused")
 class FeatureFlags(val version: LemmyVersion) {
-    private val semanticVersion = version.semanticVersion.withoutSuffixes()
+    private val semanticVersion = version.semVersionNoSuffix
 
     private val v0x19Plus = semanticVersion >= "0.19.0".toVersion()
     private val v0x19x2Plus = semanticVersion >= "0.19.2".toVersion()

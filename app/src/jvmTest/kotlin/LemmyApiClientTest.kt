@@ -48,7 +48,7 @@ class LemmyApiClientTest {
         val client = LemmyApiClient(suppliedClient, LemmyApiOptions(userAgent = "TestClient/1.0"))
 
         val controller = client.connectForVersion(LemmyInstance("lemmy.world"), LemmyVersion("0.19.11")).getOrThrow()
-        controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts()).getOrThrow()
+        controller.getPosts(GetPosts()).getOrThrow()
 
         assertEquals(listOf("retained"), requests)
         client.close()
@@ -126,7 +126,7 @@ class LemmyApiClientTest {
         client.close()
 
         assertFailsWith<CancellationException> {
-            controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts()).getOrThrow()
+            controller.getPosts(GetPosts()).getOrThrow()
         }
         assertEquals(HttpStatusCode.OK, suppliedClient.get("https://lemmy.world").status)
         suppliedClient.close()
@@ -162,11 +162,11 @@ class LemmyApiClientTest {
             LemmyAuth.Bearer("initial"),
         ).getOrThrow()
 
-        controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts())
+        controller.getPosts(GetPosts())
         controller.updateAuth(LemmyAuth.Bearer("replacement"))
-        controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts())
+        controller.getPosts(GetPosts())
         controller.clearAuth()
-        controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts())
+        controller.getPosts(GetPosts())
 
         assertEquals(listOf("Bearer initial", "Bearer replacement", null), authorizationHeaders)
         client.close()
