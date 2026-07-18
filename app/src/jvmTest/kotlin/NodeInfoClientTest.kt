@@ -32,11 +32,16 @@ class NodeInfoClientTest {
         NodeInfoClient(suppliedClient).use { client ->
             val isFediverse = client.isFediverse("lemmy.world")
             val isLemmy = client.isLemmyInstance("lemmy.world")
+            val version = client.getVersion("lemmy.world")
+            val lemmyVersion = client.getLemmyVersion("lemmy.world")
 
             assertTrue(isFediverse.isSuccess)
             assertFalse(isFediverse.getOrThrow())
             assertTrue(isLemmy.isSuccess)
             assertFalse(isLemmy.getOrThrow())
+            assertTrue(version.isSuccess)
+            assertEquals("0.19.11", version.getOrThrow())
+            assertTrue(lemmyVersion.isFailure)
         }
         suppliedClient.close()
     }

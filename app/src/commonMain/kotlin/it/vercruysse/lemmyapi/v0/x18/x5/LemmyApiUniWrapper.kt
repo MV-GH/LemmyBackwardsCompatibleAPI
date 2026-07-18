@@ -1,9 +1,10 @@
 package it.vercruysse.lemmyapi.v0.x18.x5
 
-import io.github.z4kn4fein.semver.Version
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.LemmyApiBaseController
+import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.LemmyRequestClient
+import it.vercruysse.lemmyapi.LemmyVersion
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojis
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
 import it.vercruysse.lemmyapi.datatypes.ListLoginsResponse
@@ -26,8 +27,8 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadRegistrationApplicati
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.MarkPostAsRead
 import kotlin.map
 
-internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, actualVersion: Version, baseUrl: String, auth: String?) :
-    LemmyApiBaseController(actualVersion, auth) {
+internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, baseUrl: String, auth: String?) :
+    LemmyApiBaseController(instance, actualVersion, auth) {
     private val api = LemmyApiController(LemmyRequestClient(client, apiBaseUrl, null))
     private val pictrsApi = PictrsService(client, baseUrl) { this.auth }
     private val transformer = Transformer(auth ?: "")

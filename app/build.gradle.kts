@@ -49,7 +49,6 @@ kotlin {
     iosX64()
     iosArm64()
     watchosSimulatorArm64()
-    watchosArm32()
     watchosArm64()
     watchosDeviceArm64()
 

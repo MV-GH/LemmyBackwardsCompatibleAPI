@@ -6,7 +6,10 @@ import com.github.tomakehurst.wiremock.junit5.WireMockExtension
 import com.marcinziolo.kotlin.wiremock.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
-import it.vercruysse.lemmyapi.LemmyApiFactory
+import it.vercruysse.lemmyapi.LemmyApiClient
+import it.vercruysse.lemmyapi.LemmyAuth
+import it.vercruysse.lemmyapi.LemmyInstance
+import it.vercruysse.lemmyapi.LemmyVersion
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -33,8 +36,12 @@ class AuthSetCorrectIT {
                 level = LogLevel.ALL
             }
         }
-        val factory = LemmyApiFactory(httpClient)
-        val controller = factory.createForVersion(instance = "${wm.baseUrl()}/lemmy.world", version = "0.19.1", auth = "auth").getOrThrow()
+        val factory = LemmyApiClient(httpClient)
+        val controller = factory.connectForVersion(
+            LemmyInstance("${wm.baseUrl()}/lemmy.world"),
+            LemmyVersion("0.19.1"),
+            LemmyAuth.Bearer("auth"),
+        ).getOrThrow()
 
         // Given
         wm.get {
@@ -56,7 +63,7 @@ class AuthSetCorrectIT {
             headers contains HttpHeaders.Authorization equalTo "Bearer auth"
         }
 
-        controller.auth = "newAuth"
+        controller.updateAuth(LemmyAuth.Bearer("newAuth"))
 
         // Given
         wm.get {
@@ -78,7 +85,7 @@ class AuthSetCorrectIT {
             method = RequestMethod.GET
         }
 
-        controller.auth = null
+        controller.clearAuth()
         wm.get {
             url equalTo "/api/v3/site"
         } returnsJson {

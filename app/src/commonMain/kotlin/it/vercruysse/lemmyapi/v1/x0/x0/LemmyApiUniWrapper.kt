@@ -1,9 +1,10 @@
 package it.vercruysse.lemmyapi.v1.x0.x0
 
-import io.github.z4kn4fein.semver.Version
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.LemmyApiBaseController
+import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.LemmyRequestClient
+import it.vercruysse.lemmyapi.LemmyVersion
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojis
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
 import it.vercruysse.lemmyapi.datatypes.ListLoginsResponse
@@ -15,8 +16,8 @@ import it.vercruysse.lemmyapi.datatypes.UnreadCountsResponse
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
-internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, actualVersion: Version, auth: String?) :
-    LemmyApiBaseController(actualVersion, auth) {
+internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, auth: String?) :
+    LemmyApiBaseController(instance, actualVersion, auth) {
     private val api = LemmyApiController(LemmyRequestClient(client, apiBaseUrl) { this.auth })
     private val transformer = Transformer()
 
