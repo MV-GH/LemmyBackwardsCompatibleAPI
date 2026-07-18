@@ -6,7 +6,14 @@ import io.ktor.client.request.get
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
-import it.vercruysse.lemmyapi.LemmyApiFactory
+import it.vercruysse.lemmyapi.LemmyApiClient
+import it.vercruysse.lemmyapi.LemmyApiOptions
+import it.vercruysse.lemmyapi.LemmyAuth
+import it.vercruysse.lemmyapi.LemmyInstance
+import it.vercruysse.lemmyapi.LemmyVersion
+import it.vercruysse.lemmyapi.VersionPolicy
+import it.vercruysse.lemmyapi.datatypes.GetPosts
+import it.vercruysse.lemmyapi.exception.NotSupportedException
 import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.test.Test
@@ -14,9 +21,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
-import kotlin.test.assertNull
+import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.INFINITE
+import kotlin.time.Duration.Companion.seconds
 
-class LemmyApiFactoryTest {
+class LemmyApiClientTest {
 
     @Test
     fun `create retains caller configuration and applies required configuration`() = runBlocking {
@@ -24,7 +33,7 @@ class LemmyApiFactoryTest {
         val suppliedClient = HttpClient(
             MockEngine { request ->
                 requests += request.headers["X-Test-Client"].orEmpty()
-                assertEquals("LemmyKotlinApi", request.headers[HttpHeaders.UserAgent])
+                assertEquals("TestClient/1.0", request.headers[HttpHeaders.UserAgent])
                 respond(
                     content = """{"posts": [], "next_page": null}""",
                     status = HttpStatusCode.OK,
@@ -36,13 +45,13 @@ class LemmyApiFactoryTest {
                 headers.append("X-Test-Client", "retained")
             }
         }
-        val factory = LemmyApiFactory(suppliedClient)
+        val client = LemmyApiClient(suppliedClient, LemmyApiOptions(userAgent = "TestClient/1.0"))
 
-        val controller = factory.createForVersion("lemmy.world", "0.19.11").getOrThrow()
+        val controller = client.connectForVersion(LemmyInstance("lemmy.world"), LemmyVersion("0.19.11")).getOrThrow()
         controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts()).getOrThrow()
 
         assertEquals(listOf("retained"), requests)
-        factory.close()
+        client.close()
         suppliedClient.close()
     }
 
@@ -60,22 +69,22 @@ class LemmyApiFactoryTest {
                 )
             },
         )
-        val factory = LemmyApiFactory(suppliedClient)
+        val client = LemmyApiClient(suppliedClient)
 
-        val controller = factory.create("lemmy.world").getOrThrow()
+        val controller = client.connect(LemmyInstance("lemmy.world")).getOrThrow()
 
         assertIs<it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper>(controller)
         assertEquals(1, requestCount)
-        factory.close()
+        client.close()
         suppliedClient.close()
     }
 
     @Test
     fun `close does not close supplied client`() = runBlocking<Unit> {
         val suppliedClient = HttpClient(MockEngine { respond("ok") })
-        val factory = LemmyApiFactory(suppliedClient)
+        val client = LemmyApiClient(suppliedClient)
 
-        factory.close()
+        client.close()
 
         assertEquals(HttpStatusCode.OK, suppliedClient.get("https://lemmy.world").status)
         suppliedClient.close()
@@ -90,13 +99,13 @@ class LemmyApiFactoryTest {
                 throw CancellationException("cancelled")
             },
         )
-        val factory = LemmyApiFactory(suppliedClient)
+        val client = LemmyApiClient(suppliedClient)
 
         assertFailsWith<CancellationException> {
-            factory.create("lemmy.world")
+            client.connect(LemmyInstance("lemmy.world"))
         }
 
-        factory.close()
+        client.close()
         suppliedClient.close()
     }
 
@@ -111,10 +120,10 @@ class LemmyApiFactoryTest {
                 )
             },
         )
-        val factory = LemmyApiFactory(suppliedClient)
-        val controller = factory.createForVersion("lemmy.world", "0.19.11").getOrThrow()
+        val client = LemmyApiClient(suppliedClient)
+        val controller = client.connectForVersion(LemmyInstance("lemmy.world"), LemmyVersion("0.19.11")).getOrThrow()
 
-        factory.close()
+        client.close()
 
         assertFailsWith<CancellationException> {
             controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts()).getOrThrow()
@@ -125,12 +134,12 @@ class LemmyApiFactoryTest {
 
     @Test
     fun `created controllers do not own HTTP resources`() {
-        val factory = LemmyApiFactory()
-        val controller = factory.createForVersion("lemmy.world", "0.19.11").getOrThrow()
+        val client = LemmyApiClient()
+        val controller = client.connectForVersion(LemmyInstance("lemmy.world"), LemmyVersion("0.19.11")).getOrThrow()
 
         assertFalse(controller is AutoCloseable)
 
-        factory.close()
+        client.close()
     }
 
     @Test
@@ -146,17 +155,21 @@ class LemmyApiFactoryTest {
                 )
             },
         )
-        val factory = LemmyApiFactory(suppliedClient)
-        val controller = factory.createForVersion("lemmy.world", "1.0.0", "initial").getOrThrow()
+        val client = LemmyApiClient(suppliedClient)
+        val controller = client.connectForVersion(
+            LemmyInstance("lemmy.world"),
+            LemmyVersion("1.0.0"),
+            LemmyAuth.Bearer("initial"),
+        ).getOrThrow()
 
         controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts())
-        controller.auth = "replacement"
+        controller.updateAuth(LemmyAuth.Bearer("replacement"))
         controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts())
-        controller.auth = null
+        controller.clearAuth()
         controller.getPosts(it.vercruysse.lemmyapi.datatypes.GetPosts())
 
         assertEquals(listOf("Bearer initial", "Bearer replacement", null), authorizationHeaders)
-        factory.close()
+        client.close()
         suppliedClient.close()
     }
 
@@ -175,19 +188,98 @@ class LemmyApiFactoryTest {
                 )
             },
         )
-        val factory = LemmyApiFactory(suppliedClient)
-        val controller = factory.createForVersion("lemmy.world", "0.18.5", "legacy-token").getOrThrow()
+        val client = LemmyApiClient(suppliedClient)
+        val controller = client.connectForVersion(
+            LemmyInstance("lemmy.world"),
+            LemmyVersion("0.18.5"),
+            LemmyAuth.Bearer("legacy-token"),
+        ).getOrThrow()
 
         controller.getSite()
-        controller.auth = "replacement"
+        controller.updateAuth(LemmyAuth.Bearer("replacement"))
         controller.getSite()
-        controller.auth = null
+        controller.clearAuth()
         controller.getSite()
 
         assertEquals(listOf<String?>(null, null, null), authorizationHeaders)
         assertEquals(listOf("legacy-token", "replacement", null), authParameters)
-        factory.close()
+        client.close()
         suppliedClient.close()
+    }
+
+    @Test
+    fun `typed connection owns instance authentication and version`() = runBlocking {
+        val authorizationHeaders = mutableListOf<String?>()
+        val suppliedClient = HttpClient(
+            MockEngine { request ->
+                authorizationHeaders += request.headers[HttpHeaders.Authorization]
+                respond(
+                    content = "{}",
+                    status = HttpStatusCode.OK,
+                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                )
+            },
+        )
+        val instance = LemmyInstance("lemmy.world")
+        val version = LemmyVersion("1.0.0")
+
+        LemmyApiClient(suppliedClient).use { client ->
+            val controller = client.connectForVersion(instance, version, LemmyAuth.Bearer("initial")).getOrThrow()
+
+            assertEquals(instance, controller.instance)
+            assertEquals(version, controller.version)
+            controller.getPosts(GetPosts())
+            controller.updateAuth(LemmyAuth.Bearer("replacement"))
+            controller.getPosts(GetPosts())
+            controller.clearAuth()
+            controller.getPosts(GetPosts())
+        }
+
+        assertEquals(listOf("Bearer initial", "Bearer replacement", null), authorizationHeaders)
+        suppliedClient.close()
+    }
+
+    @Test
+    fun `strict version policy rejects unknown future versions`() {
+        LemmyApiClient(
+            options = LemmyApiOptions(
+                requestTimeout = 10.seconds,
+                maxRetries = 0,
+                userAgent = "TestClient/1.0",
+                versionPolicy = VersionPolicy.Strict,
+            ),
+        ).use { client ->
+            val instance = LemmyInstance("lemmy.world")
+            val result = client.connectForVersion(instance, LemmyVersion("0.19.12"))
+            val oldLineResult = client.connectForVersion(instance, LemmyVersion("0.18.6"))
+            val newLineResult = client.connectForVersion(instance, LemmyVersion("1.0.1"))
+
+            assertTrue(result.isFailure)
+            assertIs<NotSupportedException>(result.exceptionOrNull())
+            assertIs<NotSupportedException>(oldLineResult.exceptionOrNull())
+            assertIs<NotSupportedException>(newLineResult.exceptionOrNull())
+        }
+    }
+
+    @Test
+    fun `latest known compatibility policy uses newest wrapper`() {
+        LemmyApiClient().use { client ->
+            val controller = client.connectForVersion(
+                LemmyInstance("lemmy.world"),
+                LemmyVersion("0.19.12"),
+            ).getOrThrow()
+
+            assertIs<it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper>(controller)
+        }
+    }
+
+    @Test
+    fun `typed values reject invalid input`() {
+        assertFailsWith<IllegalArgumentException> { LemmyInstance("  ") }
+        assertFailsWith<IllegalArgumentException> { LemmyVersion("invalid") }
+        assertFailsWith<IllegalArgumentException> { LemmyAuth.Bearer("") }
+        assertFailsWith<IllegalArgumentException> { LemmyApiOptions(maxRetries = -1) }
+        assertFailsWith<IllegalArgumentException> { LemmyApiOptions(requestTimeout = INFINITE) }
     }
 
     private companion object {

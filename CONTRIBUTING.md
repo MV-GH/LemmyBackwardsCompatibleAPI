@@ -4,8 +4,8 @@
 ## Architecture
 
 ```
-LemmyApiFactory (optional caller-owned HttpClient)
-  └─ createForVersion(instance, version) → LemmyApiBaseController
+LemmyApiClient (options, optional caller-owned HttpClient)
+  └─ connect / connectForVersion (typed instance, version, auth) → LemmyApiBaseController
         │
         └─ version-specific LemmyApiUniWrapper  (implements LemmyApiBaseController)
               ├─ LemmyApiController              (raw Ktor HTTP calls, version-specific datatypes)

@@ -4,14 +4,17 @@ import io.ktor.client.*
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfoClient
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
-class LemmyApiFactory(httpClient: HttpClient? = null) : AutoCloseable {
+class LemmyApiClient(
+    httpClient: HttpClient? = null,
+    val options: LemmyApiOptions = LemmyApiOptions(),
+) : AutoCloseable {
     private val ownsHttpClient = httpClient == null
     private val transport = httpClient ?: HttpClient()
-    private val apiClient = transport.withLemmyApiConfig()
-    private val nodeInfoClient = NodeInfoClient(transport)
+    private val apiClient = transport.withLemmyApiConfig(options)
+    private val nodeInfoClient = NodeInfoClient(transport, options)
 
     /**
-     * Creates a controller after discovering the Lemmy version.
+     * Connects to an instance after discovering its Lemmy version.
      *
      * Returns a failure if the instance isn't available, isn't a Lemmy host, or isn't supported.
      *
@@ -19,17 +22,17 @@ class LemmyApiFactory(httpClient: HttpClient? = null) : AutoCloseable {
      * on the version of the Lemmy Server instance.
      */
 
-    suspend fun create(
-        instance: String,
-        auth: String? = null,
+    suspend fun connect(
+        instance: LemmyInstance,
+        auth: LemmyAuth = LemmyAuth.Anonymous,
     ): Result<LemmyApiBaseController> =
         nodeInfoClient.getLemmyVersion(instance).fold(
-            onSuccess = { version -> createForVersion(instance, version, auth) },
+            onSuccess = { version -> connectForVersion(instance, LemmyVersion(version), auth) },
             onFailure = { Result.failure(it) },
         )
 
     /**
-     * Creates a controller for a known Lemmy version.
+     * Connects to an instance with a known Lemmy version.
      *
      * Returns a failure if the version is invalid or unsupported.
      *
@@ -38,22 +41,23 @@ class LemmyApiFactory(httpClient: HttpClient? = null) : AutoCloseable {
      * Use the Feature Flags before using certain endpoints as they can be or not available depending
      * on the version of the Lemmy Server instance.
      */
-    fun createForVersion(
-        instance: String,
-        version: String,
-        auth: String? = null,
+    fun connectForVersion(
+        instance: LemmyInstance,
+        version: LemmyVersion,
+        auth: LemmyAuth = LemmyAuth.Anonymous,
     ): Result<LemmyApiBaseController> = runCatchingPreservingCancellation {
         LemmyApiWrapperFactory.create(
             apiClient,
             instance,
             version,
             auth,
+            options.versionPolicy,
         )
     }
 
     /**
-     * Closes clients owned by this factory. A supplied HTTP client remains caller-owned.
-     * Controllers created by this factory must not outlive it.
+     * Closes clients owned by this client. A supplied HTTP client remains caller-owned.
+     * Controllers connected by this client must not outlive it.
      */
     override fun close() {
         nodeInfoClient.close()

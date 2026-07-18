@@ -11,7 +11,9 @@ import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.ByteReadChannel
 import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
-import it.vercruysse.lemmyapi.LemmyApiFactory
+import it.vercruysse.lemmyapi.LemmyApiClient
+import it.vercruysse.lemmyapi.LemmyInstance
+import it.vercruysse.lemmyapi.LemmyVersion
 import it.vercruysse.lemmyapi.datatypes.GetPosts
 import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
 import kotlinx.coroutines.runBlocking
@@ -27,18 +29,18 @@ class PostsListPageParamTest {
         @JvmStatic
         fun setUp() {
             mockClient = getMockClient()
-            factory = LemmyApiFactory(mockClient)
+            lemmyApiClient = LemmyApiClient(mockClient)
         }
 
         @AfterAll
         @JvmStatic
         fun tearDown() {
-            factory.close()
+            lemmyApiClient.close()
             mockClient.close()
         }
 
         private lateinit var mockClient: HttpClient
-        private lateinit var factory: LemmyApiFactory
+        private lateinit var lemmyApiClient: LemmyApiClient
 
         private fun getValidationMocKEngine(): MockEngine = MockEngine { request ->
             val url = request.url
@@ -104,7 +106,7 @@ class PostsListPageParamTest {
     fun `default form`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
                 val resp = api.getPosts(GetPosts())
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -115,7 +117,7 @@ class PostsListPageParamTest {
     fun `just page`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
                 val resp = api.getPosts(GetPosts(page = 1))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -126,7 +128,7 @@ class PostsListPageParamTest {
     fun `just cursor`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
                 val resp = api.getPosts(GetPosts(page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -137,7 +139,7 @@ class PostsListPageParamTest {
     fun `page cursor null`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
                 val resp = api.getPosts(GetPosts(page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -148,7 +150,7 @@ class PostsListPageParamTest {
     fun `both page and cursor`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
                 val resp = api.getPosts(GetPosts(page = 1, page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
@@ -159,7 +161,7 @@ class PostsListPageParamTest {
     fun `both page and cursor null`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = factory.createForVersion("lemmy.ml", it).getOrThrow()
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
                 val resp = api.getPosts(GetPosts(page = 1, page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }

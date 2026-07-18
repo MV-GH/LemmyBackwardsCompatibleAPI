@@ -10,13 +10,9 @@ import it.vercruysse.lemmyapi.dto.ErrorResponse
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import kotlinx.serialization.SerializationException
 
-internal fun HttpClient.withLemmyApiConfig(): HttpClient = config {
-    installRequiredPlugins()
+internal fun HttpClient.withLemmyApiConfig(options: LemmyApiOptions): HttpClient = config {
+    installRequiredPlugins(options)
     expectSuccess = true
-
-    install(ContentNegotiation) {
-        json(IGNORE_UNKNOWN_KEYS_JSON)
-    }
 
     HttpResponseValidator {
         // If a 4XX is returned, we try to parse it as a "Lemmy Error"
@@ -43,23 +39,27 @@ internal fun HttpClient.withLemmyApiConfig(): HttpClient = config {
     }
 }
 
-internal fun HttpClientConfig<*>.installRequiredPlugins() {
+internal fun HttpClientConfig<*>.installRequiredPlugins(options: LemmyApiOptions = LemmyApiOptions()) {
     install(UserAgent) {
-        agent = "LemmyKotlinApi"
+        agent = options.userAgent
     }
 
     install(HttpTimeout) {
-        requestTimeoutMillis = DEFAULT_TIMEOUT_MS
-        socketTimeoutMillis = DEFAULT_TIMEOUT_MS
-        connectTimeoutMillis = DEFAULT_TIMEOUT_MS / 2
+        requestTimeoutMillis = options.requestTimeout.inWholeMilliseconds
+        socketTimeoutMillis = options.requestTimeout.inWholeMilliseconds
+        connectTimeoutMillis = options.requestTimeout.inWholeMilliseconds / 2
     }
 
     install(HttpRequestRetry) {
-        maxRetries = 5
+        maxRetries = options.maxRetries
         retryIf { req, response ->
             response.status.value >= 500 && req.method == HttpMethod.Get
         }
         exponentialDelay()
+    }
+
+    install(ContentNegotiation) {
+        json(IGNORE_UNKNOWN_KEYS_JSON)
     }
 }
 

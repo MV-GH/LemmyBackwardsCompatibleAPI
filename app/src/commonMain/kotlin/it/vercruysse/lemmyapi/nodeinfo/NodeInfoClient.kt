@@ -6,23 +6,33 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
+import it.vercruysse.lemmyapi.LemmyApiOptions
+import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.installRequiredPlugins
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
-class NodeInfoClient(httpClient: HttpClient? = null) : AutoCloseable {
+class NodeInfoClient(
+    httpClient: HttpClient? = null,
+    options: LemmyApiOptions = LemmyApiOptions(),
+) : AutoCloseable {
     private val ownsHttpClient = httpClient == null
     private val transport = httpClient ?: HttpClient()
-    private val client = transport.withLemmyNodeInfoConfig()
+    private val client = transport.withLemmyNodeInfoConfig(options)
 
     /**
      * Gets the NodeInfo document of an instance.
      */
     suspend fun getNodeInfo(instance: String): Result<NodeInfo> =
         runCatchingPreservingCancellation {
+            return getNodeInfo(LemmyInstance(instance))
+        }
+
+    internal suspend fun getNodeInfo(lemmyInstance: LemmyInstance): Result<NodeInfo> =
+        runCatchingPreservingCancellation {
             client
-                .get("${constructBaseUrl(instance)}/nodeinfo/2.0.json")
+                .get("${lemmyInstance.baseUrl}/nodeinfo/2.0.json")
                 .body<NodeInfo>()
         }
 
@@ -44,12 +54,29 @@ class NodeInfoClient(httpClient: HttpClient? = null) : AutoCloseable {
         }
 
     /**
+     * Gets the version of an instance.
+     *
+     * Returns a failure if NodeInfo retrieval fails.
+     */
+    suspend fun getVersion(instance: String): Result<String> =
+        getNodeInfo(instance).fold(
+            onSuccess = { Result.success(getVersion(it)) },
+            onFailure = { Result.failure(it) },
+        )
+
+    /**
      * Gets the version of a Lemmy instance.
      *
      * Returns a failure if NodeInfo retrieval fails or the instance is not Lemmy.
      */
     suspend fun getLemmyVersion(instance: String): Result<String> =
         getNodeInfo(instance).fold(
+            onSuccess = ::getLemmyVersion,
+            onFailure = { Result.failure(it) },
+        )
+
+    internal suspend fun getLemmyVersion(lemmyInstance: LemmyInstance): Result<String> =
+        getNodeInfo(lemmyInstance).fold(
             onSuccess = ::getLemmyVersion,
             onFailure = { Result.failure(it) },
         )
@@ -87,11 +114,7 @@ class NodeInfoClient(httpClient: HttpClient? = null) : AutoCloseable {
     }
 }
 
-private fun HttpClient.withLemmyNodeInfoConfig(): HttpClient = config {
-    installRequiredPlugins()
+private fun HttpClient.withLemmyNodeInfoConfig(options: LemmyApiOptions): HttpClient = config {
+    installRequiredPlugins(options)
     expectSuccess = true
-
-    install(ContentNegotiation) {
-        json(IGNORE_UNKNOWN_KEYS_JSON)
-    }
 }

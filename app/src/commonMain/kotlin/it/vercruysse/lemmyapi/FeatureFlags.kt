@@ -1,6 +1,5 @@
 package it.vercruysse.lemmyapi
 
-import io.github.z4kn4fein.semver.Version
 import io.github.z4kn4fein.semver.toVersion
 import io.github.z4kn4fein.semver.withoutSuffixes
 
@@ -8,17 +7,19 @@ import io.github.z4kn4fein.semver.withoutSuffixes
  * Use these flags to check if a certain feature is available on this version of Lemmy.
  */
 @Suppress("unused")
-class FeatureFlags(val version: Version) {
-    private val v0x19Plus = version.withoutSuffixes() >= "0.19.0".toVersion()
-    private val v0x19x2Plus = version.withoutSuffixes() >= "0.19.2".toVersion()
-    private val v0x19x4Plus = version.withoutSuffixes() >= "0.19.4".toVersion()
-    private val v0x19x6Plus = version.withoutSuffixes() >= "0.19.6".toVersion()
-    private val v0x19x11Plus = version.withoutSuffixes() >= "0.19.11".toVersion()
+class FeatureFlags(val version: LemmyVersion) {
+    private val semanticVersion = version.semanticVersion.withoutSuffixes()
+
+    private val v0x19Plus = semanticVersion >= "0.19.0".toVersion()
+    private val v0x19x2Plus = semanticVersion >= "0.19.2".toVersion()
+    private val v0x19x4Plus = semanticVersion >= "0.19.4".toVersion()
+    private val v0x19x6Plus = semanticVersion >= "0.19.6".toVersion()
+    private val v0x19x11Plus = semanticVersion >= "0.19.11".toVersion()
 
     /**
      * V1 Feature added in 1.0
      */
-    val v1 = version.withoutSuffixes() >= "1.0.0".toVersion()
+    val v1 = semanticVersion >= "1.0.0".toVersion()
 
     /**
      * InstanceBlock Feature added in 0.19

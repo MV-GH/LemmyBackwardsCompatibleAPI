@@ -1,6 +1,5 @@
 package it.vercruysse.lemmyapi
 
-import io.github.z4kn4fein.semver.Version
 import it.vercruysse.lemmyapi.datatypes.DeleteImageParams
 import it.vercruysse.lemmyapi.datatypes.UploadImageResponse
 import it.vercruysse.lemmyapi.dto.getSupportedEntries
@@ -9,11 +8,21 @@ import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
 abstract class LemmyApiBaseController(
-    val version: Version,
-    open var auth: String?,
+    val instance: LemmyInstance,
+    val version: LemmyVersion,
+    protected open var auth: String?,
 ) : UniRoutes, OldRoutes {
+
     @Suppress("PropertyName")
     val FF = FeatureFlags(version)
+
+    fun updateAuth(auth: LemmyAuth) {
+        this.auth = auth.token
+    }
+
+    fun clearAuth() {
+        auth = null
+    }
 
     /**
      * Returns the supported entries enum entries for this API version.
@@ -23,7 +32,8 @@ abstract class LemmyApiBaseController(
      *
      * @return A list of supported entries
      */
-    inline fun <reified T> getSupportedEntries(): List<T> where T : Enum<T>, T : VersionTracker = getSupportedEntries(version)
+    inline fun <reified T> getSupportedEntries(): List<T> where T : Enum<T>, T : VersionTracker =
+        getSupportedEntries(version.semanticVersion)
 
     protected inline fun <reified T> notSupported(): Result<T> = Result.failure(
         NotSupportedException(
@@ -31,7 +41,8 @@ abstract class LemmyApiBaseController(
         ),
     )
 
-    suspend fun uploadAndApplyImage(
+    // Needed for pre 1.0.0 controllers
+    internal suspend fun uploadAndApplyImage(
         image: ByteArray,
         applyImage: suspend (String) -> Result<Unit>,
     ): Result<UploadImageResponse> = runCatchingPreservingCancellation {
