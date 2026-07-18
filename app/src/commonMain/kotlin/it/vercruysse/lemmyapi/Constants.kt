@@ -9,7 +9,7 @@ val V0_19_0 = "0.19.0".toVersion()
 val V0_19_4 = "0.19.4".toVersion()
 val V1_0_0 = "1.0.0".toVersion()
 
-const val DEFAULT_TIMEOUT_MS = 20000L
+internal const val DEFAULT_TIMEOUT_MS = 20000L
 
 internal val IGNORE_UNKNOWN_KEYS_JSON = Json {
     ignoreUnknownKeys = true
