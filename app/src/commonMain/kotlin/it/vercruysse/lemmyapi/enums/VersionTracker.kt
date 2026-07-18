@@ -1,7 +1,6 @@
 package it.vercruysse.lemmyapi.enums
 
 import io.github.z4kn4fein.semver.Version
-import it.vercruysse.lemmyapi.dto.getSupportedEntries
 import kotlinx.serialization.Serializable
 
 /**
