@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 /**
  * Tracks the version of the supported entries from this enum
- * Use this in conjunction with [getSupportedEntries]
+ * Use this in conjunction with [it.vercruysse.lemmyapi.utils.getSupportedEntries]
  *
  * @property minimumVersion The version this entry was added
  * @property maximumVersion The version this entry was removed, if null, it is still supported
