@@ -28,21 +28,25 @@ Built with **Ktor** (HTTP), **kotlinx.serialization** (JSON), and targets JVM, A
 ## Usage
 
 ```kotlin
-val factory = LemmyApiFactory()
-val api = factory.create("voyager.lemmy.ml", auth).getOrThrow()
+LemmyApiClient().use { client ->
+    val api = client.connect(
+        instance = LemmyInstance("voyager.lemmy.ml"),
+        auth = LemmyAuth.Bearer(token),
+    ).getOrThrow()
 
-api.getSite()
+    val site = api.getSite().getOrThrow()
 
-// Some features are version dependent, so we can check if they are supported
-if(api.FF.instanceBlock()) {
-    api.instanceBlock()
+    // Some features are version dependent, so check support first.
+    if (api.FF.instanceBlock()) {
+        api.userBlockInstanceCommunities(...).getOrThrow()
+    }
+
+    // Enum entries can differ between API versions.
+    api.getSupportedEntries<SortType>()
 }
-
-// These enums can be different depending on the version of the API
-api.getSupportedEntries<SortType>()
-
-factory.close()
 ```
+
+`LemmyApiBaseController` represents one instance, its resolved version, and its authentication. Change credentials explicitly after login or token refresh with `api.updateAuth(LemmyAuth.Bearer(token))`; use `api.clearAuth()` after logout.
 
 You can also supply any Ktor `HttpClient`. Its engine and configuration are retained, while the library adds the plugins required for Lemmy requests:
 
@@ -50,11 +54,22 @@ You can also supply any Ktor `HttpClient`. Its engine and configuration are reta
 val httpClient = HttpClient(OkHttp) {
     install(Logging)
 }
-val factory = LemmyApiFactory(httpClient)
-val api = factory.create("voyager.lemmy.ml").getOrThrow()
+val client = LemmyApiClient(
+    httpClient = httpClient,
+    options = LemmyApiOptions(
+        requestTimeout = 20.seconds,
+        maxRetries = 5,
+        userAgent = "MyApp/1.0",
+        versionPolicy = VersionPolicy.LatestKnownCompatible,
+    ),
+)
+val api = client.connect(LemmyInstance("voyager.lemmy.ml")).getOrThrow()
 ```
 
-Keep the factory open while using controllers created by it. A supplied `HttpClient` remains caller-owned and must be closed by the caller; when no client is supplied, the factory owns and closes its default client.
+Keep the client open while using controllers connected through it. A supplied `HttpClient` remains caller-owned and must be closed by the caller; when no client is supplied, `LemmyApiClient` owns and closes its default client.
+
+Use `connectForVersion(LemmyInstance(...), LemmyVersion(...))` when the server version is already known.
+
 
 
 ## Installation
@@ -67,8 +82,8 @@ It is currently in beta.
 ## Architecture
 
 ```
-LemmyApiFactory (optional caller-owned HttpClient)
-  └─ createForVersion(instance, version) → LemmyApiBaseController
+LemmyApiClient (options, optional caller-owned HttpClient)
+  └─ connect / connectForVersion (typed instance, version, auth) → LemmyApiBaseController
         │
         └─ version-specific LemmyApiUniWrapper  (implements LemmyApiBaseController)
               ├─ LemmyApiController              (raw Ktor HTTP calls, version-specific datatypes)

@@ -1,9 +1,7 @@
 package it.vercruysse.lemmyapi
 
-import io.github.z4kn4fein.semver.toVersion
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.exception.NotSupportedException
-import it.vercruysse.lemmyapi.utils.constructBaseUrl
 
 internal object LemmyApiWrapperFactory {
 
@@ -12,39 +10,54 @@ internal object LemmyApiWrapperFactory {
 
     fun create(
         client: HttpClient,
-        instance: String,
-        versionString: String,
-        auth: String?,
+        instance: LemmyInstance,
+        version: LemmyVersion,
+        auth: LemmyAuth,
+        versionPolicy: VersionPolicy,
     ): LemmyApiBaseController {
-        val baseUrlInstance = constructBaseUrl(instance) // TODO duplicate constructBaseURL see NodeINFO
-        val version = versionString.toVersion(false)
-        val apiBaseUrl = "$baseUrlInstance/api/${getApiVersion(version)}"
+        val baseUrlInstance = instance.baseUrl
+        val semanticVersion = version.semanticVersion
+        val apiBaseUrl = "$baseUrlInstance/api/${getApiVersion(semanticVersion)}"
+        val token = auth.token
 
-        return when (version.major) {
-            0 -> when (version.minor) {
-                18 -> it.vercruysse.lemmyapi.v0.x18.x5.LemmyApiUniWrapper(client, apiBaseUrl, version, baseUrlInstance, auth)
-
-                19 -> when (version.patch) {
-                    0, 1 -> it.vercruysse.lemmyapi.v0.x19.x0.LemmyApiUniWrapper(client, apiBaseUrl, version, baseUrlInstance, auth)
-
-                    2, 3 -> it.vercruysse.lemmyapi.v0.x19.x3.LemmyApiUniWrapper(client, apiBaseUrl, version, baseUrlInstance, auth)
-
-                    4, 5 -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, apiBaseUrl, version, baseUrlInstance, auth)
-
-                    6, 7, 8, 9, 10 -> it.vercruysse.lemmyapi.v0.x19.x6.LemmyApiUniWrapper(client, apiBaseUrl, version, baseUrlInstance, auth)
-
-                    11 -> it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper(client, apiBaseUrl, version, baseUrlInstance, auth)
-
-                    // Newer 0.19 patch releases use the latest known compatible wrapper.
-                    else -> it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper(client, apiBaseUrl, version, baseUrlInstance, auth)
+        return when (semanticVersion.major) {
+            0 -> when (semanticVersion.minor) {
+                18 -> if (semanticVersion.patch <= 5 || versionPolicy == VersionPolicy.LatestKnownCompatible) {
+                    it.vercruysse.lemmyapi.v0.x18.x5.LemmyApiUniWrapper(client, apiBaseUrl, instance, version, baseUrlInstance, token)
+                } else {
+                    throw NotSupportedException("Unsupported Lemmy version: $version")
                 }
 
-                else -> throw NotSupportedException("Unsupported Lemmy minor version: $versionString")
+                19 -> when (semanticVersion.patch) {
+                    0, 1 -> it.vercruysse.lemmyapi.v0.x19.x0.LemmyApiUniWrapper(client, apiBaseUrl, instance, version, baseUrlInstance, token)
+
+                    2, 3 -> it.vercruysse.lemmyapi.v0.x19.x3.LemmyApiUniWrapper(client, apiBaseUrl, instance, version, baseUrlInstance, token)
+
+                    4, 5 -> it.vercruysse.lemmyapi.v0.x19.x4.LemmyApiUniWrapper(client, apiBaseUrl, instance, version, baseUrlInstance, token)
+
+                    6, 7, 8, 9, 10 -> it.vercruysse.lemmyapi.v0.x19.x6.LemmyApiUniWrapper(client, apiBaseUrl, instance, version, baseUrlInstance, token)
+
+                    11 -> it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper(client, apiBaseUrl, instance, version, baseUrlInstance, token)
+
+                    else -> if (versionPolicy == VersionPolicy.LatestKnownCompatible) {
+                        it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper(client, apiBaseUrl, instance, version, baseUrlInstance, token)
+                    } else {
+                        throw NotSupportedException("Unsupported Lemmy version: $version")
+                    }
+                }
+
+                else -> throw NotSupportedException("Unsupported Lemmy minor version: $version")
             }
 
-            1 -> it.vercruysse.lemmyapi.v1.x0.x0.LemmyApiUniWrapper(client, apiBaseUrl, version, auth)
+            1 -> if (
+                versionPolicy == VersionPolicy.LatestKnownCompatible || semanticVersion.minor == 0
+            ) {
+                it.vercruysse.lemmyapi.v1.x0.x0.LemmyApiUniWrapper(client, apiBaseUrl, instance, version, token)
+            } else {
+                throw NotSupportedException("Unsupported Lemmy version: $version")
+            }
 
-            else -> throw NotSupportedException("Unsupported Lemmy major version: $versionString")
+            else -> throw NotSupportedException("Unsupported Lemmy major version: $version")
         }
     }
 }
