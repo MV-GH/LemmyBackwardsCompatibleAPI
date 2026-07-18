@@ -6,6 +6,7 @@ import it.vercruysse.lemmyapi.exception.NotSupportedException
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
@@ -65,6 +66,19 @@ class GetCorrectControllerTest {
 
             assertTrue(SortType.Scaled !in oldController.getSupportedEntries<SortType>())
             assertTrue(SortType.Scaled in newController.getSupportedEntries<SortType>())
+        }
+    }
+
+    @Test
+    fun `FF uses the controller version`() {
+        LemmyApiFactory().use { factory ->
+            val oldController = factory.createForVersion("lemmy.world", "0.18.5").getOrThrow()
+            val newController = factory.createForVersion("lemmy.world", "0.19.0").getOrThrow()
+
+            assertEquals(oldController.version, oldController.FF.version)
+            assertEquals(newController.version, newController.FF.version)
+            assertFalse(oldController.FF.instanceBlock())
+            assertTrue(newController.FF.instanceBlock())
         }
     }
 }

@@ -29,11 +29,11 @@ class CancellationPropagationTest {
             }
         }
 
-        assertCancellation { getResult("/") }
-        assertCancellation { postResult("/") }
-        assertCancellation { putResult("/") }
-        assertCancellation { deleteResult("/") }
-        assertCancellation { postUploadResult("/", byteArrayOf()) }
+        assertCancellation { getResult("test") }
+        assertCancellation { postResult("test") }
+        assertCancellation { putResult("test") }
+        assertCancellation { deleteResult("test") }
+        assertCancellation { postUploadResult("test", byteArrayOf()) }
     }
 
     @Test
@@ -46,7 +46,7 @@ class CancellationPropagationTest {
         }
 
         try {
-            val result = client.getResult<Unit>("/")
+            val result = client.getResult<Unit>("test")
             assertTrue(result.isFailure)
             assertIs<ResponseException>(result.exceptionOrNull())
         } finally {
