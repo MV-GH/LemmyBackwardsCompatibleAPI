@@ -252,7 +252,7 @@ class LemmyApiClientTest {
             val instance = LemmyInstance("lemmy.world")
             val result = client.connectForVersion(instance, LemmyVersion("0.19.12"))
             val oldLineResult = client.connectForVersion(instance, LemmyVersion("0.18.6"))
-            val newLineResult = client.connectForVersion(instance, LemmyVersion("1.0.1"))
+            val newLineResult = client.connectForVersion(instance, LemmyVersion("1.1.0"))
 
             assertTrue(result.isFailure)
             assertIs<NotSupportedException>(result.exceptionOrNull())
