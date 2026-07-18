@@ -58,11 +58,9 @@ internal class LemmyRequestClient(
             setJsonBody(body)
         }
 
-    @PublishedApi
-    internal fun resolve(path: String): String = "$apiBaseUrl/${path.removePrefix("/")}"
+    private fun resolve(path: String): String = "$apiBaseUrl/$path"
 
-    @PublishedApi
-    internal fun HttpRequestBuilder.authenticate() {
+    private fun HttpRequestBuilder.authenticate() {
         headers.remove(HttpHeaders.Authorization)
         authProvider?.invoke()?.let { token -> headers[HttpHeaders.Authorization] = "Bearer $token" }
     }
