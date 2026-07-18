@@ -4,6 +4,16 @@ import it.vercruysse.lemmyapi.datatypes.*
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 
+/**
+ * The interface for the Lemmy API routes.
+ *
+ * This interface defines all the available API routes for interacting with a Lemmy instance.
+ * Each function corresponds to a specific API endpoint and is annotated with the appropriate HTTP method.
+ *
+ * The functions use the operationId from the OpenAPI specification.
+ *
+ * @see [Lemmy API Documentation](https://join-lemmy.org/docs/contributors/04-api.html)
+ */
 interface UniRoutes {
 
     /**
