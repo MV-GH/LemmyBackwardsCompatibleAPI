@@ -11,9 +11,7 @@ import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 abstract class LemmyApiBaseController(
     val version: Version,
     open var auth: String?,
-) :
-    UniRoutes,
-    OldRoutes {
+) : UniRoutes, OldRoutes {
     @Suppress("PropertyName")
     val FF = FeatureFlags(version)
 
