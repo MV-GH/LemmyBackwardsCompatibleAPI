@@ -1,7 +1,6 @@
 package it.vercruysse.lemmyapi
 
 import io.github.z4kn4fein.semver.toVersion
-import io.github.z4kn4fein.semver.withoutSuffixes
 
 /**
  * Use these flags to check if a certain feature is available on this version of Lemmy.
