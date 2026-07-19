@@ -1,6 +1,7 @@
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respondError
+import io.ktor.client.engine.mock.respondOk
 import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.ResponseException
@@ -80,7 +81,7 @@ class CancellationPropagationTest {
         engine {
             addHandler {
                 delay(2.milliseconds)
-                respondError(HttpStatusCode.RequestTimeout)
+                respondOk()
             }
         }
 
