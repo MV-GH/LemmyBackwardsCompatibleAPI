@@ -59,12 +59,8 @@ kotlin {
         }
     }
 
-
-
-
     sourceSets {
         val ktorVersion = "3.5.2"
-
 
         commonMain.dependencies {
             api("io.ktor:ktor-client-core:$ktorVersion")
@@ -96,7 +92,7 @@ kotlin {
             implementation("io.ktor:ktor-client-mock:$ktorVersion")
         }
 
-        // Required bc we use HttpClient() see https://ktor.io/docs/client-engines.html#default
+        // Below required bc we use HttpClient() see https://ktor.io/docs/client-engines.html#default
 
         jsMain.dependencies {
             implementation("io.ktor:ktor-client-js:$ktorVersion")
