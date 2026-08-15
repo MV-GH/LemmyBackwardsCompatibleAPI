@@ -1,4 +1,3 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jmailen.gradle.kotlinter.tasks.FormatTask
 import org.jmailen.gradle.kotlinter.tasks.LintTask
 
@@ -7,7 +6,6 @@ plugins {
     kotlin("plugin.serialization") version "2.3.21"
     id("org.jmailen.kotlinter") version "5.6.0"
     id("com.vanniktech.maven.publish") version "0.37.0"
-    id("com.github.ben-manes.versions") version "0.54.0"
     id("com.android.kotlin.multiplatform.library")
     id("kotlin-parcelize")
 }
@@ -31,7 +29,7 @@ kotlin {
 
     android {
         namespace = "it.vercruysse.lemmyapi"
-        compileSdk = 36
+        compileSdk = 37
         minSdk = 21
         compilerOptions {
             freeCompilerArgs.addAll(
@@ -65,7 +63,7 @@ kotlin {
 
 
     sourceSets {
-        val ktorVersion = "3.5.1"
+        val ktorVersion = "3.5.2"
 
 
         commonMain.dependencies {
@@ -86,7 +84,7 @@ kotlin {
 
 
         jvmMain.dependencies {
-            api("io.ktor:ktor-client-okhttp:$ktorVersion")
+            implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
         }
 
         jvmTest.dependencies {
@@ -94,29 +92,31 @@ kotlin {
             implementation("io.mockk:mockk:1.14.11")
             implementation("org.wiremock:wiremock:3.13.2")
             implementation("com.marcinziolo:kotlin-wiremock:2.1.1")
-            implementation("ch.qos.logback:logback-classic:1.5.38")
+            implementation("ch.qos.logback:logback-classic:1.6.3")
             implementation("io.ktor:ktor-client-mock:$ktorVersion")
         }
 
+        // Required bc we use HttpClient() see https://ktor.io/docs/client-engines.html#default
+
         jsMain.dependencies {
-            api("io.ktor:ktor-client-js:$ktorVersion")
+            implementation("io.ktor:ktor-client-js:$ktorVersion")
         }
 
         linuxMain.dependencies {
-            api("io.ktor:ktor-client-cio:$ktorVersion")
+            implementation("io.ktor:ktor-client-cio:$ktorVersion")
         }
 
         // CIO is not available on Windows yet
         mingwMain.dependencies {
-            api("io.ktor:ktor-client-winhttp:$ktorVersion")
+            implementation("io.ktor:ktor-client-winhttp:$ktorVersion")
         }
 
         appleMain.dependencies {
-            api("io.ktor:ktor-client-cio:$ktorVersion")
+            implementation("io.ktor:ktor-client-cio:$ktorVersion")
         }
 
         androidMain.dependencies {
-            api("io.ktor:ktor-client-okhttp:$ktorVersion")
+            implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
         }
     }
 
@@ -144,19 +144,4 @@ tasks.withType<FormatTask> {
 mavenPublishing {
     publishToMavenCentral(true)
     signAllPublications()
-}
-
-
-fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase().contains(it) }
-    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
-    val isStable = stableKeyword || regex.matches(version)
-    return isStable.not()
-}
-
-tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
-    rejectVersionIf {
-        isNonStable(candidate.version)
-    }
-    gradleReleaseChannel = "current"
 }
