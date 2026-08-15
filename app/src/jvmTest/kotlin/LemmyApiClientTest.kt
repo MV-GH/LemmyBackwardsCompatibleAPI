@@ -21,6 +21,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.INFINITE
 import kotlin.time.Duration.Companion.seconds
@@ -159,13 +160,13 @@ class LemmyApiClientTest {
         val controller = client.connectForVersion(
             LemmyInstance("lemmy.world"),
             LemmyVersion("1.0.0"),
-            LemmyAuth.Bearer("initial"),
+            LemmyAuth.fromToken("initial"),
         ).getOrThrow()
 
         controller.getPosts(GetPosts())
-        controller.updateAuth(LemmyAuth.Bearer("replacement"))
+        controller.updateAuth(LemmyAuth.fromToken("replacement"))
         controller.getPosts(GetPosts())
-        controller.clearAuth()
+        controller.updateAuth(LemmyAuth.fromToken(null))
         controller.getPosts(GetPosts())
 
         assertEquals(listOf("Bearer initial", "Bearer replacement", null), authorizationHeaders)
@@ -192,13 +193,13 @@ class LemmyApiClientTest {
         val controller = client.connectForVersion(
             LemmyInstance("lemmy.world"),
             LemmyVersion("0.18.5"),
-            LemmyAuth.Bearer("legacy-token"),
+            LemmyAuth.fromToken("legacy-token"),
         ).getOrThrow()
 
         controller.getSite()
-        controller.updateAuth(LemmyAuth.Bearer("replacement"))
+        controller.updateAuth(LemmyAuth.fromToken("replacement"))
         controller.getSite()
-        controller.clearAuth()
+        controller.updateAuth(LemmyAuth.fromToken(null))
         controller.getSite()
 
         assertEquals(listOf<String?>(null, null, null), authorizationHeaders)
@@ -278,8 +279,15 @@ class LemmyApiClientTest {
         assertFailsWith<IllegalArgumentException> { LemmyInstance("  ") }
         assertFailsWith<IllegalArgumentException> { LemmyVersion("invalid") }
         assertFailsWith<IllegalArgumentException> { LemmyAuth.Bearer("") }
+        assertFailsWith<IllegalArgumentException> { LemmyAuth.fromToken("") }
         assertFailsWith<IllegalArgumentException> { LemmyApiOptions(maxRetries = -1) }
         assertFailsWith<IllegalArgumentException> { LemmyApiOptions(requestTimeout = INFINITE) }
+    }
+
+    @Test
+    fun `nullable token factory creates the expected auth values`() {
+        assertSame(LemmyAuth.fromToken(null), LemmyAuth.Anonymous)
+        assertEquals(LemmyAuth.Bearer("token"), LemmyAuth.fromToken("token"))
     }
 
     private companion object {

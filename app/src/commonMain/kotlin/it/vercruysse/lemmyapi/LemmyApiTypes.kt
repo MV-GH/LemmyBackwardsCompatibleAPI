@@ -39,6 +39,10 @@ sealed interface LemmyAuth {
             require(token.isNotBlank()) { "Bearer token must not be blank" }
         }
     }
+
+    companion object {
+        fun fromToken(token: String?): LemmyAuth = if (token == null) Anonymous else Bearer(token)
+    }
 }
 
 /** Determines how LemmyApi handles versions newer than the latest known compatible implementation in their release line. */
