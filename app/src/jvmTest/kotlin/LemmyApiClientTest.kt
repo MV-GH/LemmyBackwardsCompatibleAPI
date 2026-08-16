@@ -159,8 +159,9 @@ class LemmyApiClientTest {
         val client = LemmyApiClient(suppliedClient)
         val controller = client.connectForVersion(
             LemmyInstance("lemmy.world"),
-            LemmyVersion("1.0.0"),
             LemmyAuth.fromToken("initial"),
+            LemmyVersion("1.0.0"),
+
         ).getOrThrow()
 
         controller.getPosts(GetPosts())
@@ -192,8 +193,9 @@ class LemmyApiClientTest {
         val client = LemmyApiClient(suppliedClient)
         val controller = client.connectForVersion(
             LemmyInstance("lemmy.world"),
-            LemmyVersion("0.18.5"),
             LemmyAuth.fromToken("legacy-token"),
+            LemmyVersion("0.18.5"),
+
         ).getOrThrow()
 
         controller.getSite()
@@ -225,7 +227,7 @@ class LemmyApiClientTest {
         val version = LemmyVersion("1.0.0")
 
         LemmyApiClient(suppliedClient).use { client ->
-            val controller = client.connectForVersion(instance, version, LemmyAuth.Bearer("initial")).getOrThrow()
+            val controller = client.connectForVersion(instance, LemmyAuth.Bearer("initial"), version).getOrThrow()
 
             assertEquals(instance, controller.instance)
             assertEquals(version, controller.version)

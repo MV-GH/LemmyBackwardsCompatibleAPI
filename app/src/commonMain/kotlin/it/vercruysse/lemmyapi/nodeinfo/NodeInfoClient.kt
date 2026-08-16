@@ -108,9 +108,9 @@ class NodeInfoClient(
             transport.close()
         }
     }
-}
 
-private fun HttpClient.withLemmyNodeInfoConfig(options: LemmyApiOptions): HttpClient = config {
-    installRequiredPlugins(options)
-    expectSuccess = true
+    private fun HttpClient.withLemmyNodeInfoConfig(options: LemmyApiOptions): HttpClient = config {
+        installRequiredPlugins(options)
+        expectSuccess = true
+    }
 }
