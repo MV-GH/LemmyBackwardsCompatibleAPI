@@ -2,7 +2,9 @@ package it.vercruysse.lemmyapi.nodeinfo
 
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.*
+import io.ktor.http.HttpStatusCode
 import it.vercruysse.lemmyapi.LemmyApiOptions
 import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.exception.NotSupportedException
@@ -20,16 +22,36 @@ class NodeInfoClient(
     /**
      * Gets the NodeInfo document of an instance.
      */
-    suspend fun getNodeInfo(instance: String): Result<NodeInfo> =
+    suspend fun getNodeInfo(instance: Instance): Result<NodeInfo> = getNodeInfoQuick(instance)
+
+    /**
+     * Gets the NodeInfo document from the conventional quick endpoints.
+     *
+     * Avoids some latency by skipping the well-known discovery document,
+     * but may fail if the instance does not support the conventional endpoints.
+     */
+    suspend fun getNodeInfoQuick(instance: Instance): Result<NodeInfo> =
         runCatchingPreservingCancellation {
-            return getNodeInfo(LemmyInstance(instance))
+            try {
+                getNodeInfoAt("${instance.baseUrl}$NODEINFO_2_0_PATH")
+            } catch (exception: ClientRequestException) {
+                if (exception.response.status == HttpStatusCode.NotFound) {
+                    getNodeInfoAt("${instance.baseUrl}$NODEINFO_2_1_PATH")
+                } else {
+                    throw exception
+                }
+            }
         }
 
-    internal suspend fun getNodeInfo(lemmyInstance: LemmyInstance): Result<NodeInfo> =
+    /**
+     * Gets the NodeInfo document by following the instance's well-known discovery document.
+     */
+    suspend fun getNodeInfoSafe(instance: Instance): Result<NodeInfo> =
         runCatchingPreservingCancellation {
-            client
-                .get("${lemmyInstance.baseUrl}/nodeinfo/2.0.json")
-                .body<NodeInfo>()
+            val wellKnown = client
+                .get("${instance.baseUrl}$WELL_KNOWN_PATH")
+                .body<NodeInfoWellKnown>()
+            getNodeInfoAt(wellKnown.nodeInfoHref())
         }
 
     /**
@@ -54,7 +76,7 @@ class NodeInfoClient(
      *
      * Returns a failure if NodeInfo retrieval fails.
      */
-    suspend fun getVersion(instance: String): Result<String> =
+    suspend fun getVersion(instance: Instance): Result<String> =
         getNodeInfo(instance).fold(
             onSuccess = { Result.success(getVersion(it)) },
             onFailure = { Result.failure(it) },
@@ -65,13 +87,7 @@ class NodeInfoClient(
      *
      * Returns a failure if NodeInfo retrieval fails or the instance is not Lemmy.
      */
-    suspend fun getLemmyVersion(instance: String): Result<String> =
-        getNodeInfo(instance).fold(
-            onSuccess = ::getLemmyVersion,
-            onFailure = { Result.failure(it) },
-        )
-
-    internal suspend fun getLemmyVersion(lemmyInstance: LemmyInstance): Result<String> =
+    suspend fun getLemmyVersion(lemmyInstance: LemmyInstance): Result<String> =
         getNodeInfo(lemmyInstance).fold(
             onSuccess = ::getLemmyVersion,
             onFailure = { Result.failure(it) },
@@ -80,7 +96,7 @@ class NodeInfoClient(
     /**
      * Returns whether an instance supports the ActivityPub protocol.
      */
-    suspend fun isFediverse(instance: String): Result<Boolean> =
+    suspend fun isFediverse(instance: Instance): Result<Boolean> =
         getNodeInfo(instance).map(::isFediverse)
 
     /**
@@ -91,7 +107,7 @@ class NodeInfoClient(
     /**
      * Returns whether an instance identifies its software as Lemmy.
      */
-    suspend fun isLemmyInstance(instance: String): Result<Boolean> =
+    suspend fun isLemmyInstance(instance: LemmyInstance): Result<Boolean> =
         getNodeInfo(instance).map(::isLemmyInstance)
 
     /**
@@ -112,5 +128,22 @@ class NodeInfoClient(
     private fun HttpClient.withLemmyNodeInfoConfig(options: LemmyApiOptions): HttpClient = config {
         installRequiredPlugins(options)
         expectSuccess = true
+    }
+
+    private suspend fun getNodeInfoAt(url: String): NodeInfo = client.get(url).body()
+
+    private fun NodeInfoWellKnown.nodeInfoHref(): String =
+        links.firstOrNull { it.rel == NODEINFO_2_1_RELATION }?.href
+            ?: links.firstOrNull { it.rel == NODEINFO_2_0_RELATION }?.href
+            ?: throw NotSupportedException(
+                "NodeInfo discovery document does not contain a supported 2.0 or 2.1 link",
+            )
+
+    private companion object {
+        const val WELL_KNOWN_PATH = "/.well-known/nodeinfo"
+        const val NODEINFO_2_0_PATH = "/nodeinfo/2.0.json"
+        const val NODEINFO_2_1_PATH = "/nodeinfo/2.1.json"
+        const val NODEINFO_2_0_RELATION = "http://nodeinfo.diaspora.software/ns/schema/2.0"
+        const val NODEINFO_2_1_RELATION = "http://nodeinfo.diaspora.software/ns/schema/2.1"
     }
 }
