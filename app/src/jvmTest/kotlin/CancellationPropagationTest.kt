@@ -80,7 +80,7 @@ class CancellationPropagationTest {
 
         engine {
             addHandler {
-                delay(2.milliseconds)
+                delay(500.milliseconds)
                 respondOk()
             }
         }
