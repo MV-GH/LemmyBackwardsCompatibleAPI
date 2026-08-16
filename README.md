@@ -83,7 +83,7 @@ It is currently in beta.
 
 ```
 LemmyApiClient (options, optional caller-owned HttpClient)
-  └─ connect / connectForVersion (typed instance, version, auth) → LemmyApiBaseController
+  └─ connect / connectForVersion (typed instance, auth, version) → LemmyApiBaseController
         │
         └─ version-specific LemmyApiUniWrapper  (implements LemmyApiBaseController)
               ├─ LemmyApiController              (raw Ktor HTTP calls, version-specific datatypes)

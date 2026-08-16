@@ -39,9 +39,10 @@ class AuthSetCorrectIT {
         val factory = LemmyApiClient(httpClient)
         val controller = factory.connectForVersion(
             LemmyInstance("${wm.baseUrl()}/lemmy.world"),
-            LemmyVersion("0.19.1"),
             LemmyAuth.Bearer("auth"),
-        ).getOrThrow()
+            LemmyVersion("0.19.1"),
+
+            ).getOrThrow()
 
         // Given
         wm.get {

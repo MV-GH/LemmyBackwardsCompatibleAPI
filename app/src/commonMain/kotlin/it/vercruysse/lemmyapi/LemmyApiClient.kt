@@ -27,14 +27,14 @@ class LemmyApiClient(
         auth: LemmyAuth = LemmyAuth.Anonymous,
     ): Result<LemmyApiBaseController> =
         nodeInfoClient.getLemmyVersion(instance).fold(
-            onSuccess = { version -> connectForVersion(instance, LemmyVersion(version), auth) },
+            onSuccess = { version -> connectForVersion(instance, auth, LemmyVersion(version)) },
             onFailure = { Result.failure(it) },
         )
 
     /**
      * Connects to an instance with a known Lemmy version.
      *
-     * Returns a failure if the version is invalid or unsupported.
+     * Returns a failure if the version is unsupported.
      *
      * Be warned that this function assumes that the instance and the version are correct.
      *
@@ -43,8 +43,8 @@ class LemmyApiClient(
      */
     fun connectForVersion(
         instance: LemmyInstance,
-        version: LemmyVersion,
         auth: LemmyAuth = LemmyAuth.Anonymous,
+        version: LemmyVersion,
     ): Result<LemmyApiBaseController> = runCatchingPreservingCancellation {
         LemmyApiWrapperFactory.create(
             apiClient,
@@ -54,6 +54,21 @@ class LemmyApiClient(
             options.versionPolicy,
         )
     }
+
+    /**
+     * Connects to an instance with a known Lemmy version.
+     *
+     * Returns a failure if the version is unsupported.
+     *
+     * Be warned that this function assumes that the instance and the version are correct.
+     *
+     * Use the Feature Flags before using certain endpoints as they can be or not available depending
+     * on the version of the Lemmy Server instance.
+     */
+    fun connectForVersion(
+        instance: LemmyInstance,
+        version: LemmyVersion,
+    ): Result<LemmyApiBaseController> = connectForVersion(instance, LemmyAuth.Anonymous, version)
 
     /**
      * Closes clients owned by this client. A supplied HTTP client remains caller-owned.
