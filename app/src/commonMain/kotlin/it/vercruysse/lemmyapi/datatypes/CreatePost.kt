@@ -1,9 +1,8 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
@@ -17,4 +16,8 @@ data class CreatePost(
     val nsfw: Boolean? = null,
     val language_id: LanguageId? = null,
     val custom_thumbnail: String? = null,
+    /** Added in Lemmy 1.0.0 */
+    val tags: List<CommunityTagId>? = null,
+    /** Added in Lemmy 1.0.0 */
+    val scheduled_publish_time_at: Long? = null,
 ) : DatatypeRoot

@@ -1,3 +1,3 @@
 package it.vercruysse.lemmyapi.v0.x18.x5.datatypes
 
-typealias CommentId = Long
+internal typealias CommentId = Long

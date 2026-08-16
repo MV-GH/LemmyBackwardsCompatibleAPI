@@ -1,14 +1,16 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
 data class ListPostLikes(
     val post_id: PostId,
+    /** Removed in 1.0.0 */
     val page: Long? = null,
+    /** Added in 1.0.0 */
+    val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
 ) : DatatypeRoot

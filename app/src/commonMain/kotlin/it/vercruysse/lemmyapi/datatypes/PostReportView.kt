@@ -1,29 +1,29 @@
 package it.vercruysse.lemmyapi.datatypes
 
-import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.SubscribedType
-import kotlinx.serialization.Serializable
-
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.DatatypeRoot
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
+@SerialName("post")
 data class PostReportView(
     val post_report: PostReport,
     val post: Post,
     val community: Community,
     val creator: Person,
     val post_creator: Person,
-    val creator_banned_from_community: Boolean,
-    val creator_is_moderator: Boolean,
-    val creator_is_admin: Boolean,
-    val subscribed: SubscribedType /* "Subscribed" | "NotSubscribed" | "Pending" */,
-    val saved: Boolean,
-    val read: Boolean,
-    val hidden: Boolean,
-    val creator_blocked: Boolean,
-    val my_vote: Int = 0,
-    val unread_comments: Long,
-    val counts: PostAggregates,
+    val community_actions: CommunityActions? = null,
+    val post_actions: PostActions? = null,
+    val person_actions: PersonActions? = null,
     val resolver: Person? = null,
-) : DatatypeRoot
+    val creator_is_admin: Boolean,
+    val creator_is_moderator: Boolean,
+    val creator_banned: Boolean,
+    val creator_ban_expires_at: String? = null,
+    val creator_banned_from_community: Boolean,
+    val creator_community_ban_expires_at: String? = null,
+    /** Added in 1.0.0 */
+    val tags: CommunityTagsView = emptyList(),
+) : DatatypeRoot, ReportCombinedView

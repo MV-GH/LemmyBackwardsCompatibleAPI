@@ -1,10 +1,9 @@
 package it.vercruysse.lemmyapi.datatypes
 
-import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.PostFeatureType
-import kotlinx.serialization.Serializable
-
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.enums.PostFeatureType
+import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable

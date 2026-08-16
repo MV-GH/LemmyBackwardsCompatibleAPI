@@ -1,29 +1,32 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
-import it.vercruysse.lemmyapi.dto.SubscribedType
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
+@SerialName("comment")
 data class CommentView(
     val comment: Comment,
     val creator: Person,
     val post: Post,
     val community: Community,
-    val counts: CommentAggregates,
-    val creator_banned_from_community: Boolean,
-    val banned_from_community: Boolean,
-    val creator_is_moderator: Boolean,
+    val community_actions: CommunityActions? = null,
+    val comment_actions: CommentActions? = null,
+    val person_actions: PersonActions? = null,
+    val tags: CommunityTagsView,
+    val can_mod: Boolean,
+    val creator_banned: Boolean,
+    val creator_ban_expires_at: String? = null,
     val creator_is_admin: Boolean,
-    val subscribed: SubscribedType /* "Subscribed" | "NotSubscribed" | "Pending" */,
-    val saved: Boolean,
-    val creator_blocked: Boolean,
-    val my_vote: Int = 0,
-) : DatatypeRoot, Identity {
+    val creator_is_moderator: Boolean,
+    val creator_banned_from_community: Boolean,
+    val creator_community_ban_expires_at: String? = null,
+
+) : DatatypeRoot, Identity, NotificationData, ResolveObjectView, PostCommentCombinedView {
     override val id: Long
         get() = comment.id
 }

@@ -1,16 +1,14 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
 data class Tagline(
-    val id: Long,
-    val local_site_id: LocalSiteId,
+    val id: TaglineId,
     val content: String,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
 ) : DatatypeRoot

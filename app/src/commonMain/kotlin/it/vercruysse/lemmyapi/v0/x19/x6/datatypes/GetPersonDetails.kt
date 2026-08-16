@@ -1,6 +1,6 @@
 package it.vercruysse.lemmyapi.v0.x19.x6.datatypes
 
-import it.vercruysse.lemmyapi.dto.SortType
+import it.vercruysse.lemmyapi.v0.enums.SortType
 import kotlinx.serialization.Serializable
 
 @Serializable

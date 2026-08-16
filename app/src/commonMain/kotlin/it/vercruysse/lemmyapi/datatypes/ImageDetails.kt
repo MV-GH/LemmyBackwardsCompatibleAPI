@@ -11,4 +11,6 @@ data class ImageDetails(
     val width: Long,
     val height: Long,
     val content_type: String,
+    /** Added in Lemmy 1.0.0 */
+    val blurhash: String? = null,
 ) : DatatypeRoot

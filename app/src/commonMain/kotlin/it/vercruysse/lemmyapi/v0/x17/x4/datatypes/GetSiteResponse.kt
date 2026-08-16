@@ -1,7 +1,7 @@
 package it.vercruysse.lemmyapi.v0.x17.x4.datatypes
 
-import kotlinx.serialization.Serializable
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
+import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class GetSiteResponse(

@@ -1,0 +1,19 @@
+package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+@SerialName("community")
+internal data class CommunityReportView(
+    val community_report: CommunityReport,
+    val community: Community,
+    val creator: Person,
+    val resolver: Person? = null,
+    val creator_is_admin: Boolean,
+    val creator_is_moderator: Boolean,
+    val creator_banned: Boolean,
+    val creator_ban_expires_at: String? = null,
+    val creator_banned_from_community: Boolean,
+    val creator_community_ban_expires_at: String? = null,
+) : ReportCombinedView

@@ -1,0 +1,18 @@
+package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
+
+import it.vercruysse.lemmyapi.enums.NotificationType
+import kotlinx.serialization.Serializable
+
+@Serializable
+internal data class Notification(
+    val id: NotificationId,
+    val recipient_id: PersonId,
+    val comment_id: CommentId? = null,
+    val read: Boolean,
+    val published_at: String,
+    val kind: NotificationType /* "mention" | "reply" | "subscribed" | "private_message" | "mod_action" */,
+    val post_id: PostId? = null,
+    val private_message_id: PrivateMessageId? = null,
+    val modlog_id: ModlogId? = null,
+    val creator_id: PersonId,
+)

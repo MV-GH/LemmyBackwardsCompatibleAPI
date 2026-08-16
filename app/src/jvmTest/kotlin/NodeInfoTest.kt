@@ -1,8 +1,11 @@
-import it.vercruysse.lemmyapi.dto.NodeInfo
-import it.vercruysse.lemmyapi.lenientJson
+import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
+import it.vercruysse.lemmyapi.nodeinfo.NodeInfo
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.JsonException
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import kotlin.test.assertNull
 
 class NodeInfoTest {
 
@@ -27,13 +30,38 @@ class NodeInfoTest {
         }
         """.trimIndent()
 
-        val nodeInfo = lenientJson.decodeFromString<NodeInfo>(nodeInfoJson)
+        val nodeInfo = IGNORE_UNKNOWN_KEYS_JSON.decodeFromString<NodeInfo>(nodeInfoJson)
         assertNotNull(nodeInfo)
         assertNotNull(nodeInfo.protocols)
     }
 
     @Test
-    fun `NodeInfo should allow protocol field as null`() {
+    fun `NodeInfo should allow optional usage counters to be missing`() {
+        val nodeInfoJson = """{
+            "version": "2.0",
+            "software": {
+                "name": "Mastodon",
+                "version": "4.0.0"
+            },
+            "openRegistrations": true,
+            "usage": {
+                "users": {}
+            }
+        }
+        """.trimIndent()
+
+        val nodeInfo = IGNORE_UNKNOWN_KEYS_JSON.decodeFromString<NodeInfo>(nodeInfoJson)
+
+        assertNull(nodeInfo.usage.localPosts)
+        assertNull(nodeInfo.usage.localComments)
+        assertNull(nodeInfo.usage.users.activeHalfyear)
+        assertNull(nodeInfo.usage.users.activeMonth)
+        assertNull(nodeInfo.usage.users.total)
+    }
+
+    @OptIn(ExperimentalSerializationApi::class)
+    @Test
+    fun `NodeInfo fails when protocols field is null`() {
         val nodeInfoJson = """{
             "version": "2.0",
             "software": {
@@ -54,9 +82,6 @@ class NodeInfoTest {
         }
         """.trimIndent()
 
-        val nodeInfo = lenientJson.decodeFromString<NodeInfo>(nodeInfoJson)
-        assertNotNull(nodeInfo)
-        assertNotNull(nodeInfo.protocols)
-        assertTrue { nodeInfo.protocols.isEmpty() }
+        assertFailsWith<JsonException> { IGNORE_UNKNOWN_KEYS_JSON.decodeFromString<NodeInfo>(nodeInfoJson) }
     }
 }

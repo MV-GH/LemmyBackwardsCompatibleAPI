@@ -14,9 +14,9 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
-    kotlin("jvm") version "2.1.10" apply false
-    id("com.android.library") version "8.7.3" apply false
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+    kotlin("jvm") version "2.3.21" apply false
+    id("com.android.kotlin.multiplatform.library") version "9.2.1" apply false
 }
 
 rootProject.name = "LemmyBackwardsCompatibleAPI"

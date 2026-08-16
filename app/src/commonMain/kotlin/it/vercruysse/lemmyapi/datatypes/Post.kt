@@ -1,13 +1,14 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
+@SerialName("post")
 data class Post(
     override val id: PostId,
     val name: String,
@@ -17,8 +18,8 @@ data class Post(
     val community_id: CommunityId,
     val removed: Boolean,
     val locked: Boolean,
-    val published: String,
-    val updated: String? = null,
+    val published_at: String,
+    val updated_at: String? = null,
     val deleted: Boolean,
     val nsfw: Boolean,
     val embed_title: String? = null,
@@ -32,4 +33,15 @@ data class Post(
     val featured_local: Boolean,
     val url_content_type: String? = null,
     val alt_text: String? = null,
-) : DatatypeRoot, Identity
+    val scheduled_publish_time_at: String? = null,
+    val newest_comment_time_at: String? = null,
+    val comments: Long,
+    val score: Long,
+    val upvotes: Long,
+    val downvotes: Long,
+    val report_count: Long,
+    val unresolved_report_count: Long,
+    val federation_pending: Boolean,
+    val embed_video_width: Long? = null,
+    val embed_video_height: Long? = null,
+) : DatatypeRoot, Identity, PostOrCommentOrPrivateMessage

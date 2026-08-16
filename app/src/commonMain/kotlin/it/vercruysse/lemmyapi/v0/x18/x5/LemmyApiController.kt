@@ -1,19 +1,12 @@
 package it.vercruysse.lemmyapi.v0.x18.x5
 
-import io.github.z4kn4fein.semver.Version
-import io.ktor.client.HttpClient
+import it.vercruysse.lemmyapi.LemmyRequestClient
 import it.vercruysse.lemmyapi.utils.getResult
 import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.*
 
-internal class LemmyApiController(val client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
-    LemmyApiRouter(
-        client,
-        actualVersion,
-        baseUrl,
-        auth,
-    ) {
+internal class LemmyApiController(private val client: LemmyRequestClient) : LemmyApiRouter {
     /**
      * Gets the site, and your user data.
      *

@@ -5,57 +5,83 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
-import it.vercruysse.lemmyapi.pictrs.datatypes.UploadImage
-import it.vercruysse.lemmyapi.pictrs.datatypes.UploadImageResponse
+import it.vercruysse.lemmyapi.AuthProvider
+import it.vercruysse.lemmyapi.datatypes.DeleteImageParams
+import it.vercruysse.lemmyapi.datatypes.UploadImageResponse
+import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
+import kotlinx.serialization.Serializable
 
-open class PictrsService(private val client: HttpClient, override var auth: String?) : PictrsAPI {
+internal class PictrsService(
+    private val client: HttpClient,
+    private val baseUrl: String,
+    private val authProvider: AuthProvider,
+) {
+
     /**
      * Upload an image to the server.
      *
      * @POST(/pictrs/image)
      */
-    override suspend fun uploadImage(form: UploadImage): Result<UploadImageResponse> = runCatching {
-        val resp = client.post("/pictrs/image") {
-            auth?.let { cookie("jwt", it) }
-            setBody(createFormData(form.images))
+    suspend fun uploadImage(image: ByteArray): Result<UploadImageResponse> = runCatchingPreservingCancellation {
+        val resp = client.post("$baseUrl/pictrs/image") {
+            currentAuth()?.let { cookie("jwt", it) }
+            setBody(createFormData(image))
         }
 
-        val imageResp = resp.body<UploadImageResponse>()
+        val imageResp = resp.body<PictrsUploadImageResponse>()
+        require(imageResp.msg == "ok") { "Pictrs upload failed: ${imageResp.msg}" }
 
-        imageResp.copy(
-            files = imageResp.files.map {
-                it.copy(
-                    url = "${resp.call.request.url}/${it.file}",
-                    delete_url = "${resp.call.request.url}/delete/${it.delete_token}/${it.file}",
-                )
-            },
+        val file = imageResp.files.firstOrNull()
+            ?: throw IllegalStateException("Pictrs upload response did not contain any files")
+
+        UploadImageResponse(
+            image_url = "${resp.call.request.url}/${file.file}",
+            filename = file.file,
+            // Pre-v1 delete route needs the full relative pictrs delete path.
+            delete_filename = "/pictrs/image/delete/${file.delete_token}/${file.file}",
         )
     }
 
     /**
      * Delete an image from the server.
      *
-     * @POST(/pictrs/image/delete)
+     * @GET(/pictrs/image/delete/{delete_token}/{file})
      */
-    override suspend fun deleteImage(relativeUrl: String): Result<Unit> = runCatching {
-        client.get(relativeUrl) {
-            auth?.let { cookie("jwt", it) }
+    suspend fun deleteMedia(form: DeleteImageParams): Result<Unit> = runCatchingPreservingCancellation {
+        require(form.filename.startsWith("/pictrs/image/delete/")) {
+            "For pre-v1 Lemmy, deleteMedia filename must be /pictrs/image/delete/{delete_token}/{file}"
+        }
+
+        client.get("$baseUrl/${form.filename.removePrefix("/")}") {
+            currentAuth()?.let { cookie("jwt", it) }
         }.body()
     }
 
-    private fun createFormData(images: List<ByteArray>): MultiPartFormDataContent =
+    private fun currentAuth(): String? = authProvider()
+
+    private fun createFormData(image: ByteArray): MultiPartFormDataContent =
         MultiPartFormDataContent(
             formData {
-                for (image in images) {
-                    append(
-                        "images[]",
-                        image,
-                        Headers.build {
-                            // This is somehow needed, but it doesn't matter what you send
-                            append(HttpHeaders.ContentDisposition, "filename=\"test.jpg\"")
-                        },
-                    )
-                }
+                append(
+                    "images[]",
+                    image,
+                    Headers.build {
+                        // Pictrs expects a file-like part with a content disposition.
+                        append(HttpHeaders.ContentDisposition, "filename=\"image.jpg\"")
+                    },
+                )
             },
         )
+
+    @Serializable
+    private data class PictrsUploadImageResponse(
+        val msg: String,
+        val files: List<PictrsImageFile> = listOf(),
+    )
+
+    @Serializable
+    private data class PictrsImageFile(
+        val file: String,
+        val delete_token: String,
+    )
 }

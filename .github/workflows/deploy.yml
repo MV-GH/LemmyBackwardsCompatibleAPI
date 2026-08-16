@@ -3,14 +3,17 @@ name: Deployment
 on:
   push:
     tags: [ '[0-9]+.[0-9]+.[0-9]+*' ]
+  workflow_dispatch:
 
 jobs:
   publish:
-    if: github.repository == 'mv-gh/lemmybackwardscompatibleapi' && startsWith(github.ref, 'refs/tags')
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ macos-latest, ubuntu-latest, windows-latest ]
+    if: >
+      github.repository == 'mv-gh/lemmybackwardscompatibleapi' &&
+      (
+        startsWith(github.ref, 'refs/tags/') ||
+        (github.event_name == 'workflow_dispatch' && github.actor == 'mv-gh')
+      )
+    runs-on: macos-latest
     environment: publish
     env:
       ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKey }}
@@ -19,13 +22,10 @@ jobs:
       ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.ORG_GRADLE_PROJECT_mavenCentralPassword }}
       ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKeyId }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: SimonMarquis/ci-gradle-properties-action@v1
-        with:
-          path: .github/gradle.properties
+      - uses: actions/checkout@v6
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-      - uses: actions/setup-java@v4
+        uses: gradle/actions/setup-gradle@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '17'

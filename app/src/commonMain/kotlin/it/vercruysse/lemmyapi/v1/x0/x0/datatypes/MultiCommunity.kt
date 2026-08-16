@@ -1,0 +1,23 @@
+package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+internal data class MultiCommunity(
+    val id: MultiCommunityId,
+    val creator_id: PersonId,
+    val instance_id: InstanceId,
+    val name: String,
+    val title: String? = null,
+    val summary: String? = null,
+    val local: Boolean,
+    val deleted: Boolean,
+    val ap_id: DbUrl,
+    val last_refreshed_at: String,
+    val published_at: String,
+    val updated_at: String? = null,
+    val subscribers: Long,
+    val subscribers_local: Long,
+    val communities: Long,
+    val sidebar: String? = null,
+)

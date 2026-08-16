@@ -1,0 +1,16 @@
+package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+internal data class LinkMetadata(
+    val content_type: String? = null,
+    val title: String? = null,
+    val description: String? = null,
+    val image: DbUrl? = null,
+    val image_width: Long? = null,
+    val image_height: Long? = null,
+    val embed_video_url: DbUrl? = null,
+    val video_width: Long? = null,
+    val video_height: Long? = null,
+)
