@@ -20,15 +20,10 @@ class NodeInfoClient(
     /**
      * Gets the NodeInfo document of an instance.
      */
-    suspend fun getNodeInfo(instance: String): Result<NodeInfo> =
-        runCatchingPreservingCancellation {
-            return getNodeInfo(LemmyInstance(instance))
-        }
-
-    internal suspend fun getNodeInfo(lemmyInstance: LemmyInstance): Result<NodeInfo> =
+    suspend fun getNodeInfo(instance: Instance): Result<NodeInfo> =
         runCatchingPreservingCancellation {
             client
-                .get("${lemmyInstance.baseUrl}/nodeinfo/2.0.json")
+                .get("${instance.baseUrl}/nodeinfo/2.0.json")
                 .body<NodeInfo>()
         }
 
@@ -54,7 +49,7 @@ class NodeInfoClient(
      *
      * Returns a failure if NodeInfo retrieval fails.
      */
-    suspend fun getVersion(instance: String): Result<String> =
+    suspend fun getVersion(instance: Instance): Result<String> =
         getNodeInfo(instance).fold(
             onSuccess = { Result.success(getVersion(it)) },
             onFailure = { Result.failure(it) },
@@ -65,13 +60,7 @@ class NodeInfoClient(
      *
      * Returns a failure if NodeInfo retrieval fails or the instance is not Lemmy.
      */
-    suspend fun getLemmyVersion(instance: String): Result<String> =
-        getNodeInfo(instance).fold(
-            onSuccess = ::getLemmyVersion,
-            onFailure = { Result.failure(it) },
-        )
-
-    internal suspend fun getLemmyVersion(lemmyInstance: LemmyInstance): Result<String> =
+    suspend fun getLemmyVersion(lemmyInstance: LemmyInstance): Result<String> =
         getNodeInfo(lemmyInstance).fold(
             onSuccess = ::getLemmyVersion,
             onFailure = { Result.failure(it) },
@@ -80,7 +69,7 @@ class NodeInfoClient(
     /**
      * Returns whether an instance supports the ActivityPub protocol.
      */
-    suspend fun isFediverse(instance: String): Result<Boolean> =
+    suspend fun isFediverse(instance: Instance): Result<Boolean> =
         getNodeInfo(instance).map(::isFediverse)
 
     /**
@@ -91,7 +80,7 @@ class NodeInfoClient(
     /**
      * Returns whether an instance identifies its software as Lemmy.
      */
-    suspend fun isLemmyInstance(instance: String): Result<Boolean> =
+    suspend fun isLemmyInstance(instance: LemmyInstance): Result<Boolean> =
         getNodeInfo(instance).map(::isLemmyInstance)
 
     /**

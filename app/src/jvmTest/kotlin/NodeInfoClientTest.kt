@@ -6,6 +6,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
+import it.vercruysse.lemmyapi.nodeinfo.Instance
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfo
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfoClient
 import kotlinx.coroutines.runBlocking
@@ -30,10 +31,11 @@ class NodeInfoClientTest {
         val suppliedClient = nodeInfoHttpClient(NODE_INFO.replace("Lemmy", "Mastodon").replace("activitypub", "diaspora"))
 
         NodeInfoClient(suppliedClient).use { client ->
-            val isFediverse = client.isFediverse("lemmy.world")
-            val isLemmy = client.isLemmyInstance("lemmy.world")
-            val version = client.getVersion("lemmy.world")
-            val lemmyVersion = client.getLemmyVersion("lemmy.world")
+            val instance = Instance("lemmy.world")
+            val isFediverse = client.isFediverse(instance)
+            val isLemmy = client.isLemmyInstance(instance)
+            val version = client.getVersion(instance)
+            val lemmyVersion = client.getLemmyVersion(instance)
 
             assertTrue(isFediverse.isSuccess)
             assertFalse(isFediverse.getOrThrow())
@@ -56,10 +58,11 @@ class NodeInfoClientTest {
                 )
             },
         )
+        val instance = Instance("lemmy.world")
 
         NodeInfoClient(suppliedClient).use { client ->
-            assertTrue(client.isFediverse("lemmy.world").isFailure)
-            assertTrue(client.isLemmyInstance("lemmy.world").isFailure)
+            assertTrue(client.isFediverse(instance).isFailure)
+            assertTrue(client.isLemmyInstance(instance).isFailure)
         }
         suppliedClient.close()
     }
