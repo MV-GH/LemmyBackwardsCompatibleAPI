@@ -41,8 +41,7 @@ class AuthSetCorrectIT {
             LemmyInstance("${wm.baseUrl()}/lemmy.world"),
             LemmyAuth.Bearer("auth"),
             LemmyVersion("0.19.1"),
-
-            ).getOrThrow()
+        ).getOrThrow()
 
         // Given
         wm.get {

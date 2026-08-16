@@ -11,7 +11,13 @@ class LemmyApiClient(
     private val ownsHttpClient = httpClient == null
     private val transport = httpClient ?: HttpClient()
     private val apiClient = transport.withLemmyApiConfig(options)
-    private val nodeInfoClient = NodeInfoClient(transport, options)
+
+    /**
+     * Client for querying NodeInfo.
+     *
+     * Do not use this client after this API client has been closed.
+     */
+    val nodeInfoClient = NodeInfoClient(transport, options)
 
     /**
      * Connects to an instance after discovering its Lemmy version.
@@ -21,7 +27,6 @@ class LemmyApiClient(
      * Use the Feature Flags before using certain endpoints as they can be or not available depending
      * on the version of the Lemmy Server instance.
      */
-
     suspend fun connect(
         instance: LemmyInstance,
         auth: LemmyAuth = LemmyAuth.Anonymous,
