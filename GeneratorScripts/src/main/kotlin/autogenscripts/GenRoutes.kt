@@ -18,7 +18,7 @@ enum class HttpMethod {
     PUT,
 }
 
-const val LEMMY_SPEC_LINK = """https://raw.githubusercontent.com/MV-GH/lemmy_openapi_spec/master/lemmy_spec.yaml"""
+const val LEMMY_SPEC_LINK = """blob:https://join-lemmy.org/7fe59b0d-6b94-40d4-bba8-d03a1a0ab8b7"""
 
 data class RouteInfo(
     val path: String,
@@ -36,13 +36,13 @@ ${summary?.lines()?.joinToString("\n") { "         * ${it.trim()}" } ?: ""}
          *
          * @${method.name}("$path")
          */
-        abstract suspend fun $operationId(${if (paramsOrBody != null) "form: $paramsOrBody" else ""}): Result<${response ?: "Unit"}>
+        suspend fun $operationId(${if (paramsOrBody != null) "form: $paramsOrBody" else ""}): Result<${response ?: "Unit"}>
     """.replaceIndent("    ")
 }
 
 fun RouteInfo.toImpl(): String {
     return this.toInterface()
-        .replace("abstract suspend fun", "override suspend fun")
+        .replace("suspend fun", "override suspend fun")
         .plus(" =\n        client.${method.name.lowercase()}Result(\"$path\"${if (paramsOrBody != null) ", form" else ""})")
 }
 
@@ -129,7 +129,7 @@ fun genRouteAbstractInterface(routes: List<RouteInfo>) {
     val fileInterface = File("temp", "LemmyApiRouter.kt")
     fileInterface.createNewFile()
 
-    fileInterface.writeText("\nabstract class LemmyApiRouter : LemmyApiBase {\n\n")
+    fileInterface.writeText("\ninterface LemmyApiRouter {\n")
 
     for (route in routes) {
         fileInterface.appendText(route.toInterface() + "\n\n")

@@ -1,33 +1,33 @@
 package it.vercruysse.lemmyapi.datatypes
 
-import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.SubscribedType
-import kotlinx.serialization.Serializable
-
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
+@SerialName("post")
 data class PostView(
     val post: Post,
     val creator: Person,
     val community: Community,
-    val creator_banned_from_community: Boolean,
-    val banned_from_community: Boolean,
-    val creator_is_moderator: Boolean,
-    val creator_is_admin: Boolean,
-    val counts: PostAggregates,
-    val subscribed: SubscribedType /* "Subscribed" | "NotSubscribed" | "Pending" */,
-    val saved: Boolean,
-    val read: Boolean,
-    val hidden: Boolean,
-    val creator_blocked: Boolean,
-    val my_vote: Int = 0,
-    val unread_comments: Long,
     /** Added in 0.19.6 */
     val image_details: ImageDetails? = null,
-) : DatatypeRoot, Identity {
+    val community_actions: CommunityActions? = null,
+    val person_actions: PersonActions? = null,
+    val post_actions: PostActions? = null,
+    val tags: CommunityTagsView,
+    /** Added in 1.0.0 */
+    val can_mod: Boolean,
+    val creator_banned: Boolean,
+    val creator_ban_expires_at: String? = null,
+    val creator_is_admin: Boolean,
+    val creator_is_moderator: Boolean,
+    val creator_banned_from_community: Boolean,
+    val creator_community_ban_expires_at: String? = null,
+) : DatatypeRoot, Identity, NotificationData, ResolveObjectView, PostCommentCombinedView {
     override val id: Long
         get() = post.id
 }

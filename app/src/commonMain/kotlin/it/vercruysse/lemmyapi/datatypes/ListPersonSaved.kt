@@ -1,0 +1,16 @@
+package it.vercruysse.lemmyapi.datatypes
+
+import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.enums.PersonContentType
+import kotlinx.serialization.Serializable
+
+@CommonParcelize
+@Serializable
+data class ListPersonSaved(
+    val type_: PersonContentType? /* "All" | "Comments" | "Posts" */ = null,
+    /** Added in 1.0.0 */
+    val search_term: String? = null,
+    val page_cursor: PaginationCursor? = null,
+    val limit: Long? = null,
+) : DatatypeRoot

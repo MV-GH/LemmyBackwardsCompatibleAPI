@@ -1,11 +1,15 @@
+import com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor
+import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.http.RequestMethod
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension
 import com.marcinziolo.kotlin.wiremock.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
-import it.vercruysse.lemmyapi.LemmyApi
-import it.vercruysse.lemmyapi.setDefaultClientConfig
+import it.vercruysse.lemmyapi.LemmyApiClient
+import it.vercruysse.lemmyapi.LemmyAuth
+import it.vercruysse.lemmyapi.LemmyInstance
+import it.vercruysse.lemmyapi.LemmyVersion
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -22,7 +26,7 @@ class AuthSetCorrectIT {
 
     @Test
     fun `Changing auth should propagate everywhere`() {
-        LemmyApi.setDefaultClientConfig {
+        val httpClient = io.ktor.client.HttpClient {
             install(Logging) {
                 logger = object : Logger {
                     override fun log(message: String) {
@@ -32,7 +36,12 @@ class AuthSetCorrectIT {
                 level = LogLevel.ALL
             }
         }
-        val controller = LemmyApi.getLemmyApi(instance = "${wm.baseUrl()}/lemmy.world", version = "0.19.1", auth = "auth")
+        val factory = LemmyApiClient(httpClient)
+        val controller = factory.connectForVersion(
+            LemmyInstance("${wm.baseUrl()}/lemmy.world"),
+            LemmyAuth.Bearer("auth"),
+            LemmyVersion("0.19.1"),
+        ).getOrThrow()
 
         // Given
         wm.get {
@@ -54,7 +63,7 @@ class AuthSetCorrectIT {
             headers contains HttpHeaders.Authorization equalTo "Bearer auth"
         }
 
-        controller.auth = "newAuth"
+        controller.updateAuth(LemmyAuth.Bearer("newAuth"))
 
         // Given
         wm.get {
@@ -75,5 +84,24 @@ class AuthSetCorrectIT {
             headers contains HttpHeaders.Authorization equalTo "Bearer newAuth"
             method = RequestMethod.GET
         }
+
+        controller.clearAuth()
+        wm.get {
+            url equalTo "/api/v3/site"
+        } returnsJson {
+            body = "{}"
+        }
+
+        runBlocking {
+            controller.getSite()
+        }
+
+        wm.verify(
+            getRequestedFor(urlEqualTo("/api/v3/site"))
+                .withoutHeader(HttpHeaders.Authorization),
+        )
+
+        factory.close()
+        httpClient.close()
     }
 }

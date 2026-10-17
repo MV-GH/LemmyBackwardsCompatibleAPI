@@ -1,21 +1,20 @@
 package it.vercruysse.lemmyapi.datatypes
 
-import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.CommunityVisibility
-import kotlinx.serialization.Serializable
-
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.enums.CommunityVisibility
+import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
 data class CreateCommunity(
     val name: String,
     val title: String,
-    val description: String? = null,
-    val icon: String? = null,
+    val sidebar: String? = null,
+    val summary: String? = null,
     val banner: String? = null,
     val nsfw: Boolean? = null,
     val posting_restricted_to_mods: Boolean? = null,
     val discussion_languages: List<LanguageId>? = null,
-    val visibility: CommunityVisibility? /* "Public" | "LocalOnly" */ = null,
+    val visibility: CommunityVisibility? /* "Public" | "Unlisted" | "LocalOnlyPublic" | "LocalOnlyPrivate" | "Private" */ = null,
 ) : DatatypeRoot

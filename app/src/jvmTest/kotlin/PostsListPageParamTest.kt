@@ -10,11 +10,12 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.ByteReadChannel
-import it.vercruysse.lemmyapi.LemmyApi
-import it.vercruysse.lemmyapi.coreHttpClient
+import it.vercruysse.lemmyapi.IGNORE_UNKNOWN_KEYS_JSON
+import it.vercruysse.lemmyapi.LemmyApiClient
+import it.vercruysse.lemmyapi.LemmyInstance
+import it.vercruysse.lemmyapi.LemmyVersion
 import it.vercruysse.lemmyapi.datatypes.GetPosts
 import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
-import it.vercruysse.lemmyapi.ktorJson
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
@@ -27,14 +28,19 @@ class PostsListPageParamTest {
         @BeforeAll
         @JvmStatic
         fun setUp() {
-            LemmyApi.defaultClient = getMockClient()
+            mockClient = getMockClient()
+            lemmyApiClient = LemmyApiClient(mockClient)
         }
 
         @AfterAll
         @JvmStatic
         fun tearDown() {
-            LemmyApi.defaultClient = coreHttpClient
+            lemmyApiClient.close()
+            mockClient.close()
         }
+
+        private lateinit var mockClient: HttpClient
+        private lateinit var lemmyApiClient: LemmyApiClient
 
         private fun getValidationMocKEngine(): MockEngine = MockEngine { request ->
             val url = request.url
@@ -46,7 +52,7 @@ class PostsListPageParamTest {
             // page_cursor takes priority
             // never send pagination_guard
             // work with null and value
-            if (url.encodedPath != "/api/v3/post/list") {
+            if (url.encodedPath != "/api/v3/post/list" && url.encodedPath != "/api/v4/post/list") {
                 success = false
             } else if (url.parameters.contains("page_cursor") && url.parameters.contains("page")) {
                 success = false
@@ -55,11 +61,19 @@ class PostsListPageParamTest {
             }
 
             if (success) {
-                respond(
-                    content = ByteReadChannel("""{"posts": [], "next_page": null}"""),
-                    status = HttpStatusCode.OK,
-                    headers = headersOf(HttpHeaders.ContentType, "application/json"),
-                )
+                if (url.encodedPath.startsWith("/api/v4")) {
+                    respond(
+                        content = ByteReadChannel("""{"items": [], "next_page": null}"""),
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                    )
+                } else {
+                    respond(
+                        content = ByteReadChannel("""{"posts": [], "next_page": null}"""),
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json"),
+                    )
+                }
             } else {
                 respond(
                     content = ByteReadChannel("Failed validation"),
@@ -74,7 +88,7 @@ class PostsListPageParamTest {
                 expectSuccess = true
 
                 install(ContentNegotiation) {
-                    json(ktorJson)
+                    json(IGNORE_UNKNOWN_KEYS_JSON)
                 }
                 install(Logging) {
                     logger = object : Logger {
@@ -92,8 +106,8 @@ class PostsListPageParamTest {
     fun `default form`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts())
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
+                val resp = api.getPosts(GetPosts())
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -103,8 +117,8 @@ class PostsListPageParamTest {
     fun `just page`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page = 1))
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
+                val resp = api.getPosts(GetPosts(page = 1))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -114,8 +128,8 @@ class PostsListPageParamTest {
     fun `just cursor`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page_cursor = "cursor"))
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
+                val resp = api.getPosts(GetPosts(page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -125,8 +139,8 @@ class PostsListPageParamTest {
     fun `page cursor null`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page_cursor = null))
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
+                val resp = api.getPosts(GetPosts(page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -136,8 +150,8 @@ class PostsListPageParamTest {
     fun `both page and cursor`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page = 1, page_cursor = "cursor"))
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
+                val resp = api.getPosts(GetPosts(page = 1, page_cursor = "cursor"))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }
@@ -147,8 +161,8 @@ class PostsListPageParamTest {
     fun `both page and cursor null`() {
         controllerVersions.forEach {
             runBlocking {
-                val api = LemmyApi.getLemmyApi("lemmy.ml", it)
-                var resp = api.getPosts(GetPosts(page = 1, page_cursor = null))
+                val api = lemmyApiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(it)).getOrThrow()
+                val resp = api.getPosts(GetPosts(page = 1, page_cursor = null))
                 assertDoesNotThrow("Failed for $it") { resp.getOrThrow() }
             }
         }

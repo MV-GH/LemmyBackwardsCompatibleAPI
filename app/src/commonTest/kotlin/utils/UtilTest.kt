@@ -1,8 +1,8 @@
 package utils
 
-import it.vercruysse.lemmyapi.dto.SortType
-import it.vercruysse.lemmyapi.dto.getSupportedEntries
+import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
+import it.vercruysse.lemmyapi.utils.getSupportedEntries
 import it.vercruysse.lemmyapi.utils.isBetweenVersions
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -1,17 +1,20 @@
 package it.vercruysse.lemmyapi.datatypes
 
-import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.SearchType
-import kotlinx.serialization.Serializable
-
 import it.vercruysse.lemmyapi.CommonParcelize
+import it.vercruysse.lemmyapi.DatatypeRoot
+import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
 data class SearchResponse(
-    val type_: SearchType /* "All" | "Comments" | "Posts" | "Communities" | "Users" | "Url" */,
+    val resolve: ResolveObjectView? = null,
     val comments: List<CommentView>,
     val posts: List<PostView>,
     val communities: List<CommunityView>,
-    val users: List<PersonView>,
+    val persons: List<PersonView>,
+    val multi_communities: List<MultiCommunityView>,
+    /** Added in 1.0.0 */
+    val next_page: PaginationCursor? = null,
+    /** Added in 1.0.0 */
+    val prev_page: PaginationCursor? = null,
 ) : DatatypeRoot

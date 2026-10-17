@@ -1,13 +1,14 @@
 package it.vercruysse.lemmyapi.datatypes
 
+import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.Serializable
-
-import it.vercruysse.lemmyapi.CommonParcelize
 
 @CommonParcelize
 @Serializable
 data class ResolveCommentReport(
     val report_id: CommentReportId,
     val resolved: Boolean,
+    /** Added in Lemmy 1.0.0 */
+    val conclusion: String? = null,
 ) : DatatypeRoot

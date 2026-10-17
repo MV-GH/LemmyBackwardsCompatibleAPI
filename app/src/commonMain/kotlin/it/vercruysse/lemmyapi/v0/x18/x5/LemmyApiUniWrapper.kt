@@ -1,24 +1,43 @@
 package it.vercruysse.lemmyapi.v0.x18.x5
 
-import io.github.z4kn4fein.semver.Version
 import io.ktor.client.HttpClient
 import it.vercruysse.lemmyapi.LemmyApiBaseController
+import it.vercruysse.lemmyapi.LemmyInstance
+import it.vercruysse.lemmyapi.LemmyRequestClient
+import it.vercruysse.lemmyapi.LemmyVersion
+import it.vercruysse.lemmyapi.datatypes.ListCustomEmojis
+import it.vercruysse.lemmyapi.datatypes.ListCustomEmojisResponse
+import it.vercruysse.lemmyapi.datatypes.ListLoginsResponse
+import it.vercruysse.lemmyapi.datatypes.ListNotifications
+import it.vercruysse.lemmyapi.datatypes.MarkNotificationAsRead
+import it.vercruysse.lemmyapi.datatypes.MyUserInfo
+import it.vercruysse.lemmyapi.datatypes.PagedResponse
+import it.vercruysse.lemmyapi.datatypes.UnreadCountsResponse
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
+import it.vercruysse.lemmyapi.enums.NotificationDataType
+import it.vercruysse.lemmyapi.enums.NotificationType
+import it.vercruysse.lemmyapi.pictrs.PictrsService
+import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCaptcha
+import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetPersonDetails
+import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetReportCount
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadCount
+import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadRegistrationApplicationCount
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.MarkPostAsRead
+import kotlin.map
 
-internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, baseUrl: String, auth: String?) :
-    LemmyApiBaseController(client, actualVersion, baseUrl, auth) {
-    private val apiV18 = LemmyApiController(client, actualVersion, baseUrl, auth)
+internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, baseUrl: String, auth: String?) :
+    LemmyApiBaseController(instance, actualVersion, auth) {
+    private val api = LemmyApiController(LemmyRequestClient(client, apiBaseUrl, null))
+    private val pictrsApi = PictrsService(client, baseUrl) { this.auth }
     private val transformer = Transformer(auth ?: "")
 
-    override var auth: String? = auth
+    override var auth: String?
+        get() = super.auth
         set(value) {
+            super.auth = value
             transformer.auth = value ?: ""
-            field = value
-            apiV18.auth = value // Not sure if this needed
         }
 
     // START
@@ -28,7 +47,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @GET("site")
      */
-    override suspend fun getSite(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> = apiV18.getSite(
+    override suspend fun getSite(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> = api.getSite(
         it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSite(auth),
     ).map {
         transformer.toUni(it)
@@ -41,7 +60,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun createSite(
         form: it.vercruysse.lemmyapi.datatypes.CreateSite,
-    ): Result<it.vercruysse.lemmyapi.datatypes.SiteResponse> = apiV18.createSite(transformer.fromUni(form)).map { transformer.toUni(it) }
+    ): Result<it.vercruysse.lemmyapi.datatypes.SiteResponse> = api.createSite(transformer.fromUni(form)).map { transformer.toUni(it) }
 
     /**
      * Edit your site.
@@ -49,7 +68,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @PUT("site")
      */
     override suspend fun editSite(form: it.vercruysse.lemmyapi.datatypes.EditSite): Result<it.vercruysse.lemmyapi.datatypes.SiteResponse> =
-        apiV18.editSite(transformer.fromUni(form)).map { transformer.toUni(it) }
+        api.editSite(transformer.fromUni(form)).map { transformer.toUni(it) }
 
     /**
      * Get the modlog.
@@ -58,8 +77,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun getModlog(
         form: it.vercruysse.lemmyapi.datatypes.GetModlog,
-    ): Result<it.vercruysse.lemmyapi.datatypes.GetModlogResponse> =
-        apiV18.getModlog(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ModlogView>> = notSupported()
 
     /**
      * Search lemmy.
@@ -67,7 +85,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @GET("search")
      */
     override suspend fun search(form: it.vercruysse.lemmyapi.datatypes.Search): Result<it.vercruysse.lemmyapi.datatypes.SearchResponse> =
-        apiV18.search(transformer.fromUni(form)).map(transformer::toUni)
+        api.search(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Fetch a non-local / federated object.
@@ -76,8 +94,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun resolveObject(
         form: it.vercruysse.lemmyapi.datatypes.ResolveObject,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ResolveObjectResponse> =
-        apiV18.resolveObject(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.SearchResponse> =
+        api.resolveObject(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Get / fetch a community.
@@ -87,7 +105,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun getCommunity(
         form: it.vercruysse.lemmyapi.datatypes.GetCommunity,
     ): Result<it.vercruysse.lemmyapi.datatypes.GetCommunityResponse> =
-        apiV18.getCommunity(transformer.fromUni(form)).map(transformer::toUni)
+        api.getCommunity(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Create a new community.
@@ -97,7 +115,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createCommunity(
         form: it.vercruysse.lemmyapi.datatypes.CreateCommunity,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
-        apiV18.createCommunity(transformer.fromUni(form)).map(transformer::toUni)
+        api.createCommunity(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Edit a community.
@@ -107,7 +125,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun editCommunity(
         form: it.vercruysse.lemmyapi.datatypes.EditCommunity,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
-        apiV18.editCommunity(transformer.fromUni(form)).map(transformer::toUni)
+        api.editCommunity(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Hide a community from public view.
@@ -115,7 +133,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @PUT("community/hide")
      */
     override suspend fun hideCommunity(form: it.vercruysse.lemmyapi.datatypes.HideCommunity): Result<Unit> =
-        apiV18.hideCommunity(transformer.fromUni(form))
+        api.hideCommunity(transformer.fromUni(form))
 
     /**
      * List communities, with various filters.
@@ -124,8 +142,12 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun listCommunities(
         form: it.vercruysse.lemmyapi.datatypes.ListCommunities,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListCommunitiesResponse> =
-        apiV18.listCommunities(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommunityView>> =
+        api.listCommunities(transformer.fromUni(form)).map {
+            PagedResponse(
+                items = it.communities.map(transformer::toUni),
+            )
+        }
 
     /**
      * Follow / subscribe to a community.
@@ -135,7 +157,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun followCommunity(
         form: it.vercruysse.lemmyapi.datatypes.FollowCommunity,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
-        apiV18.followCommunity(transformer.fromUni(form)).map(transformer::toUni)
+        api.followCommunity(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Block a community.
@@ -144,8 +166,13 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun blockCommunity(
         form: it.vercruysse.lemmyapi.datatypes.BlockCommunity,
-    ): Result<it.vercruysse.lemmyapi.datatypes.BlockCommunityResponse> =
-        apiV18.blockCommunity(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
+        api.blockCommunity(transformer.fromUni(form)).map { resp ->
+            it.vercruysse.lemmyapi.datatypes.CommunityResponse(
+                transformer.toUni(resp.community_view),
+                emptyList(),
+            )
+        }
 
     /**
      * Delete a community.
@@ -155,7 +182,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun deleteCommunity(
         form: it.vercruysse.lemmyapi.datatypes.DeleteCommunity,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
-        apiV18.deleteCommunity(transformer.fromUni(form)).map(transformer::toUni)
+        api.deleteCommunity(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * A moderator remove for a community.
@@ -165,7 +192,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun removeCommunity(
         form: it.vercruysse.lemmyapi.datatypes.RemoveCommunity,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
-        apiV18.removeCommunity(transformer.fromUni(form)).map(transformer::toUni)
+        api.removeCommunity(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Transfer your community to an existing moderator.
@@ -174,8 +201,16 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun transferCommunity(
         form: it.vercruysse.lemmyapi.datatypes.TransferCommunity,
-    ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
-        apiV18.transferCommunity(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.GetCommunityResponse> =
+        api.transferCommunity(transformer.fromUni(form)).map { communityResponse ->
+            val uniCommunityResponse = transformer.toUni(communityResponse)
+            it.vercruysse.lemmyapi.datatypes.GetCommunityResponse(
+                community_view = uniCommunityResponse.community_view,
+                site = null,
+                moderators = emptyList(),
+                discussion_languages = uniCommunityResponse.discussion_languages,
+            )
+        }
 
     /**
      * Ban a user from a community.
@@ -184,8 +219,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun banFromCommunity(
         form: it.vercruysse.lemmyapi.datatypes.BanFromCommunity,
-    ): Result<it.vercruysse.lemmyapi.datatypes.BanFromCommunityResponse> =
-        apiV18.banFromCommunity(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.PersonResponse> =
+        api.banFromCommunity(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Add a moderator to your community.
@@ -195,15 +230,15 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun addModToCommunity(
         form: it.vercruysse.lemmyapi.datatypes.AddModToCommunity,
     ): Result<it.vercruysse.lemmyapi.datatypes.AddModToCommunityResponse> =
-        apiV18.addModToCommunity(transformer.fromUni(form)).map(transformer::toUni)
+        api.addModToCommunity(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Fetch federated instances.
      *
      * @GET("federated_instances")
      */
-    override suspend fun getFederatedInstances(): Result<it.vercruysse.lemmyapi.datatypes.GetFederatedInstancesResponse> =
-        apiV18.getFederatedInstances(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetFederatedInstances(auth)).map(transformer::toUni)
+    override suspend fun getFederatedInstances(form: it.vercruysse.lemmyapi.datatypes.GetFederatedInstances): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.FederatedInstanceView>> =
+        notSupported() // Not used and complex to map
 
     /**
      * Get / fetch a post.
@@ -211,7 +246,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @GET("post")
      */
     override suspend fun getPost(form: it.vercruysse.lemmyapi.datatypes.GetPost): Result<it.vercruysse.lemmyapi.datatypes.GetPostResponse> =
-        apiV18.getPost(transformer.fromUni(form)).map(transformer::toUni)
+        api.getPost(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Edit a post.
@@ -219,7 +254,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @PUT("post")
      */
     override suspend fun editPost(form: it.vercruysse.lemmyapi.datatypes.EditPost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
-        apiV18.editPost(transformer.fromUni(form)).map(transformer::toUni)
+        api.editPost(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Create a post.
@@ -229,7 +264,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createPost(
         form: it.vercruysse.lemmyapi.datatypes.CreatePost,
     ): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
-        apiV18.createPost(transformer.fromUni(form)).map(transformer::toUni)
+        api.createPost(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Get / fetch posts, with various filters.
@@ -238,8 +273,10 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun getPosts(
         form: it.vercruysse.lemmyapi.datatypes.GetPosts,
-    ): Result<it.vercruysse.lemmyapi.datatypes.GetPostsResponse> =
-        apiV18.getPosts(transformer.fromUni(form.toPostsForm())).map(transformer::toUni)
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> =
+        api.getPosts(transformer.fromUni(form.toPostsForm())).map { resp ->
+            PagedResponse(resp.posts.map(transformer::toUni))
+        }
 
     /**
      * Delete a post.
@@ -249,7 +286,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun deletePost(
         form: it.vercruysse.lemmyapi.datatypes.DeletePost,
     ): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
-        apiV18.deletePost(transformer.fromUni(form)).map(transformer::toUni)
+        api.deletePost(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * A moderator remove for a post.
@@ -259,18 +296,32 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun removePost(
         form: it.vercruysse.lemmyapi.datatypes.RemovePost,
     ): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
-        apiV18.removePost(transformer.fromUni(form)).map(transformer::toUni)
+        api.removePost(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Mark a post as read.
+     *
+     * @POST("post/mark_as_read")
+     */
+    override suspend fun markPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
+        api.markPostAsRead(
+            MarkPostAsRead(
+                post_id = form.post_id,
+                read = form.read,
+                auth = "" + auth,
+            ),
+        ).map(transformer::toUni)
+
+    /**
+     * Mark multiple posts as read.
      *
      * Maps v19 logic
      *
      * @POST("post/mark_as_read")
      */
-    override suspend fun markPostAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkPostAsRead): Result<Unit> = form.post_ids
+    override suspend fun markManyPostsAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): Result<Unit> = form.post_ids
         .map { MarkPostAsRead(post_id = it, read = form.read, auth = "" + auth) }
-        .map { apiV18.markPostAsRead(it) }
+        .map { api.markPostAsRead(it) }
         .map { it.map { } }
         .firstOrNull { it.isFailure } ?: Result.success(Unit)
 
@@ -280,7 +331,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("post/lock")
      */
     override suspend fun lockPost(form: it.vercruysse.lemmyapi.datatypes.LockPost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
-        apiV18.lockPost(transformer.fromUni(form)).map(transformer::toUni)
+        api.lockPost(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * A moderator can feature a community post ( IE stick it to the top of a community ).
@@ -290,7 +341,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun featurePost(
         form: it.vercruysse.lemmyapi.datatypes.FeaturePost,
     ): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
-        apiV18.featurePost(transformer.fromUni(form)).map(transformer::toUni)
+        api.featurePost(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Like / vote on a post.
@@ -300,7 +351,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createPostLike(
         form: it.vercruysse.lemmyapi.datatypes.CreatePostLike,
     ): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
-        apiV18.createPostLike(transformer.fromUni(form)).map(transformer::toUni)
+        api.createPostLike(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Save a post.
@@ -308,7 +359,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @PUT("post/save")
      */
     override suspend fun savePost(form: it.vercruysse.lemmyapi.datatypes.SavePost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
-        apiV18.savePost(transformer.fromUni(form)).map(transformer::toUni)
+        api.savePost(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Report a post.
@@ -318,7 +369,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createPostReport(
         form: it.vercruysse.lemmyapi.datatypes.CreatePostReport,
     ): Result<it.vercruysse.lemmyapi.datatypes.PostReportResponse> =
-        apiV18.createPostReport(transformer.fromUni(form)).map(transformer::toUni)
+        api.createPostReport(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Resolve a post report. Only a mod can do this.
@@ -328,17 +379,59 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun resolvePostReport(
         form: it.vercruysse.lemmyapi.datatypes.ResolvePostReport,
     ): Result<it.vercruysse.lemmyapi.datatypes.PostReportResponse> =
-        apiV18.resolvePostReport(transformer.fromUni(form)).map(transformer::toUni)
+        api.resolvePostReport(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
-     * List post reports.
-     *
-     * @GET("post/report/list")
+     * List reports.
      */
-    override suspend fun listPostReports(
-        form: it.vercruysse.lemmyapi.datatypes.ListPostReports,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListPostReportsResponse> =
-        apiV18.listPostReports(transformer.fromUni(form)).map(transformer::toUni)
+    override suspend fun listReports(
+        form: it.vercruysse.lemmyapi.datatypes.ListReports,
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>> =
+        when (form.type_) {
+            it.vercruysse.lemmyapi.enums.ReportType.Communities -> notSupported()
+
+            it.vercruysse.lemmyapi.enums.ReportType.Posts -> {
+                api.listPostReports(transformer.fromUniP(form)).map { resp ->
+                    PagedResponse(resp.post_reports.map(transformer::toUni))
+                }
+            }
+
+            it.vercruysse.lemmyapi.enums.ReportType.Comments -> {
+                api.listCommentReports(transformer.fromUniC(form)).map { resp ->
+                    PagedResponse(resp.comment_reports.map(transformer::toUni))
+                }
+            }
+
+            it.vercruysse.lemmyapi.enums.ReportType.PrivateMessages -> {
+                api.listPrivateMessageReports(transformer.fromUniPm(form)).map { resp ->
+                    PagedResponse(resp.private_message_reports.map(transformer::toUni))
+                }
+            }
+
+            it.vercruysse.lemmyapi.enums.ReportType.All -> {
+                runCatchingPreservingCancellation {
+                    val postsResp = api.listPostReports(transformer.fromUniP(form)).getOrThrow()
+                    val commentsResp = api.listCommentReports(transformer.fromUniC(form)).getOrThrow()
+                    val privateMessagesResp = api.listPrivateMessageReports(transformer.fromUniPm(form)).getOrThrow()
+
+                    val allReports = mutableListOf<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>()
+
+                    allReports.addAll(
+                        postsResp.post_reports.map(transformer::toUni),
+                    )
+
+                    allReports.addAll(
+                        commentsResp.comment_reports.map(transformer::toUni),
+                    )
+
+                    allReports.addAll(
+                        privateMessagesResp.private_message_reports.map(transformer::toUni),
+                    )
+
+                    PagedResponse(allReports)
+                }
+            }
+        }
 
     /**
      * Fetch metadata for any given site.
@@ -348,7 +441,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun getSiteMetadata(
         form: it.vercruysse.lemmyapi.datatypes.GetSiteMetadata,
     ): Result<it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse> =
-        apiV18.getSiteMetadata(transformer.fromUni(form)).map(transformer::toUni)
+        api.getSiteMetadata(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Get / fetch comment.
@@ -358,7 +451,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun getComment(
         form: it.vercruysse.lemmyapi.datatypes.GetComment,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
-        apiV18.getComment(transformer.fromUni(form)).map(transformer::toUni)
+        api.getComment(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Create a comment.
@@ -368,7 +461,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createComment(
         form: it.vercruysse.lemmyapi.datatypes.CreateComment,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
-        apiV18.createComment(transformer.fromUni(form)).map(transformer::toUni)
+        api.createComment(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Edit a comment.
@@ -378,7 +471,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun editComment(
         form: it.vercruysse.lemmyapi.datatypes.EditComment,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
-        apiV18.editComment(transformer.fromUni(form)).map(transformer::toUni)
+        api.editComment(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Get / fetch comments.
@@ -387,8 +480,10 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun getComments(
         form: it.vercruysse.lemmyapi.datatypes.GetComments,
-    ): Result<it.vercruysse.lemmyapi.datatypes.GetCommentsResponse> =
-        apiV18.getComments(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentView>> =
+        api.getComments(transformer.fromUni(form)).map { resp ->
+            PagedResponse(resp.comments.map(transformer::toUni))
+        }
 
     /**
      * Delete a comment.
@@ -398,7 +493,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun deleteComment(
         form: it.vercruysse.lemmyapi.datatypes.DeleteComment,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
-        apiV18.deleteComment(transformer.fromUni(form)).map(transformer::toUni)
+        api.deleteComment(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * A moderator remove for a comment.
@@ -408,17 +503,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun removeComment(
         form: it.vercruysse.lemmyapi.datatypes.RemoveComment,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
-        apiV18.removeComment(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
-     * Mark a comment as read.
-     *
-     * @POST("comment/mark_as_read")
-     */
-    override suspend fun markCommentReplyAsRead(
-        form: it.vercruysse.lemmyapi.datatypes.MarkCommentReplyAsRead,
-    ): Result<it.vercruysse.lemmyapi.datatypes.CommentReplyResponse> =
-        apiV18.markCommentReplyAsRead(transformer.fromUni(form)).map(transformer::toUni)
+        api.removeComment(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Distinguishes a comment (speak as moderator)
@@ -428,7 +513,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun distinguishComment(
         form: it.vercruysse.lemmyapi.datatypes.DistinguishComment,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
-        apiV18.distinguishComment(transformer.fromUni(form)).map(transformer::toUni)
+        api.distinguishComment(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Like / vote on a comment.
@@ -438,7 +523,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createCommentLike(
         form: it.vercruysse.lemmyapi.datatypes.CreateCommentLike,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
-        apiV18.createCommentLike(transformer.fromUni(form)).map(transformer::toUni)
+        api.createCommentLike(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Save a comment.
@@ -448,7 +533,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun saveComment(
         form: it.vercruysse.lemmyapi.datatypes.SaveComment,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
-        apiV18.saveComment(transformer.fromUni(form)).map(transformer::toUni)
+        api.saveComment(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Report a comment.
@@ -458,7 +543,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createCommentReport(
         form: it.vercruysse.lemmyapi.datatypes.CreateCommentReport,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentReportResponse> =
-        apiV18.createCommentReport(transformer.fromUni(form)).map(transformer::toUni)
+        api.createCommentReport(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Resolve a comment report. Only a mod can do this.
@@ -468,17 +553,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun resolveCommentReport(
         form: it.vercruysse.lemmyapi.datatypes.ResolveCommentReport,
     ): Result<it.vercruysse.lemmyapi.datatypes.CommentReportResponse> =
-        apiV18.resolveCommentReport(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
-     * List comment reports.
-     *
-     * @GET("comment/report/list")
-     */
-    override suspend fun listCommentReports(
-        form: it.vercruysse.lemmyapi.datatypes.ListCommentReports,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListCommentReportsResponse> =
-        apiV18.listCommentReports(transformer.fromUni(form)).map(transformer::toUni)
+        api.resolveCommentReport(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Edit a private message.
@@ -488,7 +563,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun editPrivateMessage(
         form: it.vercruysse.lemmyapi.datatypes.EditPrivateMessage,
     ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse> =
-        apiV18.editPrivateMessage(transformer.fromUni(form)).map(transformer::toUni)
+        api.editPrivateMessage(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Create a private message.
@@ -498,17 +573,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createPrivateMessage(
         form: it.vercruysse.lemmyapi.datatypes.CreatePrivateMessage,
     ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse> =
-        apiV18.createPrivateMessage(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
-     * Get / fetch private messages.
-     *
-     * @GET("private_message/list")
-     */
-    override suspend fun getPrivateMessages(
-        form: it.vercruysse.lemmyapi.datatypes.GetPrivateMessages,
-    ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessagesResponse> =
-        apiV18.getPrivateMessages(transformer.fromUni(form)).map(transformer::toUni)
+        api.createPrivateMessage(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Delete a private message.
@@ -518,17 +583,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun deletePrivateMessage(
         form: it.vercruysse.lemmyapi.datatypes.DeletePrivateMessage,
     ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse> =
-        apiV18.deletePrivateMessage(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
-     * Mark a private message as read.
-     *
-     * @POST("private_message/mark_as_read")
-     */
-    override suspend fun markPrivateMessageAsRead(
-        form: it.vercruysse.lemmyapi.datatypes.MarkPrivateMessageAsRead,
-    ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessageResponse> =
-        apiV18.markPrivateMessageAsRead(transformer.fromUni(form)).map(transformer::toUni)
+        api.deletePrivateMessage(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Create a report for a private message.
@@ -538,7 +593,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createPrivateMessageReport(
         form: it.vercruysse.lemmyapi.datatypes.CreatePrivateMessageReport,
     ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessageReportResponse> =
-        apiV18.createPrivateMessageReport(transformer.fromUni(form)).map(transformer::toUni)
+        api.createPrivateMessageReport(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Resolve a report for a private message.
@@ -548,17 +603,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun resolvePrivateMessageReport(
         form: it.vercruysse.lemmyapi.datatypes.ResolvePrivateMessageReport,
     ): Result<it.vercruysse.lemmyapi.datatypes.PrivateMessageReportResponse> =
-        apiV18.resolvePrivateMessageReport(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
-     * List private message reports.
-     *
-     * @GET("private_message/report/list")
-     */
-    override suspend fun listPrivateMessageReports(
-        form: it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReports,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListPrivateMessageReportsResponse> =
-        apiV18.listPrivateMessageReports(transformer.fromUni(form)).map(transformer::toUni)
+        api.resolvePrivateMessageReport(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Get the details for a person.
@@ -568,7 +613,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun getPersonDetails(
         form: it.vercruysse.lemmyapi.datatypes.GetPersonDetails,
     ): Result<it.vercruysse.lemmyapi.datatypes.GetPersonDetailsResponse> =
-        apiV18.getPersonDetails(transformer.fromUni(form)).map(transformer::toUni)
+        api.getPersonDetails(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Register a new user.
@@ -576,7 +621,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("user/register")
      */
     override suspend fun register(form: it.vercruysse.lemmyapi.datatypes.Register): Result<it.vercruysse.lemmyapi.datatypes.LoginResponse> =
-        apiV18.register(transformer.fromUni(form)).map(transformer::toUni)
+        api.register(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Fetch a Captcha.
@@ -584,37 +629,56 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @GET("user/get_captcha")
      */
     override suspend fun getCaptcha(): Result<it.vercruysse.lemmyapi.datatypes.GetCaptchaResponse> =
-        apiV18.getCaptcha(GetCaptcha(auth)).map(transformer::toUni)
+        api.getCaptcha(GetCaptcha(auth)).map(transformer::toUni)
 
     /**
-     * Get mentions for your user.
-     *
-     * @GET("user/mention")
+     * Mark a notification as read
      */
-    override suspend fun getPersonMentions(
-        form: it.vercruysse.lemmyapi.datatypes.GetPersonMentions,
-    ): Result<it.vercruysse.lemmyapi.datatypes.GetPersonMentionsResponse> =
-        apiV18.getPersonMentions(transformer.fromUni(form)).map(transformer::toUni)
+    override suspend fun markNotificationAsRead(form: MarkNotificationAsRead): Result<Unit> =
+        when (form._kind) {
+            NotificationType.Mention -> api.markPersonMentionAsRead(transformer.fromUniM(form)).map { }
+            NotificationType.Reply -> api.markCommentReplyAsRead(transformer.fromUniR(form)).map { }
+            NotificationType.PrivateMessage -> api.markPrivateMessageAsRead(transformer.fromUniP(form)).map { }
+            NotificationType.Subscribed, NotificationType.ModAction -> notSupported()
+            null -> notSupported()
+        }
 
     /**
-     * Mark a person mention as read.
-     *
-     * @POST("user/mention/mark_as_read")
+     * List notifications.
      */
-    override suspend fun markPersonMentionAsRead(
-        form: it.vercruysse.lemmyapi.datatypes.MarkPersonMentionAsRead,
-    ): Result<it.vercruysse.lemmyapi.datatypes.PersonMentionResponse> =
-        apiV18.markPersonMentionAsRead(transformer.fromUni(form)).map(transformer::toUni)
+    override suspend fun listNotifications(form: ListNotifications): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.NotificationView>> = when (form.type_) {
+        NotificationDataType.All ->
+            runCatchingPreservingCancellation {
+                val replies = api.getReplies(transformer.fromUniR(form)).getOrThrow().replies.map(transformer::toUni)
+                val mentionReplies = api.getPersonMentions(transformer.fromUniM(form)).getOrThrow().mentions.map(transformer::toUni)
+                val privateMessages = api.getPrivateMessages(transformer.fromUniP(form)).getOrThrow().private_messages.map(transformer::toUniPMV)
 
-    /**
-     * Get comment replies.
-     *
-     * @GET("user/replies")
-     */
-    override suspend fun getReplies(
-        form: it.vercruysse.lemmyapi.datatypes.GetReplies,
-    ): Result<it.vercruysse.lemmyapi.datatypes.GetRepliesResponse> =
-        apiV18.getReplies(transformer.fromUni(form)).map(transformer::toUni)
+                PagedResponse(
+                    buildList {
+                        addAll(replies)
+                        addAll(mentionReplies)
+                        addAll(privateMessages)
+                    },
+                )
+            }
+
+        NotificationDataType.Reply ->
+            api.getReplies(transformer.fromUniR(form)).map { resp ->
+                PagedResponse(resp.replies.map(transformer::toUni))
+            }
+
+        NotificationDataType.Mention ->
+            api.getPersonMentions(transformer.fromUniM(form)).map { resp ->
+                PagedResponse(resp.mentions.map(transformer::toUni))
+            }
+
+        NotificationDataType.PrivateMessage ->
+            api.getPrivateMessages(transformer.fromUniP(form)).map { resp ->
+                PagedResponse(resp.private_messages.map(transformer::toUniPMV))
+            }
+
+        NotificationDataType.Subscribed, NotificationDataType.ModAction -> Result.success(PagedResponse(emptyList()))
+    }
 
     /**
      * Ban a person from your site.
@@ -623,16 +687,20 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun banPerson(
         form: it.vercruysse.lemmyapi.datatypes.BanPerson,
-    ): Result<it.vercruysse.lemmyapi.datatypes.BanPersonResponse> =
-        apiV18.banPerson(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.PersonResponse> =
+        api.banPerson(transformer.fromUni(form)).map { resp ->
+            it.vercruysse.lemmyapi.datatypes.PersonResponse(transformer.toUni(resp.person_view))
+        }
 
     /**
      * Get a list of banned users
      *
      * @GET("user/banned")
      */
-    override suspend fun getBannedPersons(): Result<it.vercruysse.lemmyapi.datatypes.BannedPersonsResponse> =
-        apiV18.getBannedPersons(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetBannedPersons(auth ?: "")).map(transformer::toUni)
+    override suspend fun getBannedPersons(): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PersonView>> =
+        api.getBannedPersons(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetBannedPersons(auth ?: "")).map { resp ->
+            PagedResponse(resp.banned.map(transformer::toUni))
+        }
 
     /**
      * Block a person.
@@ -641,8 +709,10 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun blockPerson(
         form: it.vercruysse.lemmyapi.datatypes.BlockPerson,
-    ): Result<it.vercruysse.lemmyapi.datatypes.BlockPersonResponse> =
-        apiV18.blockPerson(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.PersonResponse> =
+        api.blockPerson(transformer.fromUni(form)).map { resp ->
+            it.vercruysse.lemmyapi.datatypes.PersonResponse(transformer.toUni(resp.person_view))
+        }
 
     /**
      * Log into lemmy.
@@ -650,7 +720,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("user/login")
      */
     override suspend fun login(form: it.vercruysse.lemmyapi.datatypes.Login): Result<it.vercruysse.lemmyapi.datatypes.LoginResponse> =
-        apiV18.login(transformer.fromUni(form)).map(transformer::toUni)
+        api.login(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Delete your account.
@@ -658,31 +728,31 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("user/delete_account")
      */
     override suspend fun deleteAccount(form: it.vercruysse.lemmyapi.datatypes.DeleteAccount): Result<Unit> =
-        apiV18.deleteAccount(transformer.fromUni(form))
+        api.deleteAccount(transformer.fromUni(form))
 
     /**
      * Reset your password.
      *
      * @POST("user/password_reset")
      */
-    override suspend fun resetPassword(form: it.vercruysse.lemmyapi.datatypes.PasswordReset): Result<Unit> =
-        apiV18.passwordReset(transformer.fromUni(form))
+    override suspend fun resetPassword(form: it.vercruysse.lemmyapi.datatypes.ResetPassword): Result<Unit> =
+        api.passwordReset(transformer.fromUni(form))
 
     /**
      * Change your password from an email / token based reset.
      *
      * @POST("user/password_change")
      */
-    override suspend fun changePasswordAfterReset(form: it.vercruysse.lemmyapi.datatypes.PasswordChangeAfterReset): Result<Unit> =
-        apiV18.passwordChangeAfterReset(transformer.fromUni(form))
+    override suspend fun changePasswordAfterReset(form: it.vercruysse.lemmyapi.datatypes.ChangePasswordAfterReset): Result<Unit> =
+        api.passwordChangeAfterReset(transformer.fromUni(form))
 
     /**
      * Mark all replies as read.
      *
      * @POST("user/mark_all_as_read")
      */
-    override suspend fun markAllAsRead(): Result<it.vercruysse.lemmyapi.datatypes.GetRepliesResponse> =
-        apiV18.markAllAsRead(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.MarkAllAsRead(auth ?: "")).map(transformer::toUni)
+    override suspend fun markAllNotificationsAsRead(): Result<Unit> =
+        api.markAllAsRead(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.MarkAllAsRead(auth ?: "")).map {}
 
     /**
      * Save your user settings.
@@ -691,7 +761,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun saveUserSettings(
         form: it.vercruysse.lemmyapi.datatypes.SaveUserSettings,
-    ): Result<Unit> = apiV18.saveUserSettings(transformer.fromUni(form))
+    ): Result<Unit> = api.saveUserSettings(transformer.fromUni(form))
 
     /**
      * Change your user password.
@@ -701,25 +771,23 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun changePassword(
         form: it.vercruysse.lemmyapi.datatypes.ChangePassword,
     ): Result<it.vercruysse.lemmyapi.datatypes.LoginResponse> =
-        apiV18.changePassword(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
-     * Get counts for your reports
-     *
-     * @GET("user/report_count")
-     */
-    override suspend fun getReportCount(
-        form: it.vercruysse.lemmyapi.datatypes.GetReportCount,
-    ): Result<it.vercruysse.lemmyapi.datatypes.GetReportCountResponse> =
-        apiV18.getReportCount(transformer.fromUni(form)).map(transformer::toUni)
+        api.changePassword(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Get your unread counts
      *
-     * @GET("user/unread_count")
      */
-    override suspend fun getUnreadCount(): Result<it.vercruysse.lemmyapi.datatypes.GetUnreadCountResponse> =
-        apiV18.getUnreadCount(GetUnreadCount(auth ?: "")).map(transformer::toUni)
+    override suspend fun getUnreadCounts(): Result<UnreadCountsResponse> = runCatchingPreservingCancellation {
+        val d = api.getUnreadCount(GetUnreadCount(auth ?: "")).getOrThrow()
+        val reportCount = api.getReportCount(GetReportCount(null, auth ?: "")).getOrNull()
+        val applicationCount = api.getUnreadRegistrationApplicationCount(GetUnreadRegistrationApplicationCount(auth ?: "")).getOrNull()
+
+        UnreadCountsResponse(
+            notification_count = d.replies + d.mentions + d.private_messages,
+            report_count = (reportCount?.post_reports ?: 0L) + (reportCount?.comment_reports ?: 0L) + (reportCount?.comment_reports ?: 0L),
+            registration_application_count = applicationCount?.registration_applications,
+        )
+    }
 
     /**
      * Verify your email
@@ -727,7 +795,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("user/verify_email")
      */
     override suspend fun verifyEmail(form: it.vercruysse.lemmyapi.datatypes.VerifyEmail): Result<Unit> =
-        apiV18.verifyEmail(transformer.fromUni(form))
+        api.verifyEmail(transformer.fromUni(form))
 
     /**
      * Leave the Site admins.
@@ -735,7 +803,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("user/leave_admin")
      */
     override suspend fun leaveAdmin(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> =
-        apiV18.leaveAdmin(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.LeaveAdmin(auth ?: "")).map(transformer::toUni)
+        api.leaveAdmin(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.LeaveAdmin(auth ?: "")).map(transformer::toUni)
 
     /**
      * Mark donation dialog as shown.
@@ -752,17 +820,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun addAdmin(
         form: it.vercruysse.lemmyapi.datatypes.AddAdmin,
     ): Result<it.vercruysse.lemmyapi.datatypes.AddAdminResponse> =
-        apiV18.addAdmin(transformer.fromUni(form)).map(transformer::toUni)
-
-    /**
-     * Get the unread registration applications count.
-     *
-     * @GET("admin/registration_application/count")
-     */
-    override suspend fun getUnreadRegistrationApplicationCount(): Result<it.vercruysse.lemmyapi.datatypes.GetUnreadRegistrationApplicationCountResponse> =
-        apiV18.getUnreadRegistrationApplicationCount(
-            it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetUnreadRegistrationApplicationCount(auth ?: ""),
-        ).map(transformer::toUni)
+        api.addAdmin(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * List the registration applications.
@@ -771,8 +829,10 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun listRegistrationApplications(
         form: it.vercruysse.lemmyapi.datatypes.ListRegistrationApplications,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListRegistrationApplicationsResponse> =
-        apiV18.listRegistrationApplications(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationView>> =
+        api.listRegistrationApplications(transformer.fromUni(form)).map { resp ->
+            PagedResponse(resp.registration_applications.map(transformer::toUni))
+        }
 
     /**
      * Approve a registration application
@@ -782,7 +842,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun approveRegistrationApplication(
         form: it.vercruysse.lemmyapi.datatypes.ApproveRegistrationApplication,
     ): Result<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse> =
-        apiV18.approveRegistrationApplication(transformer.fromUni(form)).map(transformer::toUni)
+        api.approveRegistrationApplication(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Purge / Delete a person from the database.
@@ -790,7 +850,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("admin/purge/person")
      */
     override suspend fun purgePerson(form: it.vercruysse.lemmyapi.datatypes.PurgePerson): Result<Unit> =
-        apiV18.purgePerson(transformer.fromUni(form))
+        api.purgePerson(transformer.fromUni(form))
 
     /**
      * Purge / Delete a community from the database.
@@ -798,7 +858,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("admin/purge/community")
      */
     override suspend fun purgeCommunity(form: it.vercruysse.lemmyapi.datatypes.PurgeCommunity): Result<Unit> =
-        apiV18.purgeCommunity(transformer.fromUni(form))
+        api.purgeCommunity(transformer.fromUni(form))
 
     /**
      * Purge / Delete a post from the database.
@@ -806,7 +866,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("admin/purge/post")
      */
     override suspend fun purgePost(form: it.vercruysse.lemmyapi.datatypes.PurgePost): Result<Unit> =
-        apiV18.purgePost(transformer.fromUni(form))
+        api.purgePost(transformer.fromUni(form))
 
     /**
      * Purge / Delete a comment from the database.
@@ -814,7 +874,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      * @POST("admin/purge/comment")
      */
     override suspend fun purgeComment(form: it.vercruysse.lemmyapi.datatypes.PurgeComment): Result<Unit> =
-        apiV18.purgeComment(transformer.fromUni(form))
+        api.purgeComment(transformer.fromUni(form))
 
     /**
      * Edit an existing custom emoji
@@ -824,7 +884,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun editCustomEmoji(
         form: it.vercruysse.lemmyapi.datatypes.EditCustomEmoji,
     ): Result<it.vercruysse.lemmyapi.datatypes.CustomEmojiResponse> =
-        apiV18.editCustomEmoji(transformer.fromUni(form)).map(transformer::toUni)
+        api.editCustomEmoji(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Create a new custom emoji
@@ -834,7 +894,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun createCustomEmoji(
         form: it.vercruysse.lemmyapi.datatypes.CreateCustomEmoji,
     ): Result<it.vercruysse.lemmyapi.datatypes.CustomEmojiResponse> =
-        apiV18.createCustomEmoji(transformer.fromUni(form)).map(transformer::toUni)
+        api.createCustomEmoji(transformer.fromUni(form)).map(transformer::toUni)
 
     /**
      * Delete a custom emoji
@@ -843,18 +903,28 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun deleteCustomEmoji(
         form: it.vercruysse.lemmyapi.datatypes.DeleteCustomEmoji,
-    ): Result<Unit> = apiV18.deleteCustomEmoji(transformer.fromUni(form))
+    ): Result<Unit> = api.deleteCustomEmoji(transformer.fromUni(form))
+
+    /**
+     * List custom emojis
+     *
+     * @GET("custom_emoji/list")
+     */
+    override suspend fun listCustomEmojis(form: ListCustomEmojis): Result<ListCustomEmojisResponse> =
+        api.getSite(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSite(auth)).map {
+            ListCustomEmojisResponse(it.custom_emojis.map(transformer::toUni))
+        }
 
     /**
      * Block an instance.
      *
      * @POST("site/block")
      */
-    override suspend fun blockInstance(
-        form: it.vercruysse.lemmyapi.datatypes.BlockInstance,
-    ): Result<it.vercruysse.lemmyapi.datatypes.BlockInstanceResponse> = notSupported()
+    override suspend fun userBlockInstanceCommunities(
+        form: it.vercruysse.lemmyapi.datatypes.UserBlockInstanceCommunitiesParams,
+    ): Result<Unit> = notSupported()
 
-    // TODO possible supported by using old logic, might not be worth the effort
+    // possible supported by using old logic, but not be worth the effort
 
     /**
      * Generate a TOTP / two-factor secret.
@@ -874,9 +944,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @POST("user/totp/update")
      */
-    override suspend fun updateTotp(
-        form: it.vercruysse.lemmyapi.datatypes.UpdateTotp,
-    ): Result<it.vercruysse.lemmyapi.datatypes.UpdateTotpResponse> = notSupported()
+    override suspend fun editTotp(
+        form: it.vercruysse.lemmyapi.datatypes.EditTotp,
+    ): Result<it.vercruysse.lemmyapi.datatypes.EditTotpResponse> = notSupported()
 
     /**
      * Export a backup of your user settings, including your saved content,
@@ -898,7 +968,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      *
      * @GET("user/list_logins")
      */
-    override suspend fun listLogins(): Result<List<it.vercruysse.lemmyapi.datatypes.LoginToken>> = notSupported()
+    override suspend fun listLogins(): Result<ListLoginsResponse> = notSupported()
 
     /**
      * Returns an error message if your auth token is invalid
@@ -907,7 +977,17 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun validateAuth(): Result<Unit> =
         // This request can only fail if the auth token is invalid
-        apiV18.getPersonMentions(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetPersonMentions(auth = auth ?: "")).map { }
+        api.getPersonMentions(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetPersonMentions(auth = auth ?: "")).map { }
+
+    /**
+     * Get data of current user
+     *
+     * @GET("/account")
+     */
+    override suspend fun getMyUser(): Result<MyUserInfo> =
+        api.getSite(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSite(auth))
+            .mapCatching { it.my_user ?: throw IllegalStateException("Auth invalid") }
+            .map { transformer.toUni(it) }
 
     /**
      * Logout your user
@@ -923,7 +1003,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun listPostLikes(
         form: it.vercruysse.lemmyapi.datatypes.ListPostLikes,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListPostLikesResponse> = notSupported()
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> = notSupported()
 
     /**
      * List a comment's likes. Admin-only.
@@ -932,7 +1012,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun listCommentLikes(
         form: it.vercruysse.lemmyapi.datatypes.ListCommentLikes,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListCommentLikesResponse> = notSupported()
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> = notSupported()
 
     /**
      * List all the media for your user
@@ -941,23 +1021,25 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
      */
     override suspend fun listMedia(
         form: it.vercruysse.lemmyapi.datatypes.ListMedia,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListMediaResponse> = notSupported()
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> = notSupported()
 
     /**
      * List all the media known to your instance.
      *
      * @GET("admin/list_all_media")
      */
-    override suspend fun listAllMedia(
+    override suspend fun listMediaAdmin(
         form: it.vercruysse.lemmyapi.datatypes.ListMedia,
-    ): Result<it.vercruysse.lemmyapi.datatypes.ListMediaResponse> = notSupported()
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> = notSupported()
 
     /**
      * Hide a post from list views.
      *
      * @POST("post/hide")
      */
-    override suspend fun hidePost(form: it.vercruysse.lemmyapi.datatypes.HidePost): Result<Unit> = notSupported()
+    override suspend fun hidePost(form: it.vercruysse.lemmyapi.datatypes.HidePost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> = notSupported()
+
+    override suspend fun hidePosts(form: it.vercruysse.lemmyapi.datatypes.HidePosts): Result<Unit> = notSupported()
 
     /**
      * Get the application a user submitted when they first registered their account
@@ -967,4 +1049,239 @@ internal class LemmyApiUniWrapper(client: HttpClient, actualVersion: Version, ba
     override suspend fun getRegistrationApplication(
         form: it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication,
     ): Result<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse> = notSupported()
+
+    /**
+     * List the content for a person.
+     *
+     * @GET("person/content")
+     */
+    override suspend fun listPersonContent(
+        form: it.vercruysse.lemmyapi.datatypes.ListPersonContent,
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> {
+        val getPersonDetailsForm = GetPersonDetails(
+            username = form.username,
+            person_id = form.person_id,
+            community_id = form.community_id,
+            page = form.page,
+            limit = form.limit,
+            auth = auth,
+        )
+        return api.getPersonDetails(getPersonDetailsForm).map { response ->
+            val comments = when (form.type_) {
+                it.vercruysse.lemmyapi.enums.PersonContentType.Posts -> emptyList()
+                else -> response.comments.map { transformer.toUni(it) }
+            }
+            val posts = when (form.type_) {
+                it.vercruysse.lemmyapi.enums.PersonContentType.Comments -> emptyList()
+                else -> response.posts.map { transformer.toUni(it) }
+            }
+            PagedResponse(items = comments + posts)
+        }
+    }
+
+    override suspend fun uploadImage(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
+        pictrsApi.uploadImage(image)
+
+    override suspend fun uploadCommunityBanner(
+        image: ByteArray,
+        form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery,
+    ): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
+        uploadAndApplyImage(image) { imageUrl ->
+            api.editCommunity(
+                it.vercruysse.lemmyapi.v0.x18.x5.datatypes.EditCommunity(
+                    community_id = form.id,
+                    banner = imageUrl,
+                    auth = auth ?: "",
+                ),
+            ).map {}
+        }
+
+    override suspend fun uploadCommunityIcon(
+        image: ByteArray,
+        form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery,
+    ): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
+        uploadAndApplyImage(image) { imageUrl ->
+            api.editCommunity(
+                it.vercruysse.lemmyapi.v0.x18.x5.datatypes.EditCommunity(
+                    community_id = form.id,
+                    icon = imageUrl,
+                    auth = auth ?: "",
+                ),
+            ).map {}
+        }
+
+    override suspend fun uploadSiteBanner(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
+        uploadAndApplyImage(image) { imageUrl ->
+            api.editSite(
+                it.vercruysse.lemmyapi.v0.x18.x5.datatypes.EditSite(
+                    banner = imageUrl,
+                    auth = auth ?: "",
+                ),
+            ).map {}
+        }
+
+    override suspend fun uploadSiteIcon(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
+        uploadAndApplyImage(image) { imageUrl ->
+            api.editSite(
+                it.vercruysse.lemmyapi.v0.x18.x5.datatypes.EditSite(
+                    icon = imageUrl,
+                    auth = auth ?: "",
+                ),
+            ).map {}
+        }
+
+    override suspend fun uploadUserAvatar(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
+        uploadAndApplyImage(image) { imageUrl ->
+            api.saveUserSettings(
+                it.vercruysse.lemmyapi.v0.x18.x5.datatypes.SaveUserSettings(
+                    avatar = imageUrl,
+                    auth = auth ?: "",
+                ),
+            )
+        }
+
+    override suspend fun uploadUserBanner(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
+        uploadAndApplyImage(image) { imageUrl ->
+            api.saveUserSettings(
+                it.vercruysse.lemmyapi.v0.x18.x5.datatypes.SaveUserSettings(
+                    banner = imageUrl,
+                    auth = auth ?: "",
+                ),
+            )
+        }
+
+    override suspend fun deleteUserAvatar(): Result<Unit> =
+        api.saveUserSettings(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.SaveUserSettings(avatar = "", auth = auth ?: ""))
+
+    override suspend fun deleteUserBanner(): Result<Unit> =
+        api.saveUserSettings(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.SaveUserSettings(banner = "", auth = auth ?: ""))
+
+    override suspend fun deleteCommunityBanner(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> =
+        api.editCommunity(
+            it.vercruysse.lemmyapi.v0.x18.x5.datatypes.EditCommunity(
+                community_id = form.id,
+                banner = "",
+                auth = auth ?: "",
+            ),
+        ).map {}
+
+    override suspend fun deleteCommunityIcon(form: it.vercruysse.lemmyapi.datatypes.CommunityIdQuery): Result<Unit> =
+        api.editCommunity(
+            it.vercruysse.lemmyapi.v0.x18.x5.datatypes.EditCommunity(
+                community_id = form.id,
+                icon = "",
+                auth = auth ?: "",
+            ),
+        ).map {}
+
+    override suspend fun deleteSiteBanner(): Result<Unit> =
+        api.editSite(
+            it.vercruysse.lemmyapi.v0.x18.x5.datatypes.EditSite(
+                banner = "",
+                auth = auth ?: "",
+            ),
+        ).map {}
+
+    override suspend fun deleteSiteIcon(): Result<Unit> =
+        api.editSite(
+            it.vercruysse.lemmyapi.v0.x18.x5.datatypes.EditSite(
+                icon = "",
+                auth = auth ?: "",
+            ),
+        ).map {}
+
+    override suspend fun deleteMedia(form: it.vercruysse.lemmyapi.datatypes.DeleteImageParams): Result<Unit> =
+        pictrsApi.deleteMedia(form)
+
+    override suspend fun adminListUsers(form: it.vercruysse.lemmyapi.datatypes.AdminListUsers): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalUserView>> = notSupported()
+
+    override suspend fun getRandomCommunity(form: it.vercruysse.lemmyapi.datatypes.GetRandomCommunity): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> = notSupported()
+
+    override suspend fun createCommunityReport(form: it.vercruysse.lemmyapi.datatypes.CreateCommunityReport): Result<it.vercruysse.lemmyapi.datatypes.CommunityReportResponse> = notSupported()
+
+    override suspend fun resolveCommunityReport(form: it.vercruysse.lemmyapi.datatypes.ResolveCommunityReport): Result<it.vercruysse.lemmyapi.datatypes.CommunityReportResponse> = notSupported()
+
+    override suspend fun createCommunityTag(form: it.vercruysse.lemmyapi.datatypes.CreateCommunityTag): Result<it.vercruysse.lemmyapi.datatypes.CommunityTag> = notSupported()
+
+    override suspend fun editCommunityTag(form: it.vercruysse.lemmyapi.datatypes.EditCommunityTag): Result<it.vercruysse.lemmyapi.datatypes.CommunityTag> = notSupported()
+
+    override suspend fun deleteCommunityTag(form: it.vercruysse.lemmyapi.datatypes.DeleteCommunityTag): Result<it.vercruysse.lemmyapi.datatypes.CommunityTag> = notSupported()
+
+    override suspend fun editCommunityNotifications(form: it.vercruysse.lemmyapi.datatypes.EditCommunityNotifications): Result<Unit> = notSupported()
+
+    override suspend fun approveCommunityPendingFollow(form: it.vercruysse.lemmyapi.datatypes.ApproveCommunityPendingFollower): Result<Unit> = notSupported()
+
+    override suspend fun listCommunityPendingFollows(form: it.vercruysse.lemmyapi.datatypes.ListCommunityPendingFollows): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PendingFollowerView>> = notSupported()
+
+    override suspend fun modEditPost(form: it.vercruysse.lemmyapi.datatypes.ModEditPost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> = notSupported()
+
+    override suspend fun editPostNotifications(form: it.vercruysse.lemmyapi.datatypes.EditPostNotifications): Result<Unit> = notSupported()
+
+    override suspend fun warnPost(form: it.vercruysse.lemmyapi.datatypes.CreatePostWarning): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> = notSupported()
+
+    override suspend fun getCommentsSlim(form: it.vercruysse.lemmyapi.datatypes.GetComments): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentSlimView>> = notSupported()
+
+    override suspend fun lockComment(form: it.vercruysse.lemmyapi.datatypes.LockComment): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> = notSupported()
+
+    override suspend fun warnComment(form: it.vercruysse.lemmyapi.datatypes.CreateCommentWarning): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> = notSupported()
+
+    override suspend fun notePerson(form: it.vercruysse.lemmyapi.datatypes.NotePerson): Result<Unit> = notSupported()
+
+    override suspend fun listPersonSaved(form: it.vercruysse.lemmyapi.datatypes.ListPersonSaved): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> = notSupported()
+
+    override suspend fun listPersonRead(form: it.vercruysse.lemmyapi.datatypes.ListPersonRead): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> = notSupported()
+
+    override suspend fun listPersonHidden(form: it.vercruysse.lemmyapi.datatypes.ListPersonHidden): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> = notSupported()
+
+    override suspend fun listPersonLiked(form: it.vercruysse.lemmyapi.datatypes.ListPersonLiked): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> = notSupported()
+
+    override suspend fun resendVerificationEmail(form: it.vercruysse.lemmyapi.datatypes.ResendVerificationEmail): Result<Unit> = notSupported()
+
+    override suspend fun authenticateWithOAuth(form: it.vercruysse.lemmyapi.datatypes.AuthenticateWithOauth): Result<it.vercruysse.lemmyapi.datatypes.LoginResponse> = notSupported()
+
+    override suspend fun userBlockInstancePersons(form: it.vercruysse.lemmyapi.datatypes.UserBlockInstancePersonsParams): Result<Unit> = notSupported()
+
+    override suspend fun adminAllowInstance(form: it.vercruysse.lemmyapi.datatypes.AdminAllowInstanceParams): Result<Unit> = notSupported()
+
+    override suspend fun adminBlockInstance(form: it.vercruysse.lemmyapi.datatypes.AdminBlockInstanceParams): Result<Unit> = notSupported()
+
+    override suspend fun createTagline(form: it.vercruysse.lemmyapi.datatypes.CreateTagline): Result<it.vercruysse.lemmyapi.datatypes.TaglineResponse> = notSupported()
+
+    override suspend fun editTagline(form: it.vercruysse.lemmyapi.datatypes.EditTagline): Result<it.vercruysse.lemmyapi.datatypes.TaglineResponse> = notSupported()
+
+    override suspend fun deleteTagline(form: it.vercruysse.lemmyapi.datatypes.DeleteTagline): Result<Unit> = notSupported()
+
+    override suspend fun listTaglines(form: it.vercruysse.lemmyapi.datatypes.ListTaglines): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.Tagline>> = notSupported()
+
+    override suspend fun createOAuthProvider(form: it.vercruysse.lemmyapi.datatypes.CreateOAuthProvider): Result<it.vercruysse.lemmyapi.datatypes.AdminOAuthProvider> = notSupported()
+
+    override suspend fun editOAuthProvider(form: it.vercruysse.lemmyapi.datatypes.EditOAuthProvider): Result<it.vercruysse.lemmyapi.datatypes.AdminOAuthProvider> = notSupported()
+
+    override suspend fun deleteOAuthProvider(form: it.vercruysse.lemmyapi.datatypes.DeleteOAuthProvider): Result<Unit> = notSupported()
+
+    override suspend fun getMultiCommunity(form: it.vercruysse.lemmyapi.datatypes.GetMultiCommunity): Result<it.vercruysse.lemmyapi.datatypes.GetMultiCommunityResponse> = notSupported()
+
+    override suspend fun createMultiCommunity(form: it.vercruysse.lemmyapi.datatypes.CreateMultiCommunity): Result<it.vercruysse.lemmyapi.datatypes.MultiCommunityResponse> = notSupported()
+
+    override suspend fun editMultiCommunity(form: it.vercruysse.lemmyapi.datatypes.EditMultiCommunity): Result<it.vercruysse.lemmyapi.datatypes.MultiCommunityResponse> = notSupported()
+
+    override suspend fun createMultiCommunityEntry(form: it.vercruysse.lemmyapi.datatypes.CreateOrDeleteMultiCommunityEntry): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> = notSupported()
+
+    override suspend fun deleteMultiCommunityEntry(form: it.vercruysse.lemmyapi.datatypes.CreateOrDeleteMultiCommunityEntry): Result<Unit> = notSupported()
+
+    override suspend fun followMultiCommunity(form: it.vercruysse.lemmyapi.datatypes.FollowMultiCommunity): Result<it.vercruysse.lemmyapi.datatypes.MultiCommunityResponse> = notSupported()
+
+    override suspend fun listMultiCommunities(form: it.vercruysse.lemmyapi.datatypes.ListMultiCommunities): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.MultiCommunityView>> = notSupported()
+
+    override suspend fun deleteMediaAdmin(form: it.vercruysse.lemmyapi.datatypes.DeleteImageParams): Result<Unit> = notSupported()
+
+    override suspend fun imageHealth(): Result<Unit> = notSupported()
+
+    override suspend fun listPersons(form: it.vercruysse.lemmyapi.datatypes.ListPersons): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PersonView>> = notSupported()
+
+    override suspend fun createRegistrationInvitation(form: it.vercruysse.lemmyapi.datatypes.CreateInvitation): Result<it.vercruysse.lemmyapi.datatypes.CreateInvitationResponse> = notSupported()
+
+    override suspend fun revokeRegistrationInvitation(form: it.vercruysse.lemmyapi.datatypes.RevokeInvitation): Result<Unit> = notSupported()
+
+    override suspend fun listRegistrationInvitations(form: it.vercruysse.lemmyapi.datatypes.ListInvitations): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalUserInvite>> = notSupported()
 }

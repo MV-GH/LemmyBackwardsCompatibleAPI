@@ -1,6 +1,6 @@
 package it.vercruysse.lemmyapi.v0.x19.x0.datatypes
 
-import it.vercruysse.lemmyapi.dto.SearchType
+import it.vercruysse.lemmyapi.v0.enums.SearchType
 import kotlinx.serialization.Serializable
 
 @Serializable

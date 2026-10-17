@@ -1,6 +1,6 @@
 package it.vercruysse.lemmyapi.v0.x19.x4
 
-import io.ktor.client.HttpClient
+import it.vercruysse.lemmyapi.LemmyRequestClient
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.utils.getResult
@@ -8,11 +8,7 @@ import it.vercruysse.lemmyapi.utils.postResult
 import it.vercruysse.lemmyapi.utils.putResult
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.*
 
-internal class LemmyApiController(client: HttpClient, auth: String?) :
-    LemmyApiRouter(
-        client,
-        auth,
-    ) {
+internal class LemmyApiController(private val client: LemmyRequestClient) : LemmyApiRouter {
 
     /**
      * Gets the site, and your user data.
@@ -707,7 +703,7 @@ internal class LemmyApiController(client: HttpClient, auth: String?) :
      *
      * @POST("site/block")
      */
-    override suspend fun blockInstance(form: BlockInstance): Result<BlockInstanceResponse> =
+    override suspend fun blockInstance(form: BlockInstance): Result<Unit> =
         client.postResult("site/block", form)
 
     /**

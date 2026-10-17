@@ -3,22 +3,33 @@ package it.vercruysse.lemmyapi.utils
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.http.*
+
+suspend inline fun <reified R> HttpClient.deleteResult(
+    urlString: String,
+    builder: HttpRequestBuilder.() -> Unit = {},
+): Result<R> = runCatchingPreservingCancellation { delete(urlString, builder).body() }
+
+suspend inline fun <reified R, reified T> HttpClient.deleteResult(
+    urlString: String,
+    body: T,
+): Result<R> = this.deleteResult(urlString) { setJsonBody(body) }
 
 suspend inline fun <reified R> HttpClient.getResult(
     urlString: String,
     builder: HttpRequestBuilder.() -> Unit = {},
-): Result<R> = runCatching { get(urlString, builder).body() }
+): Result<R> = runCatchingPreservingCancellation { get(urlString, builder).body() }
 
 suspend inline fun <reified R> HttpClient.putResult(
     urlString: String,
     builder: HttpRequestBuilder.() -> Unit = {},
-): Result<R> = runCatching { put(urlString, builder).body() }
+): Result<R> = runCatchingPreservingCancellation { put(urlString, builder).body() }
 
 suspend inline fun <reified R> HttpClient.postResult(
     urlString: String,
     builder: HttpRequestBuilder.() -> Unit = {},
-): Result<R> = runCatching { post(urlString, builder).body() }
+): Result<R> = runCatchingPreservingCancellation { post(urlString, builder).body() }
 
 suspend inline fun <reified R, reified T> HttpClient.getResult(
     urlString: String,
@@ -34,6 +45,29 @@ suspend inline fun <reified R, reified T> HttpClient.putResult(
     urlString: String,
     body: T,
 ): Result<R> = this.putResult(urlString) { setJsonBody(body) }
+
+suspend inline fun <reified R> HttpClient.postUploadResult(
+    urlString: String,
+    image: ByteArray,
+    builder: HttpRequestBuilder.() -> Unit = {},
+): Result<R> = runCatchingPreservingCancellation {
+    post(urlString) {
+        setBody(
+            MultiPartFormDataContent(
+                formData {
+                    append(
+                        "image", // TODO: this might need to be images[]
+                        image,
+                        Headers.build {
+                            append(HttpHeaders.ContentDisposition, "filename=\"image.jpg\"")
+                        },
+                    )
+                },
+            ),
+        )
+        builder()
+    }.body()
+}
 
 inline fun <reified T> HttpRequestBuilder.addQueryParams(form: T) {
     toMap(form).forEach { (key, value) ->
