@@ -9,4 +9,6 @@ import kotlinx.serialization.Serializable
 data class ResolvePrivateMessageReport(
     val report_id: PrivateMessageReportId,
     val resolved: Boolean,
+    /** Added in Lemmy 1.0.0 */
+    val conclusion: String? = null,
 ) : DatatypeRoot

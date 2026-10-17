@@ -331,7 +331,7 @@ fun downloadTypes(
 }
 
 fun main() {
-    // Future version 1.0.0-beta.1
-    downloadTypes("1.0.0-beta.1", "v1/x0/x0")
+    // Future version 1.0.0-beta.2
+    downloadTypes("1.0.0-beta.2", "v1/x0/x0")
     exitProcess(0)
 }

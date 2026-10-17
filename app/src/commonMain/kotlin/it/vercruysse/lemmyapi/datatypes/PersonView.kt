@@ -14,4 +14,6 @@ data class PersonView(
     val person_actions: PersonActions? = null,
     val banned: Boolean,
     val ban_expires_at: String? = null,
+    /** Added in Lemmy 1.0.0 */
+    val community_actions: CommunityActions? = null,
 ) : DatatypeRoot, ResolveObjectView
