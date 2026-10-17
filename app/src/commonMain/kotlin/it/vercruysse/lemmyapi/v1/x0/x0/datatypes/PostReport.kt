@@ -16,4 +16,5 @@ internal data class PostReport(
     val published_at: String,
     val updated_at: String? = null,
     val violates_instance_rules: Boolean,
+    val conclusion: String? = null,
 )

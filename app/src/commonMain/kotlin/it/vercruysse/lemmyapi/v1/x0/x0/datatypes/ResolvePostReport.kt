@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 internal data class ResolvePostReport(
     val report_id: PostReportId,
     val resolved: Boolean,
+    val conclusion: String? = null,
 )

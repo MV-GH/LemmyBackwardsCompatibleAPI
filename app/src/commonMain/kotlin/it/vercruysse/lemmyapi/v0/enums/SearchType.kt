@@ -32,6 +32,7 @@ internal enum class SearchType {
                 UniSearchType.Posts -> Posts
                 UniSearchType.Communities -> Communities
                 UniSearchType.Users -> Users
+                UniSearchType.MultiCommunities -> null
                 UniSearchType.Url -> Url
             }
 

@@ -18,4 +18,5 @@ internal data class CommunityReport(
     val resolver_id: PersonId? = null,
     val published_at: String,
     val updated_at: String? = null,
+    val conclusion: String? = null,
 )

@@ -21,4 +21,6 @@ data class PostReport(
     val updated_at: String? = null,
     /** Added in Lemmy 1.0.0 */
     val violates_instance_rules: Boolean,
+    /** Added in Lemmy 1.0.0 */
+    val conclusion: String? = null,
 ) : DatatypeRoot, Identity

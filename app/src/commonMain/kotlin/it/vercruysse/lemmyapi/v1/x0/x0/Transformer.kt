@@ -597,6 +597,7 @@ internal class Transformer : MapperGenerator {
         published_at = d.published_at,
         updated_at = d.updated_at,
         violates_instance_rules = d.violates_instance_rules,
+        conclusion = d.conclusion,
     )
 
     override fun toUni(d: X0DatatypesCommentReportResponse): LemmyapiDatatypesCommentReportResponse = LemmyapiDatatypesCommentReportResponse(
@@ -728,6 +729,7 @@ internal class Transformer : MapperGenerator {
         resolver_id = d.resolver_id,
         published_at = d.published_at,
         updated_at = d.updated_at,
+        conclusion = d.conclusion,
     )
 
     override fun toUni(d: X0DatatypesCommunityReportResponse): LemmyapiDatatypesCommunityReportResponse = LemmyapiDatatypesCommunityReportResponse(
@@ -1277,6 +1279,7 @@ internal class Transformer : MapperGenerator {
         person_actions = d.person_actions?.let { this.toUni(d = it) },
         banned = d.banned,
         ban_expires_at = d.ban_expires_at,
+        community_actions = d.community_actions?.let { this.toUni(d = it) },
     )
 
     override fun toUni(d: X0DatatypesPluginMetadata): LemmyapiDatatypesPluginMetadata = LemmyapiDatatypesPluginMetadata(
@@ -1350,6 +1353,7 @@ internal class Transformer : MapperGenerator {
         published_at = d.published_at,
         updated_at = d.updated_at,
         violates_instance_rules = d.violates_instance_rules,
+        conclusion = d.conclusion,
     )
 
     override fun toUni(d: X0DatatypesPostReportResponse): LemmyapiDatatypesPostReportResponse = LemmyapiDatatypesPostReportResponse(
@@ -1421,6 +1425,7 @@ internal class Transformer : MapperGenerator {
         resolver_id = d.resolver_id,
         published_at = d.published_at,
         updated_at = d.updated_at,
+        conclusion = d.conclusion,
     )
 
     override fun toUni(d: X0DatatypesPrivateMessageReportResponse): LemmyapiDatatypesPrivateMessageReportResponse = LemmyapiDatatypesPrivateMessageReportResponse(
@@ -2267,6 +2272,7 @@ internal class Transformer : MapperGenerator {
         sort = d.sort,
         search_term = d.search_term,
         search_title_only = d.search_title_only,
+        community_id = d.community_id,
         page_cursor = d.page_cursor,
         limit = d.limit,
     )
@@ -2440,11 +2446,13 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesResolveCommentReport): X0DatatypesResolveCommentReport = X0DatatypesResolveCommentReport(
         report_id = d.report_id,
         resolved = d.resolved,
+        conclusion = d.conclusion,
     )
 
     override fun fromUni(d: LemmyapiDatatypesResolveCommunityReport): X0DatatypesResolveCommunityReport = X0DatatypesResolveCommunityReport(
         report_id = d.report_id,
         resolved = d.resolved,
+        conclusion = d.conclusion,
     )
 
     override fun fromUni(d: LemmyapiDatatypesResolveObject): X0DatatypesResolveObject = X0DatatypesResolveObject(
@@ -2454,11 +2462,13 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesResolvePostReport): X0DatatypesResolvePostReport = X0DatatypesResolvePostReport(
         report_id = d.report_id,
         resolved = d.resolved,
+        conclusion = d.conclusion,
     )
 
     override fun fromUni(d: LemmyapiDatatypesResolvePrivateMessageReport): X0DatatypesResolvePrivateMessageReport = X0DatatypesResolvePrivateMessageReport(
         report_id = d.report_id,
         resolved = d.resolved,
+        conclusion = d.conclusion,
     )
 
     override fun fromUni(d: LemmyapiDatatypesRevokeInvitation): X0DatatypesRevokeInvitation = X0DatatypesRevokeInvitation(

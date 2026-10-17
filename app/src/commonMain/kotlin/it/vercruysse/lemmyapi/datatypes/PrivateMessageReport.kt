@@ -17,4 +17,6 @@ data class PrivateMessageReport(
     val resolver_id: PersonId? = null,
     val published_at: String,
     val updated_at: String? = null,
+    /** Added in Lemmy 1.0.0 */
+    val conclusion: String? = null,
 ) : DatatypeRoot, Identity
