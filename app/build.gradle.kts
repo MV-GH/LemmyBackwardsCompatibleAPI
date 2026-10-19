@@ -25,6 +25,12 @@ kotlin {
                 useJUnitPlatform()
             }
         }
+
+        // Separate compilation so the Docker-based E2E tests never run as part of `jvmTest`/`check`
+        val mainCompilation = compilations.getByName("main")
+        compilations.create("e2eTest") {
+            associateWith(mainCompilation)
+        }
     }
 
     android {
@@ -92,6 +98,13 @@ kotlin {
             implementation("io.ktor:ktor-client-mock:$ktorVersion")
         }
 
+        getByName("jvmE2eTest").dependencies {
+            implementation(kotlin("test-junit5"))
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
+            implementation("org.testcontainers:testcontainers:1.21.4")
+            implementation("ch.qos.logback:logback-classic:1.6.3")
+        }
+
         // Below required bc we use HttpClient() see https://ktor.io/docs/client-engines.html#default
 
         jsMain.dependencies {
@@ -128,6 +141,21 @@ kotlin {
     }
 }
 
+
+val e2eCompilation = kotlin.jvm().compilations.getByName("e2eTest")
+
+tasks.register<Test>("e2eTest") {
+    description = "Runs JVM E2E tests against a local Lemmy docker setup."
+    group = "verification"
+    testClassesDirs = e2eCompilation.output.classesDirs
+    classpath = files(e2eCompilation.output.allOutputs, e2eCompilation.runtimeDependencyFiles)
+    useJUnitPlatform()
+    outputs.upToDateWhen { false }
+    testLogging {
+        events("passed", "failed", "skipped")
+        showStandardStreams = true
+    }
+}
 
 tasks.withType<LintTask> {
     exclude("**/datatypes/**")

@@ -56,7 +56,7 @@ suspend inline fun <reified R> HttpClient.postUploadResult(
             MultiPartFormDataContent(
                 formData {
                     append(
-                        "image", // TODO: this might need to be images[]
+                        "images[]",
                         image,
                         Headers.build {
                             append(HttpHeaders.ContentDisposition, "filename=\"image.jpg\"")
