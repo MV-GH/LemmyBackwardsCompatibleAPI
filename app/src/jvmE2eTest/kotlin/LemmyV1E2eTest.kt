@@ -9,15 +9,6 @@ import it.vercruysse.lemmyapi.datatypes.PaginationCursor
 import it.vercruysse.lemmyapi.datatypes.PostView
 import java.util.concurrent.atomic.AtomicInteger
 
-/**
- * Base class for all Lemmy v1 end-to-end tests.
- *
- * The docker stack and seed data are created once per JVM, on first access, and shared by every subclass.
- * Containers are stopped by a shutdown hook (Testcontainers' Ryuk also reaps them if the JVM dies).
- *
- * Tests that change data should create their own entities (see [newPost], [newComment], [newCommunity], [newUser])
- * so they do not depend on each other. Seeded data is only read.
- */
 abstract class LemmyV1E2eTest {
     protected val anonApi: LemmyApiBaseController get() = env.anon
     protected val adminApi: LemmyApiBaseController get() = env.admin
