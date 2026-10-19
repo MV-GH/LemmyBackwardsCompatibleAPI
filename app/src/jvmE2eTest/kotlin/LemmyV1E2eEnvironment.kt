@@ -133,6 +133,7 @@ internal class LemmyV1E2eEnvironment {
                 rate_limit_register_max_requests = UNLIMITED,
                 rate_limit_comment_max_requests = UNLIMITED,
                 rate_limit_search_max_requests = UNLIMITED,
+                rate_limit_image_max_requests = UNLIMITED,
             ),
         ).getOrThrow()
     }
