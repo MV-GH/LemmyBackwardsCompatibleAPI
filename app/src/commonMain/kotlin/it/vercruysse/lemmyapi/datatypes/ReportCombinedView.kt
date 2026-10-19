@@ -3,9 +3,11 @@ package it.vercruysse.lemmyapi.datatypes
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
 
 @CommonParcelize
 @OptIn(ExperimentalSerializationApi::class)
+@Serializable
 @JsonClassDiscriminator("type_")
 sealed interface ReportCombinedView : DatatypeRoot
