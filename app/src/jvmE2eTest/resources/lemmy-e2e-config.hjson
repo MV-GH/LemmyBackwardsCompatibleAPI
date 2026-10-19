@@ -1,0 +1,17 @@
+{
+  setup: {
+    admin_username: "lemmy"
+    admin_password: "lemmylemmy"
+    site_name: "lemmy-e2e"
+  }
+  database: {
+    connection: "postgres://lemmy:password@postgres:5432/lemmy"
+  }
+  hostname: "lemmy"
+  bind: "0.0.0.0"
+  port: 8536
+  pictrs: {
+    url: "http://pictrs:8080/"
+    api_key: "lemmy-e2e-pictrs-key"
+  }
+}

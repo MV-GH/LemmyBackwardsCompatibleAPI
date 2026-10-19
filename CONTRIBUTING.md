@@ -39,6 +39,11 @@ The `it.vercruysse.lemmyapi.datatypes` package represents the **1.0.0 Lemmy API*
 - **Enum entries**: each entry tracks `minimumVersion`/`maximumVersion`. Use `getSupportedEntries<Type>()` to retrieve the valid entries for the connected instance (e.g. sort options).
 
 
+## End-to-end tests
+
+`gradlew :app:e2eTest` runs the library against a real Lemmy server (currently v1 only) started with Testcontainers, so a running Docker engine is required.
+
+
 ## Compatibility Rules
 
 When adding or updating an older-version implementation:
