@@ -32,7 +32,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun getModlog(form: it.vercruysse.lemmyapi.datatypes.GetModlog): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ModlogView>> =
         api.getModlog(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun search(form: it.vercruysse.lemmyapi.datatypes.Search): Result<it.vercruysse.lemmyapi.datatypes.SearchResponse> =
@@ -55,7 +55,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listCommunities(form: it.vercruysse.lemmyapi.datatypes.ListCommunities): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommunityView>> =
         api.listCommunities(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun followCommunity(form: it.vercruysse.lemmyapi.datatypes.FollowCommunity): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
@@ -81,7 +81,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun getFederatedInstances(form: it.vercruysse.lemmyapi.datatypes.GetFederatedInstances): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.FederatedInstanceView>> =
         api.getFederatedInstances(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun getPost(form: it.vercruysse.lemmyapi.datatypes.GetPost): Result<it.vercruysse.lemmyapi.datatypes.GetPostResponse> =
@@ -95,7 +95,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun getPosts(form: it.vercruysse.lemmyapi.datatypes.GetPosts): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> =
         api.getPosts(transformer.fromUni(form.toValidatedForm())).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun deletePost(form: it.vercruysse.lemmyapi.datatypes.DeletePost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
@@ -130,7 +130,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listReports(form: it.vercruysse.lemmyapi.datatypes.ListReports): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>> =
         api.listReports(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun getSiteMetadata(form: it.vercruysse.lemmyapi.datatypes.GetSiteMetadata): Result<it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse> =
@@ -147,7 +147,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun getComments(form: it.vercruysse.lemmyapi.datatypes.GetComments): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentView>> =
         api.getComments(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun deleteComment(form: it.vercruysse.lemmyapi.datatypes.DeleteComment): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
@@ -191,7 +191,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listPersons(form: it.vercruysse.lemmyapi.datatypes.ListPersons): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PersonView>> =
         api.listPersons(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun register(form: it.vercruysse.lemmyapi.datatypes.Register): Result<it.vercruysse.lemmyapi.datatypes.LoginResponse> =
@@ -208,7 +208,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listNotifications(form: ListNotifications): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.NotificationView>> =
         api.listNotifications(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun banPerson(form: it.vercruysse.lemmyapi.datatypes.BanPerson): Result<it.vercruysse.lemmyapi.datatypes.PersonResponse> =
@@ -255,7 +255,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listRegistrationApplications(form: it.vercruysse.lemmyapi.datatypes.ListRegistrationApplications): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationView>> =
         api.listRegistrationApplications(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun approveRegistrationApplication(form: it.vercruysse.lemmyapi.datatypes.ApproveRegistrationApplication): Result<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse> =
@@ -314,12 +314,12 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listPostLikes(form: it.vercruysse.lemmyapi.datatypes.ListPostLikes): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> =
         api.listPostLikes(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun listCommentLikes(form: it.vercruysse.lemmyapi.datatypes.ListCommentLikes): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> =
         api.listCommentLikes(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun createRegistrationInvitation(form: it.vercruysse.lemmyapi.datatypes.CreateInvitation): Result<it.vercruysse.lemmyapi.datatypes.CreateInvitationResponse> =
@@ -330,17 +330,17 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listRegistrationInvitations(form: it.vercruysse.lemmyapi.datatypes.ListInvitations): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalUserInvite>> =
         api.listRegistrationInvitations(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun listMedia(form: it.vercruysse.lemmyapi.datatypes.ListMedia): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> =
         api.listMedia(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun listMediaAdmin(form: it.vercruysse.lemmyapi.datatypes.ListMedia): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> =
         api.listMediaAdmin(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun hidePost(form: it.vercruysse.lemmyapi.datatypes.HidePost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
@@ -353,7 +353,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listPersonContent(form: it.vercruysse.lemmyapi.datatypes.ListPersonContent): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> =
         api.listPersonContent(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun uploadImage(image: ByteArray): Result<it.vercruysse.lemmyapi.datatypes.UploadImageResponse> =
@@ -406,7 +406,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun adminListUsers(form: it.vercruysse.lemmyapi.datatypes.AdminListUsers): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalUserView>> =
         api.adminListUsers(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun getRandomCommunity(form: it.vercruysse.lemmyapi.datatypes.GetRandomCommunity): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
@@ -435,7 +435,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listCommunityPendingFollows(form: it.vercruysse.lemmyapi.datatypes.ListCommunityPendingFollows): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PendingFollowerView>> =
         api.listCommunityPendingFollows(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun modEditPost(form: it.vercruysse.lemmyapi.datatypes.ModEditPost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
@@ -449,7 +449,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun getCommentsSlim(form: it.vercruysse.lemmyapi.datatypes.GetComments): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentSlimView>> =
         api.getCommentsSlim(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun lockComment(form: it.vercruysse.lemmyapi.datatypes.LockComment): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> =
@@ -463,22 +463,22 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listPersonSaved(form: it.vercruysse.lemmyapi.datatypes.ListPersonSaved): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> =
         api.listPersonSaved(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun listPersonRead(form: it.vercruysse.lemmyapi.datatypes.ListPersonRead): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> =
         api.listPersonRead(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun listPersonHidden(form: it.vercruysse.lemmyapi.datatypes.ListPersonHidden): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> =
         api.listPersonHidden(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun listPersonLiked(form: it.vercruysse.lemmyapi.datatypes.ListPersonLiked): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> =
         api.listPersonLiked(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun resendVerificationEmail(form: it.vercruysse.lemmyapi.datatypes.ResendVerificationEmail): Result<Unit> =
@@ -507,7 +507,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listTaglines(form: it.vercruysse.lemmyapi.datatypes.ListTaglines): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.Tagline>> =
         api.listTaglines(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 
     override suspend fun createOAuthProvider(form: it.vercruysse.lemmyapi.datatypes.CreateOAuthProvider): Result<it.vercruysse.lemmyapi.datatypes.AdminOAuthProvider> =
@@ -539,6 +539,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listMultiCommunities(form: it.vercruysse.lemmyapi.datatypes.ListMultiCommunities): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.MultiCommunityView>> =
         api.listMultiCommunities(transformer.fromUni(form)).map { resp ->
-            PagedResponse(resp.items.map(transformer::toUni))
+            PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 }

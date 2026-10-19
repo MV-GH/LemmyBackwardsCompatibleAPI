@@ -78,13 +78,15 @@ val fileFieldEnumOverrides = mapOf(
 // Maps the interface name to its @JsonClassDiscriminator field, and whether it needs @Serializable.
 data class SealedInterface(val discriminator: String, val serializable: Boolean = false)
 
-// TODO: don't know yet if serializable required but also it breaks the generated code
+// Interfaces that are deserialized polymorphically (as response fields) must be @Serializable,
+// otherwise the class discriminator is not resolved at runtime.
+// TODO refactor
 val sealedInterfaces = mapOf(
-    "PostOrCommentOrPrivateMessage" to SealedInterface("type_"),
-    "ResolveObjectView"            to SealedInterface("type_"),
-    "ReportCombinedView"            to SealedInterface("type_"),
-    "NotificationData"              to SealedInterface("type_", serializable = false),
-    "PostCommentCombinedView"       to SealedInterface("type_"),
+    "PostOrCommentOrPrivateMessage" to SealedInterface("type_", serializable = true),
+    "ResolveObjectView"            to SealedInterface("type_", serializable = true),
+    "ReportCombinedView"            to SealedInterface("type_", serializable = true),
+    "NotificationData"              to SealedInterface("type_", serializable = true),
+    "PostCommentCombinedView"       to SealedInterface("type_", serializable = true),
 )
 
 // Which data classes implement which sealed interfaces and what @SerialName they carry.

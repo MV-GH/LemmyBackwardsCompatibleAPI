@@ -1,136 +1,91 @@
+import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.LemmyApiBaseController
-import it.vercruysse.lemmyapi.LemmyApiClient
-import it.vercruysse.lemmyapi.LemmyApiOptions
-import it.vercruysse.lemmyapi.LemmyAuth
-import it.vercruysse.lemmyapi.LemmyInstance
-import it.vercruysse.lemmyapi.LemmyVersion
+import it.vercruysse.lemmyapi.datatypes.CommentView
 import it.vercruysse.lemmyapi.datatypes.CreateComment
 import it.vercruysse.lemmyapi.datatypes.CreateCommunity
 import it.vercruysse.lemmyapi.datatypes.CreatePost
-import it.vercruysse.lemmyapi.datatypes.Login
-import kotlinx.coroutines.runBlocking
-import org.testcontainers.containers.GenericContainer
-import org.testcontainers.containers.Network
-import org.testcontainers.containers.wait.strategy.Wait
-import org.testcontainers.utility.DockerImageName
-import org.testcontainers.utility.MountableFile
-import java.time.Duration
-import kotlin.time.Duration.Companion.seconds
+import it.vercruysse.lemmyapi.datatypes.PagedResponse
+import it.vercruysse.lemmyapi.datatypes.PaginationCursor
+import it.vercruysse.lemmyapi.datatypes.PostView
+import java.util.concurrent.atomic.AtomicInteger
 
+/**
+ * Base class for all Lemmy v1 end-to-end tests.
+ *
+ * The docker stack and seed data are created once per JVM, on first access, and shared by every subclass.
+ * Containers are stopped by a shutdown hook (Testcontainers' Ryuk also reaps them if the JVM dies).
+ *
+ * Tests that change data should create their own entities (see [newPost], [newComment], [newCommunity], [newUser])
+ * so they do not depend on each other. Seeded data is only read.
+ */
 abstract class LemmyV1E2eTest {
-    protected val api: LemmyApiBaseController get() = env.api
+    protected val anonApi: LemmyApiBaseController get() = env.anon
+    protected val adminApi: LemmyApiBaseController get() = env.admin
+
+    /** Regular (non admin) user that is shared by all tests, create a new one with [newUser] if you change its state. */
+    protected val user: E2eUser get() = env.user
+
+    protected val communityId: Long get() = env.communityId
     protected val postId: Long get() = env.postId
+    protected val commentId: Long get() = env.commentId
 
-    private class Environment {
-        private val network = Network.newNetwork()
-        private val postgres =
-            LemmyContainer("postgres:16.4-alpine")
-                .withNetwork(network)
-                .withNetworkAliases("postgres")
-                .withEnv("POSTGRES_USER", "lemmy")
-                .withEnv("POSTGRES_PASSWORD", "password")
-                .withEnv("POSTGRES_DB", "lemmy")
-                .withExposedPorts(POSTGRES_PORT)
-                .waitingFor(Wait.forListeningPort())
-        private val pictrs =
-            LemmyContainer("asonix/pictrs:0.5.16")
-                .withNetwork(network)
-                .withNetworkAliases("pictrs")
-                .withEnv("PICTRS__SERVER__API_KEY", "lemmy-e2e-pictrs-key")
-                .withExposedPorts(PICTRS_PORT)
-                .waitingFor(Wait.forListeningPort())
-        private val lemmy =
-            LemmyContainer("dessalines/lemmy:$LEMMY_VERSION")
-                .withNetwork(network)
-                .withEnv("LEMMY_DISABLE_ACTIVITY_SENDING", "true")
-                .withEnv("RUST_LOG", "warn")
-                .withCopyFileToContainer(
-                    MountableFile.forClasspathResource("lemmy-e2e-config.hjson"),
-                    "/config/config.hjson",
-                )
-                .withExposedPorts(LEMMY_PORT)
-                .waitingFor(
-                    Wait.forHttp("/api/v4/site")
-                        .forStatusCode(200)
-                        .withStartupTimeout(Duration.ofMinutes(4)),
-                )
+    /** Seeded post/comment ids (the main seed entity first) all created by the admin. */
+    protected val seededPostIds: List<Long> get() = env.seededPostIds
+    protected val seededCommentIds: List<Long> get() = env.seededCommentIds
 
-        private val client =
-            LemmyApiClient(
-                options =
-                LemmyApiOptions(
-                    requestTimeout = 30.seconds,
-                    maxRetries = 5,
-                    userAgent = "LemmyBackwardsCompatibleAPI-E2E",
-                ),
-            )
+    protected suspend fun newUser(): E2eUser = env.newUser()
 
-        lateinit var api: LemmyApiBaseController
-            private set
-        var postId = 0L
-            private set
+    protected suspend fun LemmyApiBaseController.newCommunity(): Long =
+        createCommunity(CreateCommunity(name = unique("e2ec"), title = "E2E community"))
+            .getOrThrow().community_view.community.id
 
-        fun start() {
-            try {
-                postgres.start()
-                pictrs.start()
-                lemmy.start()
-                seed()
-            } catch (t: Throwable) {
-                stop()
-                throw t
-            }
-        }
+    protected suspend fun LemmyApiBaseController.newPost(
+        title: String = unique("E2E post"),
+        body: String? = "E2E post body",
+        inCommunity: Long = communityId,
+    ): PostView =
+        createPost(CreatePost(name = title, body = body, community_id = inCommunity)).getOrThrow().post_view
 
-        private fun seed() =
-            runBlocking {
-                val instance = LemmyInstance("http://${lemmy.host}:${lemmy.getMappedPort(LEMMY_PORT)}")
-                val version = LemmyVersion(LEMMY_VERSION)
+    protected suspend fun LemmyApiBaseController.newComment(
+        content: String = unique("E2E comment"),
+        onPost: Long = postId,
+        parent: Long? = null,
+    ): CommentView =
+        createComment(CreateComment(content = content, post_id = onPost, parent_id = parent))
+            .getOrThrow().comment_view
 
-                val admin = client.connectForVersion(instance, version).getOrThrow()
-                val jwt = admin.login(Login(ADMIN_USERNAME, ADMIN_PASSWORD)).getOrThrow().jwt
-                checkNotNull(jwt) { "Lemmy did not return a token for the admin user" }
-                admin.updateAuth(LemmyAuth.Bearer(jwt))
-
-                val community =
-                    admin.createCommunity(CreateCommunity(name = SEED_COMMUNITY_NAME, title = "E2E Test Community"))
-                        .getOrThrow().community_view.community
-                val post =
-                    admin.createPost(
-                        CreatePost(name = SEED_POST_TITLE, body = SEED_POST_BODY, community_id = community.id),
-                    ).getOrThrow().post_view.post
-                admin.createComment(CreateComment(content = SEED_COMMENT_CONTENT, post_id = post.id)).getOrThrow()
-
-                postId = post.id
-                api = client.connectForVersion(instance, version).getOrThrow()
-            }
-
-        fun stop() {
-            runCatching { client.close() }
-            runCatching { lemmy.stop() }
-            runCatching { pictrs.stop() }
-            runCatching { postgres.stop() }
-            runCatching { network.close() }
-        }
+    /** Follows `next_page` until exhausted (or [maxPages]) and returns the items of each page. */
+    protected suspend fun <T : DatatypeRoot> fetchPages(
+        maxPages: Int = 20,
+        fetch: suspend (PaginationCursor?) -> Result<PagedResponse<T>>,
+    ): List<List<T>> {
+        val pages = mutableListOf<List<T>>()
+        var cursor: PaginationCursor? = null
+        do {
+            val page = fetch(cursor).getOrThrow()
+            pages += page.items
+            cursor = page.next_page
+        } while (cursor != null && pages.size < maxPages)
+        return pages
     }
 
-    private class LemmyContainer(image: String) : GenericContainer<LemmyContainer>(DockerImageName.parse(image))
-
     protected companion object {
-        const val LEMMY_VERSION = "1.0.0-beta.2"
-        const val ADMIN_USERNAME = "lemmy"
-        const val ADMIN_PASSWORD = "lemmylemmy"
-        const val SEED_COMMUNITY_NAME = "e2ebasic"
-        const val SEED_POST_TITLE = "E2E seeded post"
-        const val SEED_POST_BODY = "A post created through the public unified API."
-        const val SEED_COMMENT_CONTENT = "An E2E comment created through the public unified API."
+        const val LEMMY_VERSION = LemmyV1E2eEnvironment.LEMMY_VERSION
+        const val ADMIN_USERNAME = LemmyV1E2eEnvironment.ADMIN_USERNAME
+        const val ADMIN_PASSWORD = LemmyV1E2eEnvironment.ADMIN_PASSWORD
+        const val USER_PASSWORD = LemmyV1E2eEnvironment.USER_PASSWORD
+        const val SEED_COMMUNITY_NAME = LemmyV1E2eEnvironment.SEED_COMMUNITY_NAME
+        const val SEED_POST_TITLE = LemmyV1E2eEnvironment.SEED_POST_TITLE
+        const val SEED_POST_BODY = LemmyV1E2eEnvironment.SEED_POST_BODY
+        const val SEED_COMMENT_CONTENT = LemmyV1E2eEnvironment.SEED_COMMENT_CONTENT
+        const val SEED_PAGING_COUNT = LemmyV1E2eEnvironment.SEED_PAGING_COUNT
 
-        private const val LEMMY_PORT = 8536
-        private const val PICTRS_PORT = 8080
-        private const val POSTGRES_PORT = 5432
+        private val uniqueCounter = AtomicInteger()
 
-        private val env: Environment by lazy {
-            Environment().also {
+        fun unique(prefix: String): String = "$prefix${uniqueCounter.incrementAndGet()}"
+
+        private val env: LemmyV1E2eEnvironment by lazy {
+            LemmyV1E2eEnvironment().also {
                 Runtime.getRuntime().addShutdownHook(Thread { it.stop() })
                 it.start()
             }
