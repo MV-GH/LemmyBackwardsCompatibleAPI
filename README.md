@@ -10,7 +10,6 @@
 ![badge][badge-mac]
 ![badge][badge-ios]
 ![badge][badge-watchos]
-![badge][badge-tvos]
 ![example workflow](https://github.com//mv-gh/lemmybackwardsCompatibleAPi/actions/workflows/ci.yml/badge.svg)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 ![GitHub stars](https://img.shields.io/github/stars/mv-gh/lemmybackwardsCompatibleAPi?style=social)
@@ -121,4 +120,3 @@ It is a non-goal to provide a stable API. The API can change with every iteratio
 [badge-ios]: http://img.shields.io/badge/-ios-CDCDCD.svg?style=flat
 [badge-mac]: http://img.shields.io/badge/-macos-111111.svg?style=flat
 [badge-watchos]: http://img.shields.io/badge/-watchos-C0C0C0.svg?style=flat
-[badge-tvos]: http://img.shields.io/badge/-tvos-808080.svg?style=flat
