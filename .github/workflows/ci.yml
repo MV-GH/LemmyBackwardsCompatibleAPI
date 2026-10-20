@@ -57,3 +57,26 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - run: ./gradlew allTests
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      checks: write
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+      - run: ./gradlew :app:e2eTest
+      - name: Publish E2E test results
+        if: ${{ always() && hashFiles('app/build/test-results/e2eTest/**/*.xml') != '' }}
+        uses: dorny/test-reporter@v3
+        with:
+          name: E2E test results
+          path: app/build/test-results/e2eTest/**/*.xml
+          reporter: java-junit
