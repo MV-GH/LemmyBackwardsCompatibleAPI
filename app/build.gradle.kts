@@ -3,8 +3,8 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "2.3.21"
-    id("org.jmailen.kotlinter") version "5.6.0"
+    kotlin("plugin.serialization") version "2.4.21"
+    id("org.jmailen.kotlinter") version "5.7.0"
     id("com.vanniktech.maven.publish") version "0.37.0"
     id("com.android.kotlin.multiplatform.library")
     id("kotlin-parcelize")
@@ -66,12 +66,12 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "3.5.2"
+        val ktorVersion = "3.6.0"
 
         commonMain.dependencies {
             api("io.ktor:ktor-client-core:$ktorVersion")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
@@ -94,15 +94,15 @@ kotlin {
             implementation("io.mockk:mockk:1.14.11")
             implementation("org.wiremock:wiremock:3.13.2")
             implementation("com.marcinziolo:kotlin-wiremock:2.1.1")
-            implementation("ch.qos.logback:logback-classic:1.6.3")
+            implementation("ch.qos.logback:logback-classic:1.6.5")
             implementation("io.ktor:ktor-client-mock:$ktorVersion")
         }
 
         getByName("jvmE2eTest").dependencies {
             implementation(kotlin("test-junit5"))
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
-            implementation("org.testcontainers:testcontainers:1.21.4")
-            implementation("ch.qos.logback:logback-classic:1.6.3")
+            implementation("org.testcontainers:testcontainers:2.0.5")
+            implementation("ch.qos.logback:logback-classic:1.6.5")
         }
 
         // Below required bc we use HttpClient() see https://ktor.io/docs/client-engines.html#default
