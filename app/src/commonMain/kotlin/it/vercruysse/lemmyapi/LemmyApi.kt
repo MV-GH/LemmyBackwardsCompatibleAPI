@@ -10,7 +10,7 @@ import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.constructBaseUrl
 
 object LemmyApi {
-    const val MAX_SUPPORTED_VERSION = "0.19"
+    const val MAX_SUPPORTED_VERSION = "1.0"
     const val MIN_SUPPORTED_VERSION = "0.18"
     const val API_VERSION = "v3"
     var defaultClient = coreHttpClient
@@ -147,6 +147,8 @@ object LemmyApi {
 
                 else -> throw NotSupportedException("Unsupported Lemmy minor version: $version")
             }
+
+            1 -> it.vercruysse.lemmyapi.v0.x19.x11.LemmyApiUniWrapper(client, semverV, baseUrlInstance, auth)
 
             else -> throw NotSupportedException("Unsupported Lemmy major version: $version")
         }
