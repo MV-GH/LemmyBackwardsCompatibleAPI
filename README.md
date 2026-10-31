@@ -18,7 +18,6 @@
 
 # LemmyBackwardsCompatibleAPI
 
-## Project Overview
 
 A **Kotlin Multiplatform** library that provides a single, unified API surface over multiple Lemmy server versions (0.18+, 0.19+, 1.0+). Consumers call one interface (`LemmyApiBaseController`) and receive unified ("uni") datatypes regardless of which Lemmy version the target instance is running.
 
@@ -76,7 +75,6 @@ Use `connectForVersion(LemmyInstance(...), LemmyVersion(...))` when the server v
 ```kts
 implementation("it.vercruysse.lemmyapi:lemmy-api:VERSION")
 ```
-It is currently in beta.
 
 ## Architecture
 
