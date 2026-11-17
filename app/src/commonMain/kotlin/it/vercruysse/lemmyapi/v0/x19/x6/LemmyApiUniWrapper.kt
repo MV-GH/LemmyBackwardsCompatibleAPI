@@ -18,6 +18,7 @@ import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.enums.NotificationDataType
 import it.vercruysse.lemmyapi.enums.NotificationType
+import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetPersonDetails
@@ -1004,7 +1005,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      */
     override suspend fun getMyUser(): Result<MyUserInfo> =
         api.getSite()
-            .mapCatching { it.my_user ?: throw IllegalStateException("Auth invalid") }
+            .mapCatching { it.my_user ?: throw LemmyBadRequestException(401, "not_logged_in") }
             .map { transformer.toUni(it) }
 
     /**
