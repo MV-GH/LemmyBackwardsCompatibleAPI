@@ -6,12 +6,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class FederationMode(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+enum class VoteSettings(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
     @SerialName("all")
     All,
 
     @SerialName("local")
     Local,
+
+    @SerialName("subscribed")
+    Subscribed,
 
     @SerialName("disable")
     Disable,

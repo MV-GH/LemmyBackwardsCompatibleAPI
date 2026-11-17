@@ -33,10 +33,10 @@ val globalFieldEnums = mapOf(
     "sort_type" to "SortType",
     "visibility" to "CommunityVisibility",
     "follow_state" to "CommunityFollowerState",
-    "post_upvotes" to "FederationMode",
-    "post_downvotes" to "FederationMode",
-    "comment_upvotes" to "FederationMode",
-    "comment_downvotes" to "FederationMode",
+    "post_upvotes" to "VoteSettings",
+    "post_downvotes" to "VoteSettings",
+    "comment_upvotes" to "VoteSettings",
+    "comment_downvotes" to "VoteSettings",
     "show_downvotes" to "VoteShow",
     "image_mode" to "ImageMode",
     // Defaults for ambiguous fields overridden per file below
@@ -332,7 +332,7 @@ fun downloadTypes(
 }
 
 fun main() {
-    // Future version 1.0.0-beta.2
-    downloadTypes("1.0.0-beta.2", "v1/x0/x0")
+    // Future version 1.0.0-feed-only-jwt.1
+    downloadTypes("1.0.0-feed-only-jwt.1", "v1/x0/x0")
     exitProcess(0)
 }

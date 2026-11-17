@@ -22,8 +22,8 @@ class LemmyV1SiteE2eTest : LemmyV1E2eTest() {
         runBlocking {
             val local = anonApi.getSite().getOrThrow().site_view.local_site
 
-            assertTrue(local.posts >= seededPostIds.size)
-            assertTrue(local.comments >= seededCommentIds.size)
-            assertTrue(local.communities >= 1)
+            assertTrue(local.local_posts >= seededPostIds.size)
+            assertTrue(local.local_comments >= seededCommentIds.size)
+            assertTrue(local.local_communities >= 1)
         }
 }

@@ -4,7 +4,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
 import it.vercruysse.lemmyapi.enums.CommentSortType
-import it.vercruysse.lemmyapi.enums.FederationMode
+import it.vercruysse.lemmyapi.enums.VoteSettings
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
@@ -37,16 +37,16 @@ data class LocalSite(
     val default_post_sort_type: SortType /* "Active" | "Hot" | "New" | "Old" | "TopDay" | "TopWeek" | "TopMonth" | "TopYear" | "TopAll" | "MostComments" | "NewComments" | "TopHour" | "TopSixHour" | "TopTwelveHour" | "TopThreeMonths" | "TopSixMonths" | "TopNineMonths" | "Controversial" | "Scaled" */,
     val default_comment_sort_type: CommentSortType /* "Hot" | "Top" | "New" | "Old" | "Controversial" */,
     val oauth_registration: Boolean,
-    val post_upvotes: FederationMode /* "All" | "Local" | "Disable" */,
-    val post_downvotes: FederationMode /* "All" | "Local" | "Disable" */,
-    val comment_upvotes: FederationMode /* "All" | "Local" | "Disable" */,
-    val comment_downvotes: FederationMode /* "All" | "Local" | "Disable" */,
+    val default_post_upvotes: VoteSettings /* "All" | "Local" | "Subscribed" | "Disable" */,
+    val default_post_downvotes: VoteSettings /* "All" | "Local" | "Subscribed" | "Disable" */,
+    val default_comment_upvotes: VoteSettings /* "All" | "Local" | "Subscribed" | "Disable" */,
+    val default_comment_downvotes: VoteSettings /* "All" | "Local" | "Subscribed" | "Disable" */,
     val default_post_time_range_seconds: Long? = null,
     val nsfw_content_disallowed: Boolean,
-    val users: Long,
-    val posts: Long,
-    val comments: Long,
-    val communities: Long,
+    val local_users: Long,
+    val local_posts: Long,
+    val local_comments: Long,
+    val local_communities: Long,
     val users_active_day: Long,
     val users_active_week: Long,
     val users_active_month: Long,
@@ -63,6 +63,22 @@ data class LocalSite(
     val image_max_upload_size: Long,
     val image_allow_video_uploads: Boolean,
     val image_upload_disabled: Boolean,
+    /** Added in 1.0.0 */
+    val linked_instances: Long,
+    /** Added in 1.0.0 */
+    val total_posts: Long,
+    /** Added in 1.0.0 */
+    val total_comments: Long,
+    /** Added in 1.0.0 */
+    val total_users: Long,
+    /** Added in 1.0.0 */
+    val total_communities: Long,
+    /** Added in 1.0.0 */
+    val user_retention_month_percent: Long,
+    /** Added in 1.0.0 */
+    val user_retention_half_year_percent: Long,
+    /** Added in 1.0.0 */
+    val banned_users_percent: Long,
     /** Added in 1.0.0 */
     val max_invites_per_user_allowed: Long,
 ) : DatatypeRoot, Identity

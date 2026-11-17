@@ -1,12 +1,12 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
 import it.vercruysse.lemmyapi.enums.CommentSortType
-import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.RegistrationMode
 import it.vercruysse.lemmyapi.enums.SortType
+import it.vercruysse.lemmyapi.enums.VoteSettings
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -33,16 +33,16 @@ internal data class LocalSite(
     val default_post_sort_type: SortType /* "active" | "hot" | "new" | "old" | "top" | "most_comments" | "new_comments" | "controversial" | "scaled" */,
     val default_comment_sort_type: CommentSortType /* "hot" | "top" | "new" | "old" | "controversial" */,
     val oauth_registration: Boolean,
-    val post_upvotes: FederationMode /* "all" | "local" | "disable" */,
-    val post_downvotes: FederationMode /* "all" | "local" | "disable" */,
-    val comment_upvotes: FederationMode /* "all" | "local" | "disable" */,
-    val comment_downvotes: FederationMode /* "all" | "local" | "disable" */,
+    val default_post_upvotes: VoteSettings /* "all" | "local" | "subscribed" | "disable" */,
+    val default_post_downvotes: VoteSettings /* "all" | "local" | "subscribed" | "disable" */,
+    val default_comment_upvotes: VoteSettings /* "all" | "local" | "subscribed" | "disable" */,
+    val default_comment_downvotes: VoteSettings /* "all" | "local" | "subscribed" | "disable" */,
     val default_post_time_range_seconds: Long? = null,
     val nsfw_content_disallowed: Boolean,
-    val users: Long,
-    val posts: Long,
-    val comments: Long,
-    val communities: Long,
+    val local_users: Long,
+    val local_posts: Long,
+    val local_comments: Long,
+    val local_communities: Long,
     val users_active_day: Long,
     val users_active_week: Long,
     val users_active_month: Long,
@@ -59,5 +59,13 @@ internal data class LocalSite(
     val image_max_upload_size: Long,
     val image_allow_video_uploads: Boolean,
     val image_upload_disabled: Boolean,
+    val linked_instances: Long,
+    val total_posts: Long,
+    val total_comments: Long,
+    val total_users: Long,
+    val total_communities: Long,
+    val user_retention_month_percent: Long,
+    val user_retention_half_year_percent: Long,
+    val banned_users_percent: Long,
     val max_invites_per_user_allowed: Long,
 )

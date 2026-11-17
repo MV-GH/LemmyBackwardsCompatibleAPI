@@ -3,7 +3,7 @@ package it.vercruysse.lemmyapi.datatypes
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.enums.CommentSortType
-import it.vercruysse.lemmyapi.enums.FederationMode
+import it.vercruysse.lemmyapi.enums.VoteSettings
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
@@ -74,13 +74,13 @@ data class EditSite(
     /** Added in 1.0.0 */
     val oauth_registration: Boolean? = null,
     /** Added in 1.0.0 */
-    val post_upvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
+    val default_post_upvotes: VoteSettings? /* "All" | "Local" | "Subscribed" | "Disable" */ = null,
     /** Added in 1.0.0 */
-    val post_downvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
+    val default_post_downvotes: VoteSettings? /* "All" | "Local" | "Subscribed" | "Disable" */ = null,
     /** Added in 1.0.0 */
-    val comment_upvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
+    val default_comment_upvotes: VoteSettings? /* "All" | "Local" | "Subscribed" | "Disable" */ = null,
     /** Added in 1.0.0 */
-    val comment_downvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
+    val default_comment_downvotes: VoteSettings? /* "All" | "Local" | "Subscribed" | "Disable" */ = null,
     /** Added in 1.0.0 */
     val suggested_multi_community_id: MultiCommunityId? = null,
     /** Added in 1.0.0 */
