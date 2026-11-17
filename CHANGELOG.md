@@ -9,6 +9,7 @@ All notable changes to this project are documented here.
 - v1 types bumped to `1.0.0-feed-only-jwt.1`.
 - Legacy getMyUser endpoints now report rejected auth tokens as `LemmyBadRequestException(401, "not_logged_in")`, matching v1 behavior.
 - `listPersonSaved` supports saved posts and comments on Lemmy 0.18 and 0.19 using page-based pagination.
+- Lemmy 0.19 unread counts now return a null report count when the report request fails instead of reporting zero.
 
 ## [1.0.0-rc.1] - 2026-10-20
 
