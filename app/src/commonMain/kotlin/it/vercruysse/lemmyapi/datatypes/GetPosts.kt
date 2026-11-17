@@ -2,7 +2,6 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
-import it.vercruysse.lemmyapi.dto.PAGE_CURSOR_GUARD
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.SortType
 import kotlinx.serialization.Serializable
@@ -43,22 +42,6 @@ data class GetPosts(
     val search_url_only: Boolean? = null,
     /** Added in 1.0.0 */
     val tag_id: CommunityTagId? = null,
-    /** The page cursor to the next list, null is valid and considered first list */
-    val page_cursor: PaginationCursor? = PAGE_CURSOR_GUARD, // Guard is used to detect when null is set
-    /** starts from 1, null is considered not set, deprecated 0.19+, set to support 0.18, removed in 1.0.0 */
-    val page: Long? = null,
+    val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
-) : DatatypeRoot {
-
-    internal fun toPostsForm(): GetPosts = this.copy(page_cursor = null, page = this.page)
-
-    internal fun toValidatedForm(): GetPosts {
-        val pageCursorSet = this.page_cursor != PAGE_CURSOR_GUARD
-
-        return if (pageCursorSet) {
-            this.copy(page_cursor = this.page_cursor, page = null)
-        } else {
-            this.copy(page_cursor = null, page = this.page)
-        }
-    }
-}
+) : DatatypeRoot

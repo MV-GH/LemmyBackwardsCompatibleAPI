@@ -1388,7 +1388,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
             type_ = V0ListingType.fromUniNullable(d.type_),
             sort = V0CommentSortType.fromUniNullable(d.sort),
             max_depth = d.max_depth,
-            page = d.page,
             limit = d.limit,
             community_id = d.community_id,
             community_name = d.community_name,
@@ -1408,7 +1407,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetModlog): X5DatatypesGetModlog = X5DatatypesGetModlog(
         mod_person_id = d.mod_person_id,
         community_id = d.community_id,
-        page = d.page,
         limit = d.limit,
         type_ = V0ModlogActionType.fromUniNullable(d.type_),
         other_person_id = d.other_person_id,
@@ -1431,7 +1429,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetPosts): X5DatatypesGetPosts = X5DatatypesGetPosts(
         type_ = V0ListingType.fromUniNullable(d.type_),
         sort = V0SortType.fromUniNullable(d.sort),
-        page = d.page,
         limit = d.limit,
         community_id = d.community_id,
         community_name = d.community_name,
@@ -1441,7 +1438,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
     fun fromUniR(d: LemmyapiDatatypesListNotifications): X5DatatypesGetReplies =
         X5DatatypesGetReplies(
             sort = V0CommentSortType.New,
-            page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
             auth = auth,
@@ -1450,7 +1446,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
     fun fromUniM(d: LemmyapiDatatypesListNotifications): X5DatatypesGetPersonMentions =
         X5DatatypesGetPersonMentions(
             sort = V0CommentSortType.New,
-            page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
             auth = auth,
@@ -1458,7 +1453,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     fun fromUniP(d: LemmyapiDatatypesListNotifications): X5DatatypesGetPrivateMessages =
         X5DatatypesGetPrivateMessages(
-            page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
             auth = auth,
@@ -1479,7 +1473,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     override fun fromUniC(d: LemmyapiDatatypesListReports): X5DatatypesListCommentReports =
         X5DatatypesListCommentReports(
-            page = d.page,
             limit = d.limit,
             unresolved_only = d.unresolved_only,
             community_id = d.community_id,
@@ -1491,14 +1484,12 @@ internal class Transformer(var auth: String) : MapperGenerator {
             type_ = V0ListingType.fromUniNullable(d.type_),
             sort = V0SortType.fromUniNullable(d.sort),
             show_nsfw = d.show_nsfw,
-            page = d.page,
             limit = d.limit,
             auth = auth,
         )
 
     override fun fromUniP(d: LemmyapiDatatypesListReports): X5DatatypesListPostReports =
         X5DatatypesListPostReports(
-            page = d.page,
             limit = d.limit,
             unresolved_only = d.unresolved_only,
             community_id = d.community_id,
@@ -1506,7 +1497,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
         )
 
     override fun fromUniPm(d: LemmyapiDatatypesListReports): X5DatatypesListPrivateMessageReports = X5DatatypesListPrivateMessageReports(
-        page = d.page,
         limit = d.limit,
         unresolved_only = d.unresolved_only,
         auth = auth,
@@ -1514,7 +1504,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     override fun fromUni(d: LemmyapiDatatypesListRegistrationApplications): X5DatatypesListRegistrationApplications = X5DatatypesListRegistrationApplications(
         unread_only = d.unread_only,
-        page = d.page,
         limit = d.limit,
         auth = auth,
     )
@@ -1691,7 +1680,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
         creator_id = d.creator_id,
         type_ = V0SearchType.fromUniNullable(d.type_),
         listing_type = V0ListingType.fromUniNullable(d.listing_type),
-        page = d.page,
         limit = d.limit,
         auth = auth,
     )

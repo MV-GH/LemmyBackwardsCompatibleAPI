@@ -17,6 +17,4 @@ data class ListPersonContent(
     val community_name: String? = null,
     val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
-    /** Removed in 1.0.0 */
-    val page: Long? = null,
 ) : DatatypeRoot

@@ -19,6 +19,7 @@ import it.vercruysse.lemmyapi.enums.NotificationDataType
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.pictrs.PictrsService
+import it.vercruysse.lemmyapi.utils.LegacyPaging
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.GetPersonDetails
 
@@ -67,7 +68,12 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      * @GET("search")
      */
     override suspend fun search(form: it.vercruysse.lemmyapi.datatypes.Search): Result<it.vercruysse.lemmyapi.datatypes.SearchResponse> =
-        api.search(transformer.fromUni(form)).map(transformer::toUni)
+        LegacyPaging.withPage(form.page_cursor) { page ->
+            api.search(transformer.fromUni(form).copy(page = page)).map(transformer::toUni).map {
+                val hasItems = it.comments.isNotEmpty() || it.posts.isNotEmpty() || it.communities.isNotEmpty() || it.persons.isNotEmpty()
+                it.copy(next_page = LegacyPaging.next(page, hasItems), prev_page = LegacyPaging.prev(page))
+            }
+        }
 
     /**
      * Fetch a non-local / federated object.
@@ -125,7 +131,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun listCommunities(
         form: it.vercruysse.lemmyapi.datatypes.ListCommunities,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommunityView>> =
-        api.listCommunities(transformer.fromUni(form)).map { PagedResponse(it.communities.map(transformer::toUni)) }
+        LegacyPaging.paged(form.page_cursor) { page ->
+            api.listCommunities(transformer.fromUni(form).copy(page = page)).map { it.communities.map(transformer::toUni) }
+        }
 
     /**
      * Follow / subscribe to a community.
@@ -246,7 +254,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun getPosts(
         form: it.vercruysse.lemmyapi.datatypes.GetPosts,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> =
-        api.getPosts(transformer.fromUni(form.toValidatedForm())).map { PagedResponse(it.posts.map(transformer::toUni)) }
+        api.getPosts(transformer.fromUni(form)).map { PagedResponse(it.posts.map(transformer::toUni), next_page = it.next_page) }
 
     /**
      * Delete a post.
@@ -357,33 +365,33 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      */
     override suspend fun listReports(
         form: it.vercruysse.lemmyapi.datatypes.ListReports,
-    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>> =
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>> = LegacyPaging.pagedResponse(form.page_cursor) { page ->
         when (form.type_) {
             it.vercruysse.lemmyapi.enums.ReportType.Communities -> notSupported()
 
             it.vercruysse.lemmyapi.enums.ReportType.Posts -> {
-                api.listPostReports(transformer.fromUniP(form)).map { resp ->
+                api.listPostReports(transformer.fromUniP(form).copy(page = page)).map { resp ->
                     PagedResponse(resp.post_reports.map(transformer::toUni))
                 }
             }
 
             it.vercruysse.lemmyapi.enums.ReportType.Comments -> {
-                api.listCommentReports(transformer.fromUniC(form)).map { resp ->
+                api.listCommentReports(transformer.fromUniC(form).copy(page = page)).map { resp ->
                     PagedResponse(resp.comment_reports.map(transformer::toUni))
                 }
             }
 
             it.vercruysse.lemmyapi.enums.ReportType.PrivateMessages -> {
-                api.listPrivateMessageReports(transformer.fromUniPm(form)).map { resp ->
+                api.listPrivateMessageReports(transformer.fromUniPm(form).copy(page = page)).map { resp ->
                     PagedResponse(resp.private_message_reports.map(transformer::toUni))
                 }
             }
 
             it.vercruysse.lemmyapi.enums.ReportType.All -> {
                 runCatchingPreservingCancellation {
-                    val postsResp = api.listPostReports(transformer.fromUniP(form)).getOrThrow()
-                    val commentsResp = api.listCommentReports(transformer.fromUniC(form)).getOrThrow()
-                    val privateMessagesResp = api.listPrivateMessageReports(transformer.fromUniPm(form)).getOrThrow()
+                    val postsResp = api.listPostReports(transformer.fromUniP(form).copy(page = page)).getOrThrow()
+                    val commentsResp = api.listCommentReports(transformer.fromUniC(form).copy(page = page)).getOrThrow()
+                    val privateMessagesResp = api.listPrivateMessageReports(transformer.fromUniPm(form).copy(page = page)).getOrThrow()
 
                     val allReports = mutableListOf<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>()
 
@@ -403,6 +411,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
                 }
             }
         }
+    }
 
     /**
      * Fetch metadata for any given site.
@@ -452,7 +461,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun getComments(
         form: it.vercruysse.lemmyapi.datatypes.GetComments,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentView>> =
-        api.getComments(transformer.fromUni(form)).map { PagedResponse(it.comments.map(transformer::toUni)) }
+        LegacyPaging.paged(form.page_cursor) { page ->
+            api.getComments(transformer.fromUni(form).copy(page = page)).map { it.comments.map(transformer::toUni) }
+        }
 
     /**
      * Delete a comment.
@@ -615,13 +626,13 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     /**
      * List notifications.
      */
-    override suspend fun listNotifications(form: ListNotifications): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.NotificationView>> =
+    override suspend fun listNotifications(form: ListNotifications): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.NotificationView>> = LegacyPaging.pagedResponse(form.page_cursor) { page ->
         when (form.type_) {
             NotificationDataType.All ->
                 runCatchingPreservingCancellation {
-                    val replies = api.getReplies(transformer.fromUniR(form)).getOrThrow().replies.map(transformer::toUni)
-                    val mentionReplies = api.getPersonMentions(transformer.fromUniM(form)).getOrThrow().mentions.map(transformer::toUni)
-                    val privateMessages = api.getPrivateMessages(transformer.fromUniP(form)).getOrThrow().private_messages.map(transformer::toUniPMV)
+                    val replies = api.getReplies(transformer.fromUniR(form).copy(page = page)).getOrThrow().replies.map(transformer::toUni)
+                    val mentionReplies = api.getPersonMentions(transformer.fromUniM(form).copy(page = page)).getOrThrow().mentions.map(transformer::toUni)
+                    val privateMessages = api.getPrivateMessages(transformer.fromUniP(form).copy(page = page)).getOrThrow().private_messages.map(transformer::toUniPMV)
                     PagedResponse(
                         buildList {
                             addAll(replies)
@@ -632,16 +643,17 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
                 }
 
             NotificationDataType.Reply ->
-                api.getReplies(transformer.fromUniR(form)).map { resp -> PagedResponse(resp.replies.map(transformer::toUni)) }
+                api.getReplies(transformer.fromUniR(form).copy(page = page)).map { resp -> PagedResponse(resp.replies.map(transformer::toUni)) }
 
             NotificationDataType.Mention ->
-                api.getPersonMentions(transformer.fromUniM(form)).map { resp -> PagedResponse(resp.mentions.map(transformer::toUni)) }
+                api.getPersonMentions(transformer.fromUniM(form).copy(page = page)).map { resp -> PagedResponse(resp.mentions.map(transformer::toUni)) }
 
             NotificationDataType.PrivateMessage ->
-                api.getPrivateMessages(transformer.fromUniP(form)).map { resp -> PagedResponse(resp.private_messages.map(transformer::toUniPMV)) }
+                api.getPrivateMessages(transformer.fromUniP(form).copy(page = page)).map { resp -> PagedResponse(resp.private_messages.map(transformer::toUniPMV)) }
 
             NotificationDataType.Subscribed, NotificationDataType.ModAction -> Result.success(PagedResponse(emptyList()))
         }
+    }
 
     /**
      * Ban a person from your site.
@@ -781,7 +793,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun listRegistrationApplications(
         form: it.vercruysse.lemmyapi.datatypes.ListRegistrationApplications,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationView>> =
-        api.listRegistrationApplications(transformer.fromUni(form)).map { resp -> PagedResponse(resp.registration_applications.map(transformer::toUni)) }
+        LegacyPaging.paged(form.page_cursor) { page ->
+            api.listRegistrationApplications(transformer.fromUni(form).copy(page = page)).map { it.registration_applications.map(transformer::toUni) }
+        }
 
     /**
      * Approve a registration application
@@ -944,7 +958,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun listPostLikes(
         form: it.vercruysse.lemmyapi.datatypes.ListPostLikes,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> =
-        api.listPostLikes(transformer.fromUni(form)).map { PagedResponse(it.post_likes.map(transformer::toUni)) }
+        LegacyPaging.paged(form.page_cursor) { page ->
+            api.listPostLikes(transformer.fromUni(form).copy(page = page)).map { it.post_likes.map(transformer::toUni) }
+        }
 
     /**
      * List a comment's likes. Admin-only.
@@ -954,7 +970,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun listCommentLikes(
         form: it.vercruysse.lemmyapi.datatypes.ListCommentLikes,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.VoteView>> =
-        api.listCommentLikes(transformer.fromUni(form)).map { PagedResponse(it.comment_likes.map(transformer::toUni)) }
+        LegacyPaging.paged(form.page_cursor) { page ->
+            api.listCommentLikes(transformer.fromUni(form).copy(page = page)).map { it.comment_likes.map(transformer::toUni) }
+        }
 
     /**
      * List all the media for your user
@@ -964,7 +982,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun listMedia(
         form: it.vercruysse.lemmyapi.datatypes.ListMedia,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> =
-        api.listMedia(transformer.fromUni(form)).map { PagedResponse(it.images.map(transformer::toUni)) }
+        LegacyPaging.paged(form.page_cursor) { page ->
+            api.listMedia(transformer.fromUni(form).copy(page = page)).map { it.images.map(transformer::toUni) }
+        }
 
     /**
      * List all the media known to your instance.
@@ -974,7 +994,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun listMediaAdmin(
         form: it.vercruysse.lemmyapi.datatypes.ListMedia,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.LocalImageView>> =
-        api.listAllMedia(transformer.fromUni(form)).map { PagedResponse(it.images.map(transformer::toUni)) }
+        LegacyPaging.paged(form.page_cursor) { page ->
+            api.listAllMedia(transformer.fromUni(form).copy(page = page)).map { it.images.map(transformer::toUni) }
+        }
 
     /**
      * Hide a post from list views.
@@ -1020,15 +1042,15 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      */
     override suspend fun listPersonContent(
         form: it.vercruysse.lemmyapi.datatypes.ListPersonContent,
-    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> {
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> = LegacyPaging.pagedResponse(form.page_cursor) { page ->
         val getPersonDetailsForm = GetPersonDetails(
             username = form.username,
             person_id = form.person_id,
             community_id = form.community_id,
-            page = form.page,
+            page = page,
             limit = form.limit,
         )
-        return api.getPersonDetails(getPersonDetailsForm).map { response ->
+        api.getPersonDetails(getPersonDetailsForm).map { response ->
             val comments = when (form.type_) {
                 it.vercruysse.lemmyapi.enums.PersonContentType.Posts -> emptyList()
                 else -> response.comments.map { transformer.toUni(it) }
@@ -1181,17 +1203,19 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun listPersonSaved(form: it.vercruysse.lemmyapi.datatypes.ListPersonSaved): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> {
         if (form.search_term != null) return notSupported()
-        return getMyUser().fold(
-            onSuccess = { user ->
-                api.getPersonDetails(GetPersonDetails(person_id = user.local_user_view.person.id, saved_only = true, page = form.page, limit = form.limit))
-                    .map { response ->
-                        val comments = if (form.type_ == it.vercruysse.lemmyapi.enums.PersonContentType.Posts) emptyList() else response.comments.map { transformer.toUni(it) }
-                        val posts = if (form.type_ == it.vercruysse.lemmyapi.enums.PersonContentType.Comments) emptyList() else response.posts.map { transformer.toUni(it) }
-                        PagedResponse(items = comments + posts)
-                    }
-            },
-            onFailure = { Result.failure(it) },
-        )
+        return LegacyPaging.pagedResponse(form.page_cursor) { page ->
+            getMyUser().fold(
+                onSuccess = { user ->
+                    api.getPersonDetails(GetPersonDetails(person_id = user.local_user_view.person.id, saved_only = true, page = page, limit = form.limit))
+                        .map { response ->
+                            val comments = if (form.type_ == it.vercruysse.lemmyapi.enums.PersonContentType.Posts) emptyList() else response.comments.map { transformer.toUni(it) }
+                            val posts = if (form.type_ == it.vercruysse.lemmyapi.enums.PersonContentType.Comments) emptyList() else response.posts.map { transformer.toUni(it) }
+                            PagedResponse(items = comments + posts)
+                        }
+                },
+                onFailure = { Result.failure(it) },
+            )
+        }
     }
 
     override suspend fun listPersonRead(form: it.vercruysse.lemmyapi.datatypes.ListPersonRead): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> = notSupported()

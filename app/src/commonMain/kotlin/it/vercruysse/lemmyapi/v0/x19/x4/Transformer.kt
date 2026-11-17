@@ -1486,7 +1486,6 @@ internal class Transformer : MapperGenerator {
             type_ = V0ListingType.fromUniNullable(d.type_),
             sort = V0CommentSortType.fromUniNullable(d.sort),
             max_depth = d.max_depth,
-            page = d.page,
             limit = d.limit,
             community_id = d.community_id,
             community_name = d.community_name,
@@ -1506,7 +1505,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetModlog): X4DatatypesGetModlog = X4DatatypesGetModlog(
         mod_person_id = d.mod_person_id,
         community_id = d.community_id,
-        page = d.page,
         limit = d.limit,
         type_ = V0ModlogActionType.fromUniNullable(d.type_),
         other_person_id = d.other_person_id,
@@ -1528,7 +1526,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetPosts): X4DatatypesGetPosts = X4DatatypesGetPosts(
         type_ = V0ListingType.fromUniNullable(d.type_),
         sort = V0SortType.fromUniNullable(d.sort),
-        page = d.page,
         limit = d.limit,
         community_id = d.community_id,
         community_name = d.community_name,
@@ -1539,7 +1536,6 @@ internal class Transformer : MapperGenerator {
     fun fromUniR(d: LemmyapiDatatypesListNotifications): X4DatatypesGetReplies =
         X4DatatypesGetReplies(
             sort = V0CommentSortType.New,
-            page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
         )
@@ -1547,14 +1543,12 @@ internal class Transformer : MapperGenerator {
     fun fromUniM(d: LemmyapiDatatypesListNotifications): X4DatatypesGetPersonMentions =
         X4DatatypesGetPersonMentions(
             sort = V0CommentSortType.New,
-            page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
         )
 
     fun fromUniP(d: LemmyapiDatatypesListNotifications): X4DatatypesGetPrivateMessages =
         X4DatatypesGetPrivateMessages(
-            page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
         )
@@ -1573,7 +1567,6 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUniC(d: it.vercruysse.lemmyapi.datatypes.ListReports): X4DatatypesListCommentReports =
         X4DatatypesListCommentReports(
-            page = d.page,
             limit = d.limit,
             unresolved_only = d.unresolved_only,
             community_id = d.community_id,
@@ -1581,7 +1574,6 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUniP(d: it.vercruysse.lemmyapi.datatypes.ListReports): X4DatatypesListPostReports =
         X4DatatypesListPostReports(
-            page = d.page,
             limit = d.limit,
             unresolved_only = d.unresolved_only,
             community_id = d.community_id,
@@ -1589,7 +1581,6 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUniPm(d: it.vercruysse.lemmyapi.datatypes.ListReports): X4DatatypesListPrivateMessageReports =
         X4DatatypesListPrivateMessageReports(
-            page = d.page,
             limit = d.limit,
             unresolved_only = d.unresolved_only,
         )
@@ -1602,7 +1593,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesListCommentLikes): X4DatatypesListCommentLikes =
         X4DatatypesListCommentLikes(
             comment_id = d.comment_id,
-            page = d.page,
             limit = d.limit,
         )
 
@@ -1611,25 +1601,21 @@ internal class Transformer : MapperGenerator {
             type_ = V0ListingType.fromUniNullable(d.type_),
             sort = V0SortType.fromUniNullable(d.sort),
             show_nsfw = d.show_nsfw,
-            page = d.page,
             limit = d.limit,
         )
 
     override fun fromUni(d: LemmyapiDatatypesListMedia): X4DatatypesListMedia = X4DatatypesListMedia(
-        page = d.page,
         limit = d.limit,
     )
 
     override fun fromUni(d: LemmyapiDatatypesListPostLikes): X4DatatypesListPostLikes =
         X4DatatypesListPostLikes(
             post_id = d.post_id,
-            page = d.page,
             limit = d.limit,
         )
 
     override fun fromUni(d: LemmyapiDatatypesListRegistrationApplications): X4DatatypesListRegistrationApplications = X4DatatypesListRegistrationApplications(
         unread_only = d.unread_only,
-        page = d.page,
         limit = d.limit,
     )
 
@@ -1805,7 +1791,6 @@ internal class Transformer : MapperGenerator {
         creator_id = d.creator_id,
         type_ = V0SearchType.fromUniNullable(d.type_),
         listing_type = V0ListingType.fromUniNullable(d.listing_type),
-        page = d.page,
         limit = d.limit,
     )
 
