@@ -20,6 +20,8 @@ data class GetSiteResponse(
     val admin_oauth_providers: List<AdminOAuthProvider>,
     /** Added in 1.0.0 */
     val active_plugins: List<PluginMetadata>,
+    /** Added in 1.0.0 */
+    val my_feed_token: SensitiveString? = null,
     val last_application_duration_seconds: Long? = null,
     /** Added in 1.0.0 */
     val captcha_enabled: Boolean,

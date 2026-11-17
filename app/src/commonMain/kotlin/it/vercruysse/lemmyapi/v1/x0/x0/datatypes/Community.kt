@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi.v1.x0.x0.datatypes
 
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
+import it.vercruysse.lemmyapi.enums.VoteSettings
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -34,4 +35,8 @@ internal data class Community(
     val report_count: Long,
     val unresolved_report_count: Long,
     val local_removed: Boolean,
+    val post_upvotes: VoteSettings /* "all" | "local" | "subscribed" | "disable" */,
+    val post_downvotes: VoteSettings /* "all" | "local" | "subscribed" | "disable" */,
+    val comment_upvotes: VoteSettings /* "all" | "local" | "subscribed" | "disable" */,
+    val comment_downvotes: VoteSettings /* "all" | "local" | "subscribed" | "disable" */,
 )

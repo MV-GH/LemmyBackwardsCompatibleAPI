@@ -36,6 +36,7 @@ The `it.vercruysse.lemmyapi.datatypes` package represents the **1.0.0 Lemmy API*
 - **API route added**: add a function to `FeatureFlags` that returns whether this feature is supported. Older versions implement this route by throwing `notSupported()`.
 - **API route removed**: newer versions implement the old route by throwing `notSupported()`. Add to the `oldRoutes` interface if needed.
 - **Request/response changes**: transform using `Transformer`. The unified type (usually the latest datatype shape) is returned regardless of version. Example: [moving admin flag from person to local_user](https://github.com/LemmyNet/lemmy/pull/3403) — pre-0.19 APIs map their type to the latest shape.
+- **Fields missing in older versions**: unified types match the latest datatypes as closely as possible, so new fields are declared non-null and **without defaults**. Older-version `Transformer`s set the fallback explicitly (e.g. `-1` for missing counters).
 - **Enum entries**: each entry tracks `minimumVersion`/`maximumVersion`. Use `getSupportedEntries<Type>()` to retrieve the valid entries for the connected instance (e.g. sort options).
 
 

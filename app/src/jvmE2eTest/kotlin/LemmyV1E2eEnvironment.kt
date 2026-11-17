@@ -182,7 +182,7 @@ internal class LemmyV1E2eEnvironment {
     private class LemmyContainer(image: String) : GenericContainer<LemmyContainer>(DockerImageName.parse(image))
 
     companion object {
-        const val LEMMY_VERSION = "1.0.0-beta.2"
+        const val LEMMY_VERSION = "1.0.0-beta.3"
         const val ADMIN_USERNAME = "lemmy"
         const val ADMIN_PASSWORD = "lemmylemmy"
         const val USER_PASSWORD = "e2e-user-password"

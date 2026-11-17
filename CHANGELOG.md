@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## [1.0.0-rc.2] - 2026-11-17
+
+### Changed
+
+- v1 types bumped to `1.0.0-feed-only-jwt.1`.
+
 ## [1.0.0-rc.1] - 2026-10-20
 
 The first release candidate for the stable 1.0.0 API.
@@ -29,4 +35,5 @@ The first release candidate for the stable 1.0.0 API.
 - Consumers should use `uploadImage()` and `deleteMedia()` instead of calling legacy pictrs APIs directly.
 - Consumers using page-based pagination should provide both `page` and `page_cursor` when supporting both pre-1.0 and 1.x instances.
 
+[1.0.0-rc.2]: https://github.com/MV-GH/LemmyBackwardsCompatibleAPI/releases/tag/1.0.0-rc.2
 [1.0.0-rc.1]: https://github.com/MV-GH/LemmyBackwardsCompatibleAPI/releases/tag/1.0.0-rc.1

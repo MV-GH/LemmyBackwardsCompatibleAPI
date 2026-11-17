@@ -543,6 +543,7 @@ internal class Transformer : MapperGenerator {
         username = d.username,
         answer = d.answer,
         pkce_code_verifier = d.pkce_code_verifier,
+        totp_2fa_token = d.totp_2fa_token,
         stay_logged_in = d.stay_logged_in,
     )
 
@@ -688,6 +689,10 @@ internal class Transformer : MapperGenerator {
         report_count = d.report_count,
         unresolved_report_count = d.unresolved_report_count,
         local_removed = d.local_removed,
+        post_upvotes = d.post_upvotes,
+        post_downvotes = d.post_downvotes,
+        comment_upvotes = d.comment_upvotes,
+        comment_downvotes = d.comment_downvotes,
     )
 
     override fun toUni(d: X0DatatypesCommunityActions): LemmyapiDatatypesCommunityActions = LemmyapiDatatypesCommunityActions(
@@ -887,6 +892,7 @@ internal class Transformer : MapperGenerator {
         oauth_providers = d.oauth_providers.map { this.toUni(d = it) },
         admin_oauth_providers = d.admin_oauth_providers.map { this.toUni(d = it) },
         active_plugins = d.active_plugins.map { this.toUni(d = it) },
+        my_feed_token = d.my_feed_token,
         last_application_duration_seconds = d.last_application_duration_seconds,
         captcha_enabled = d.captcha_enabled,
     )
@@ -930,6 +936,8 @@ internal class Transformer : MapperGenerator {
         id = d.id,
         code = d.code,
         name = d.name,
+        usage_in_local_posts_percent = d.usage_in_local_posts_percent,
+        usage_in_local_comments_percent = d.usage_in_local_comments_percent,
     )
 
     override fun toUni(d: X0DatatypesLinkMetadata): LemmyapiDatatypesLinkMetadata = LemmyapiDatatypesLinkMetadata(
@@ -988,16 +996,16 @@ internal class Transformer : MapperGenerator {
         default_post_sort_type = d.default_post_sort_type,
         default_comment_sort_type = d.default_comment_sort_type,
         oauth_registration = d.oauth_registration,
-        post_upvotes = d.post_upvotes,
-        post_downvotes = d.post_downvotes,
-        comment_upvotes = d.comment_upvotes,
-        comment_downvotes = d.comment_downvotes,
+        default_post_upvotes = d.default_post_upvotes,
+        default_post_downvotes = d.default_post_downvotes,
+        default_comment_upvotes = d.default_comment_upvotes,
+        default_comment_downvotes = d.default_comment_downvotes,
         default_post_time_range_seconds = d.default_post_time_range_seconds,
         nsfw_content_disallowed = d.nsfw_content_disallowed,
-        users = d.users,
-        posts = d.posts,
-        comments = d.comments,
-        communities = d.communities,
+        local_users = d.local_users,
+        local_posts = d.local_posts,
+        local_comments = d.local_comments,
+        local_communities = d.local_communities,
         users_active_day = d.users_active_day,
         users_active_week = d.users_active_week,
         users_active_month = d.users_active_month,
@@ -1014,6 +1022,14 @@ internal class Transformer : MapperGenerator {
         image_max_upload_size = d.image_max_upload_size,
         image_allow_video_uploads = d.image_allow_video_uploads,
         image_upload_disabled = d.image_upload_disabled,
+        linked_instances = d.linked_instances,
+        total_posts = d.total_posts,
+        total_comments = d.total_comments,
+        total_users = d.total_users,
+        total_communities = d.total_communities,
+        user_retention_month_percent = d.user_retention_month_percent,
+        user_retention_half_year_percent = d.user_retention_half_year_percent,
+        banned_users_percent = d.banned_users_percent,
         max_invites_per_user_allowed = d.max_invites_per_user_allowed,
     )
 
@@ -1639,6 +1655,7 @@ internal class Transformer : MapperGenerator {
         username = d.username,
         answer = d.answer,
         pkce_code_verifier = d.pkce_code_verifier,
+        totp_2fa_token = d.totp_2fa_token,
         stay_logged_in = d.stay_logged_in,
     )
 
@@ -1712,6 +1729,10 @@ internal class Transformer : MapperGenerator {
         posting_restricted_to_mods = d.posting_restricted_to_mods,
         discussion_languages = d.discussion_languages,
         visibility = d.visibility,
+        post_upvotes = d.post_upvotes,
+        post_downvotes = d.post_downvotes,
+        comment_upvotes = d.comment_upvotes,
+        comment_downvotes = d.comment_downvotes,
     )
 
     override fun fromUni(d: LemmyapiDatatypesCreateCommunityReport): X0DatatypesCreateCommunityReport = X0DatatypesCreateCommunityReport(
@@ -1844,10 +1865,10 @@ internal class Transformer : MapperGenerator {
         registration_mode = d.registration_mode,
         oauth_registration = d.oauth_registration,
         content_warning = d.content_warning,
-        post_upvotes = d.post_upvotes,
-        post_downvotes = d.post_downvotes,
-        comment_upvotes = d.comment_upvotes,
-        comment_downvotes = d.comment_downvotes,
+        default_post_upvotes = d.default_post_upvotes,
+        default_post_downvotes = d.default_post_downvotes,
+        default_comment_upvotes = d.default_comment_upvotes,
+        default_comment_downvotes = d.default_comment_downvotes,
         nsfw_content_disallowed = d.nsfw_content_disallowed,
         email_notifications_disabled = d.email_notifications_disabled,
         suggested_multi_community_id = d.suggested_multi_community_id,
@@ -1936,6 +1957,10 @@ internal class Transformer : MapperGenerator {
         posting_restricted_to_mods = d.posting_restricted_to_mods,
         discussion_languages = d.discussion_languages,
         visibility = d.visibility,
+        post_upvotes = d.post_upvotes,
+        post_downvotes = d.post_downvotes,
+        comment_upvotes = d.comment_upvotes,
+        comment_downvotes = d.comment_downvotes,
     )
 
     override fun fromUni(d: LemmyapiDatatypesEditCommunityNotifications): X0DatatypesEditCommunityNotifications = X0DatatypesEditCommunityNotifications(
@@ -2045,10 +2070,10 @@ internal class Transformer : MapperGenerator {
         reports_email_admins = d.reports_email_admins,
         content_warning = d.content_warning,
         oauth_registration = d.oauth_registration,
-        post_upvotes = d.post_upvotes,
-        post_downvotes = d.post_downvotes,
-        comment_upvotes = d.comment_upvotes,
-        comment_downvotes = d.comment_downvotes,
+        default_post_upvotes = d.default_post_upvotes,
+        default_post_downvotes = d.default_post_downvotes,
+        default_comment_upvotes = d.default_comment_upvotes,
+        default_comment_downvotes = d.default_comment_downvotes,
         suggested_multi_community_id = d.suggested_multi_community_id,
         nsfw_content_disallowed = d.nsfw_content_disallowed,
         email_notifications_disabled = d.email_notifications_disabled,

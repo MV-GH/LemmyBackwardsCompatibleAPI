@@ -7,4 +7,6 @@ internal data class Language(
     val id: LanguageId,
     val code: String,
     val name: String,
+    val usage_in_local_posts_percent: Long,
+    val usage_in_local_comments_percent: Long,
 )

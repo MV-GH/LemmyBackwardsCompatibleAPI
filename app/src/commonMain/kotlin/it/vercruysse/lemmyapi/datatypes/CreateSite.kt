@@ -3,7 +3,7 @@ package it.vercruysse.lemmyapi.datatypes
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.enums.CommentSortType
-import it.vercruysse.lemmyapi.enums.FederationMode
+import it.vercruysse.lemmyapi.enums.VoteSettings
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
@@ -67,10 +67,10 @@ data class CreateSite(
     /** Added in 1.0.0 */
     val oauth_registration: Boolean? = null,
     val content_warning: String? = null,
-    val post_upvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
-    val post_downvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
-    val comment_upvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
-    val comment_downvotes: FederationMode? /* "All" | "Local" | "Disable" */ = null,
+    val default_post_upvotes: VoteSettings? /* "All" | "Local" | "Subscribed" | "Disable" */ = null,
+    val default_post_downvotes: VoteSettings? /* "All" | "Local" | "Subscribed" | "Disable" */ = null,
+    val default_comment_upvotes: VoteSettings? /* "All" | "Local" | "Subscribed" | "Disable" */ = null,
+    val default_comment_downvotes: VoteSettings? /* "All" | "Local" | "Subscribed" | "Disable" */ = null,
     val nsfw_content_disallowed: Boolean? = null,
     /** Added in 1.0.0 */
     val email_notifications_disabled: Boolean? = null,

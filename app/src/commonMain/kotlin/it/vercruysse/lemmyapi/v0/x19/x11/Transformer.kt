@@ -10,10 +10,10 @@ import it.vercruysse.lemmyapi.datatypes.PostActions
 import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.CommunityFollowerState
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
-import it.vercruysse.lemmyapi.enums.FederationMode
 import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.enums.VoteAction
+import it.vercruysse.lemmyapi.enums.VoteSettings
 import it.vercruysse.lemmyapi.enums.VoteShow
 import it.vercruysse.lemmyapi.utils.toAt
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
@@ -468,6 +468,10 @@ internal class Transformer : MapperGenerator {
             report_count = -1,
             unresolved_report_count = -1,
             local_removed = false,
+            post_upvotes = VoteSettings.All,
+            post_downvotes = VoteSettings.All,
+            comment_upvotes = VoteSettings.All,
+            comment_downvotes = VoteSettings.All,
             last_refreshed_at = "",
         )
 
@@ -677,6 +681,8 @@ internal class Transformer : MapperGenerator {
             id = d.id,
             code = d.code,
             name = d.name,
+            usage_in_local_posts_percent = -1,
+            usage_in_local_comments_percent = -1,
         )
 
     override fun toUni(d: X11DatatypesLinkMetadata): LemmyapiDatatypesLinkMetadata =
@@ -730,14 +736,14 @@ internal class Transformer : MapperGenerator {
             suggested_multi_community_id = null,
             default_comment_sort_type = CommentSortType.Hot,
             default_post_time_range_seconds = null,
-            post_upvotes = FederationMode.All,
-            post_downvotes = if (d.enable_downvotes) FederationMode.All else FederationMode.Disable,
-            comment_upvotes = FederationMode.All,
-            comment_downvotes = if (d.enable_downvotes) FederationMode.All else FederationMode.Disable,
-            users = counts.users,
-            posts = counts.posts,
-            comments = counts.comments,
-            communities = counts.communities,
+            default_post_upvotes = VoteSettings.All,
+            default_post_downvotes = if (d.enable_downvotes) VoteSettings.All else VoteSettings.Disable,
+            default_comment_upvotes = VoteSettings.All,
+            default_comment_downvotes = if (d.enable_downvotes) VoteSettings.All else VoteSettings.Disable,
+            local_users = counts.users,
+            local_posts = counts.posts,
+            local_comments = counts.comments,
+            local_communities = counts.communities,
             users_active_day = counts.users_active_day,
             users_active_week = counts.users_active_week,
             users_active_month = counts.users_active_month,
@@ -751,6 +757,14 @@ internal class Transformer : MapperGenerator {
             image_max_upload_size = 0,
             image_allow_video_uploads = false,
             image_upload_disabled = false,
+            linked_instances = -1,
+            total_posts = -1,
+            total_comments = -1,
+            total_users = -1,
+            total_communities = -1,
+            user_retention_month_percent = -1,
+            user_retention_half_year_percent = -1,
+            banned_users_percent = -1,
             max_invites_per_user_allowed = 0,
         )
 
@@ -1286,9 +1300,9 @@ internal class Transformer : MapperGenerator {
             name = d.name,
             sidebar = d.sidebar,
             description = d.summary,
-            enable_downvotes = when (d.post_downvotes) {
-                FederationMode.Local, FederationMode.All -> true
-                FederationMode.Disable -> false
+            enable_downvotes = when (d.default_post_downvotes) {
+                VoteSettings.Local, VoteSettings.Subscribed, VoteSettings.All -> true
+                VoteSettings.Disable -> false
                 null -> null
             },
             enable_nsfw = if (d.nsfw_content_disallowed == null) null else !d.nsfw_content_disallowed,
@@ -1415,9 +1429,9 @@ internal class Transformer : MapperGenerator {
         name = d.name,
         sidebar = d.sidebar,
         description = d.summary,
-        enable_downvotes = when (d.post_downvotes) {
-            FederationMode.Local, FederationMode.All -> true
-            FederationMode.Disable -> false
+        enable_downvotes = when (d.default_post_downvotes) {
+            VoteSettings.Local, VoteSettings.Subscribed, VoteSettings.All -> true
+            VoteSettings.Disable -> false
             null -> null
         },
         enable_nsfw = d.enable_nsfw,

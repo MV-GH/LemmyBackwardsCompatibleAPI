@@ -14,6 +14,7 @@ internal data class GetSiteResponse(
     val admin_oauth_providers: List<AdminOAuthProvider>,
     val blocked_urls: List<LocalSiteUrlBlocklist>,
     val active_plugins: List<PluginMetadata>,
+    val my_feed_token: SensitiveString? = null,
     val last_application_duration_seconds: Long? = null,
     val captcha_enabled: Boolean,
 )

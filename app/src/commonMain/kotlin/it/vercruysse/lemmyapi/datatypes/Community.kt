@@ -4,6 +4,7 @@ import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
 import it.vercruysse.lemmyapi.Identity
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
+import it.vercruysse.lemmyapi.enums.VoteSettings
 import kotlinx.serialization.Serializable
 
 @CommonParcelize
@@ -38,4 +39,9 @@ data class Community(
     val report_count: Long,
     val unresolved_report_count: Long,
     val local_removed: Boolean,
+    /** Added in 1.0.0 */
+    val post_upvotes: VoteSettings,
+    val post_downvotes: VoteSettings,
+    val comment_upvotes: VoteSettings,
+    val comment_downvotes: VoteSettings,
 ) : DatatypeRoot, Identity
