@@ -19,9 +19,6 @@ data class ListCommunities(
     val search_term: String? = null,
     /** Added in 1.0.0 */
     val search_title_only: Boolean? = null,
-    /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
-    /** Removed in 1.0.0 */
-    val page: Long? = null,
     val limit: Long? = null,
 ) : DatatypeRoot

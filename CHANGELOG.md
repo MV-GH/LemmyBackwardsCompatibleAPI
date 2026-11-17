@@ -2,6 +2,15 @@
 
 All notable changes to this project are documented here.
 
+## [1.0.0-rc.3] - 2026-11-17
+
+### Breaking changes
+
+- Pagination is cursor-only: `page` was removed from all unified request types (`GetPosts`, `GetComments`, `GetModlog`, `Search`, `ListCommunities`, `ListReports`, `ListNotifications`, `ListMedia`, `ListPersonContent`, `ListPersonSaved`, `ListPostLikes`, `ListCommentLikes`, `ListRegistrationApplications`). 
+Pass `page_cursor` and read `next_page`/`prev_page` from the response. 
+On pre-1.0 instances these are synthetic cursors that map to page-based pagination internally, so the same flow works on every supported version.
+- `getPosts` on Lemmy 0.19 passes the server's own cursor through and now returns its `next_page`.
+
 ## [1.0.0-rc.2] - 2026-11-17
 
 ### Changed
@@ -38,5 +47,6 @@ The first release candidate for the stable 1.0.0 API.
 - Consumers should use `uploadImage()` and `deleteMedia()` instead of calling legacy pictrs APIs directly.
 - Consumers using page-based pagination should provide both `page` and `page_cursor` when supporting both pre-1.0 and 1.x instances.
 
+[1.0.0-rc.3]: https://github.com/MV-GH/LemmyBackwardsCompatibleAPI/releases/tag/1.0.0-rc.3
 [1.0.0-rc.2]: https://github.com/MV-GH/LemmyBackwardsCompatibleAPI/releases/tag/1.0.0-rc.2
 [1.0.0-rc.1]: https://github.com/MV-GH/LemmyBackwardsCompatibleAPI/releases/tag/1.0.0-rc.1

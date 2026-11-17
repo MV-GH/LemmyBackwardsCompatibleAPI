@@ -94,7 +94,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
         api.createPost(transformer.fromUni(form)).map(transformer::toUni)
 
     override suspend fun getPosts(form: it.vercruysse.lemmyapi.datatypes.GetPosts): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> =
-        api.getPosts(transformer.fromUni(form.toValidatedForm())).map { resp ->
+        api.getPosts(transformer.fromUni(form)).map { resp ->
             PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)
         }
 

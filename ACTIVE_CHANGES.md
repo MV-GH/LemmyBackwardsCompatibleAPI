@@ -27,10 +27,13 @@ Should now use the dedicated avatar/icon/banner upload/delete endpoints.
 
 ### Pagination: `page` replaced by `page_cursor`
 
-`page: Long?` has been removed from all list/query types in v1 (`GetPosts`, `GetComments`, `GetModlog`, `Search`, `ListCommunities`, `ListReports`, `ListNotifications`, `ListMedia`, `ListPersonContent`, `ListPostLikes`, `ListCommentLikes`, `ListRegistrationApplications`).
+`page: Long?` has been removed from all unified list/query types, as it was in v1. Only pass `page_cursor`: `null` for the first page, then the `next_page` / `prev_page` from the previous response (`PagedResponse` or `SearchResponse`).
 
-- On v1, use `page_cursor` for cursor-based pagination.
-- To support pre-v1 instances, populate **both** `page` (for older versions, handled internally) and `page_cursor` (for v1). The wrapper will pass the appropriate one.
+- On v1, the cursor comes from the server.
+- On pre-v1, the wrapper returns synthetic cursors that map to `page` internally. `next_page` is set whenever the returned page is not empty, so the end of a list costs one extra empty request.
+- `getPosts` on 0.19 uses the server's own cursor, so it has a `next_page` but no `prev_page`.
+- Treat cursors as opaque and only reuse them on the instance (and version) that returned them. Passing an unknown cursor to a pre-v1 instance fails with `LemmyBadRequestException(400, "invalid_page_cursor")`.
+- Page-based pagination on pre-v1 can still return duplicates or skip items when new content arrives between requests.
 
 
 

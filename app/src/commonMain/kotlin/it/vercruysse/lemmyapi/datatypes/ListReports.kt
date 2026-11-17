@@ -14,8 +14,6 @@ data class ListReports(
     val post_id: PostId? = null,
     /** Removed in 1.0.0 */
     val community_id: CommunityId? = null,
-    val page: Long? = null,
-    /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
     /** Added in 1.0.0 */

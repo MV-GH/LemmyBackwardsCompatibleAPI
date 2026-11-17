@@ -14,10 +14,7 @@ data class GetComments(
     /** Added in 1.0.0 */
     val time_range_seconds: Long? = null,
     val max_depth: Long? = null,
-    /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
-    /** Removed in 1.0.0 */
-    val page: Long? = null,
     val limit: Long? = null,
     val community_id: CommunityId? = null,
     val community_name: String? = null,

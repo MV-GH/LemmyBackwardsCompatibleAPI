@@ -1,9 +1,6 @@
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.mock.MockEngine
-import io.ktor.client.engine.mock.respond
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.headersOf
+import io.ktor.client.*
+import io.ktor.client.engine.mock.*
+import io.ktor.http.*
 import it.vercruysse.lemmyapi.LemmyApiClient
 import it.vercruysse.lemmyapi.LemmyAuth
 import it.vercruysse.lemmyapi.LemmyInstance
@@ -14,18 +11,9 @@ import it.vercruysse.lemmyapi.datatypes.PostView
 import it.vercruysse.lemmyapi.enums.PersonContentType
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.exception.NotSupportedException
+import it.vercruysse.lemmyapi.utils.LegacyPaging
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.descriptors.PolymorphicKind
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.SerialKind
-import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -43,10 +31,9 @@ import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.GetSiteResponse as Site4
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetPersonDetailsResponse as Details6
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetSiteResponse as Site6
 
-@OptIn(ExperimentalSerializationApi::class)
 class LegacySavedTest {
     @Test
-    fun `legacy wrappers request and map saved content with page and type filters`() = runBlocking {
+    fun `legacy wrappers request and map saved content with cursor and type filters`() = runBlocking {
         val versions = listOf(
             Triple("0.18.5", Site18.serializer().descriptor, Details18.serializer().descriptor),
             Triple("0.19.0", Site0.serializer().descriptor, Details0.serializer().descriptor),
@@ -91,15 +78,16 @@ class LegacySavedTest {
             val apiClient = LemmyApiClient(client)
             try {
                 val api = apiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyAuth.Bearer("test-token"), LemmyVersion(version)).getOrThrow()
-                val result = api.listPersonSaved(ListPersonSaved(page = 3, limit = 1)).getOrThrow()
+                val result = api.listPersonSaved(ListPersonSaved(page_cursor = LegacyPaging.encode(3), limit = 1)).getOrThrow()
                 assertIs<CommentView>(result.items[0], version)
                 assertIs<PostView>(result.items[1], version)
-                assertNull(result.next_page)
+                assertEquals(LegacyPaging.encode(4), result.next_page)
+                assertEquals(LegacyPaging.encode(2), result.prev_page)
                 assertEquals(listOf("/api/v3/site", "/api/v3/user"), paths)
-                val posts = api.listPersonSaved(ListPersonSaved(type_ = PersonContentType.Posts, page = 3, limit = 1)).getOrThrow()
+                val posts = api.listPersonSaved(ListPersonSaved(type_ = PersonContentType.Posts, page_cursor = LegacyPaging.encode(3), limit = 1)).getOrThrow()
                 assertEquals(1, posts.items.size)
                 assertIs<PostView>(posts.items.single())
-                val comments = api.listPersonSaved(ListPersonSaved(type_ = PersonContentType.Comments, page = 3, limit = 1)).getOrThrow()
+                val comments = api.listPersonSaved(ListPersonSaved(type_ = PersonContentType.Comments, page_cursor = LegacyPaging.encode(3), limit = 1)).getOrThrow()
                 assertEquals(1, comments.items.size)
                 assertIs<CommentView>(comments.items.single())
                 val requestCount = paths.size
@@ -149,43 +137,11 @@ class LegacySavedTest {
         val apiClient = LemmyApiClient(client)
         try {
             val api = apiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion("1.0.0")).getOrThrow()
-            api.listPersonSaved(ListPersonSaved(page = 3, page_cursor = "cursor", limit = 2)).getOrThrow()
+            api.listPersonSaved(ListPersonSaved(page_cursor = "cursor", limit = 2)).getOrThrow()
             Unit
         } finally {
             apiClient.close()
             client.close()
-        }
-    }
-
-    private fun SerialDescriptor.element(name: String): SerialDescriptor = getElementDescriptor(getElementIndex(name))
-
-    private fun objectWith(descriptor: SerialDescriptor, vararg fields: Pair<String, JsonElement>): JsonObject =
-        JsonObject((sample(descriptor) as JsonObject) + fields)
-
-    private fun sample(descriptor: SerialDescriptor, nullable: Boolean = true): JsonElement {
-        if (nullable && descriptor.isNullable) return JsonNull
-        return when (descriptor.kind) {
-            PrimitiveKind.BOOLEAN -> JsonPrimitive(false)
-
-            PrimitiveKind.STRING, PrimitiveKind.CHAR -> JsonPrimitive("test")
-
-            PrimitiveKind.BYTE, PrimitiveKind.SHORT, PrimitiveKind.INT, PrimitiveKind.LONG,
-            PrimitiveKind.FLOAT, PrimitiveKind.DOUBLE,
-            -> JsonPrimitive(1)
-
-            SerialKind.ENUM -> JsonPrimitive(descriptor.getElementName(0))
-
-            StructureKind.LIST -> JsonArray(emptyList())
-
-            StructureKind.CLASS, StructureKind.OBJECT -> JsonObject(
-                (0 until descriptor.elementsCount)
-                    .filterNot(descriptor::isElementOptional)
-                    .associate { descriptor.getElementName(it) to sample(descriptor.getElementDescriptor(it)) },
-            )
-
-            is PolymorphicKind -> error("Unexpected polymorphic field ${descriptor.serialName}")
-
-            else -> error("Unexpected field ${descriptor.serialName}")
         }
     }
 }

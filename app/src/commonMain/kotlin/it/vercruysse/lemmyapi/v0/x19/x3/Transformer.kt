@@ -1421,7 +1421,6 @@ internal class Transformer : MapperGenerator {
         X3DatatypesGetComments(
             type_ = V0ListingType.fromUniNullable(d.type_),
             sort = V0CommentSortType.fromUniNullable(d.sort),
-            page = d.page,
             limit = d.limit,
             community_id = d.community_id,
             community_name = d.community_name,
@@ -1441,7 +1440,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetModlog): X3DatatypesGetModlog = X3DatatypesGetModlog(
         mod_person_id = d.mod_person_id,
         community_id = d.community_id,
-        page = d.page,
         limit = d.limit,
         type_ = V0ModlogActionType.fromUniNullable(d.type_),
         other_person_id = d.other_person_id,
@@ -1461,7 +1459,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetPosts): X3DatatypesGetPosts = X3DatatypesGetPosts(
         type_ = V0ListingType.fromUniNullable(d.type_),
         sort = V0SortType.fromUniNullable(d.sort),
-        page = d.page,
         limit = d.limit,
         community_id = d.community_id,
         community_name = d.community_name,
@@ -1471,7 +1468,6 @@ internal class Transformer : MapperGenerator {
     fun fromUniR(d: LemmyapiDatatypesListNotifications): X3DatatypesGetReplies =
         X3DatatypesGetReplies(
             sort = V0CommentSortType.New,
-            page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
         )
@@ -1479,14 +1475,12 @@ internal class Transformer : MapperGenerator {
     fun fromUniM(d: LemmyapiDatatypesListNotifications): X3DatatypesGetPersonMentions =
         X3DatatypesGetPersonMentions(
             sort = V0CommentSortType.New,
-            page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
         )
 
     fun fromUniP(d: LemmyapiDatatypesListNotifications): X3DatatypesGetPrivateMessages =
         X3DatatypesGetPrivateMessages(
-            page = d.page,
             limit = d.limit,
             unread_only = d.unread_only,
         )
@@ -1505,7 +1499,6 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUniC(d: it.vercruysse.lemmyapi.datatypes.ListReports): X3DatatypesListCommentReports =
         X3DatatypesListCommentReports(
-            page = d.page,
             limit = d.limit,
             unresolved_only = d.unresolved_only,
             community_id = d.community_id,
@@ -1513,7 +1506,6 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUniP(d: it.vercruysse.lemmyapi.datatypes.ListReports): X3DatatypesListPostReports =
         X3DatatypesListPostReports(
-            page = d.page,
             limit = d.limit,
             unresolved_only = d.unresolved_only,
             community_id = d.community_id,
@@ -1521,7 +1513,6 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUniPm(d: it.vercruysse.lemmyapi.datatypes.ListReports): X3DatatypesListPrivateMessageReports =
         X3DatatypesListPrivateMessageReports(
-            page = d.page,
             limit = d.limit,
             unresolved_only = d.unresolved_only,
         )
@@ -1529,7 +1520,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesListCommentLikes): X3DatatypesListCommentLikes =
         X3DatatypesListCommentLikes(
             comment_id = d.comment_id,
-            page = d.page,
             limit = d.limit,
         )
 
@@ -1538,20 +1528,17 @@ internal class Transformer : MapperGenerator {
             type_ = V0ListingType.fromUniNullable(d.type_),
             sort = V0SortType.fromUniNullable(d.sort),
             show_nsfw = d.show_nsfw,
-            page = d.page,
             limit = d.limit,
         )
 
     override fun fromUni(d: LemmyapiDatatypesListPostLikes): X3DatatypesListPostLikes =
         X3DatatypesListPostLikes(
             post_id = d.post_id,
-            page = d.page,
             limit = d.limit,
         )
 
     override fun fromUni(d: LemmyapiDatatypesListRegistrationApplications): X3DatatypesListRegistrationApplications = X3DatatypesListRegistrationApplications(
         unread_only = d.unread_only,
-        page = d.page,
         limit = d.limit,
     )
 
@@ -1719,7 +1706,6 @@ internal class Transformer : MapperGenerator {
         creator_id = d.creator_id,
         type_ = V0SearchType.fromUniNullable(d.type_),
         listing_type = V0ListingType.fromUniNullable(d.listing_type),
-        page = d.page,
         limit = d.limit,
     )
 

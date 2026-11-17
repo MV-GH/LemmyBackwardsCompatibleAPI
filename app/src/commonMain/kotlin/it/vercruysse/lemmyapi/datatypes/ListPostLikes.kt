@@ -8,9 +8,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ListPostLikes(
     val post_id: PostId,
-    /** Removed in 1.0.0 */
-    val page: Long? = null,
-    /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
     val limit: Long? = null,
 ) : DatatypeRoot

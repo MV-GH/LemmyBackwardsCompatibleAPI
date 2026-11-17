@@ -21,9 +21,6 @@ data class GetModlog(
     val show_bulk: Boolean? = null,
     /** Added in 1.0.0 */
     val bulk_action_parent_id: ModlogId? = null,
-    /** Added in 1.0.0 */
     val page_cursor: PaginationCursor? = null,
-    /** Removed in 1.0.0 */
-    val page: Long? = null,
     val limit: Long? = null,
 ) : DatatypeRoot
