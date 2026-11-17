@@ -7,6 +7,7 @@ All notable changes to this project are documented here.
 ### Changed
 
 - v1 types bumped to `1.0.0-feed-only-jwt.1`.
+- Legacy getMyUser endpoints now report rejected auth tokens as `LemmyBadRequestException(401, "not_logged_in")`, matching v1 behavior.
 
 ## [1.0.0-rc.1] - 2026-10-20
 
