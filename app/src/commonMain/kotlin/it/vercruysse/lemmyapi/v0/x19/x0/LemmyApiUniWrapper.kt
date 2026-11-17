@@ -1172,7 +1172,20 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun notePerson(form: it.vercruysse.lemmyapi.datatypes.NotePerson): Result<Unit> = notSupported()
 
-    override suspend fun listPersonSaved(form: it.vercruysse.lemmyapi.datatypes.ListPersonSaved): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> = notSupported()
+    override suspend fun listPersonSaved(form: it.vercruysse.lemmyapi.datatypes.ListPersonSaved): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostCommentCombinedView>> {
+        if (form.search_term != null) return notSupported()
+        return getMyUser().fold(
+            onSuccess = { user ->
+                api.getPersonDetails(GetPersonDetails(person_id = user.local_user_view.person.id, saved_only = true, page = form.page, limit = form.limit))
+                    .map { response ->
+                        val comments = if (form.type_ == it.vercruysse.lemmyapi.enums.PersonContentType.Posts) emptyList() else response.comments.map { transformer.toUni(it) }
+                        val posts = if (form.type_ == it.vercruysse.lemmyapi.enums.PersonContentType.Comments) emptyList() else response.posts.map { transformer.toUni(it) }
+                        PagedResponse(items = comments + posts)
+                    }
+            },
+            onFailure = { Result.failure(it) },
+        )
+    }
 
     override suspend fun listPersonRead(form: it.vercruysse.lemmyapi.datatypes.ListPersonRead): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.PostView>> = notSupported()
 
