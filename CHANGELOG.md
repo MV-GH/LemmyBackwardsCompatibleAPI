@@ -2,6 +2,40 @@
 
 All notable changes to this project are documented here.
 
+## [1.0.0-rc.4] - 2026-11-18
+
+### Breaking changes
+
+- `EditSite.enable_nsfw` was removed, as it was in 1.0. Use its inverse `nsfw_content_disallowed`, which now also works on 0.18 and 0.19.
+- `leaveAdmin` was removed, as it was in 1.0. Use `addAdmin(AddAdmin(person_id, added = false))` instead.
+- `hideCommunity` and `HideCommunity` were removed, as they were in 1.0. Use `createCommunity` or `editCommunity` with `visibility = CommunityVisibility.Unlisted`. On 0.18 and 0.19 this hides the community (admins only), and `Public` unhides it. `Public` and `Unlisted` are now supported entries from 0.18.
+
+### Added
+
+- Feature flags `instanceBlockPersons()`, `modlog()` and `listPersonReadHiddenLiked()` for endpoints that only work on Lemmy 1.0.
+- `hidePosts` works on Lemmy 1.0 by hiding the posts one by one.
+
+### Fixed
+
+- Only GET requests are retried after network errors, so POST/PUT/DELETE requests are no longer sent twice.
+- `localhost:<port>` and `127.0.0.1:<port>` instances use http.
+- An uploaded image is deleted again when applying it is cancelled.
+- Creating and listing registration invitations works on Lemmy 1.0 (wrong list route, and responses failed to deserialize).
+- Post notifications no longer make `listNotifications` fail on Lemmy 1.0.
+- `deleteCustomEmoji` uses the correct route on Lemmy 1.0.
+- `resolveObject` works on Lemmy 1.0.
+- Lemmy 0.18: admins are reported as admins (`is_admin`, `local_user.admin`, `creator_is_admin`).
+- Lemmy 0.18: all timestamps have a timezone.
+- Lemmy 0.18: the report count no longer counts comment reports twice, and is null when it isn't available.
+- Pre-1.0: partial `editCustomEmoji` edits keep the current values instead of crashing (0.18) or blanking them (0.19).
+- Lemmy 0.18: `markManyPostsAsRead` stops at the first failure.
+- Lemmy 0.19.2-0.19.3: `GetComments.max_depth` and `SaveUserSettings.animated_images_enabled` are sent.
+- Lemmy 0.19.4-0.19.5: `listReports` filters post reports by `post_id`.
+- Lemmy 0.19.11: comment reports include their `resolver`.
+- Lemmy 0.19.6+: `subscribers_local` is filled in.
+- Pre-1.0: `listReports` with `post_id` or `community_id` no longer returns unrelated post, comment or private message reports, and paging continues past pages without matches.
+- Pre-1.0: `getComments` with `max_depth` returns no `next_page`, because the server always returns the whole tree.
+
 ## [1.0.0-rc.3] - 2026-11-17
 
 ### Breaking changes
