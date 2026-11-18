@@ -23,8 +23,30 @@ class FeatureFlags(val version: LemmyVersion) {
     /**
      * InstanceBlock Feature added in 0.19
      *
+     * Endpoint `userBlockInstanceCommunities`, see [instanceBlockPersons] for `userBlockInstancePersons`
      */
     fun instanceBlock(): Boolean = v0x19Plus
+
+    /**
+     * Block the persons of an instance, feature added in 1.0
+     *
+     * Endpoint `userBlockInstancePersons`
+     */
+    fun instanceBlockPersons(): Boolean = v1
+
+    /**
+     * Modlog, supported from 1.0
+     *
+     * Endpoint `getModlog`
+     */
+    fun modlog(): Boolean = v1
+
+    /**
+     * Read, hidden and liked content lists, feature added in 1.0
+     *
+     * Endpoint `listPersonRead` + `listPersonHidden` + `listPersonLiked`
+     */
+    fun listPersonReadHiddenLiked(): Boolean = v1
 
     /**
      * TOTP Rework Feature added in 0.19
@@ -67,6 +89,8 @@ class FeatureFlags(val version: LemmyVersion) {
 
     /**
      * Hide posts, feature added in 0.19.4
+     *
+     * Endpoint `hidePost` + `hidePosts`
      */
     fun hidePost(): Boolean = v0x19x4Plus
 
