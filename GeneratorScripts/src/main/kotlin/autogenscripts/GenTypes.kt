@@ -94,7 +94,7 @@ val sealedImplementations = mapOf(
     "Post"                   to SealedImpl("post",             listOf("PostOrCommentOrPrivateMessage")),
     "PrivateMessage"         to SealedImpl("private_message",  listOf("PostOrCommentOrPrivateMessage")),
     "CommentView"            to SealedImpl("comment",          listOf("ResolveObjectView", "NotificationData", "PostCommentCombinedView")),
-    "PostView"               to SealedImpl("post",             listOf("ResolveObjectView", "PostCommentCombinedView")),
+    "PostView"               to SealedImpl("post",             listOf("ResolveObjectView", "NotificationData", "PostCommentCombinedView")),
     "CommunityView"          to SealedImpl("community",        listOf("ResolveObjectView")),
     "PersonView"             to SealedImpl("person",           listOf("ResolveObjectView")),
     "MultiCommunityView"     to SealedImpl("multi_community",  listOf("ResolveObjectView")),
