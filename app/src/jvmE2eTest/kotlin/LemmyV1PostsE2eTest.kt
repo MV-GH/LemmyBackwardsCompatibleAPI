@@ -133,7 +133,7 @@ class LemmyV1PostsE2eTest : LemmyV1E2eTest() {
 
     @Test
     fun `user can mark a post as read`() =
-        runBlocking {
+        runBlocking<Unit> {
             val post = adminApi.newPost()
 
             val read = user.api.markPostAsRead(MarkPostAsRead(post.post.id, read = true)).getOrThrow()
@@ -143,7 +143,7 @@ class LemmyV1PostsE2eTest : LemmyV1E2eTest() {
 
     @Test
     fun `user can hide a post`() =
-        runBlocking {
+        runBlocking<Unit> {
             val post = adminApi.newPost()
 
             user.api.hidePost(HidePost(post.post.id, hide = true)).getOrThrow()

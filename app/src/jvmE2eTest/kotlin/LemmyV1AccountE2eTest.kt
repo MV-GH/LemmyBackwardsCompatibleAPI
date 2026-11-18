@@ -30,7 +30,7 @@ class LemmyV1AccountE2eTest : LemmyV1E2eTest() {
 
     @Test
     fun `login with valid credentials returns a token`() =
-        runBlocking {
+        runBlocking<Unit> {
             val response = anonApi.login(Login(user.username, USER_PASSWORD)).getOrThrow()
 
             assertNotNull(response.jwt)
