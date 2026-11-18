@@ -17,7 +17,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class LegacyUnreadCountsTest {
-    private val versions = listOf("0.19.0", "0.19.3", "0.19.4", "0.19.6", "0.19.11", "0.19.21")
+    private val versions = listOf("0.18.5", "0.19.0", "0.19.3", "0.19.4", "0.19.6", "0.19.11", "0.19.21")
 
     @Test
     fun `ordinary accounts retain notification counts when privileged requests fail`() = runBlocking {

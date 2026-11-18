@@ -792,7 +792,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
         UnreadCountsResponse(
             notification_count = d.replies + d.mentions + d.private_messages,
-            report_count = (reportCount?.post_reports ?: 0L) + (reportCount?.comment_reports ?: 0L) + (reportCount?.comment_reports ?: 0L),
+            report_count = reportCount?.let { it.post_reports + it.comment_reports + (it.private_message_reports ?: 0L) },
             registration_application_count = applicationCount?.registration_applications,
         )
     }
