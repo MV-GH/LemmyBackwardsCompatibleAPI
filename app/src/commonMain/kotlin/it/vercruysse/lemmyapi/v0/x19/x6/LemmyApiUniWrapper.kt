@@ -21,6 +21,7 @@ import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.utils.LegacyPaging
+import it.vercruysse.lemmyapi.utils.matchesLegacyFilters
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetPersonDetails
 
@@ -366,7 +367,10 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      */
     override suspend fun listReports(
         form: it.vercruysse.lemmyapi.datatypes.ListReports,
-    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>> = LegacyPaging.pagedResponse(form.page_cursor) { page ->
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ReportCombinedView>> = LegacyPaging.pagedResponse(
+        form.page_cursor,
+        filter = { report -> report.matchesLegacyFilters(form) },
+    ) { page ->
         when (form.type_) {
             it.vercruysse.lemmyapi.enums.ReportType.Communities -> notSupported()
 
@@ -382,7 +386,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
                 }
             }
 
-            it.vercruysse.lemmyapi.enums.ReportType.PrivateMessages -> {
+            it.vercruysse.lemmyapi.enums.ReportType.PrivateMessages -> if (form.post_id != null || form.community_id != null) {
+                Result.success(PagedResponse(emptyList()))
+            } else {
                 api.listPrivateMessageReports(transformer.fromUniPm(form).copy(page = page)).map { resp ->
                     PagedResponse(resp.private_message_reports.map(transformer::toUni))
                 }
