@@ -411,6 +411,7 @@ internal class Transformer : MapperGenerator {
             creator_is_moderator = d.creator_is_moderator,
             creator_is_admin = d.creator_is_admin,
             creator_banned = d.creator.banned,
+            resolver = d.resolver?.let { this.toUni(d = it) },
             person_actions = PersonActions(if (d.creator_blocked) "" else null),
             comment_actions = CommentActions(VoteAction.from(d.my_vote), null, if (d.saved) "" else null),
             community_actions = CommunityActions(null, CommunityFollowerState.from(d.subscribed)),
