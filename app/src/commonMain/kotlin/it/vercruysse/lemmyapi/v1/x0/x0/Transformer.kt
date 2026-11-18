@@ -1107,9 +1107,7 @@ internal class Transformer : MapperGenerator {
     )
 
     override fun toUni(d: X0DatatypesLocalUserInvite): LemmyapiDatatypesLocalUserInvite = LemmyapiDatatypesLocalUserInvite(
-        id = d.id,
         token = d.token,
-        local_user_id = d.local_user_id,
         max_uses = d.max_uses,
         uses_count = d.uses_count,
         expires_at = d.expires_at,

@@ -318,7 +318,7 @@ internal interface LemmyApiRouter {
     /** @DELETE("account/invite") */
     suspend fun revokeRegistrationInvitation(form: RevokeInvitation): Result<Unit>
 
-    /** @GET("account/invite") */
+    /** @GET("account/invite/list") */
     suspend fun listRegistrationInvitations(form: ListInvitations): Result<PagedResponse<LocalUserInvite>>
 
     /** @GET("account/media/list") */
