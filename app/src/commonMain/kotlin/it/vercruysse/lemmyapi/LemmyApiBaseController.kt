@@ -1,6 +1,8 @@
 package it.vercruysse.lemmyapi
 
 import it.vercruysse.lemmyapi.datatypes.DeleteImageParams
+import it.vercruysse.lemmyapi.datatypes.EditCustomEmoji
+import it.vercruysse.lemmyapi.datatypes.ListCustomEmojis
 import it.vercruysse.lemmyapi.datatypes.UploadImageResponse
 import it.vercruysse.lemmyapi.enums.VersionTracker
 import it.vercruysse.lemmyapi.exception.NotSupportedException
@@ -58,5 +60,19 @@ abstract class LemmyApiBaseController(
             }
             throw e
         }
+    }
+
+    // Pre 1.0 edits overwrite every field, so fill the ones not given with the current values
+    internal suspend fun withCurrentCustomEmoji(form: EditCustomEmoji): EditCustomEmoji {
+        if (form.category != null && form.image_url != null && form.alt_text != null && form.keywords != null) return form
+        val current = listCustomEmojis(ListCustomEmojis()).getOrThrow().custom_emojis
+            .firstOrNull { it.custom_emoji.id == form.id }
+            ?: throw IllegalArgumentException("Custom emoji ${form.id} not found")
+        return form.copy(
+            category = form.category ?: current.custom_emoji.category,
+            image_url = form.image_url ?: current.custom_emoji.image_url,
+            alt_text = form.alt_text ?: current.custom_emoji.alt_text,
+            keywords = form.keywords ?: current.keywords.map { it.keyword },
+        )
     }
 }
