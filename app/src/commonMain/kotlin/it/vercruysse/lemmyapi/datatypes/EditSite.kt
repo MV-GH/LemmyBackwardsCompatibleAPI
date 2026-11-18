@@ -17,8 +17,6 @@ data class EditSite(
     val name: String? = null,
     val sidebar: String? = null,
     val summary: String? = null,
-    /** Removed in 1.0.0 */
-    val enable_nsfw: Boolean? = null,
     val community_creation_admin_only: Boolean? = null,
     val email_verification_required: Boolean? = null,
     val application_question: String? = null,
@@ -83,7 +81,6 @@ data class EditSite(
     val default_comment_downvotes: VoteSettings? /* "All" | "Local" | "Subscribed" | "Disable" */ = null,
     /** Added in 1.0.0 */
     val suggested_multi_community_id: MultiCommunityId? = null,
-    /** Added in 1.0.0 */
     val nsfw_content_disallowed: Boolean? = null,
     /** Added in 1.0.0 */
     val email_notifications_disabled: Boolean? = null,
