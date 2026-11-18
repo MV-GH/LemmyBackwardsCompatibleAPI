@@ -42,7 +42,7 @@ internal class LemmyApiController(private val client: LemmyRequestClient) : Lemm
         client.getResult("search", form)
 
     /** @GET("resolve_object") */
-    override suspend fun resolveObject(form: ResolveObject): Result<SearchResponse> =
+    override suspend fun resolveObject(form: ResolveObject): Result<ResolveObjectView> =
         client.getResult("resolve_object", form)
 
     /** @GET("community") */

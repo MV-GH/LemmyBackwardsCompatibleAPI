@@ -83,8 +83,8 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      */
     override suspend fun resolveObject(
         form: it.vercruysse.lemmyapi.datatypes.ResolveObject,
-    ): Result<it.vercruysse.lemmyapi.datatypes.SearchResponse> =
-        api.resolveObject(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.ResolveObjectView> =
+        api.resolveObject(transformer.fromUni(form)).mapCatching(transformer::toUni)
 
     /**
      * Get / fetch a community.

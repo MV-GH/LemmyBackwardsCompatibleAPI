@@ -1,8 +1,14 @@
+import it.vercruysse.lemmyapi.datatypes.CommunityView
+import it.vercruysse.lemmyapi.datatypes.GetCommunity
+import it.vercruysse.lemmyapi.datatypes.GetPost
+import it.vercruysse.lemmyapi.datatypes.PostView
+import it.vercruysse.lemmyapi.datatypes.ResolveObject
 import it.vercruysse.lemmyapi.datatypes.Search
 import it.vercruysse.lemmyapi.enums.SearchType
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 class LemmyV1SearchE2eTest : LemmyV1E2eTest() {
@@ -57,5 +63,17 @@ class LemmyV1SearchE2eTest : LemmyV1E2eTest() {
             assertTrue(pages >= 3, "Expected multiple pages but got $pages")
             assertEquals(ids.distinct(), ids, "Pages must not repeat posts")
             assertTrue(ids.containsAll(seededPostIds.drop(1)))
+        }
+
+    @Test
+    fun `resolve object finds a local post and community by their url`() =
+        runBlocking {
+            val apId = anonApi.getPost(GetPost(id = postId)).getOrThrow().post_view.post.ap_id
+            val post = assertIs<PostView>(user.api.resolveObject(ResolveObject(apId)).getOrThrow())
+            assertEquals(postId, post.post.id)
+
+            val communityApId = anonApi.getCommunity(GetCommunity(id = communityId)).getOrThrow().community_view.community.ap_id
+            val community = assertIs<CommunityView>(user.api.resolveObject(ResolveObject(communityApId)).getOrThrow())
+            assertEquals(communityId, community.community.id)
         }
 }

@@ -56,7 +56,7 @@ interface UniRoutes {
      *
      * @GET("resolve_object")
      */
-    suspend fun resolveObject(form: ResolveObject): Result<SearchResponse>
+    suspend fun resolveObject(form: ResolveObject): Result<ResolveObjectView>
 
     /**
      * Get / fetch a community.
