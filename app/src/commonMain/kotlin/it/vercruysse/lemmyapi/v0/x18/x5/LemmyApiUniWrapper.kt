@@ -892,7 +892,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun editCustomEmoji(
         form: it.vercruysse.lemmyapi.datatypes.EditCustomEmoji,
     ): Result<it.vercruysse.lemmyapi.datatypes.CustomEmojiResponse> =
-        api.editCustomEmoji(transformer.fromUni(form)).map(transformer::toUni)
+        runCatchingPreservingCancellation {
+            transformer.toUni(api.editCustomEmoji(transformer.fromUni(withCurrentCustomEmoji(form))).getOrThrow())
+        }
 
     /**
      * Create a new custom emoji
