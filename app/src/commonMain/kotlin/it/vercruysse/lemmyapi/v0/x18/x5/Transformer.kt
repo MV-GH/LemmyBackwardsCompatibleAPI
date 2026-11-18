@@ -620,7 +620,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             resolved = d.resolved,
             resolver_id = d.resolver_id,
             published_at = addTimezoneOffset(d.published),
-            updated_at = d.updated,
+            updated_at = addTimezoneOffsetNullable(d.updated),
         )
 
     override fun toUni(d: X5DatatypesCommentReportResponse): LemmyapiDatatypesCommentReportResponse =
@@ -658,7 +658,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             alt_text = d.alt_text,
             category = d.category,
             published_at = addTimezoneOffset(d.published),
-            updated_at = d.updated,
+            updated_at = addTimezoneOffsetNullable(d.updated),
         )
 
     override fun toUni(d: X5DatatypesCustomEmojiKeyword): LemmyapiDatatypesCustomEmojiKeyword =
@@ -887,7 +887,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             resolved = d.resolved,
             resolver_id = d.resolver_id,
             published_at = addTimezoneOffset(d.published),
-            updated_at = d.updated,
+            updated_at = addTimezoneOffsetNullable(d.updated),
             violates_instance_rules = false,
         )
 
@@ -927,7 +927,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             resolved = d.resolved,
             resolver_id = d.resolver_id,
             published_at = addTimezoneOffset(d.published),
-            updated_at = d.updated,
+            updated_at = addTimezoneOffsetNullable(d.updated),
         )
 
     override fun toUni(d: X5DatatypesPrivateMessageReportResponse): LemmyapiDatatypesPrivateMessageReportResponse = LemmyapiDatatypesPrivateMessageReportResponse(
@@ -961,7 +961,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         answer = d.answer,
         admin_id = d.admin_id,
         deny_reason = d.deny_reason,
-        published_at = d.published,
+        published_at = addTimezoneOffset(d.published),
     )
 
     override fun toUni(d: X5DatatypesRegistrationApplicationResponse): LemmyapiDatatypesRegistrationApplicationResponse =
@@ -1032,7 +1032,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         id = d.id,
         content = d.content,
         published_at = addTimezoneOffset(d.published),
-        updated_at = d.updated,
+        updated_at = addTimezoneOffsetNullable(d.updated),
     )
 
     override fun fromUni(d: LemmyapiDatatypesAddAdmin): X5DatatypesAddAdmin = X5DatatypesAddAdmin(
