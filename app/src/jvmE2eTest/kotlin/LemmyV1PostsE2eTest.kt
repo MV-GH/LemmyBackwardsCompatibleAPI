@@ -15,6 +15,7 @@ import it.vercruysse.lemmyapi.enums.ReportType
 import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.enums.VoteAction
 import kotlinx.coroutines.runBlocking
+import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -57,8 +58,11 @@ class LemmyV1PostsE2eTest : LemmyV1E2eTest() {
             val newest = anonApi.getPosts(GetPosts(community_name = SEED_COMMUNITY_NAME, sort = SortType.New)).getOrThrow()
             val oldest = anonApi.getPosts(GetPosts(community_name = SEED_COMMUNITY_NAME, sort = SortType.Old)).getOrThrow()
 
-            assertEquals(oldest.items.map { it.post.id }.sorted(), oldest.items.map { it.post.id })
-            assertEquals(newest.items.map { it.post.id }.sortedDescending(), newest.items.map { it.post.id })
+            // Lemmy sorts on published_at, which doesn't always follow the post id
+            val oldestPublished = oldest.items.map { Instant.parse(it.post.published_at) }
+            val newestPublished = newest.items.map { Instant.parse(it.post.published_at) }
+            assertEquals(oldestPublished.sorted(), oldestPublished)
+            assertEquals(newestPublished.sortedDescending(), newestPublished)
         }
 
     @Test
