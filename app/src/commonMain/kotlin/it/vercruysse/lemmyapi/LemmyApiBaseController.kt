@@ -6,6 +6,8 @@ import it.vercruysse.lemmyapi.enums.VersionTracker
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.getSupportedEntries
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
 
 abstract class LemmyApiBaseController(
     val instance: LemmyInstance,
@@ -51,7 +53,9 @@ abstract class LemmyApiBaseController(
             applyImage(uploadResponse.image_url).getOrThrow()
             uploadResponse
         } catch (e: Throwable) {
-            deleteMedia(DeleteImageParams(uploadResponse.delete_filename)).getOrNull()
+            withContext(NonCancellable) {
+                deleteMedia(DeleteImageParams(uploadResponse.delete_filename)).getOrNull()
+            }
             throw e
         }
     }
