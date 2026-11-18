@@ -1364,7 +1364,7 @@ internal class Transformer : MapperGenerator {
             VoteSettings.Disable -> false
             null -> null
         },
-        enable_nsfw = d.enable_nsfw,
+        enable_nsfw = d.nsfw_content_disallowed?.not(),
         community_creation_admin_only = d.community_creation_admin_only,
         require_email_verification = d.email_verification_required,
         application_question = d.application_question,
