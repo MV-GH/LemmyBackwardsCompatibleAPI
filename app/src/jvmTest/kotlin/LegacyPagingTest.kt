@@ -108,6 +108,39 @@ class LegacyPagingTest {
     }
 
     @Test
+    fun `legacy comment tree fetches have no next page`() = runBlocking {
+        val versions = listOf(
+            "0.18.5" to it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCommentsResponse.serializer().descriptor,
+            "0.19.3" to it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetCommentsResponse.serializer().descriptor,
+            "0.19.11" to it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetCommentsResponse.serializer().descriptor,
+        )
+        for ((version, descriptor) in versions) {
+            val client = HttpClient(
+                MockEngine { request ->
+                    assertEquals("8", request.url.parameters["max_depth"], version)
+                    val comments = objectWith(descriptor, "comments" to JsonArray(listOf(sample(descriptor.element("comments").getElementDescriptor(0)))))
+                    respond(comments.toString(), HttpStatusCode.OK, headersOf(HttpHeaders.ContentType, "application/json"))
+                },
+            )
+            val apiClient = LemmyApiClient(client)
+            try {
+                val api = apiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(version)).getOrThrow()
+                val tree = api.getComments(GetComments(post_id = 1, max_depth = 8)).getOrThrow()
+                assertEquals(1, tree.items.size, version)
+                assertNull(tree.next_page, version)
+
+                val second = api.getComments(GetComments(post_id = 1, max_depth = 8, page_cursor = LegacyPaging.next(1, true))).getOrThrow()
+                assertTrue(second.items.isEmpty(), version)
+                assertNull(second.next_page, version)
+                assertNull(second.prev_page, version)
+            } finally {
+                apiClient.close()
+                client.close()
+            }
+        }
+    }
+
+    @Test
     fun `legacy wrappers translate the cursor to page on every paged endpoint`() = runBlocking {
         val endpoints: List<Pair<String, suspend LemmyApiBaseController.(PaginationCursor?) -> Result<*>>> = listOf(
             "getComments" to { getComments(GetComments(page_cursor = it)) },
