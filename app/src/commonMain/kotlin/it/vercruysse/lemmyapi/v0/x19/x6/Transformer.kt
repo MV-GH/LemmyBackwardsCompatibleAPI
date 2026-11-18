@@ -88,7 +88,6 @@ import it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication as LemmyapiDa
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
 import it.vercruysse.lemmyapi.datatypes.HidePosts as LemmyapiDatatypesHidePosts
 import it.vercruysse.lemmyapi.datatypes.ImageDetails as LemmyapiDatatypesImageDetails
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
@@ -244,7 +243,6 @@ import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetReplies as X6DatatypesGetRe
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetSiteMetadata as X6DatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetSiteMetadataResponse as X6DatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetSiteResponse as X6DatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.HideCommunity as X6DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.HidePost as X6DatatypesHidePost
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.ImageDetails as X6DatatypesImageDetails
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.Instance as X6DatatypesInstance
@@ -1566,13 +1564,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X6DatatypesGetSiteMetadata =
         X6DatatypesGetSiteMetadata(
             url = d.url,
-        )
-
-    override fun fromUni(d: LemmyapiDatatypesHideCommunity): X6DatatypesHideCommunity =
-        X6DatatypesHideCommunity(
-            community_id = d.community_id,
-            hidden = d.hidden,
-            reason = d.reason,
         )
 
     override fun fromUni(d: LemmyapiDatatypesHidePosts): X6DatatypesHidePost = X6DatatypesHidePost(

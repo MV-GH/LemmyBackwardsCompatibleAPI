@@ -87,7 +87,6 @@ import it.vercruysse.lemmyapi.datatypes.GetPosts as LemmyapiDatatypesGetPosts
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
 import it.vercruysse.lemmyapi.datatypes.HidePosts as LemmyapiDatatypesHidePosts
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
 import it.vercruysse.lemmyapi.datatypes.Language as LemmyapiDatatypesLanguage
@@ -241,7 +240,6 @@ import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.GetReplies as X4DatatypesGetRe
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.GetSiteMetadata as X4DatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.GetSiteMetadataResponse as X4DatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.GetSiteResponse as X4DatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.HideCommunity as X4DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.HidePost as X4DatatypesHidePost
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.Instance as X4DatatypesInstance
 import it.vercruysse.lemmyapi.v0.x19.x4.datatypes.Language as X4DatatypesLanguage
@@ -1556,13 +1554,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X4DatatypesGetSiteMetadata =
         X4DatatypesGetSiteMetadata(
             url = d.url,
-        )
-
-    override fun fromUni(d: LemmyapiDatatypesHideCommunity): X4DatatypesHideCommunity =
-        X4DatatypesHideCommunity(
-            community_id = d.community_id,
-            hidden = d.hidden,
-            reason = d.reason,
         )
 
     override fun fromUniC(d: it.vercruysse.lemmyapi.datatypes.ListReports): X4DatatypesListCommentReports =

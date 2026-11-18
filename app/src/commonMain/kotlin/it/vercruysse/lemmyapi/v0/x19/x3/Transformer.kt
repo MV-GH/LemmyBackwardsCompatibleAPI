@@ -91,7 +91,6 @@ import it.vercruysse.lemmyapi.datatypes.GetPosts as LemmyapiDatatypesGetPosts
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
 import it.vercruysse.lemmyapi.datatypes.Language as LemmyapiDatatypesLanguage
 import it.vercruysse.lemmyapi.datatypes.ListCommentLikes as LemmyapiDatatypesListCommentLikes
@@ -238,7 +237,6 @@ import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetReplies as X3DatatypesGetRe
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetSiteMetadata as X3DatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetSiteMetadataResponse as X3DatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetSiteResponse as X3DatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.HideCommunity as X3DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Instance as X3DatatypesInstance
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.Language as X3DatatypesLanguage
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.ListCommentLikes as X3DatatypesListCommentLikes
@@ -1489,13 +1487,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X3DatatypesGetSiteMetadata =
         X3DatatypesGetSiteMetadata(
             url = d.url,
-        )
-
-    override fun fromUni(d: LemmyapiDatatypesHideCommunity): X3DatatypesHideCommunity =
-        X3DatatypesHideCommunity(
-            community_id = d.community_id,
-            hidden = d.hidden,
-            reason = d.reason,
         )
 
     override fun fromUniC(d: it.vercruysse.lemmyapi.datatypes.ListReports): X3DatatypesListCommentReports =

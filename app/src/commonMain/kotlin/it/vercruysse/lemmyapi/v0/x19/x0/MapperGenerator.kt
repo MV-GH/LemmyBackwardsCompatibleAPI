@@ -139,7 +139,6 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetPosts): GetPosts
 
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetSiteMetadata): GetSiteMetadata
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.HideCommunity): HideCommunity
     fun fromUniC(d: it.vercruysse.lemmyapi.datatypes.ListReports): ListCommentReports
     fun fromUniP(d: it.vercruysse.lemmyapi.datatypes.ListReports): ListPostReports
     fun fromUniPm(d: it.vercruysse.lemmyapi.datatypes.ListReports): ListPrivateMessageReports

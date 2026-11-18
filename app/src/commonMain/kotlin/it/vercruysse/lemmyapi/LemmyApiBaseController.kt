@@ -2,9 +2,12 @@ package it.vercruysse.lemmyapi
 
 import it.vercruysse.lemmyapi.datatypes.DeleteImageParams
 import it.vercruysse.lemmyapi.datatypes.EditCustomEmoji
+import it.vercruysse.lemmyapi.datatypes.GetCommunity
 import it.vercruysse.lemmyapi.datatypes.ListCustomEmojis
 import it.vercruysse.lemmyapi.datatypes.UploadImageResponse
+import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import it.vercruysse.lemmyapi.enums.VersionTracker
+import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.getSupportedEntries
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
@@ -75,4 +78,22 @@ abstract class LemmyApiBaseController(
             keywords = form.keywords ?: current.keywords.map { it.keyword },
         )
     }
+
+    // Pre 1.0 Unlisted is the hidden flag. Returns the hidden state a visibility asks for, null to leave it as is.
+    internal fun legacyHidden(visibility: CommunityVisibility?): Boolean? = when (visibility) {
+        CommunityVisibility.Unlisted -> true
+        CommunityVisibility.Public -> false
+        CommunityVisibility.LocalOnly -> if (version.semanticVersion >= V0_19_4) false else null
+        else -> null
+    }
+
+    // Only admins can hide a community pre 1.0, check it before anything is created or edited
+    internal suspend fun checkCanChangeHidden() {
+        if (!getMyUser().getOrThrow().local_user_view.local_user.admin) {
+            throw LemmyBadRequestException(400, "not_an_admin", "Only admins can hide or unhide a community before Lemmy 1.0")
+        }
+    }
+
+    internal suspend fun isHidden(communityId: Long): Boolean =
+        getCommunity(GetCommunity(id = communityId)).getOrThrow().community_view.community.visibility == CommunityVisibility.Unlisted
 }

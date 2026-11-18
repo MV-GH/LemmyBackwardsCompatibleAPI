@@ -80,13 +80,6 @@ interface UniRoutes {
     suspend fun editCommunity(form: EditCommunity): Result<CommunityResponse>
 
     /**
-     * Hide a community from public / "All" view. Admins only.
-     *
-     * @PUT("community/hide")
-     */
-    suspend fun hideCommunity(form: HideCommunity): Result<Unit>
-
-    /**
      * List communities, with various filters.
      *
      * @GET("community/list")

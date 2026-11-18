@@ -103,8 +103,12 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      */
     override suspend fun createCommunity(
         form: it.vercruysse.lemmyapi.datatypes.CreateCommunity,
-    ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
-        api.createCommunity(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> = runCatchingPreservingCancellation {
+        val hide = legacyHidden(form.visibility) == true
+        if (hide) checkCanChangeHidden()
+        val response = api.createCommunity(transformer.fromUni(form)).getOrThrow()
+        transformer.toUni(if (hide) runCatchingPreservingCancellation { setHidden(response, true) }.getOrDefault(response) else response)
+    }
 
     /**
      * Edit a community.
@@ -113,16 +117,22 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      */
     override suspend fun editCommunity(
         form: it.vercruysse.lemmyapi.datatypes.EditCommunity,
-    ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
-        api.editCommunity(transformer.fromUni(form)).map(transformer::toUni)
+    ): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> = runCatchingPreservingCancellation {
+        val hide = legacyHidden(form.visibility)
+        val change = hide != null && isHidden(form.community_id) != hide
+        if (change) checkCanChangeHidden()
+        val response = api.editCommunity(transformer.fromUni(form)).getOrThrow()
+        transformer.toUni(if (change && hide != null) setHidden(response, hide) else response)
+    }
 
-    /**
-     * Hide a community from public view.
-     *
-     * @PUT("community/hide")
-     */
-    override suspend fun hideCommunity(form: it.vercruysse.lemmyapi.datatypes.HideCommunity): Result<Unit> =
-        api.hideCommunity(transformer.fromUni(form))
+    private suspend fun setHidden(
+        response: it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CommunityResponse,
+        hidden: Boolean,
+    ): it.vercruysse.lemmyapi.v0.x19.x4.datatypes.CommunityResponse {
+        val community = response.community_view.community
+        api.hideCommunity(it.vercruysse.lemmyapi.v0.x19.x4.datatypes.HideCommunity(community_id = community.id, hidden = hidden)).getOrThrow()
+        return response.copy(community_view = response.community_view.copy(community = community.copy(hidden = hidden)))
+    }
 
     /**
      * List communities, with various filters.

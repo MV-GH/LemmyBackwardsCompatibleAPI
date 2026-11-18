@@ -89,7 +89,6 @@ import it.vercruysse.lemmyapi.datatypes.GetPosts as LemmyapiDatatypesGetPosts
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
 import it.vercruysse.lemmyapi.datatypes.Language as LemmyapiDatatypesLanguage
 import it.vercruysse.lemmyapi.datatypes.ListCommunities as LemmyapiDatatypesListCommunities
@@ -233,7 +232,6 @@ import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetReplies as X0DatatypesGetRe
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetSiteMetadata as X0DatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetSiteMetadataResponse as X0DatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetSiteResponse as X0DatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.HideCommunity as X0DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.Instance as X0DatatypesInstance
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.Language as X0DatatypesLanguage
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.ListCommentReports as X0DatatypesListCommentReports
@@ -1471,13 +1469,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X0DatatypesGetSiteMetadata =
         X0DatatypesGetSiteMetadata(
             url = d.url,
-        )
-
-    override fun fromUni(d: LemmyapiDatatypesHideCommunity): X0DatatypesHideCommunity =
-        X0DatatypesHideCommunity(
-            community_id = d.community_id,
-            hidden = d.hidden,
-            reason = d.reason,
         )
 
     override fun fromUniC(d: it.vercruysse.lemmyapi.datatypes.ListReports): X0DatatypesListCommentReports =

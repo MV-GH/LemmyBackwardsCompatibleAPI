@@ -61,10 +61,6 @@ internal class LemmyApiController(private val client: LemmyRequestClient) : Lemm
     override suspend fun deleteCommunity(form: DeleteCommunity): Result<CommunityResponse> =
         client.deleteResult("community", form)
 
-    /** @PUT("community/hide") */
-    override suspend fun hideCommunity(form: HideCommunity): Result<Unit> =
-        client.putResult("community/hide", form)
-
     /** @GET("community/list") */
     override suspend fun listCommunities(form: ListCommunities): Result<PagedResponse<CommunityView>> =
         client.getResult("community/list", form)
