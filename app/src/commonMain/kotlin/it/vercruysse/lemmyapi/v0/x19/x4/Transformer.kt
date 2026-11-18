@@ -1577,6 +1577,7 @@ internal class Transformer : MapperGenerator {
             limit = d.limit,
             unresolved_only = d.unresolved_only,
             community_id = d.community_id,
+            post_id = d.post_id,
         )
 
     override fun fromUniPm(d: it.vercruysse.lemmyapi.datatypes.ListReports): X4DatatypesListPrivateMessageReports =
