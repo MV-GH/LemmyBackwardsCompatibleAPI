@@ -15,6 +15,7 @@ import it.vercruysse.lemmyapi.datatypes.PagedResponse
 import it.vercruysse.lemmyapi.datatypes.UnreadCountsResponse
 import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
+import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
 internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, auth: String?) :
     LemmyApiBaseController(instance, actualVersion, auth) {
@@ -346,7 +347,10 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun hidePost(form: it.vercruysse.lemmyapi.datatypes.HidePost): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> =
         api.hidePost(transformer.fromUni(form)).map(transformer::toUni)
 
-    override suspend fun hidePosts(form: it.vercruysse.lemmyapi.datatypes.HidePosts): Result<Unit> = notSupported()
+    // v1 has no bulk hide, hide one by one and stop at the first failure
+    override suspend fun hidePosts(form: it.vercruysse.lemmyapi.datatypes.HidePosts): Result<Unit> = runCatchingPreservingCancellation {
+        form.post_ids.forEach { postId -> hidePost(it.vercruysse.lemmyapi.datatypes.HidePost(postId, form.hide)).getOrThrow() }
+    }
 
     override suspend fun getRegistrationApplication(form: it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication): Result<it.vercruysse.lemmyapi.datatypes.RegistrationApplicationResponse> =
         api.getRegistrationApplication(transformer.fromUni(form)).map(transformer::toUni)
