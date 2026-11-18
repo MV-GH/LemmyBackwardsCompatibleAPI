@@ -1,16 +1,25 @@
 import it.vercruysse.lemmyapi.datatypes.CreatePostLike
 import it.vercruysse.lemmyapi.datatypes.CreatePostReport
+import it.vercruysse.lemmyapi.datatypes.CreatePostWarning
 import it.vercruysse.lemmyapi.datatypes.DeletePost
 import it.vercruysse.lemmyapi.datatypes.EditPost
+import it.vercruysse.lemmyapi.datatypes.EditPostNotifications
 import it.vercruysse.lemmyapi.datatypes.FollowCommunity
 import it.vercruysse.lemmyapi.datatypes.GetPost
 import it.vercruysse.lemmyapi.datatypes.GetPosts
 import it.vercruysse.lemmyapi.datatypes.HidePost
+import it.vercruysse.lemmyapi.datatypes.HidePosts
+import it.vercruysse.lemmyapi.datatypes.ListPersonHidden
+import it.vercruysse.lemmyapi.datatypes.ListPersonRead
+import it.vercruysse.lemmyapi.datatypes.ListPostLikes
 import it.vercruysse.lemmyapi.datatypes.ListReports
+import it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead
 import it.vercruysse.lemmyapi.datatypes.MarkPostAsRead
+import it.vercruysse.lemmyapi.datatypes.ModEditPost
 import it.vercruysse.lemmyapi.datatypes.PostReportView
 import it.vercruysse.lemmyapi.datatypes.SavePost
 import it.vercruysse.lemmyapi.enums.ListingType
+import it.vercruysse.lemmyapi.enums.PostNotificationsMode
 import it.vercruysse.lemmyapi.enums.ReportType
 import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.enums.VoteAction
@@ -26,8 +35,8 @@ class LemmyV1PostsE2eTest : LemmyV1E2eTest() {
     @Test
     fun `anonymous post list returns the seeded post`() =
         runBlocking {
-            val response = anonApi.getPosts(GetPosts(community_name = SEED_COMMUNITY_NAME)).getOrThrow()
-            val post = response.items.single { it.post.id == postId }
+            val posts = fetchPages { cursor -> anonApi.getPosts(GetPosts(community_name = SEED_COMMUNITY_NAME, page_cursor = cursor)) }
+            val post = posts.flatten().single { it.post.id == postId }
 
             assertEquals(SEED_POST_TITLE, post.post.name)
             assertEquals(SEED_POST_BODY, post.post.body)
@@ -184,5 +193,72 @@ class LemmyV1PostsE2eTest : LemmyV1E2eTest() {
 
             val feed = follower.api.getPosts(GetPosts(type_ = ListingType.Subscribed)).getOrThrow()
             assertTrue(feed.items.any { it.post.id == post.post.id })
+        }
+
+    @Test
+    fun `user can hide many posts and list them`() =
+        runBlocking<Unit> {
+            val hider = newUser()
+            val posts = List(2) { adminApi.newPost().post.id }
+
+            hider.api.hidePosts(HidePosts(posts, hide = true)).getOrThrow()
+
+            assertEquals(posts.toSet(), hider.api.listPersonHidden(ListPersonHidden()).getOrThrow().items.map { it.post.id }.toSet())
+        }
+
+    @Test
+    fun `user can mark many posts as read and list them`() =
+        runBlocking<Unit> {
+            val reader = newUser()
+            val posts = List(2) { adminApi.newPost().post.id }
+
+            reader.api.markManyPostsAsRead(MarkManyPostsAsRead(posts, read = true)).getOrThrow()
+
+            assertEquals(posts.toSet(), reader.api.listPersonRead(ListPersonRead()).getOrThrow().items.map { it.post.id }.toSet())
+        }
+
+    @Test
+    fun `admin can list the votes on a post`() =
+        runBlocking<Unit> {
+            val voter = newUser()
+            val post = adminApi.newPost()
+            voter.api.createPostLike(CreatePostLike(post.post.id, VoteAction.UpVote)).getOrThrow()
+
+            val likes = adminApi.listPostLikes(ListPostLikes(post.post.id)).getOrThrow().items
+
+            // The creator automatically upvotes its own post
+            assertEquals(setOf(post.creator.id, voter.personId), likes.filter { it.vote == VoteAction.UpVote }.map { it.creator.id }.toSet())
+        }
+
+    @Test
+    fun `moderator can mark a post as nsfw`() =
+        runBlocking<Unit> {
+            val post = user.api.newPost()
+
+            val edited = adminApi.modEditPost(ModEditPost(post.post.id, nsfw = true)).getOrThrow()
+
+            assertTrue(edited.post_view.post.nsfw)
+        }
+
+    @Test
+    fun `moderator can warn a post`() =
+        runBlocking<Unit> {
+            val post = user.api.newPost()
+
+            val warned = adminApi.warnPost(CreatePostWarning(post.post.id, "e2e warning")).getOrThrow()
+
+            assertEquals(post.post.id, warned.post_view.post.id)
+        }
+
+    @Test
+    fun `user can change the notifications of a post`() =
+        runBlocking<Unit> {
+            val watcher = newUser()
+            val post = adminApi.newPost()
+
+            watcher.api.editPostNotifications(EditPostNotifications(post.post.id, PostNotificationsMode.Mute)).getOrThrow()
+
+            val actions = watcher.api.getPost(GetPost(id = post.post.id)).getOrThrow().post_view.post_actions
+            assertEquals(PostNotificationsMode.Mute, actions?.notifications)
         }
 }

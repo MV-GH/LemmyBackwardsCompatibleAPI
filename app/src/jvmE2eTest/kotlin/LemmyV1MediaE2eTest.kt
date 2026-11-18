@@ -1,9 +1,9 @@
 import it.vercruysse.lemmyapi.datatypes.DeleteImageParams
 import it.vercruysse.lemmyapi.datatypes.ListMedia
 import kotlinx.coroutines.runBlocking
-import java.util.Base64
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class LemmyV1MediaE2eTest : LemmyV1E2eTest() {
@@ -71,11 +71,38 @@ class LemmyV1MediaE2eTest : LemmyV1E2eTest() {
             assertTrue(result.isFailure)
         }
 
-    private companion object {
-        // 1x1 transparent PNG
-        val PNG: ByteArray =
-            Base64.getDecoder().decode(
-                "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
-            )
-    }
+    @Test
+    fun `user can delete its avatar and banner`() =
+        runBlocking<Unit> {
+            val uploader = newUser()
+            uploader.api.uploadUserAvatar(PNG).getOrThrow()
+            uploader.api.uploadUserBanner(PNG).getOrThrow()
+
+            uploader.api.deleteUserAvatar().getOrThrow()
+            uploader.api.deleteUserBanner().getOrThrow()
+
+            val person = uploader.api.getMyUser().getOrThrow().local_user_view.person
+            assertNull(person.avatar)
+            assertNull(person.banner)
+        }
+
+    @Test
+    fun `admin can list and delete the images of other users`() =
+        runBlocking<Unit> {
+            val uploader = newUser()
+            val upload = uploader.api.uploadImage(PNG).getOrThrow()
+
+            val all = fetchPages { cursor -> adminApi.listMediaAdmin(ListMedia(page_cursor = cursor)) }.flatten()
+            assertTrue(all.any { it.local_image.pictrs_alias == upload.filename })
+
+            adminApi.deleteMediaAdmin(DeleteImageParams(upload.filename)).getOrThrow()
+
+            assertTrue(uploader.api.listMedia(ListMedia()).getOrThrow().items.isEmpty())
+        }
+
+    @Test
+    fun `image server is healthy`() =
+        runBlocking<Unit> {
+            anonApi.imageHealth().getOrThrow()
+        }
 }

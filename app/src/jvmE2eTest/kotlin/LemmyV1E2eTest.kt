@@ -7,6 +7,7 @@ import it.vercruysse.lemmyapi.datatypes.CreatePost
 import it.vercruysse.lemmyapi.datatypes.PagedResponse
 import it.vercruysse.lemmyapi.datatypes.PaginationCursor
 import it.vercruysse.lemmyapi.datatypes.PostView
+import java.util.Base64
 import java.util.concurrent.atomic.AtomicInteger
 
 abstract class LemmyV1E2eTest {
@@ -70,6 +71,12 @@ abstract class LemmyV1E2eTest {
         const val SEED_POST_BODY = LemmyV1E2eEnvironment.SEED_POST_BODY
         const val SEED_COMMENT_CONTENT = LemmyV1E2eEnvironment.SEED_COMMENT_CONTENT
         const val SEED_PAGING_COUNT = LemmyV1E2eEnvironment.SEED_PAGING_COUNT
+
+        /** 1x1 transparent PNG */
+        val PNG: ByteArray =
+            Base64.getDecoder().decode(
+                "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
+            )
 
         private val uniqueCounter = AtomicInteger()
 

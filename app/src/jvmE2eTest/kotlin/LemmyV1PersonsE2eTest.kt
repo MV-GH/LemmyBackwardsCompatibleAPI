@@ -1,11 +1,16 @@
 import it.vercruysse.lemmyapi.datatypes.BlockPerson
 import it.vercruysse.lemmyapi.datatypes.CommentView
+import it.vercruysse.lemmyapi.datatypes.CreatePostLike
 import it.vercruysse.lemmyapi.datatypes.GetPersonDetails
 import it.vercruysse.lemmyapi.datatypes.ListPersonContent
+import it.vercruysse.lemmyapi.datatypes.ListPersonLiked
 import it.vercruysse.lemmyapi.datatypes.ListPersonSaved
+import it.vercruysse.lemmyapi.datatypes.ListPersons
+import it.vercruysse.lemmyapi.datatypes.NotePerson
 import it.vercruysse.lemmyapi.datatypes.PostView
 import it.vercruysse.lemmyapi.datatypes.SavePost
 import it.vercruysse.lemmyapi.enums.PersonContentType
+import it.vercruysse.lemmyapi.enums.VoteAction
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -83,5 +88,38 @@ class LemmyV1PersonsE2eTest : LemmyV1E2eTest() {
 
             blocker.api.blockPerson(BlockPerson(target.personId, block = false)).getOrThrow()
             assertTrue(blocker.api.getMyUser().getOrThrow().person_blocks.isEmpty())
+        }
+
+    @Test
+    fun `person list can be searched by name`() =
+        runBlocking<Unit> {
+            val persons = anonApi.listPersons(ListPersons(search_term = user.username)).getOrThrow().items
+
+            assertTrue(persons.any { it.person.id == user.personId })
+            assertTrue(persons.all { it.person.name.contains(user.username) })
+        }
+
+    @Test
+    fun `liked content shows up in the liked list`() =
+        runBlocking<Unit> {
+            val liker = newUser()
+            val post = adminApi.newPost()
+            liker.api.createPostLike(CreatePostLike(post.post.id, VoteAction.UpVote)).getOrThrow()
+
+            val liked = liker.api.listPersonLiked(ListPersonLiked()).getOrThrow()
+
+            assertEquals(listOf(post.post.id), liked.items.filterIsInstance<PostView>().map { it.post.id })
+        }
+
+    @Test
+    fun `user can add a note to another person`() =
+        runBlocking<Unit> {
+            val noter = newUser()
+            val target = newUser()
+
+            noter.api.notePerson(NotePerson(target.personId, "e2e note")).getOrThrow()
+
+            val details = noter.api.getPersonDetails(GetPersonDetails(person_id = target.personId)).getOrThrow()
+            assertEquals("e2e note", details.person_view.person_actions?.note)
         }
 }

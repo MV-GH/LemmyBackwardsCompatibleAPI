@@ -1,3 +1,5 @@
+import it.vercruysse.lemmyapi.datatypes.ChangePassword
+import it.vercruysse.lemmyapi.datatypes.DeleteAccount
 import it.vercruysse.lemmyapi.datatypes.Login
 import it.vercruysse.lemmyapi.datatypes.SaveUserSettings
 import kotlinx.coroutines.runBlocking
@@ -81,5 +83,58 @@ class LemmyV1AccountE2eTest : LemmyV1E2eTest() {
     fun `new user has no unread notifications`() =
         runBlocking {
             assertEquals(0, newUser().api.getUnreadCounts().getOrThrow().notification_count)
+        }
+
+    @Test
+    fun `user can change its password`() =
+        runBlocking<Unit> {
+            val changer = newUser()
+
+            // Lemmy's JWT only differs by user, issue second and expiry, so a login in the same second as the
+            // password change would produce the same token and fail on the unique login_token key.
+            // stay_logged_in gives this token another expiry, so the login after it gets a different token.
+            val changed =
+                changer.api.changePassword(
+                    ChangePassword("e2e-new-password", "e2e-new-password", USER_PASSWORD, stay_logged_in = true),
+                ).getOrThrow()
+            assertNotNull(changed.jwt)
+            assertTrue(anonApi.login(Login(changer.username, USER_PASSWORD)).isFailure)
+            assertTrue(anonApi.login(Login(changer.username, "e2e-new-password")).isSuccess)
+        }
+
+    @Test
+    fun `user can delete its account`() =
+        runBlocking<Unit> {
+            val deleter = newUser()
+
+            deleter.api.deleteAccount(DeleteAccount(USER_PASSWORD, delete_content = true)).getOrThrow()
+
+            // Lemmy 1.0 still accepts a login of a deleted account, but its existing tokens are revoked
+            assertTrue(deleter.api.getMyUser().isFailure)
+        }
+
+    @Test
+    fun `logins of the user are listed`() =
+        runBlocking<Unit> {
+            assertTrue(newUser().api.listLogins().getOrThrow().logins.isNotEmpty())
+        }
+
+    @Test
+    fun `exported user settings can be imported by another user`() =
+        runBlocking<Unit> {
+            val exporter = newUser()
+            val importer = newUser()
+            exporter.api.saveUserSettings(SaveUserSettings(bio = "e2e exported bio")).getOrThrow()
+
+            val exported = exporter.api.exportUserSettings().getOrThrow()
+            importer.api.importUserSettings(exported).getOrThrow()
+
+            eventually { assertEquals("e2e exported bio", importer.api.getMyUser().getOrThrow().local_user_view.person.bio) }
+        }
+
+    @Test
+    fun `donation dialog can be marked as shown`() =
+        runBlocking<Unit> {
+            newUser().api.markDonationDialogShown().getOrThrow()
         }
 }
