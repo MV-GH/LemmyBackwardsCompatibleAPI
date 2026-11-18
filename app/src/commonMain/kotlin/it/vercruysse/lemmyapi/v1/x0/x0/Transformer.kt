@@ -116,7 +116,6 @@ import it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication as LemmyapiDa
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
 import it.vercruysse.lemmyapi.datatypes.HidePost as LemmyapiDatatypesHidePost
 import it.vercruysse.lemmyapi.datatypes.ImageDetails as LemmyapiDatatypesImageDetails
 import it.vercruysse.lemmyapi.datatypes.ImageGetParams as LemmyapiDatatypesImageGetParams
@@ -352,7 +351,6 @@ import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.GetRegistrationApplication as X
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.GetSiteMetadata as X0DatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.GetSiteMetadataResponse as X0DatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.GetSiteResponse as X0DatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.HideCommunity as X0DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.HidePost as X0DatatypesHidePost
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ImageDetails as X0DatatypesImageDetails
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ImageGetParams as X0DatatypesImageGetParams
@@ -2209,12 +2207,6 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X0DatatypesGetSiteMetadata = X0DatatypesGetSiteMetadata(
         url = d.url,
-    )
-
-    override fun fromUni(d: LemmyapiDatatypesHideCommunity): X0DatatypesHideCommunity = X0DatatypesHideCommunity(
-        community_id = d.community_id,
-        hidden = d.hidden,
-        reason = d.reason,
     )
 
     override fun fromUni(d: LemmyapiDatatypesHidePost): X0DatatypesHidePost = X0DatatypesHidePost(

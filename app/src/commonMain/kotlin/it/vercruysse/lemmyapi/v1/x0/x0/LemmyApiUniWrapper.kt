@@ -51,9 +51,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun editCommunity(form: it.vercruysse.lemmyapi.datatypes.EditCommunity): Result<it.vercruysse.lemmyapi.datatypes.CommunityResponse> =
         api.editCommunity(transformer.fromUni(form)).map(transformer::toUni)
 
-    override suspend fun hideCommunity(form: it.vercruysse.lemmyapi.datatypes.HideCommunity): Result<Unit> =
-        api.hideCommunity(transformer.fromUni(form))
-
     override suspend fun listCommunities(form: it.vercruysse.lemmyapi.datatypes.ListCommunities): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommunityView>> =
         api.listCommunities(transformer.fromUni(form)).map { resp ->
             PagedResponse(resp.items.map(transformer::toUni), resp.next_page, resp.prev_page)

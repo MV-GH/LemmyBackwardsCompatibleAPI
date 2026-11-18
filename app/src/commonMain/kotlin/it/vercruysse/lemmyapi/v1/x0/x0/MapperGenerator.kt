@@ -234,7 +234,6 @@ internal interface MapperGenerator {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetRandomCommunity): GetRandomCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication): GetRegistrationApplication
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetSiteMetadata): GetSiteMetadata
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.HideCommunity): HideCommunity
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.HidePost): HidePost
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCommentLikes): ListCommentLikes
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCommunities): ListCommunities

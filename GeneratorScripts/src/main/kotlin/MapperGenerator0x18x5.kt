@@ -310,9 +310,6 @@ internal interface MapperGenerator0x18x5 {
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.GetSiteMetadata): GetSiteMetadata
 
     @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
-    fun fromUni(d: it.vercruysse.lemmyapi.datatypes.HideCommunity): HideCommunity
-
-    @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])
     fun fromUni(d: it.vercruysse.lemmyapi.datatypes.ListCommunities): ListCommunities
 
     @Konvert(mappings = [Mapping(target = "auth", constant = "auth")])

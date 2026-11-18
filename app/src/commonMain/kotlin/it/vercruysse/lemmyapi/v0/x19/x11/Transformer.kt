@@ -88,7 +88,6 @@ import it.vercruysse.lemmyapi.datatypes.GetRegistrationApplication as LemmyapiDa
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
 import it.vercruysse.lemmyapi.datatypes.HidePosts as LemmyapiDatatypesHidePosts
 import it.vercruysse.lemmyapi.datatypes.ImageDetails as LemmyapiDatatypesImageDetails
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
@@ -244,7 +243,6 @@ import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetReplies as X11DatatypesGet
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetSiteMetadata as X11DatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetSiteMetadataResponse as X11DatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetSiteResponse as X11DatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.HideCommunity as X11DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.HidePost as X11DatatypesHidePost
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.ImageDetails as X11DatatypesImageDetails
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.Instance as X11DatatypesInstance
@@ -1574,13 +1572,6 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X11DatatypesGetSiteMetadata =
         X11DatatypesGetSiteMetadata(
             url = d.url,
-        )
-
-    override fun fromUni(d: LemmyapiDatatypesHideCommunity): X11DatatypesHideCommunity =
-        X11DatatypesHideCommunity(
-            community_id = d.community_id,
-            hidden = d.hidden,
-            reason = d.reason,
         )
 
     override fun fromUni(d: LemmyapiDatatypesHidePosts): X11DatatypesHidePost = X11DatatypesHidePost(

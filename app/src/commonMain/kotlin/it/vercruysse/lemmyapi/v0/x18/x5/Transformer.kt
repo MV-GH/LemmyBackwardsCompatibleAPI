@@ -86,7 +86,6 @@ import it.vercruysse.lemmyapi.datatypes.GetPosts as LemmyapiDatatypesGetPosts
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadata as LemmyapiDatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.datatypes.GetSiteMetadataResponse as LemmyapiDatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.datatypes.GetSiteResponse as LemmyapiDatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.datatypes.HideCommunity as LemmyapiDatatypesHideCommunity
 import it.vercruysse.lemmyapi.datatypes.Instance as LemmyapiDatatypesInstance
 import it.vercruysse.lemmyapi.datatypes.Language as LemmyapiDatatypesLanguage
 import it.vercruysse.lemmyapi.datatypes.ListCommunities as LemmyapiDatatypesListCommunities
@@ -223,7 +222,6 @@ import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetReplies as X5DatatypesGetRe
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSiteMetadata as X5DatatypesGetSiteMetadata
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSiteMetadataResponse as X5DatatypesGetSiteMetadataResponse
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSiteResponse as X5DatatypesGetSiteResponse
-import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.HideCommunity as X5DatatypesHideCommunity
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.Instance as X5DatatypesInstance
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.Language as X5DatatypesLanguage
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.ListCommentReports as X5DatatypesListCommentReports
@@ -1461,14 +1459,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesGetSiteMetadata): X5DatatypesGetSiteMetadata =
         X5DatatypesGetSiteMetadata(
             url = d.url,
-        )
-
-    override fun fromUni(d: LemmyapiDatatypesHideCommunity): X5DatatypesHideCommunity =
-        X5DatatypesHideCommunity(
-            community_id = d.community_id,
-            hidden = d.hidden,
-            reason = d.reason,
-            auth = auth,
         )
 
     override fun fromUniC(d: LemmyapiDatatypesListReports): X5DatatypesListCommentReports =

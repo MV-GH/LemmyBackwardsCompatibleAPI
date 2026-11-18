@@ -36,9 +36,6 @@ internal interface LemmyApiRouter {
     /** @DELETE("community") */
     suspend fun deleteCommunity(form: DeleteCommunity): Result<CommunityResponse>
 
-    /** @PUT("community/hide") */
-    suspend fun hideCommunity(form: HideCommunity): Result<Unit>
-
     /** @GET("community/list") */
     suspend fun listCommunities(form: ListCommunities): Result<PagedResponse<CommunityView>>
 
