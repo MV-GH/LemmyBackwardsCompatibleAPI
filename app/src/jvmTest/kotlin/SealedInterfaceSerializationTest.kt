@@ -6,6 +6,7 @@ import kotlin.test.assertTrue
 import it.vercruysse.lemmyapi.datatypes.PersonView as UniPersonView
 import it.vercruysse.lemmyapi.datatypes.ResolveObjectView as UniResolveObjectView
 import it.vercruysse.lemmyapi.datatypes.SearchResponse as UniSearchResponse
+import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.NotificationData as V1NotificationData
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.PersonView as V1PersonView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.ResolveObjectView as V1ResolveObjectView
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.SearchResponse as V1SearchResponse
@@ -62,5 +63,14 @@ class SealedInterfaceSerializationTest {
 
         assertEquals(response, roundTripped)
         assertIs<UniResolveObjectView>(roundTripped.resolve)
+    }
+
+    @Test
+    fun `generated v1 notification data accepts every notification kind`() {
+        val subclasses = V1NotificationData.serializer().descriptor.getElementDescriptor(1)
+            .let { d -> (0 until d.elementsCount).map(d::getElementName) }
+            .toSet()
+
+        assertEquals(setOf("comment", "post", "private_message", "mod_action"), subclasses)
     }
 }

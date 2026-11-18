@@ -96,6 +96,7 @@ internal interface MapperGenerator1x0x0 {
 
     fun toUni(d: NotificationData): it.vercruysse.lemmyapi.datatypes.NotificationData = when (d) {
         is CommentView -> toUni(d)
+        is PostView -> toUni(d)
         is ModlogView -> toUni(d)
         is PrivateMessageView -> toUni(d)
     }
