@@ -496,13 +496,6 @@ interface UniRoutes {
     suspend fun verifyEmail(form: VerifyEmail): Result<Unit>
 
     /**
-     * Leave the Site admins.
-     *
-     * @POST("user/leave_admin")
-     */
-    suspend fun leaveAdmin(): Result<GetSiteResponse>
-
-    /**
      * Mark the donation dialog as shown, so it isn't displayed anymore.
      *
      * @POST("user/donation_dialog_shown")

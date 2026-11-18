@@ -814,14 +814,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
         api.verifyEmail(transformer.fromUni(form))
 
     /**
-     * Leave the Site admins.
-     *
-     * @POST("user/leave_admin")
-     */
-    override suspend fun leaveAdmin(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> =
-        api.leaveAdmin(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.LeaveAdmin(auth ?: "")).map(transformer::toUni)
-
-    /**
      * Mark donation dialog as shown.
      *
      * @POST("user/donation_dialog_shown")
