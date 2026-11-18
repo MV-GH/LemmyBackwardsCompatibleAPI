@@ -465,7 +465,7 @@ internal class Transformer : MapperGenerator {
             users_active_week = counts.users_active_week,
             users_active_month = counts.users_active_month,
             users_active_half_year = counts.users_active_half_year,
-            subscribers_local = -1,
+            subscribers_local = counts.subscribers_local,
             report_count = -1,
             unresolved_report_count = -1,
             local_removed = false,
