@@ -1698,6 +1698,7 @@ internal class Transformer : MapperGenerator {
             infinite_scroll_enabled = d.infinite_scroll_enabled,
             post_listing_mode = V0PostListingMode.fromUniNullable(d.post_listing_mode),
             collapse_bot_comments = d.collapse_bot_comments,
+            enable_animated_images = d.animated_images_enabled,
         )
 
     override fun fromUni(d: LemmyapiDatatypesSearch): X3DatatypesSearch = X3DatatypesSearch(
