@@ -245,9 +245,6 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun verifyEmail(form: it.vercruysse.lemmyapi.datatypes.VerifyEmail): Result<Unit> =
         api.verifyEmail(transformer.fromUni(form))
 
-    override suspend fun leaveAdmin(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> =
-        api.leaveAdmin().map(transformer::toUni)
-
     override suspend fun markDonationDialogShown(): Result<Unit> =
         api.markDonationDialogShown()
 

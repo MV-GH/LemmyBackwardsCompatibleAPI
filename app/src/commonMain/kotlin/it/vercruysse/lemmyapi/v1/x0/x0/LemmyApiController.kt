@@ -473,10 +473,6 @@ internal class LemmyApiController(private val client: LemmyRequestClient) : Lemm
     override suspend fun banPerson(form: BanPerson): Result<PersonResponse> =
         client.postResult("admin/ban", form)
 
-    /** @POST("admin/leave") */
-    override suspend fun leaveAdmin(): Result<GetSiteResponse> =
-        client.postResult("admin/leave")
-
     /** @GET("admin/registration_application") */
     override suspend fun getRegistrationApplication(form: GetRegistrationApplication): Result<RegistrationApplicationResponse> =
         client.getResult("admin/registration_application", form)

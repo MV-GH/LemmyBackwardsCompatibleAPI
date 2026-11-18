@@ -330,9 +330,6 @@ internal interface LemmyApiRouter {
     /** @POST("admin/ban") */
     suspend fun banPerson(form: BanPerson): Result<PersonResponse>
 
-    /** @POST("admin/leave") */
-    suspend fun leaveAdmin(): Result<GetSiteResponse>
-
     /** @GET("admin/registration_application") */
     suspend fun getRegistrationApplication(form: GetRegistrationApplication): Result<RegistrationApplicationResponse>
 
