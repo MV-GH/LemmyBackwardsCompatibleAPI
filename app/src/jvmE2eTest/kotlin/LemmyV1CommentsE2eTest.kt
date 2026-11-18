@@ -1,15 +1,20 @@
 import it.vercruysse.lemmyapi.datatypes.CreateCommentLike
 import it.vercruysse.lemmyapi.datatypes.CreateCommentReport
+import it.vercruysse.lemmyapi.datatypes.CreateCommentWarning
 import it.vercruysse.lemmyapi.datatypes.DeleteComment
+import it.vercruysse.lemmyapi.datatypes.DistinguishComment
 import it.vercruysse.lemmyapi.datatypes.EditComment
 import it.vercruysse.lemmyapi.datatypes.GetComment
 import it.vercruysse.lemmyapi.datatypes.GetComments
+import it.vercruysse.lemmyapi.datatypes.ListCommentLikes
+import it.vercruysse.lemmyapi.datatypes.LockComment
 import it.vercruysse.lemmyapi.datatypes.SaveComment
 import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.VoteAction
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -132,5 +137,54 @@ class LemmyV1CommentsE2eTest : LemmyV1E2eTest() {
             val report = user.api.createCommentReport(CreateCommentReport(comment.comment.id, reason = "E2E report")).getOrThrow()
 
             assertEquals("E2E report", report.comment_report_view.comment_report.reason)
+        }
+
+    @Test
+    fun `slim comment list returns the seeded comment`() =
+        runBlocking<Unit> {
+            val comments = anonApi.getCommentsSlim(GetComments(post_id = postId)).getOrThrow().items
+
+            assertTrue(comments.any { it.comment.id == commentId && it.comment.content == SEED_COMMENT_CONTENT })
+        }
+
+    @Test
+    fun `moderator can distinguish its comment`() =
+        runBlocking<Unit> {
+            val comment = adminApi.newComment()
+
+            val distinguished = adminApi.distinguishComment(DistinguishComment(comment.comment.id, true)).getOrThrow()
+
+            assertTrue(distinguished.comment_view.comment.distinguished)
+        }
+
+    @Test
+    fun `moderator can lock and unlock a comment`() =
+        runBlocking<Unit> {
+            val id = user.api.newComment().comment.id
+
+            assertTrue(adminApi.lockComment(LockComment(id, true, "e2e lock")).getOrThrow().comment_view.comment.locked)
+            assertFalse(adminApi.lockComment(LockComment(id, false, "e2e unlock")).getOrThrow().comment_view.comment.locked)
+        }
+
+    @Test
+    fun `moderator can warn a comment`() =
+        runBlocking<Unit> {
+            val comment = user.api.newComment()
+
+            val warned = adminApi.warnComment(CreateCommentWarning(comment.comment.id, "e2e warning")).getOrThrow()
+
+            assertEquals(comment.comment.id, warned.comment_view.comment.id)
+        }
+
+    @Test
+    fun `admin can list the votes on a comment`() =
+        runBlocking<Unit> {
+            val voter = newUser()
+            val comment = adminApi.newComment()
+            voter.api.createCommentLike(CreateCommentLike(comment.comment.id, VoteAction.DownVote)).getOrThrow()
+
+            val likes = adminApi.listCommentLikes(ListCommentLikes(comment.comment.id)).getOrThrow().items
+
+            assertEquals(listOf(voter.personId), likes.filter { it.vote == VoteAction.DownVote }.map { it.creator.id })
         }
 }

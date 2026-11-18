@@ -1,7 +1,10 @@
+import it.vercruysse.lemmyapi.datatypes.GetFederatedInstances
+import it.vercruysse.lemmyapi.enums.GetFederatedInstancesKind
 import it.vercruysse.lemmyapi.enums.RegistrationMode
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class LemmyV1SiteE2eTest : LemmyV1E2eTest() {
@@ -25,5 +28,32 @@ class LemmyV1SiteE2eTest : LemmyV1E2eTest() {
             assertTrue(local.local_posts >= seededPostIds.size)
             assertTrue(local.local_comments >= seededCommentIds.size)
             assertTrue(local.local_communities >= 1)
+        }
+
+    @Test
+    fun `admin can upload and delete the site icon and banner`() =
+        runBlocking<Unit> {
+            val icon = adminApi.uploadSiteIcon(PNG).getOrThrow()
+            val banner = adminApi.uploadSiteBanner(PNG).getOrThrow()
+            // getSite is cached for a short while
+            eventually {
+                val uploaded = anonApi.getSite().getOrThrow().site_view.site
+                assertEquals(icon.image_url, uploaded.icon)
+                assertEquals(banner.image_url, uploaded.banner)
+            }
+
+            adminApi.deleteSiteIcon().getOrThrow()
+            adminApi.deleteSiteBanner().getOrThrow()
+            eventually {
+                val deleted = anonApi.getSite().getOrThrow().site_view.site
+                assertNull(deleted.icon)
+                assertNull(deleted.banner)
+            }
+        }
+
+    @Test
+    fun `federated instances can be listed`() =
+        runBlocking<Unit> {
+            assertTrue(anonApi.getFederatedInstances(GetFederatedInstances(kind = GetFederatedInstancesKind.All)).isSuccess)
         }
 }
