@@ -62,11 +62,14 @@ internal object LegacyPaging {
     /**
      * Like [paged], for fetches that already build a [PagedResponse], for example by combining several requests.
      * Its cursors are replaced by synthetic ones.
+     *
+     * [filter] is applied after the cursors are set, so a page that is filtered down to nothing doesn't end the paging.
      */
     suspend fun <T : DatatypeRoot> pagedResponse(
         cursor: PaginationCursor?,
+        filter: (T) -> Boolean = { true },
         fetch: suspend (page: Long) -> Result<PagedResponse<T>>,
     ): Result<PagedResponse<T>> = withPage(cursor) { page ->
-        fetch(page).map { it.copy(next_page = next(page, it.items.isNotEmpty()), prev_page = prev(page)) }
+        fetch(page).map { it.copy(items = it.items.filter(filter), next_page = next(page, it.items.isNotEmpty()), prev_page = prev(page)) }
     }
 }
