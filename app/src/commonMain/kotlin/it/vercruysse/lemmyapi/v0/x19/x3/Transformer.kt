@@ -1421,6 +1421,7 @@ internal class Transformer : MapperGenerator {
         X3DatatypesGetComments(
             type_ = V0ListingType.fromUniNullable(d.type_),
             sort = V0CommentSortType.fromUniNullable(d.sort),
+            max_depth = d.max_depth,
             limit = d.limit,
             community_id = d.community_id,
             community_name = d.community_name,
