@@ -22,7 +22,7 @@ internal interface LemmyApiRouter {
     suspend fun search(form: Search): Result<SearchResponse>
 
     /** @GET("resolve_object") */
-    suspend fun resolveObject(form: ResolveObject): Result<SearchResponse>
+    suspend fun resolveObject(form: ResolveObject): Result<ResolveObjectView>
 
     /** @GET("community") */
     suspend fun getCommunity(form: GetCommunity): Result<GetCommunityResponse>

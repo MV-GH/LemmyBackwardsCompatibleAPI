@@ -39,7 +39,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
     override suspend fun search(form: it.vercruysse.lemmyapi.datatypes.Search): Result<it.vercruysse.lemmyapi.datatypes.SearchResponse> =
         api.search(transformer.fromUni(form)).map(transformer::toUni)
 
-    override suspend fun resolveObject(form: it.vercruysse.lemmyapi.datatypes.ResolveObject): Result<it.vercruysse.lemmyapi.datatypes.SearchResponse> =
+    override suspend fun resolveObject(form: it.vercruysse.lemmyapi.datatypes.ResolveObject): Result<it.vercruysse.lemmyapi.datatypes.ResolveObjectView> =
         api.resolveObject(transformer.fromUni(form)).map(transformer::toUni)
 
     override suspend fun getCommunity(form: it.vercruysse.lemmyapi.datatypes.GetCommunity): Result<it.vercruysse.lemmyapi.datatypes.GetCommunityResponse> =

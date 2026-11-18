@@ -15,6 +15,7 @@ import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.enums.VoteAction
 import it.vercruysse.lemmyapi.enums.VoteSettings
 import it.vercruysse.lemmyapi.enums.VoteShow
+import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.utils.toAt
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
 import it.vercruysse.lemmyapi.datatypes.AddAdminResponse as LemmyapiDatatypesAddAdminResponse
@@ -140,6 +141,7 @@ import it.vercruysse.lemmyapi.datatypes.RemovePost as LemmyapiDatatypesRemovePos
 import it.vercruysse.lemmyapi.datatypes.ResetPassword as LemmyapiDatatypesPasswordReset
 import it.vercruysse.lemmyapi.datatypes.ResolveCommentReport as LemmyapiDatatypesResolveCommentReport
 import it.vercruysse.lemmyapi.datatypes.ResolveObject as LemmyapiDatatypesResolveObject
+import it.vercruysse.lemmyapi.datatypes.ResolveObjectView as LemmyapiDatatypesResolveObjectView
 import it.vercruysse.lemmyapi.datatypes.ResolvePostReport as LemmyapiDatatypesResolvePostReport
 import it.vercruysse.lemmyapi.datatypes.ResolvePrivateMessageReport as LemmyapiDatatypesResolvePrivateMessageReport
 import it.vercruysse.lemmyapi.datatypes.SaveComment as LemmyapiDatatypesSaveComment
@@ -1078,21 +1080,13 @@ internal class Transformer : MapperGenerator {
         admin = d.admin?.let { this.toUni(d = it) },
     )
 
-    override fun toUni(d: X6DatatypesResolveObjectResponse): LemmyapiDatatypesSearchResponse =
-        LemmyapiDatatypesSearchResponse(
-            resolve = when {
-                d.post != null -> toUni(d.post)
-                d.comment != null -> toUni(d.comment)
-                d.community != null -> toUni(d.community)
-                d.person != null -> toUni(d.person)
-                else -> null
-            },
-            comments = emptyList(),
-            posts = emptyList(),
-            communities = emptyList(),
-            persons = emptyList(),
-            multi_communities = emptyList(),
-        )
+    override fun toUni(d: X6DatatypesResolveObjectResponse): LemmyapiDatatypesResolveObjectView = when {
+        d.post != null -> toUni(d.post)
+        d.comment != null -> toUni(d.comment)
+        d.community != null -> toUni(d.community)
+        d.person != null -> toUni(d.person)
+        else -> throw LemmyBadRequestException(404, "couldnt_find_object")
+    }
 
     override fun toUni(d: X6DatatypesSearchResponse): LemmyapiDatatypesSearchResponse =
         LemmyapiDatatypesSearchResponse(
