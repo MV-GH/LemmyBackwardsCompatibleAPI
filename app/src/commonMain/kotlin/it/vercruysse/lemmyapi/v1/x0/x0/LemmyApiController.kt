@@ -541,9 +541,9 @@ internal class LemmyApiController(private val client: LemmyRequestClient) : Lemm
     override suspend fun editCustomEmoji(form: EditCustomEmoji): Result<CustomEmojiResponse> =
         client.putResult("custom_emoji", form)
 
-    /** @POST("custom_emoji/delete") */
+    /** @DELETE("custom_emoji") */
     override suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit> =
-        client.postResult("custom_emoji/delete", form)
+        client.deleteResult("custom_emoji", form)
 
     /** @GET("custom_emoji/list") */
     override suspend fun listCustomEmojis(form: ListCustomEmojis): Result<ListCustomEmojisResponse> =

@@ -381,7 +381,7 @@ internal interface LemmyApiRouter {
     /** @PUT("custom_emoji") */
     suspend fun editCustomEmoji(form: EditCustomEmoji): Result<CustomEmojiResponse>
 
-    /** @POST("custom_emoji/delete") */
+    /** @DELETE("custom_emoji") */
     suspend fun deleteCustomEmoji(form: DeleteCustomEmoji): Result<Unit>
 
     /** @GET("custom_emoji/list") */
