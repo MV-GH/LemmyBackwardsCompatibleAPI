@@ -381,7 +381,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             comment_creator = this.toUni(d = d.comment_creator),
             creator_banned_from_community = d.creator_banned_from_community,
             creator_is_moderator = false,
-            creator_is_admin = false,
+            creator_is_admin = d.creator.admin,
             creator_banned = d.creator.banned,
             resolver = d.resolver?.let { this.toUni(d = it) },
             comment_actions = CommentActions(VoteAction.from(d.my_vote), null, null),
@@ -395,7 +395,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             community = this.toUni(d = d.community, counts = X5DatatypesCommunityAggregates(-1, -1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
             creator_banned_from_community = d.creator_banned_from_community,
             creator_is_moderator = false,
-            creator_is_admin = false,
+            creator_is_admin = d.creator.admin,
             tags = emptyList(),
             creator_banned = d.creator.banned,
             creator_ban_expires_at = addTimezoneOffsetNullable(d.creator.ban_expires),
@@ -527,7 +527,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
     override fun toUni(d: X5DatatypesPersonView, is_admin: Boolean): LemmyapiDatatypesPersonView =
         LemmyapiDatatypesPersonView(
             person = this.toUni(d = d.person, d.counts),
-            is_admin = is_admin,
+            is_admin = is_admin || d.person.admin,
             person_actions = null,
             banned = d.person.banned,
             ban_expires_at = addTimezoneOffsetNullable(d.person.ban_expires),
@@ -545,7 +545,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             community_actions = null,
             resolver = d.resolver?.let { this.toUni(d = it) },
             creator_is_moderator = false,
-            creator_is_admin = false,
+            creator_is_admin = d.creator.admin,
             creator_banned = d.creator.banned,
             creator_banned_from_community = d.creator_banned_from_community,
         )
@@ -561,7 +561,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
         can_mod = false,
         creator_banned = d.creator.banned,
         creator_ban_expires_at = addTimezoneOffsetNullable(d.creator.ban_expires),
-        creator_is_admin = false,
+        creator_is_admin = d.creator.admin,
         creator_is_moderator = false,
         creator_banned_from_community = d.creator_banned_from_community,
     )
@@ -728,7 +728,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             community = this.toUni(d = d.community, counts = X5DatatypesCommunityAggregates(-1, -1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
             creator_banned_from_community = d.creator_banned_from_community,
             creator_is_moderator = false,
-            creator_is_admin = false,
+            creator_is_admin = d.creator.admin,
             tags = emptyList(),
             creator_banned = d.creator.banned,
             creator_ban_expires_at = addTimezoneOffsetNullable(d.creator.ban_expires),
@@ -761,7 +761,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
             community = this.toUni(d = d.community, counts = X5DatatypesCommunityAggregates(-1, -1, -1, -1, -1, "", -1, -1, -1, -1, -1)),
             creator_banned_from_community = d.creator_banned_from_community,
             creator_is_moderator = false,
-            creator_is_admin = false,
+            creator_is_admin = d.creator.admin,
             tags = emptyList(),
             creator_banned = d.creator.banned,
             creator_ban_expires_at = addTimezoneOffsetNullable(d.creator.ban_expires),
@@ -807,7 +807,7 @@ internal class Transformer(var auth: String) : MapperGenerator {
 
     override fun toUni(d: X5DatatypesLocalUserView): LemmyapiDatatypesLocalUserView =
         LemmyapiDatatypesLocalUserView(
-            local_user = this.toUni(d = d.local_user),
+            local_user = this.toUni(d = d.local_user).copy(admin = d.person.admin),
             person = this.toUni(d = d.person, d.counts),
             banned = d.person.banned,
             ban_expires_at = addTimezoneOffsetNullable(d.person.ban_expires),
