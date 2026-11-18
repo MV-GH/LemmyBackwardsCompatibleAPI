@@ -313,7 +313,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
             MarkPostAsRead(
                 post_id = form.post_id,
                 read = form.read,
-                auth = "" + auth,
+                auth = auth ?: "",
             ),
         ).map(transformer::toUni)
 
@@ -324,11 +324,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      *
      * @POST("post/mark_as_read")
      */
-    override suspend fun markManyPostsAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): Result<Unit> = form.post_ids
-        .map { MarkPostAsRead(post_id = it, read = form.read, auth = "" + auth) }
-        .map { api.markPostAsRead(it) }
-        .map { it.map { } }
-        .firstOrNull { it.isFailure } ?: Result.success(Unit)
+    override suspend fun markManyPostsAsRead(form: it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead): Result<Unit> = runCatchingPreservingCancellation {
+        form.post_ids.forEach { postId -> api.markPostAsRead(MarkPostAsRead(post_id = postId, read = form.read, auth = auth ?: "")).getOrThrow() }
+    }
 
     /**
      * A moderator can lock a post ( IE disable new comments ).
