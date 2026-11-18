@@ -1,6 +1,8 @@
 package it.vercruysse.lemmyapi
 
 import io.ktor.client.*
+import io.ktor.client.network.sockets.ConnectTimeoutException
+import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.statement.*
@@ -9,6 +11,7 @@ import io.ktor.serialization.kotlinx.json.*
 import it.vercruysse.lemmyapi.dto.ErrorResponse
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import kotlinx.serialization.SerializationException
+import kotlin.coroutines.cancellation.CancellationException
 
 internal fun HttpClient.withLemmyApiConfig(options: LemmyApiOptions): HttpClient = config {
     installRequiredPlugins(options)
@@ -55,6 +58,10 @@ internal fun HttpClientConfig<*>.installRequiredPlugins(options: LemmyApiOptions
         retryIf { req, response ->
             response.status.value >= 500 && req.method == HttpMethod.Get
         }
+        // The default also retries non-idempotent requests on network errors, which can duplicate them
+        retryOnExceptionIf { req, cause ->
+            req.method == HttpMethod.Get && cause !is CancellationException && !cause.isTimeout()
+        }
         exponentialDelay()
     }
 
@@ -62,5 +69,8 @@ internal fun HttpClientConfig<*>.installRequiredPlugins(options: LemmyApiOptions
         json(IGNORE_UNKNOWN_KEYS_JSON)
     }
 }
+
+private fun Throwable.isTimeout(): Boolean =
+    this is HttpRequestTimeoutException || this is ConnectTimeoutException || this is SocketTimeoutException
 
 internal typealias AuthProvider = () -> String?
