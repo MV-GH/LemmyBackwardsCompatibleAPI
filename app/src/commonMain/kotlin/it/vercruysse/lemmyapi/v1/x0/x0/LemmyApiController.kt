@@ -445,9 +445,9 @@ internal class LemmyApiController(private val client: LemmyRequestClient) : Lemm
     override suspend fun revokeRegistrationInvitation(form: RevokeInvitation): Result<Unit> =
         client.deleteResult("account/invite", form)
 
-    /** @GET("account/invite") */
+    /** @GET("account/invite/list") */
     override suspend fun listRegistrationInvitations(form: ListInvitations): Result<PagedResponse<LocalUserInvite>> =
-        client.getResult("account/invite", form)
+        client.getResult("account/invite/list", form)
 
     /** @GET("account/media/list") */
     override suspend fun listMedia(form: ListMedia): Result<PagedResponse<LocalImageView>> =
