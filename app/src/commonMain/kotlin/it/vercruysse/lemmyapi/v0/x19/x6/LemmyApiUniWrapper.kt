@@ -469,8 +469,12 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
         form: it.vercruysse.lemmyapi.datatypes.GetComments,
     ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentView>> =
         LegacyPaging.paged(form.page_cursor) { page ->
-            api.getComments(transformer.fromUni(form).copy(page = page)).map { it.comments.map(transformer::toUni) }
-        }
+            if (form.max_depth != null && page > 1) {
+                Result.success(emptyList())
+            } else {
+                api.getComments(transformer.fromUni(form).copy(page = page)).map { it.comments.map(transformer::toUni) }
+            }
+        }.map { if (form.max_depth != null) it.copy(next_page = null, prev_page = null) else it } // Tree fetches ignore page
 
     /**
      * Delete a comment.
