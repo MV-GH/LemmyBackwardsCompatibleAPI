@@ -101,7 +101,8 @@ internal fun constructBaseUrl(instance: String): String {
         } else {
             // Really basic heuristic to determine if it's http or https,
             // if wrong, consumer should specify protocol
-            val protocol = if (instanceUrl.equals("localhost", true)) {
+            val host = instanceUrl.substringBefore('/').substringBefore(':')
+            val protocol = if (host.equals("localhost", true) || host == "127.0.0.1") {
                 URLProtocol.HTTP
             } else {
                 URLProtocol.HTTPS
