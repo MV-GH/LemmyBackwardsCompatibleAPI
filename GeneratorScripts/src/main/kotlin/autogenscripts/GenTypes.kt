@@ -68,6 +68,7 @@ val fileFieldEnumOverrides = mapOf(
     "EditCommunityNotifications" to mapOf("mode" to "CommunityNotificationsMode"),
     "EditPostNotifications"     to mapOf("mode" to "PostNotificationsMode"),
     "ListPersons"              to mapOf("sort" to "PersonSortType"),
+    "ListCommunities"           to mapOf("sort" to "CommunitySortType"),
 )
 
 // Enums whose wire values differ from the unified enum for a version, so that version has its own

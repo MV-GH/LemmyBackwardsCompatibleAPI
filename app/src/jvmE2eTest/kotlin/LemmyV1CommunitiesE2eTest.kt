@@ -2,12 +2,22 @@ import it.vercruysse.lemmyapi.datatypes.BlockCommunity
 import it.vercruysse.lemmyapi.datatypes.FollowCommunity
 import it.vercruysse.lemmyapi.datatypes.GetCommunity
 import it.vercruysse.lemmyapi.datatypes.ListCommunities
+import it.vercruysse.lemmyapi.enums.CommunitySortType
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class LemmyV1CommunitiesE2eTest : LemmyV1E2eTest() {
+    @Test
+    fun `communities can be listed with every sort`() =
+        runBlocking {
+            CommunitySortType.entries.forEach { sort ->
+                val response = anonApi.listCommunities(ListCommunities(sort = sort)).getOrThrow()
+                assertTrue(response.items.any { it.community.id == communityId }, "$sort should list the seeded community")
+            }
+        }
+
     @Test
     fun `anonymous get community by name and id`() =
         runBlocking {

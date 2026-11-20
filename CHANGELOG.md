@@ -4,6 +4,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Breaking changes
+
+- `ListCommunities.sort` is now a `CommunitySortType` instead of the post `SortType`.
+
 ### Fixed
 
 - Lemmy 1.0: `Top*` sorts work; they are sent as `top` with a `time_range_seconds`.

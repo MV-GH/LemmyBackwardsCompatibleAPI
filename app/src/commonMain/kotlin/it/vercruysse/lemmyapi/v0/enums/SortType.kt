@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi.v0.enums
 
 import kotlinx.serialization.Serializable
+import it.vercruysse.lemmyapi.enums.CommunitySortType as UniCommunitySortType
 import it.vercruysse.lemmyapi.enums.SortType as UniSortType
 
 @Serializable
@@ -75,6 +76,36 @@ internal enum class SortType {
             }
 
         fun fromUni(uni: UniSortType): SortType = fromUniNullable(uni) ?: error("No v0 mapping for $uni")
+
+        /** Pre 1.0 communities are sorted with the post sort, returns the one that orders communities the same way. */
+        fun fromUniCommunitySort(uni: UniCommunitySortType?): SortType? =
+            when (uni) {
+                null -> null
+
+                UniCommunitySortType.ActiveSixMonths -> TopSixMonths
+
+                UniCommunitySortType.ActiveMonthly -> TopMonth
+
+                UniCommunitySortType.ActiveWeekly -> TopWeek
+
+                UniCommunitySortType.ActiveDaily -> TopDay
+
+                UniCommunitySortType.Hot -> Hot
+
+                UniCommunitySortType.New -> New
+
+                UniCommunitySortType.Old -> Old
+
+                UniCommunitySortType.Comments -> MostComments
+
+                UniCommunitySortType.Subscribers -> TopAll
+
+                UniCommunitySortType.NameAsc,
+                UniCommunitySortType.NameDesc,
+                UniCommunitySortType.Posts,
+                UniCommunitySortType.SubscribersLocal,
+                -> null
+            }
     }
 }
 
