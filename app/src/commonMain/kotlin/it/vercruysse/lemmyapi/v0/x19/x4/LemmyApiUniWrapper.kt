@@ -1073,7 +1073,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
                 it.vercruysse.lemmyapi.enums.PersonContentType.Comments -> emptyList()
                 else -> response.posts.map { transformer.toUni(it) }
             }
-            PagedResponse(items = comments + posts)
+            PagedResponse(items = it.vercruysse.lemmyapi.utils.weaveNewestFirst(comments, posts))
         }
     }
 

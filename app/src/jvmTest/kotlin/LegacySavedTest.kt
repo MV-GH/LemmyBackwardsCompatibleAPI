@@ -7,6 +7,7 @@ import it.vercruysse.lemmyapi.LemmyAuth
 import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.LemmyVersion
 import it.vercruysse.lemmyapi.datatypes.CommentView
+import it.vercruysse.lemmyapi.datatypes.ListPersonContent
 import it.vercruysse.lemmyapi.datatypes.ListPersonSaved
 import it.vercruysse.lemmyapi.datatypes.PostView
 import it.vercruysse.lemmyapi.enums.PersonContentType
@@ -110,6 +111,43 @@ class LegacySavedTest {
                 val requestCount = paths.size
                 assertIs<NotSupportedException>(api.listPersonSaved(ListPersonSaved(search_term = "test")).exceptionOrNull())
                 assertEquals(requestCount, paths.size)
+            } finally {
+                apiClient.close()
+                client.close()
+            }
+        }
+    }
+
+    @Test
+    fun `legacy wrappers weave person content newest first`() = runBlocking {
+        val versions = listOf(
+            "0.18.5" to Details18.serializer().descriptor,
+            "0.19.0" to Details0.serializer().descriptor,
+            "0.19.3" to Details3.serializer().descriptor,
+            "0.19.4" to Details4.serializer().descriptor,
+            "0.19.6" to Details6.serializer().descriptor,
+            "0.19.11" to Details11.serializer().descriptor,
+        )
+        for ((version, detailsDescriptor) in versions) {
+            val comment = sample(detailsDescriptor.element("comments").getElementDescriptor(0)) as JsonObject
+            val post = sample(detailsDescriptor.element("posts").getElementDescriptor(0)) as JsonObject
+            val details = objectWith(
+                detailsDescriptor,
+                "comments" to JsonArray(listOf(comment.withPublished("comment", 1, "2024-01-01T00:00:01Z"), comment.withPublished("comment", 3, "2024-01-01T00:00:03Z"))),
+                "posts" to JsonArray(listOf(post.withPublished("post", 2, "2024-01-01T00:00:02Z"))),
+            )
+            val client = HttpClient(
+                MockEngine { request ->
+                    assertEquals("/api/v3/user", request.url.encodedPath)
+                    respond(details.toString(), HttpStatusCode.OK, headersOf(HttpHeaders.ContentType, "application/json"))
+                },
+            )
+            val apiClient = LemmyApiClient(client)
+            try {
+                val api = apiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(version)).getOrThrow()
+                val result = api.listPersonContent(ListPersonContent(person_id = 1)).getOrThrow()
+                assertEquals(listOf(3L, 2L, 1L), result.items.map { (it as Identity).id }, version)
+                assertIs<PostView>(result.items[1], version)
             } finally {
                 apiClient.close()
                 client.close()
