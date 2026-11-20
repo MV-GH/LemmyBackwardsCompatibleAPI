@@ -70,6 +70,20 @@ val fileFieldEnumOverrides = mapOf(
     "ListPersons"              to mapOf("sort" to "PersonSortType"),
 )
 
+// Enums whose wire values differ from the unified enum for a version, so that version has its own
+// internal copy in `<version prefix>enums`. Maps the version package prefix → enum class names.
+val versionLocalEnums = mapOf(
+    "v1." to setOf("SortType"),
+)
+
+/** Package (including trailing dot) the given enum class should be imported from for [packageName]. */
+fun enumPackage(rootPackage: String, packageName: String, enumClass: String): String {
+    val versionPrefix = versionLocalEnums.entries.firstOrNull { (prefix, enums) ->
+        packageName.startsWith(rootPackage + prefix) && enumClass in enums
+    }?.key
+    return rootPackage + (versionPrefix ?: "") + ENUMS_PACKAGE
+}
+
 // ============================================================
 // Sealed Interface Configuration
 // ============================================================
@@ -123,10 +137,11 @@ fun String.replaceFieldEnum(
     enumClass: String,
     imports: MutableSet<String>,
     rootPackage: String,
+    packageName: String,
 ): String {
     val pattern = "$fieldName: String"
     if (!contains(pattern)) return this
-    imports.add("import $rootPackage${ENUMS_PACKAGE}$enumClass")
+    imports.add("import ${enumPackage(rootPackage, packageName, enumClass)}$enumClass")
     return replace(pattern, "$fieldName: $enumClass")
 }
 
@@ -155,17 +170,17 @@ fun resolveDynamicType(line: String): String {
 }
 
 /** Applies all field→enum replacements to a single line. File-specific overrides take priority. */
-fun applyEnumReplacements(line: String, fileName: String, imports: MutableSet<String>, rootPackage: String): String {
+fun applyEnumReplacements(line: String, fileName: String, imports: MutableSet<String>, rootPackage: String, packageName: String): String {
     val fileOverrides = fileFieldEnumOverrides[fileName] ?: emptyMap()
     val effectiveReplacements = globalFieldEnums + fileOverrides
 
     return effectiveReplacements.entries.fold(line) { acc, (fieldName, enumClass) ->
-        acc.replaceFieldEnum(fieldName, enumClass, imports, rootPackage)
+        acc.replaceFieldEnum(fieldName, enumClass, imports, rootPackage, packageName)
     }
 }
 
 /** Transforms a single line from dukat-output syntax to Kotlin data class syntax. */
-fun processLine(line: String, fileName: String, imports: MutableSet<String>, rootPackage: String): String {
+fun processLine(line: String, fileName: String, imports: MutableSet<String>, rootPackage: String, packageName: String): String {
     var k = line
         .replace("interface ", "internal data class ")
         .replace("typealias ", "internal typealias ")
@@ -189,7 +204,7 @@ fun processLine(line: String, fileName: String, imports: MutableSet<String>, roo
     }
 
     k = resolveDynamicType(k)
-    k = applyEnumReplacements(k, fileName, imports, rootPackage)
+    k = applyEnumReplacements(k, fileName, imports, rootPackage, packageName)
 
     return k
 }
@@ -245,7 +260,7 @@ fun processDukatFile(typeFile: File, fileName: String, packageName: String, root
         .lines()
         .drop(16) // Remove dukat-generated header
         .filter { !it.contains("definedExternally") }
-        .map { processLine(it, fileName, imports, rootPackage) }
+        .map { processLine(it, fileName, imports, rootPackage, packageName) }
 
     var body = lines.joinToString("\n")
     if (!isTypealias) body = addSealedInterfaceImpl(body, fileName, imports)

@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented here.
 
+## [Unreleased]
+
+### Fixed
+
+- Lemmy 1.0: `Top*` sorts work; they are sent as `top` with a `time_range_seconds`.
+- Lemmy 1.0: a `top` default post sort no longer makes `getSite` and `getMyUser` fail.
+
 ## [1.0.0-rc.4] - 2026-11-18
 
 ### Breaking changes

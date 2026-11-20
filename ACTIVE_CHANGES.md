@@ -7,10 +7,12 @@ This document lists the changes that you will need to actively handle, through f
 
 ### Sort types split + `time_range_seconds`
 
-The many `Top*` `SortType` variants (`TopDay`, `TopWeek`, `TopMonth`, `TopYear`, `TopAll`, `TopHour`, `TopSixHour`, `TopTwelveHour`, `TopThreeMonths`, `TopSixMonths`, `TopNineMonths`) have been collapsed into a single `Top` value in v1. Time range is now expressed via `time_range_seconds: Long?` on the query (`GetPosts`, `GetComments`, `ListCommunities`, `ListMultiCommunities`, `Search`).
+Lemmy 1.0 collapsed the `Top*` post sorts (`TopDay`, `TopWeek`, `TopMonth`, `TopYear`, `TopAll`, `TopHour`, `TopSixHour`, `TopTwelveHour`, `TopThreeMonths`, `TopSixMonths`, `TopNineMonths`) into a single `top`, with the range in `time_range_seconds` (`default_post_time_range_seconds` for user and site defaults). The unified `SortType` keeps the `Top*` variants on every version.
 
-- On v1, set `sort = SortType.Top` and pass `time_range_seconds` (e.g. `86400` for top day).
-- On pre-v1, the old `Top*` variants are still used; `time_range_seconds` is ignored. The wrapper translates automatically.
+- Keep using the `Top*` variants. On 1.0 the wrapper sends `top` plus the matching range (`TopAll` sends `0`, which clears a stored range and overrides the user/site default).
+- A `time_range_seconds` you pass yourself takes precedence over the range of the `Top*` variant. Pre-1.0 ignores it.
+- A 1.0 `top` default is read back as the `Top*` variant closest to its range; the exact range stays in `default_post_time_range_seconds`.
+- `GetComments`, `ListCommunities`, `ListMultiCommunities` and `Search` only take `time_range_seconds` on 1.0.
 
 ### Image upload / delete compatibility
 

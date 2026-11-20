@@ -236,6 +236,7 @@ import it.vercruysse.lemmyapi.datatypes.UserBlockInstancePersonsParams as Lemmya
 import it.vercruysse.lemmyapi.datatypes.UserSettingsBackup as LemmyapiDatatypesUserSettingsBackup
 import it.vercruysse.lemmyapi.datatypes.VerifyEmail as LemmyapiDatatypesVerifyEmail
 import it.vercruysse.lemmyapi.datatypes.VoteView as LemmyapiDatatypesVoteView
+import it.vercruysse.lemmyapi.v1.enums.SortType as V1SortType
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AddAdmin as X0DatatypesAddAdmin
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AddAdminResponse as X0DatatypesAddAdminResponse
 import it.vercruysse.lemmyapi.v1.x0.x0.datatypes.AddModToCommunity as X0DatatypesAddModToCommunity
@@ -991,7 +992,7 @@ internal class Transformer : MapperGenerator {
         reports_email_admins = d.reports_email_admins,
         federation_signed_fetch = d.federation_signed_fetch,
         default_post_listing_mode = d.default_post_listing_mode,
-        default_post_sort_type = d.default_post_sort_type,
+        default_post_sort_type = d.default_post_sort_type.toUni(d.default_post_time_range_seconds),
         default_comment_sort_type = d.default_comment_sort_type,
         oauth_registration = d.oauth_registration,
         default_post_upvotes = d.default_post_upvotes,
@@ -1064,7 +1065,7 @@ internal class Transformer : MapperGenerator {
         email = d.email,
         show_nsfw = d.show_nsfw,
         theme = d.theme,
-        default_post_sort_type = d.default_post_sort_type,
+        default_post_sort_type = d.default_post_sort_type.toUni(d.default_post_time_range_seconds),
         default_listing_type = d.default_listing_type,
         interface_language = d.interface_language,
         show_avatars = d.show_avatars,
@@ -1836,8 +1837,8 @@ internal class Transformer : MapperGenerator {
         default_theme = d.default_theme,
         default_post_listing_type = d.default_post_listing_type,
         default_post_listing_mode = d.default_post_listing_mode,
-        default_post_sort_type = d.default_post_sort_type,
-        default_post_time_range_seconds = d.default_post_time_range_seconds,
+        default_post_sort_type = V1SortType.fromUni(d.default_post_sort_type, d.default_post_time_range_seconds).first,
+        default_post_time_range_seconds = V1SortType.fromUni(d.default_post_sort_type, d.default_post_time_range_seconds).second,
         default_comment_sort_type = d.default_comment_sort_type,
         legal_information = d.legal_information,
         application_email_admins = d.application_email_admins,
@@ -2037,8 +2038,8 @@ internal class Transformer : MapperGenerator {
         default_theme = d.default_theme,
         default_post_listing_type = d.default_post_listing_type,
         default_post_listing_mode = d.default_post_listing_mode,
-        default_post_sort_type = d.default_post_sort_type,
-        default_post_time_range_seconds = d.default_post_time_range_seconds,
+        default_post_sort_type = V1SortType.fromUni(d.default_post_sort_type, d.default_post_time_range_seconds).first,
+        default_post_time_range_seconds = V1SortType.fromUni(d.default_post_sort_type, d.default_post_time_range_seconds).second,
         default_items_per_page = d.default_items_per_page,
         default_comment_sort_type = d.default_comment_sort_type,
         legal_information = d.legal_information,
@@ -2174,8 +2175,8 @@ internal class Transformer : MapperGenerator {
 
     override fun fromUni(d: LemmyapiDatatypesGetPosts): X0DatatypesGetPosts = X0DatatypesGetPosts(
         type_ = d.type_,
-        sort = d.sort,
-        time_range_seconds = d.time_range_seconds,
+        sort = V1SortType.fromUni(d.sort, d.time_range_seconds).first,
+        time_range_seconds = V1SortType.fromUni(d.sort, d.time_range_seconds).second,
         community_id = d.community_id,
         community_name = d.community_name,
         creator_id = d.creator_id,
@@ -2506,8 +2507,8 @@ internal class Transformer : MapperGenerator {
         theme = d.theme,
         default_listing_type = d.default_listing_type,
         post_listing_mode = d.post_listing_mode,
-        default_post_sort_type = d.default_post_sort_type,
-        default_post_time_range_seconds = d.default_post_time_range_seconds,
+        default_post_sort_type = V1SortType.fromUni(d.default_post_sort_type, d.default_post_time_range_seconds).first,
+        default_post_time_range_seconds = V1SortType.fromUni(d.default_post_sort_type, d.default_post_time_range_seconds).second,
         default_items_per_page = d.default_items_per_page,
         default_comment_sort_type = d.default_comment_sort_type,
         interface_language = d.interface_language,

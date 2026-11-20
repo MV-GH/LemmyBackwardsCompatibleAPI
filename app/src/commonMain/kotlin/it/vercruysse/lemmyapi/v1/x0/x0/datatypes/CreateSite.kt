@@ -5,7 +5,7 @@ import it.vercruysse.lemmyapi.enums.ImageMode
 import it.vercruysse.lemmyapi.enums.ListingType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.RegistrationMode
-import it.vercruysse.lemmyapi.enums.SortType
+import it.vercruysse.lemmyapi.v1.enums.SortType
 import it.vercruysse.lemmyapi.enums.VoteSettings
 import kotlinx.serialization.Serializable
 
