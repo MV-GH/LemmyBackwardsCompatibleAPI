@@ -1224,7 +1224,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
                         .map { response ->
                             val comments = if (form.type_ == it.vercruysse.lemmyapi.enums.PersonContentType.Posts) emptyList() else response.comments.map { transformer.toUni(it) }
                             val posts = if (form.type_ == it.vercruysse.lemmyapi.enums.PersonContentType.Comments) emptyList() else response.posts.map { transformer.toUni(it) }
-                            PagedResponse(items = comments + posts)
+                            PagedResponse(items = it.vercruysse.lemmyapi.utils.weaveNewestFirst(comments, posts))
                         }
                 },
                 onFailure = { Result.failure(it) },

@@ -1,6 +1,7 @@
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
+import it.vercruysse.lemmyapi.Identity
 import it.vercruysse.lemmyapi.LemmyApiClient
 import it.vercruysse.lemmyapi.LemmyAuth
 import it.vercruysse.lemmyapi.LemmyInstance
@@ -14,6 +15,8 @@ import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.utils.LegacyPaging
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -45,10 +48,23 @@ class LegacySavedTest {
         )
         for ((version, siteDescriptor, detailsDescriptor) in versions) {
             val site = objectWith(siteDescriptor, "my_user" to sample(siteDescriptor.element("my_user"), nullable = false))
+            val comment = sample(detailsDescriptor.element("comments").getElementDescriptor(0)) as JsonObject
+            val post = sample(detailsDescriptor.element("posts").getElementDescriptor(0)) as JsonObject
+            // Mixed fraction lengths and zones to check the timestamps are compared chronologically, not as plain strings
             val details = objectWith(
                 detailsDescriptor,
-                "comments" to JsonArray(listOf(sample(detailsDescriptor.element("comments").getElementDescriptor(0)))),
-                "posts" to JsonArray(listOf(sample(detailsDescriptor.element("posts").getElementDescriptor(0)))),
+                "comments" to JsonArray(
+                    listOf(
+                        comment.withPublished("comment", 1, "2024-01-01T00:00:01Z"),
+                        comment.withPublished("comment", 3, "2024-01-01T00:00:03.5"),
+                    ),
+                ),
+                "posts" to JsonArray(
+                    listOf(
+                        post.withPublished("post", 4, "2024-01-01T00:00:03.75+00:00"),
+                        post.withPublished("post", 2, "2024-01-01T00:00:02.123456Z"),
+                    ),
+                ),
             )
             val paths = mutableListOf<String>()
             val client = HttpClient(
@@ -79,17 +95,18 @@ class LegacySavedTest {
             try {
                 val api = apiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyAuth.Bearer("test-token"), LemmyVersion(version)).getOrThrow()
                 val result = api.listPersonSaved(ListPersonSaved(page_cursor = LegacyPaging.encode(3), limit = 1)).getOrThrow()
-                assertIs<CommentView>(result.items[0], version)
-                assertIs<PostView>(result.items[1], version)
+                assertEquals(listOf(4L, 3L, 2L, 1L), result.items.map { (it as Identity).id }, version)
+                assertIs<PostView>(result.items[0], version)
+                assertIs<CommentView>(result.items[1], version)
+                assertIs<PostView>(result.items[2], version)
+                assertIs<CommentView>(result.items[3], version)
                 assertEquals(LegacyPaging.encode(4), result.next_page)
                 assertEquals(LegacyPaging.encode(2), result.prev_page)
                 assertEquals(listOf("/api/v3/site", "/api/v3/user"), paths)
                 val posts = api.listPersonSaved(ListPersonSaved(type_ = PersonContentType.Posts, page_cursor = LegacyPaging.encode(3), limit = 1)).getOrThrow()
-                assertEquals(1, posts.items.size)
-                assertIs<PostView>(posts.items.single())
+                assertEquals(listOf(4L, 2L), posts.items.map { assertIs<PostView>(it).id })
                 val comments = api.listPersonSaved(ListPersonSaved(type_ = PersonContentType.Comments, page_cursor = LegacyPaging.encode(3), limit = 1)).getOrThrow()
-                assertEquals(1, comments.items.size)
-                assertIs<CommentView>(comments.items.single())
+                assertEquals(listOf(3L, 1L), comments.items.map { assertIs<CommentView>(it).id })
                 val requestCount = paths.size
                 assertIs<NotSupportedException>(api.listPersonSaved(ListPersonSaved(search_term = "test")).exceptionOrNull())
                 assertEquals(requestCount, paths.size)
@@ -144,4 +161,9 @@ class LegacySavedTest {
             client.close()
         }
     }
+}
+
+private fun JsonObject.withPublished(key: String, id: Long, published: String): JsonObject {
+    val inner = this.getValue(key) as JsonObject
+    return JsonObject(this + (key to JsonObject(inner + mapOf("id" to JsonPrimitive(id), "published" to JsonPrimitive(published)))))
 }
