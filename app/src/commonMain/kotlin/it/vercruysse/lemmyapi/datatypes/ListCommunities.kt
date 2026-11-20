@@ -2,15 +2,15 @@ package it.vercruysse.lemmyapi.datatypes
 
 import it.vercruysse.lemmyapi.CommonParcelize
 import it.vercruysse.lemmyapi.DatatypeRoot
+import it.vercruysse.lemmyapi.enums.CommunitySortType
 import it.vercruysse.lemmyapi.enums.ListingType
-import it.vercruysse.lemmyapi.enums.SortType
 import kotlinx.serialization.Serializable
 
 @CommonParcelize
 @Serializable
 data class ListCommunities(
     val type_: ListingType? /* "all" | "local" | "subscribed" | "moderator_view" | "suggested" */ = null,
-    val sort: SortType? /* "active_six_months" | "active_monthly" | "active_weekly" | "active_daily" | "hot" | "new" | "old" | "name_asc" | "name_desc" | "comments" | "posts" | "subscribers" | "subscribers_local" */ = null,
+    val sort: CommunitySortType? /* "active_six_months" | "active_monthly" | "active_weekly" | "active_daily" | "hot" | "new" | "old" | "name_asc" | "name_desc" | "comments" | "posts" | "subscribers" | "subscribers_local" */ = null,
     val time_range_seconds: Long? = null,
     val show_nsfw: Boolean? = null,
     /** Added in 1.0.0 */

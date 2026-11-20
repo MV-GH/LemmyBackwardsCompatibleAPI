@@ -1585,7 +1585,7 @@ internal class Transformer : MapperGenerator {
     override fun fromUni(d: LemmyapiDatatypesListCommunities): X4DatatypesListCommunities =
         X4DatatypesListCommunities(
             type_ = V0ListingType.fromUniNullable(d.type_),
-            sort = V0SortType.fromUniNullable(d.sort),
+            sort = V0SortType.fromUniCommunitySort(d.sort),
             show_nsfw = d.show_nsfw,
             limit = d.limit,
         )
