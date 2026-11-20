@@ -7,9 +7,17 @@ All notable changes to this project are documented here.
 ### Breaking changes
 
 - `ListCommunities.sort` is now a `CommunitySortType` instead of the post `SortType`.
+- `connect` and `connectForVersion` fail with a `LemmyConnectException` (`NodeInfoUnavailable`, `NotLemmy`, `InvalidVersion`, `UnsupportedVersion`) instead of `NotSupportedException`.
+- `NodeInfoClient.getLemmyVersion` fails with `LemmyConnectException.NotLemmy` for other software.
+- On Lemmy 0.18, a request failure whose message would contain the token (error statuses without a Lemmy error, timeouts) is now a `TokenRedactedException`.
+
+### Added
+
+- `LemmyApiOptions.onAuthRejected`: called with the token of a request the server rejected as not logged in.
 
 ### Fixed
 
+- `connect` no longer throws when the instance reports a version that isn't a version number; it fails with `LemmyConnectException.InvalidVersion`.
 - Lemmy 1.0: `Top*` sorts work; they are sent as `top` with a `time_range_seconds`.
 - Lemmy 1.0: a `top` default post sort no longer makes `getSite` and `getMyUser` fail.
 

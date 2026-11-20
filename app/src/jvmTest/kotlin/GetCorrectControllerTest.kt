@@ -4,7 +4,7 @@ import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.LemmyVersion
 import it.vercruysse.lemmyapi.MINIMUM_API_VERSION
 import it.vercruysse.lemmyapi.enums.SortType
-import it.vercruysse.lemmyapi.exception.NotSupportedException
+import it.vercruysse.lemmyapi.exception.LemmyConnectException
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -55,7 +55,7 @@ class GetCorrectControllerTest {
         LemmyApiClient().use { client ->
             val unsupportedVersion = client.connectForVersion(LemmyInstance("lemmy.world"), LemmyVersion("200.0.0"))
 
-            assertIs<NotSupportedException>(unsupportedVersion.exceptionOrNull())
+            assertIs<LemmyConnectException.UnsupportedVersion>(unsupportedVersion.exceptionOrNull())
         }
     }
 

@@ -59,6 +59,15 @@ data class LemmyApiOptions(
     val maxRetries: Int = 3,
     val userAgent: String = "LemmyKotlinApi",
     val versionPolicy: VersionPolicy = VersionPolicy.LatestKnownCompatible,
+    /**
+     * Called with the token of an API request the server rejected as not logged in: a 401, or the Lemmy error
+     * `not_logged_in` or `incorrect_login`. Password checks (login, change password, delete account) are left out,
+     * as there `incorrect_login` means a wrong password.
+     *
+     * It gets the token the request was sent with, so a token replaced since can be told apart. It runs on the
+     * requesting coroutine before the result is returned; keep it quick. Exceptions it throws are ignored.
+     */
+    val onAuthRejected: AuthRejectedListener? = null,
 ) {
     init {
         require(requestTimeout.isPositive() && requestTimeout.isFinite()) { "Request timeout must be positive and finite" }
@@ -69,3 +78,6 @@ data class LemmyApiOptions(
 
 internal val LemmyAuth.token: String?
     get() = (this as? LemmyAuth.Bearer)?.token
+
+/** See [LemmyApiOptions.onAuthRejected]. */
+typealias AuthRejectedListener = (LemmyAuth.Bearer) -> Unit

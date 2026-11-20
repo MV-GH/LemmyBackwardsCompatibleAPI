@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi.v1.x0.x0
 
 import io.ktor.client.HttpClient
+import it.vercruysse.lemmyapi.AuthRejectedListener
 import it.vercruysse.lemmyapi.LemmyApiBaseController
 import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.LemmyRequestClient
@@ -17,9 +18,9 @@ import it.vercruysse.lemmyapi.dto.ExportUserSettingsResponse
 import it.vercruysse.lemmyapi.dto.ImportUserSettings
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
-internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, auth: String?) :
+internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, auth: String?, onAuthRejected: AuthRejectedListener? = null) :
     LemmyApiBaseController(instance, actualVersion, auth) {
-    private val api = LemmyApiController(LemmyRequestClient(client, apiBaseUrl) { this.auth })
+    private val api = LemmyApiController(LemmyRequestClient(client, apiBaseUrl, { this.auth }, onAuthRejected = onAuthRejected))
     private val transformer = Transformer()
 
     override suspend fun getSite(): Result<it.vercruysse.lemmyapi.datatypes.GetSiteResponse> =

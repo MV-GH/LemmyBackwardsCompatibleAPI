@@ -7,6 +7,7 @@ import io.ktor.client.request.*
 import io.ktor.http.HttpStatusCode
 import it.vercruysse.lemmyapi.LemmyApiOptions
 import it.vercruysse.lemmyapi.LemmyInstance
+import it.vercruysse.lemmyapi.exception.LemmyConnectException
 import it.vercruysse.lemmyapi.exception.NotSupportedException
 import it.vercruysse.lemmyapi.installRequiredPlugins
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
@@ -62,13 +63,13 @@ class NodeInfoClient(
     /**
      * Gets the Lemmy version from a NodeInfo document.
      *
-     * Returns a failure if the document does not describe a Lemmy instance.
+     * Returns a [LemmyConnectException.NotLemmy] failure if the document does not describe a Lemmy instance.
      */
     fun getLemmyVersion(nodeInfo: NodeInfo): Result<String> =
         if (isLemmyInstance(nodeInfo)) {
             Result.success(getVersion(nodeInfo))
         } else {
-            Result.failure(NotSupportedException("Not a Lemmy instance"))
+            Result.failure(LemmyConnectException.NotLemmy(nodeInfo))
         }
 
     /**

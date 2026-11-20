@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi
 
 import io.ktor.client.*
+import it.vercruysse.lemmyapi.exception.LemmyConnectException
 import it.vercruysse.lemmyapi.nodeinfo.NodeInfoClient
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 
@@ -22,7 +23,11 @@ class LemmyApiClient(
     /**
      * Connects to an instance after discovering its Lemmy version.
      *
-     * Returns a failure if the instance isn't available, isn't a Lemmy host, or isn't supported.
+     * Fails with a [LemmyConnectException]:
+     * - [LemmyConnectException.NodeInfoUnavailable] when the NodeInfo document can't be loaded or read,
+     * - [LemmyConnectException.NotLemmy] when the instance runs other software,
+     * - [LemmyConnectException.InvalidVersion] when the reported version isn't a version number,
+     * - [LemmyConnectException.UnsupportedVersion] when the version isn't supported.
      *
      * Use the Feature Flags before using certain endpoints as they can be or not available depending
      * on the version of the Lemmy Server instance.
@@ -30,16 +35,25 @@ class LemmyApiClient(
     suspend fun connect(
         instance: LemmyInstance,
         auth: LemmyAuth = LemmyAuth.Anonymous,
-    ): Result<LemmyApiBaseController> =
-        nodeInfoClient.getLemmyVersion(instance).fold(
-            onSuccess = { version -> connectForVersion(instance, auth, LemmyVersion(version)) },
-            onFailure = { Result.failure(it) },
-        )
+    ): Result<LemmyApiBaseController> {
+        val nodeInfo = nodeInfoClient.getNodeInfo(instance)
+            .getOrElse { return Result.failure(LemmyConnectException.NodeInfoUnavailable(it)) }
+        if (!nodeInfoClient.isLemmyInstance(nodeInfo)) {
+            return Result.failure(LemmyConnectException.NotLemmy(nodeInfo))
+        }
+        val rawVersion = nodeInfo.software.version
+        val version = try {
+            LemmyVersion(rawVersion)
+        } catch (exception: IllegalArgumentException) {
+            return Result.failure(LemmyConnectException.InvalidVersion(rawVersion, exception))
+        }
+        return connectForVersion(instance, auth, version)
+    }
 
     /**
      * Connects to an instance with a known Lemmy version.
      *
-     * Returns a failure if the version is unsupported.
+     * Fails with [LemmyConnectException.UnsupportedVersion] if the version is unsupported.
      *
      * Be warned that this function assumes that the instance and the version are correct.
      *
@@ -57,13 +71,14 @@ class LemmyApiClient(
             version,
             auth,
             options.versionPolicy,
+            options.onAuthRejected,
         )
     }
 
     /**
      * Connects to an instance with a known Lemmy version.
      *
-     * Returns a failure if the version is unsupported.
+     * Fails with [LemmyConnectException.UnsupportedVersion] if the version is unsupported.
      *
      * Be warned that this function assumes that the instance and the version are correct.
      *
