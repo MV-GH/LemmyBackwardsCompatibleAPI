@@ -33,7 +33,9 @@ class LemmyV1AccountE2eTest : LemmyV1E2eTest() {
     @Test
     fun `login with valid credentials returns a token`() =
         runBlocking<Unit> {
-            val response = anonApi.login(Login(user.username, USER_PASSWORD)).getOrThrow()
+            // The user was registered during setup, a login in the same second would produce the same token
+            // and fail on the unique login_token key. stay_logged_in gives this token another expiry.
+            val response = anonApi.login(Login(user.username, USER_PASSWORD, stay_logged_in = true)).getOrThrow()
 
             assertNotNull(response.jwt)
         }
