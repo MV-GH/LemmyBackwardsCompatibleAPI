@@ -1,6 +1,7 @@
 package it.vercruysse.lemmyapi.v0.x19.x6
 
 import io.ktor.client.HttpClient
+import it.vercruysse.lemmyapi.AuthRejectedListener
 import it.vercruysse.lemmyapi.LemmyApiBaseController
 import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.LemmyRequestClient
@@ -25,9 +26,9 @@ import it.vercruysse.lemmyapi.utils.matchesLegacyFilters
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetPersonDetails
 
-internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, baseUrl: String, auth: String?) :
+internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, baseUrl: String, auth: String?, onAuthRejected: AuthRejectedListener? = null) :
     LemmyApiBaseController(instance, actualVersion, auth) {
-    private val api = LemmyApiController(LemmyRequestClient(client, apiBaseUrl) { this.auth })
+    private val api = LemmyApiController(LemmyRequestClient(client, apiBaseUrl, { this.auth }, onAuthRejected = onAuthRejected))
     private val pictrsApi = PictrsService(client, baseUrl) { this.auth }
     private val transformer = Transformer()
 
@@ -123,7 +124,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
         val change = hide != null && isHidden(form.community_id) != hide
         if (change) checkCanChangeHidden()
         val response = api.editCommunity(transformer.fromUni(form)).getOrThrow()
-        transformer.toUni(if (change && hide != null) setHidden(response, hide) else response)
+        transformer.toUni(if (change) setHidden(response, hide) else response)
     }
 
     private suspend fun setHidden(

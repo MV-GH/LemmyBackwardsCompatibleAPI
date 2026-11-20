@@ -13,7 +13,7 @@ import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.LemmyVersion
 import it.vercruysse.lemmyapi.VersionPolicy
 import it.vercruysse.lemmyapi.datatypes.GetPosts
-import it.vercruysse.lemmyapi.exception.NotSupportedException
+import it.vercruysse.lemmyapi.exception.LemmyConnectException
 import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.test.Test
@@ -258,9 +258,9 @@ class LemmyApiClientTest {
             val newLineResult = client.connectForVersion(instance, LemmyVersion("1.1.0"))
 
             assertTrue(result.isFailure)
-            assertIs<NotSupportedException>(result.exceptionOrNull())
-            assertIs<NotSupportedException>(oldLineResult.exceptionOrNull())
-            assertIs<NotSupportedException>(newLineResult.exceptionOrNull())
+            assertIs<LemmyConnectException.UnsupportedVersion>(result.exceptionOrNull())
+            assertIs<LemmyConnectException.UnsupportedVersion>(oldLineResult.exceptionOrNull())
+            assertIs<LemmyConnectException.UnsupportedVersion>(newLineResult.exceptionOrNull())
         }
     }
 
