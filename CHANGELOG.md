@@ -20,6 +20,7 @@ All notable changes to this project are documented here.
 - `connect` no longer throws when the instance reports a version that isn't a version number; it fails with `LemmyConnectException.InvalidVersion`.
 - Lemmy 1.0: `Top*` sorts work; they are sent as `top` with a `time_range_seconds`.
 - Lemmy 1.0: a `top` default post sort no longer makes `getSite` and `getMyUser` fail.
+- `getSupportedEntries` includes report, notification, and person-content types supported by legacy wrappers.
 
 ## [1.0.0-rc.4] - 2026-11-18
 
