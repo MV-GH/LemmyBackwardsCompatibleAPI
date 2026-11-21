@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-## [Unreleased]
+## [1.0.0-rc.5] - 2026-11-21
 
 ### Breaking changes
 
@@ -20,6 +20,7 @@ All notable changes to this project are documented here.
 - `connect` no longer throws when the instance reports a version that isn't a version number; it fails with `LemmyConnectException.InvalidVersion`.
 - Lemmy 1.0: `Top*` sorts work; they are sent as `top` with a `time_range_seconds`.
 - Lemmy 1.0: a `top` default post sort no longer makes `getSite` and `getMyUser` fail.
+- Pre-1.0: `listPersonSaved` and `listPersonContent` return posts and comments woven together newest first, like 1.0, instead of all comments followed by all posts.
 
 ## [1.0.0-rc.4] - 2026-11-18
 
