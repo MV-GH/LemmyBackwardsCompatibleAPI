@@ -3,6 +3,9 @@ import it.vercruysse.lemmyapi.LemmyApiClient
 import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.LemmyVersion
 import it.vercruysse.lemmyapi.MINIMUM_API_VERSION
+import it.vercruysse.lemmyapi.enums.NotificationDataType
+import it.vercruysse.lemmyapi.enums.PersonContentType
+import it.vercruysse.lemmyapi.enums.ReportType
 import it.vercruysse.lemmyapi.enums.SortType
 import it.vercruysse.lemmyapi.exception.LemmyConnectException
 import org.junit.jupiter.api.Assertions.assertInstanceOf
@@ -65,9 +68,24 @@ class GetCorrectControllerTest {
             val instance = LemmyInstance("lemmy.world")
             val oldController = client.connectForVersion(instance, LemmyVersion("0.18.5")).getOrThrow()
             val newController = client.connectForVersion(instance, LemmyVersion("0.19.0")).getOrThrow()
+            val v1Controller = client.connectForVersion(instance, LemmyVersion("1.0.0")).getOrThrow()
 
             assertTrue(SortType.Scaled !in oldController.getSupportedEntries<SortType>())
             assertTrue(SortType.Scaled in newController.getSupportedEntries<SortType>())
+            assertEquals(
+                setOf(ReportType.All, ReportType.Posts, ReportType.Comments, ReportType.PrivateMessages),
+                oldController.getSupportedEntries<ReportType>().toSet(),
+            )
+            assertEquals(ReportType.entries.toSet(), v1Controller.getSupportedEntries<ReportType>().toSet())
+            assertEquals(
+                setOf(NotificationDataType.All, NotificationDataType.Reply, NotificationDataType.Mention, NotificationDataType.PrivateMessage),
+                oldController.getSupportedEntries<NotificationDataType>().toSet(),
+            )
+            assertEquals(NotificationDataType.entries.toSet(), v1Controller.getSupportedEntries<NotificationDataType>().toSet())
+            assertEquals(
+                PersonContentType.entries.toSet(),
+                oldController.getSupportedEntries<PersonContentType>().toSet(),
+            )
         }
     }
 
