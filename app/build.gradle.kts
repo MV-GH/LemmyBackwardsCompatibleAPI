@@ -66,12 +66,12 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "3.6.0"
+        val ktorVersion = "3.6.1"
 
         commonMain.dependencies {
             api("io.ktor:ktor-client-core:$ktorVersion")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.13.0")
 
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
@@ -91,10 +91,10 @@ kotlin {
 
         jvmTest.dependencies {
             implementation(kotlin("reflect"))
-            implementation("io.mockk:mockk:1.14.11")
+            implementation("io.mockk:mockk:1.14.12")
             implementation("org.wiremock:wiremock:3.13.2")
             implementation("com.marcinziolo:kotlin-wiremock:2.1.1")
-            implementation("ch.qos.logback:logback-classic:1.6.5")
+            implementation("ch.qos.logback:logback-classic:1.6.8")
             implementation("io.ktor:ktor-client-mock:$ktorVersion")
         }
 
@@ -102,7 +102,7 @@ kotlin {
             implementation(kotlin("test-junit5"))
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
             implementation("org.testcontainers:testcontainers:2.0.5")
-            implementation("ch.qos.logback:logback-classic:1.6.5")
+            implementation("ch.qos.logback:logback-classic:1.6.8")
         }
 
         // Below required bc we use HttpClient() see https://ktor.io/docs/client-engines.html#default

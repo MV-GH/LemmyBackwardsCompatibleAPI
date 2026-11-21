@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization") version "2.4.21"
-    id("com.google.devtools.ksp").version("2.3.12")
+    id("com.google.devtools.ksp").version("2.3.14")
 }
 
 repositories {
@@ -11,18 +11,18 @@ repositories {
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     implementation("com.charleskorn.kaml:kaml:0.104.0")
-    val ktorVersion = "3.6.0"
-    val konvertVersion = "4.5.1"
+    val ktorVersion = "3.6.1"
+    val konvertVersion = "4.5.2"
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.13.0")
 
     implementation("com.squareup.okio:okio:3.18.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.9.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.9.3")
     implementation("io.mcarle:konvert-api:$konvertVersion")
     implementation(project(":app"))
 
