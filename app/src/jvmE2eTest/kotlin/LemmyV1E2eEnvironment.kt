@@ -93,11 +93,15 @@ internal class LemmyV1E2eEnvironment {
             postgres.start()
             pictrs.start()
             lemmy.start()
-            runBlocking { configureSite() }
+            // Log the admin in only once: a second login in the same second would produce the same token
+            // and fail on the unique login_token key. The token lives in postgres, so it survives the restart.
+            val adminAuth = runBlocking { loginAdmin() }
+            runBlocking { configureSite(connect(adminAuth)) }
             // Lemmy only reads its rate limits at startup, so restart it to pick up the change
             lemmy.stop()
             lemmy.start()
-            runBlocking { seed() }
+            // The restart maps another port, so connect again
+            runBlocking { seed(connect(adminAuth)) }
         } catch (t: Throwable) {
             stop()
             throw t
@@ -117,15 +121,15 @@ internal class LemmyV1E2eEnvironment {
         return client.connectForVersion(instance, auth, version).getOrThrow()
     }
 
-    private suspend fun loginAdmin(): LemmyApiBaseController {
+    private suspend fun loginAdmin(): LemmyAuth {
         val jwt = connect().login(Login(ADMIN_USERNAME, ADMIN_PASSWORD)).getOrThrow().jwt
         checkNotNull(jwt) { "Lemmy did not return a token for the admin user" }
-        return connect(LemmyAuth.Bearer(jwt))
+        return LemmyAuth.Bearer(jwt)
     }
 
     // Open registration and lift the rate limits, all tests come from the same IP
-    private suspend fun configureSite() {
-        loginAdmin().editSite(
+    private suspend fun configureSite(admin: LemmyApiBaseController) {
+        admin.editSite(
             EditSite(
                 registration_mode = RegistrationMode.Open,
                 rate_limit_message_max_requests = UNLIMITED,
@@ -138,9 +142,9 @@ internal class LemmyV1E2eEnvironment {
         ).getOrThrow()
     }
 
-    private suspend fun seed() {
+    private suspend fun seed(adminApi: LemmyApiBaseController) {
         anon = connect()
-        admin = loginAdmin()
+        admin = adminApi
 
         communityId =
             admin.createCommunity(CreateCommunity(name = SEED_COMMUNITY_NAME, title = "E2E Test Community"))
