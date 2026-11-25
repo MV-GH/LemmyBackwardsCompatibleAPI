@@ -11,7 +11,7 @@
 ![badge][badge-ios]
 ![badge][badge-watchos]
 ![example workflow](https://github.com//mv-gh/lemmybackwardsCompatibleAPi/actions/workflows/ci.yml/badge.svg)
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-blue.svg)](https://www.mozilla.org/en-US/MPL/2.0/)
 ![GitHub stars](https://img.shields.io/github/stars/mv-gh/lemmybackwardsCompatibleAPi?style=social)
 </div>
 
