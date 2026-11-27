@@ -4,6 +4,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- `getModlog` works on Lemmy 0.19: its per-category modlog is flattened into 1.0 `ModlogView`s, newest first. `FF.modlog()` is now true from 0.19. Pre-1.0 a `Modlog.id` is only unique per `kind`, and filtering on a 1.0-only type returns nothing.
+
 ### Changed
 
 - Pre-1.0: community `description` maps to `sidebar` instead of `summary`; create/edit send `sidebar`, falling back to `summary`.

@@ -1,12 +1,13 @@
 package it.vercruysse.lemmyapi.enums
 
 import io.github.z4kn4fein.semver.Version
+import it.vercruysse.lemmyapi.V0_19_0
 import it.vercruysse.lemmyapi.V1_0_0
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class ModlogKind(override val minimumVersion: Version = V1_0_0, override val maximumVersion: Version? = null) : VersionTracker {
+enum class ModlogKind(override val minimumVersion: Version = V0_19_0, override val maximumVersion: Version? = null) : VersionTracker {
     @SerialName("all")
     All,
 
@@ -17,10 +18,10 @@ enum class ModlogKind(override val minimumVersion: Version = V1_0_0, override va
     AdminBan,
 
     @SerialName("admin_allow_instance")
-    AdminAllowInstance,
+    AdminAllowInstance(V1_0_0),
 
     @SerialName("admin_block_instance")
-    AdminBlockInstance,
+    AdminBlockInstance(V1_0_0),
 
     @SerialName("admin_purge_comment")
     AdminPurgeComment,
@@ -65,11 +66,11 @@ enum class ModlogKind(override val minimumVersion: Version = V1_0_0, override va
     ModTransferCommunity,
 
     @SerialName("mod_lock_comment")
-    ModLockComment,
+    ModLockComment(V1_0_0),
 
     @SerialName("mod_warn_comment")
-    ModWarnComment,
+    ModWarnComment(V1_0_0),
 
     @SerialName("mod_warn_post")
-    ModWarnPost,
+    ModWarnPost(V1_0_0),
 }
