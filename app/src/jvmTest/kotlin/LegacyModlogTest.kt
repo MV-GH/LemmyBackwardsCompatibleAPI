@@ -16,7 +16,6 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetModlogResponse as Modlog18
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetModlogResponse as Modlog0
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetModlogResponse as Modlog11
@@ -82,7 +81,6 @@ class LegacyModlogTest {
             val apiClient = LemmyApiClient(client)
             try {
                 val api = apiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion(version)).getOrThrow()
-                assertTrue(api.FF.modlog(), version)
                 val result = api.getModlog(GetModlog(page_cursor = LegacyPaging.encode(2))).getOrThrow()
                 val log = result.items.map { it.modlog }
                 assertEquals(listOf(ModlogKind.AdminBan, ModlogKind.ModRemovePost, ModlogKind.ModFeaturePostCommunity), log.map { it.kind }, version)
