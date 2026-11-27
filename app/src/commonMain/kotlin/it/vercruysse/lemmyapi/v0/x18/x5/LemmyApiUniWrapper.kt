@@ -23,6 +23,7 @@ import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.utils.LegacyPaging
 import it.vercruysse.lemmyapi.utils.matchesLegacyFilters
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
+import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCaptcha
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetPersonDetails
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetReportCount
@@ -81,7 +82,16 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      */
     override suspend fun getModlog(
         form: it.vercruysse.lemmyapi.datatypes.GetModlog,
-    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ModlogView>> = notSupported()
+    ): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.ModlogView>> = LegacyPaging.pagedResponse(
+        form.page_cursor,
+        filter = { view -> LegacyModlog.matches(view, form) },
+    ) { page ->
+        if (LegacyModlog.hasNoLegacyType(form)) {
+            Result.success(PagedResponse(emptyList()))
+        } else {
+            api.getModlog(transformer.fromUni(form).copy(page = page)).map { PagedResponse(LegacyModlog.sort(transformer.toUni(it))) }
+        }
+    }
 
     /**
      * Search lemmy.

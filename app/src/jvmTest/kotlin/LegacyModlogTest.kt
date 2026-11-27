@@ -17,6 +17,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetModlogResponse as Modlog18
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetModlogResponse as Modlog0
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetModlogResponse as Modlog11
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetModlogResponse as Modlog3
@@ -25,6 +26,7 @@ import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetModlogResponse as Modlog6
 
 class LegacyModlogTest {
     private val versions = listOf(
+        "0.18.5" to Modlog18.serializer().descriptor,
         "0.19.0" to Modlog0.serializer().descriptor,
         "0.19.3" to Modlog3.serializer().descriptor,
         "0.19.4" to Modlog4.serializer().descriptor,
@@ -39,7 +41,7 @@ class LegacyModlogTest {
     }
 
     @Test
-    fun `0_19 modlog categories are flattened newest first`() = runBlocking {
+    fun `pre 1_0 modlog categories are flattened newest first`() = runBlocking {
         for ((version, descriptor) in versions) {
             val response = objectWith(
                 descriptor,

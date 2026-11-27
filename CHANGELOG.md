@@ -6,7 +6,7 @@ All notable changes to this project are documented here.
 
 ### Added
 
-- `getModlog` works on Lemmy 0.19: its per-category modlog is flattened into 1.0 `ModlogView`s, newest first. `FF.modlog()` is now true from 0.19. Pre-1.0 a `Modlog.id` is only unique per `kind`, and filtering on a 1.0-only type returns nothing.
+- `getModlog` works on Lemmy 0.18 and 0.19: their per-category modlog is flattened into 1.0 `ModlogView`s, newest first. `FF.modlog()` is now always true. Pre-1.0 a `Modlog.id` is only unique per `kind`, and filtering on a 1.0-only type returns nothing.
 
 ### Changed
 
