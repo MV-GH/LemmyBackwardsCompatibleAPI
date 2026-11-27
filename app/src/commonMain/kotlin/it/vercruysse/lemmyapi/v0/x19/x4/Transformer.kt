@@ -441,7 +441,7 @@ internal class Transformer : MapperGenerator {
             id = d.id,
             name = d.name,
             title = d.title,
-            summary = d.description,
+            sidebar = d.description,
             removed = d.removed,
             published_at = d.published,
             updated_at = d.updated,
@@ -1225,7 +1225,7 @@ internal class Transformer : MapperGenerator {
         X4DatatypesCreateCommunity(
             name = d.name,
             title = d.title,
-            description = d.summary,
+            description = d.sidebar ?: d.summary,
             nsfw = d.nsfw,
             posting_restricted_to_mods = d.posting_restricted_to_mods,
             discussion_languages = d.discussion_languages,
@@ -1374,7 +1374,7 @@ internal class Transformer : MapperGenerator {
         X4DatatypesEditCommunity(
             community_id = d.community_id,
             title = d.title,
-            description = d.summary,
+            description = d.sidebar ?: d.summary,
             nsfw = d.nsfw,
             posting_restricted_to_mods = d.posting_restricted_to_mods,
             discussion_languages = d.discussion_languages,
