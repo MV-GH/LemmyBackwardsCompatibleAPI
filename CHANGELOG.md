@@ -4,6 +4,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- `getCommentsSlim` now works on Lemmy 0.18 and 0.19.
+
 ### Changed
 
 - Pre-1.0: community `description` maps to `sidebar` instead of `summary`; create/edit send `sidebar`, falling back to `summary`.
