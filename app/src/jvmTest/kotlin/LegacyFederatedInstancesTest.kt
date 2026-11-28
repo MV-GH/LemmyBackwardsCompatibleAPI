@@ -57,6 +57,12 @@ class LegacyFederatedInstancesTest {
                 assertEquals(listOf(3L), second.items.map { it.instance.id })
                 assertNull(second.next_page)
                 assertEquals(LegacyPaging.encode(1), second.prev_page)
+                val far = api.getFederatedInstances(
+                    GetFederatedInstances(kind = GetFederatedInstancesKind.All, page_cursor = LegacyPaging.encode(Int.MAX_VALUE.toLong()), limit = Long.MAX_VALUE),
+                ).getOrThrow()
+                assertEquals(emptyList(), far.items, version)
+                val wrapping = api.getFederatedInstances(GetFederatedInstances(kind = GetFederatedInstancesKind.All, limit = (1L shl 32) + 1)).getOrThrow()
+                assertEquals(3, wrapping.items.size, version)
             } finally {
                 apiClient.close()
                 client.close()
