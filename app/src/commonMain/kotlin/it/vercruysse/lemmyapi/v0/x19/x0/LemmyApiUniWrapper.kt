@@ -24,8 +24,8 @@ import it.vercruysse.lemmyapi.utils.LegacyPaging
 import it.vercruysse.lemmyapi.utils.matchesLegacyFilters
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.utils.toSlim
-import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.v0.LegacyFederatedInstances
+import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonDetails
 
 internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, baseUrl: String, auth: String?, onAuthRejected: AuthRejectedListener? = null) :

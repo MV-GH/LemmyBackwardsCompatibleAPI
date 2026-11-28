@@ -45,17 +45,6 @@ internal object LegacyFederatedInstances {
                     allowed = if (instance.id in allowedIds) FederationAllowList(instance.published_at, instance.updated_at) else null,
                 )
             }
-        val limit = form.limit?.takeIf { it > 0 }?.coerceAtMost(Int.MAX_VALUE.toLong())
-        return if (limit == null) {
-            PagedResponse(views)
-        } else {
-            val from = ((page - 1) * limit).coerceAtMost(views.size.toLong()).toInt()
-            val to = (from + limit).coerceAtMost(views.size.toLong()).toInt()
-            PagedResponse(
-                views.subList(from, to),
-                next_page = if (to < views.size) LegacyPaging.encode(page + 1) else null,
-                prev_page = LegacyPaging.prev(page),
-            )
-        }
+        return LegacyPaging.slice(views, page, form.limit)
     }
 }

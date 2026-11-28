@@ -21,8 +21,8 @@ import it.vercruysse.lemmyapi.enums.VoteSettings
 import it.vercruysse.lemmyapi.enums.VoteShow
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.utils.toAt
-import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.v0.LegacyFederatedInstances
+import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.SiteMetadata
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
 import it.vercruysse.lemmyapi.datatypes.AddAdminResponse as LemmyapiDatatypesAddAdminResponse

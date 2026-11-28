@@ -24,8 +24,8 @@ import it.vercruysse.lemmyapi.utils.LegacyPaging
 import it.vercruysse.lemmyapi.utils.matchesLegacyFilters
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.utils.toSlim
-import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.v0.LegacyFederatedInstances
+import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.v0.x19.x3.datatypes.GetPersonDetails
 
 // Based on tags/0.19.3-alpha.6
