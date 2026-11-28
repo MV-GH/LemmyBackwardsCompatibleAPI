@@ -18,8 +18,8 @@ enum class ModlogActionType(override val minimumVersion: Version = MINIMUM_API_V
     @SerialName("mod_lock_post")
     ModLockPost,
 
-    @SerialName("mod_feature_post")
-    ModFeaturePost,
+    @SerialName("mod_feature_post_community")
+    ModFeaturePostCommunity,
 
     @SerialName("mod_remove_comment")
     ModRemoveComment,
@@ -73,5 +73,5 @@ enum class ModlogActionType(override val minimumVersion: Version = MINIMUM_API_V
     ModWarnPost(V1_0_0),
 
     @SerialName("admin_feature_post_site")
-    AdminFeaturePostSite(V1_0_0),
+    AdminFeaturePostSite,
 }

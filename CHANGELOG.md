@@ -7,6 +7,7 @@ All notable changes to this project are documented here.
 ### Added
 
 - `getCommentsSlim` now works on Lemmy 0.18 and 0.19.
+- `getModlog` now works on Lemmy 0.18 and 0.19.
 
 ### Changed
 

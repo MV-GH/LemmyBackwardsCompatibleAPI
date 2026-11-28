@@ -28,7 +28,7 @@ internal enum class ModlogActionType {
             All -> UniModlogActionType.All
             ModRemovePost -> UniModlogActionType.ModRemovePost
             ModLockPost -> UniModlogActionType.ModLockPost
-            ModFeaturePost -> UniModlogActionType.ModFeaturePost
+            ModFeaturePost -> UniModlogActionType.ModFeaturePostCommunity
             ModRemoveComment -> UniModlogActionType.ModRemoveComment
             ModRemoveCommunity -> UniModlogActionType.AdminRemoveCommunity
             ModBanFromCommunity -> UniModlogActionType.ModBanFromCommunity
@@ -50,7 +50,7 @@ internal enum class ModlogActionType {
                 UniModlogActionType.All -> All
                 UniModlogActionType.ModRemovePost -> ModRemovePost
                 UniModlogActionType.ModLockPost -> ModLockPost
-                UniModlogActionType.ModFeaturePost -> ModFeaturePost
+                UniModlogActionType.ModFeaturePostCommunity, UniModlogActionType.AdminFeaturePostSite -> ModFeaturePost
                 UniModlogActionType.ModRemoveComment -> ModRemoveComment
                 UniModlogActionType.AdminRemoveCommunity -> ModRemoveCommunity
                 UniModlogActionType.ModBanFromCommunity -> ModBanFromCommunity
