@@ -41,6 +41,16 @@ internal object LegacyPaging {
     fun prev(page: Long): PaginationCursor? = if (page > 1) encode(page - 1) else null
 
     /**
+     * Pages a list the server returns in full. Without a [limit] everything is returned at once.
+     */
+    fun <T : DatatypeRoot> slice(items: List<T>, page: Long, limit: Long?): PagedResponse<T> {
+        val size = limit?.takeIf { it > 0 } ?: return PagedResponse(items)
+        val from = ((page - 1) * size).coerceAtMost(items.size.toLong()).toInt()
+        val to = (from + size).coerceAtMost(items.size.toLong()).toInt()
+        return PagedResponse(items.subList(from, to), next_page = if (to < items.size) encode(page + 1) else null, prev_page = prev(page))
+    }
+
+    /**
      * Decodes [cursor] and runs [fetch] with the page number, failing without calling [fetch] on an invalid cursor.
      */
     suspend fun <R> withPage(

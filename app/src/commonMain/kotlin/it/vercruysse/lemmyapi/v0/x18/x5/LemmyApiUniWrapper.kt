@@ -1287,7 +1287,9 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun deleteTagline(form: it.vercruysse.lemmyapi.datatypes.DeleteTagline): Result<Unit> = notSupported()
 
-    override suspend fun listTaglines(form: it.vercruysse.lemmyapi.datatypes.ListTaglines): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.Tagline>> = notSupported()
+    override suspend fun listTaglines(form: it.vercruysse.lemmyapi.datatypes.ListTaglines): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.Tagline>> = LegacyPaging.withPage(form.page_cursor) { page ->
+        api.getSite(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetSite(auth)).map { site -> LegacyPaging.slice(site.taglines.map { transformer.toUni(it) }, page, form.limit) }
+    }
 
     override suspend fun createOAuthProvider(form: it.vercruysse.lemmyapi.datatypes.CreateOAuthProvider): Result<it.vercruysse.lemmyapi.datatypes.AdminOAuthProvider> = notSupported()
 
