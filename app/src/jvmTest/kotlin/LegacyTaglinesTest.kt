@@ -52,6 +52,8 @@ class LegacyTaglinesTest {
                 assertEquals(listOf(3L), second.items.map { it.id }, version)
                 assertNull(second.next_page)
                 assertEquals(LegacyPaging.encode(1), second.prev_page)
+                val far = api.listTaglines(ListTaglines(page_cursor = LegacyPaging.encode(Int.MAX_VALUE.toLong()), limit = Long.MAX_VALUE)).getOrThrow()
+                assertEquals(emptyList(), far.items, version)
             } finally {
                 apiClient.close()
                 client.close()

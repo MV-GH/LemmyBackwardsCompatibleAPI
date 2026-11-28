@@ -17,14 +17,15 @@ internal object LegacyPaging {
     const val INVALID_CURSOR_ERROR = "invalid_page_cursor"
 
     /**
-     * Decodes a synthetic cursor into a 1-based page number. A `null` cursor means the first page.
+     * Decodes a synthetic cursor into a 1-based page number. A `null` cursor means the first page. Pages above [Int.MAX_VALUE] are rejected,
+     * so multiplying a page by a limit capped at [Int.MAX_VALUE] cannot overflow.
      */
     fun decode(cursor: PaginationCursor?): Result<Long> {
         if (cursor == null) return Result.success(1L)
         val page = cursor.takeIf { it.startsWith(PREFIX) }
             ?.removePrefix(PREFIX)
             ?.toLongOrNull()
-            ?.takeIf { it >= 1 }
+            ?.takeIf { it in 1L..Int.MAX_VALUE.toLong() }
         return if (page != null) {
             Result.success(page)
         } else {
@@ -44,7 +45,7 @@ internal object LegacyPaging {
      * Pages a list the server returns in full. Without a [limit] everything is returned at once.
      */
     fun <T : DatatypeRoot> slice(items: List<T>, page: Long, limit: Long?): PagedResponse<T> {
-        val size = limit?.takeIf { it > 0 } ?: return PagedResponse(items)
+        val size = limit?.takeIf { it > 0 }?.coerceAtMost(Int.MAX_VALUE.toLong()) ?: return PagedResponse(items)
         val from = ((page - 1) * size).coerceAtMost(items.size.toLong()).toInt()
         val to = (from + size).coerceAtMost(items.size.toLong()).toInt()
         return PagedResponse(items.subList(from, to), next_page = if (to < items.size) encode(page + 1) else null, prev_page = prev(page))

@@ -55,7 +55,7 @@ class LegacyPagingTest {
 
     @Test
     fun `foreign or malformed cursors are rejected`() {
-        for (cursor in listOf("abc", "p:", "p:0", "p:-1", "p:x")) {
+        for (cursor in listOf("abc", "p:", "p:0", "p:-1", "p:x", "p:2147483648", "p:9223372036854775807")) {
             val error = assertIs<LemmyBadRequestException>(LegacyPaging.decode(cursor).exceptionOrNull(), cursor)
             assertEquals(LegacyPaging.INVALID_CURSOR_ERROR, error.id)
         }
