@@ -35,13 +35,6 @@ class FeatureFlags(val version: LemmyVersion) {
     fun instanceBlockPersons(): Boolean = v1
 
     /**
-     * Modlog, supported from 1.0
-     *
-     * Endpoint `getModlog`
-     */
-    fun modlog(): Boolean = v1
-
-    /**
      * Read, hidden and liked content lists, feature added in 1.0
      *
      * Endpoint `listPersonRead` + `listPersonHidden` + `listPersonLiked`

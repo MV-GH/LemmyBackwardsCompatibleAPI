@@ -24,6 +24,8 @@ import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.utils.LegacyPaging
 import it.vercruysse.lemmyapi.utils.matchesLegacyFilters
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
+import it.vercruysse.lemmyapi.utils.toSlim
+import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.v0.x19.x6.datatypes.GetPersonDetails
 
 internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instance: LemmyInstance, actualVersion: LemmyVersion, baseUrl: String, auth: String?, onAuthRejected: AuthRejectedListener? = null) :
@@ -63,7 +65,16 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      */
     override suspend fun getModlog(
         form: it.vercruysse.lemmyapi.datatypes.GetModlog,
-    ): Result<PagedResponse<ModlogView>> = notSupported()
+    ): Result<PagedResponse<ModlogView>> = LegacyPaging.pagedResponse(
+        form.page_cursor,
+        filter = { view -> LegacyModlog.matches(view, form) },
+    ) { page ->
+        if (LegacyModlog.hasNoLegacyType(form)) {
+            Result.success(PagedResponse(emptyList()))
+        } else {
+            api.getModlog(transformer.fromUni(form).copy(page = page)).map { PagedResponse(LegacyModlog.sort(transformer.toUni(it))) }
+        }
+    }
 
     /**
      * Search lemmy.
@@ -1203,7 +1214,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun warnPost(form: it.vercruysse.lemmyapi.datatypes.CreatePostWarning): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> = notSupported()
 
-    override suspend fun getCommentsSlim(form: it.vercruysse.lemmyapi.datatypes.GetComments): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentSlimView>> = notSupported()
+    override suspend fun getCommentsSlim(form: it.vercruysse.lemmyapi.datatypes.GetComments): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentSlimView>> = getComments(form).map { it.toSlim() }
 
     override suspend fun lockComment(form: it.vercruysse.lemmyapi.datatypes.LockComment): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> = notSupported()
 

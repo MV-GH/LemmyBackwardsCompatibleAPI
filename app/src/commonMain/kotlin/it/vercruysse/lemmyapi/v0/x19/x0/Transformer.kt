@@ -11,6 +11,7 @@ import it.vercruysse.lemmyapi.enums.CommentSortType
 import it.vercruysse.lemmyapi.enums.CommunityFollowerState
 import it.vercruysse.lemmyapi.enums.CommunityVisibility
 import it.vercruysse.lemmyapi.enums.ImageMode
+import it.vercruysse.lemmyapi.enums.ModlogKind
 import it.vercruysse.lemmyapi.enums.NotificationType
 import it.vercruysse.lemmyapi.enums.PostListingMode
 import it.vercruysse.lemmyapi.enums.SortType
@@ -19,6 +20,7 @@ import it.vercruysse.lemmyapi.enums.VoteSettings
 import it.vercruysse.lemmyapi.enums.VoteShow
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.utils.toAt
+import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
 import it.vercruysse.lemmyapi.datatypes.AddAdminResponse as LemmyapiDatatypesAddAdminResponse
 import it.vercruysse.lemmyapi.datatypes.AddModToCommunity as LemmyapiDatatypesAddModToCommunity
@@ -104,6 +106,7 @@ import it.vercruysse.lemmyapi.datatypes.Login as LemmyapiDatatypesLogin
 import it.vercruysse.lemmyapi.datatypes.LoginResponse as LemmyapiDatatypesLoginResponse
 import it.vercruysse.lemmyapi.datatypes.LoginToken as LemmyapiDatatypesLoginToken
 import it.vercruysse.lemmyapi.datatypes.MarkManyPostsAsRead as LemmyapiDatatypesMarkPostAsRead
+import it.vercruysse.lemmyapi.datatypes.ModlogView as LemmyapiDatatypesModlogView
 import it.vercruysse.lemmyapi.datatypes.MyUserInfo as LemmyapiDatatypesMyUserInfo
 import it.vercruysse.lemmyapi.datatypes.Person as LemmyapiDatatypesPerson
 import it.vercruysse.lemmyapi.datatypes.PersonView as LemmyapiDatatypesPersonView
@@ -223,6 +226,7 @@ import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetComments as X0DatatypesGetC
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetCommunity as X0DatatypesGetCommunity
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetCommunityResponse as X0DatatypesGetCommunityResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetModlog as X0DatatypesGetModlog
+import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetModlogResponse as X0DatatypesGetModlogResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonDetails as X0DatatypesGetPersonDetails
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonDetailsResponse as X0DatatypesGetPersonDetailsResponse
 import it.vercruysse.lemmyapi.v0.x19.x0.datatypes.GetPersonMentions as X0DatatypesGetPersonMentions
@@ -1682,4 +1686,184 @@ internal class Transformer : MapperGenerator {
         X0DatatypesVerifyEmail(
             token = d.token,
         )
+
+    private fun toUniModlogPost(d: X0DatatypesPost) = this.toUni(d = d, counts = X0DatatypesPostAggregates(-1, -1, -1, -1, -1, ""))
+
+    private fun toUniModlogCommunity(d: X0DatatypesCommunity) = this.toUni(d = d, counts = X0DatatypesCommunityAggregates(-1, -1, -1, -1, "", -1, -1, -1, -1))
+
+    private fun toUniModlogComment(d: X0DatatypesComment) = this.toUni(d = d, counts = X0DatatypesCommentAggregates(-1, -1, -1, -1, "", -1))
+
+    private fun toUniModlogPerson(d: X0DatatypesPerson?) = d?.let { this.toUni(d = it) }
+
+    fun toUni(d: X0DatatypesGetModlogResponse): List<LemmyapiDatatypesModlogView> = buildList {
+        d.removed_posts.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_remove_post.id,
+                ModlogKind.ModRemovePost,
+                !it.mod_remove_post.removed,
+                it.mod_remove_post.when_,
+                toUniModlogPerson(it.moderator),
+                reason = it.mod_remove_post.reason,
+                targetCommunity = toUniModlogCommunity(it.community),
+                targetPost = toUniModlogPost(it.post),
+            )
+        }
+        d.locked_posts.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_lock_post.id,
+                ModlogKind.ModLockPost,
+                !it.mod_lock_post.locked,
+                it.mod_lock_post.when_,
+                toUniModlogPerson(it.moderator),
+                targetCommunity = toUniModlogCommunity(it.community),
+                targetPost = toUniModlogPost(it.post),
+            )
+        }
+        d.featured_posts.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_feature_post.id,
+                if (it.mod_feature_post.is_featured_community) ModlogKind.ModFeaturePostCommunity else ModlogKind.AdminFeaturePostSite,
+                !it.mod_feature_post.featured,
+                it.mod_feature_post.when_,
+                toUniModlogPerson(it.moderator),
+                targetCommunity = toUniModlogCommunity(it.community),
+                targetPost = toUniModlogPost(it.post),
+            )
+        }
+        d.removed_comments.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_remove_comment.id,
+                ModlogKind.ModRemoveComment,
+                !it.mod_remove_comment.removed,
+                it.mod_remove_comment.when_,
+                toUniModlogPerson(it.moderator),
+                reason = it.mod_remove_comment.reason,
+                targetPerson = toUniModlogPerson(it.commenter),
+                targetCommunity = toUniModlogCommunity(it.community),
+                targetPost = toUniModlogPost(it.post),
+                targetComment = toUniModlogComment(it.comment),
+            )
+        }
+        d.removed_communities.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_remove_community.id,
+                ModlogKind.AdminRemoveCommunity,
+                !it.mod_remove_community.removed,
+                it.mod_remove_community.when_,
+                toUniModlogPerson(it.moderator),
+                reason = it.mod_remove_community.reason,
+                targetCommunity = toUniModlogCommunity(it.community),
+            )
+        }
+        d.banned_from_community.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_ban_from_community.id,
+                ModlogKind.ModBanFromCommunity,
+                !it.mod_ban_from_community.banned,
+                it.mod_ban_from_community.when_,
+                toUniModlogPerson(it.moderator),
+                reason = it.mod_ban_from_community.reason,
+                expiresAt = it.mod_ban_from_community.expires,
+                targetPerson = toUniModlogPerson(it.banned_person),
+                targetCommunity = toUniModlogCommunity(it.community),
+            )
+        }
+        d.banned.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_ban.id,
+                ModlogKind.AdminBan,
+                !it.mod_ban.banned,
+                it.mod_ban.when_,
+                toUniModlogPerson(it.moderator),
+                reason = it.mod_ban.reason,
+                expiresAt = it.mod_ban.expires,
+                targetPerson = toUniModlogPerson(it.banned_person),
+            )
+        }
+        d.added_to_community.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_add_community.id,
+                ModlogKind.ModAddToCommunity,
+                it.mod_add_community.removed,
+                it.mod_add_community.when_,
+                toUniModlogPerson(it.moderator),
+                targetPerson = toUniModlogPerson(it.modded_person),
+                targetCommunity = toUniModlogCommunity(it.community),
+            )
+        }
+        d.transferred_to_community.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_transfer_community.id,
+                ModlogKind.ModTransferCommunity,
+                false,
+                it.mod_transfer_community.when_,
+                toUniModlogPerson(it.moderator),
+                targetPerson = toUniModlogPerson(it.modded_person),
+                targetCommunity = toUniModlogCommunity(it.community),
+            )
+        }
+        d.added.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_add.id,
+                ModlogKind.AdminAdd,
+                it.mod_add.removed,
+                it.mod_add.when_,
+                toUniModlogPerson(it.moderator),
+                targetPerson = toUniModlogPerson(it.modded_person),
+            )
+        }
+        d.admin_purged_persons.mapTo(this) {
+            LegacyModlog.view(
+                it.admin_purge_person.id,
+                ModlogKind.AdminPurgePerson,
+                false,
+                it.admin_purge_person.when_,
+                toUniModlogPerson(it.admin),
+                reason = it.admin_purge_person.reason,
+            )
+        }
+        d.admin_purged_communities.mapTo(this) {
+            LegacyModlog.view(
+                it.admin_purge_community.id,
+                ModlogKind.AdminPurgeCommunity,
+                false,
+                it.admin_purge_community.when_,
+                toUniModlogPerson(it.admin),
+                reason = it.admin_purge_community.reason,
+            )
+        }
+        d.admin_purged_posts.mapTo(this) {
+            LegacyModlog.view(
+                it.admin_purge_post.id,
+                ModlogKind.AdminPurgePost,
+                false,
+                it.admin_purge_post.when_,
+                toUniModlogPerson(it.admin),
+                reason = it.admin_purge_post.reason,
+                targetCommunity = toUniModlogCommunity(it.community),
+            )
+        }
+        d.admin_purged_comments.mapTo(this) {
+            LegacyModlog.view(
+                it.admin_purge_comment.id,
+                ModlogKind.AdminPurgeComment,
+                false,
+                it.admin_purge_comment.when_,
+                toUniModlogPerson(it.admin),
+                reason = it.admin_purge_comment.reason,
+                targetPost = toUniModlogPost(it.post),
+            )
+        }
+        d.hidden_communities.mapTo(this) {
+            LegacyModlog.view(
+                it.mod_hide_community.id,
+                ModlogKind.ModChangeCommunityVisibility,
+                !it.mod_hide_community.hidden,
+                it.mod_hide_community.when_,
+                toUniModlogPerson(it.admin),
+                reason = it.mod_hide_community.reason,
+                targetCommunity = toUniModlogCommunity(it.community),
+            )
+        }
+    }
 }
