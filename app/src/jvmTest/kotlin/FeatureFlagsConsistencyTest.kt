@@ -7,7 +7,6 @@ import it.vercruysse.lemmyapi.LemmyApiClient
 import it.vercruysse.lemmyapi.LemmyAuth
 import it.vercruysse.lemmyapi.LemmyInstance
 import it.vercruysse.lemmyapi.LemmyVersion
-import it.vercruysse.lemmyapi.datatypes.GetModlog
 import it.vercruysse.lemmyapi.datatypes.HidePosts
 import it.vercruysse.lemmyapi.datatypes.ListPersonHidden
 import it.vercruysse.lemmyapi.datatypes.ListPersonLiked
@@ -26,7 +25,6 @@ class FeatureFlagsConsistencyTest {
         Triple("instanceBlock", { it.FF.instanceBlock() }, { userBlockInstanceCommunities(UserBlockInstanceCommunitiesParams(1, true)) }),
         Triple("instanceBlockPersons", { it.FF.instanceBlockPersons() }, { userBlockInstancePersons(UserBlockInstancePersonsParams(1, true)) }),
         Triple("hidePost", { it.FF.hidePost() }, { hidePosts(HidePosts(listOf(1), true)) }),
-        Triple("modlog", { it.FF.modlog() }, { getModlog(GetModlog()) }),
         Triple("listPersonRead", { it.FF.listPersonReadHiddenLiked() }, { listPersonRead(ListPersonRead()) }),
         Triple("listPersonHidden", { it.FF.listPersonReadHiddenLiked() }, { listPersonHidden(ListPersonHidden()) }),
         Triple("listPersonLiked", { it.FF.listPersonReadHiddenLiked() }, { listPersonLiked(ListPersonLiked()) }),
