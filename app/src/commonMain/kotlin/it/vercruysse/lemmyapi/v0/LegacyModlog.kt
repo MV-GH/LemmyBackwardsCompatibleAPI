@@ -10,6 +10,7 @@ import it.vercruysse.lemmyapi.datatypes.Post
 import it.vercruysse.lemmyapi.enums.ModlogKind
 import it.vercruysse.lemmyapi.utils.sortableTimestamp
 import it.vercruysse.lemmyapi.v0.enums.ModlogActionType
+import it.vercruysse.lemmyapi.enums.ModlogActionType as UniModlogActionType
 
 /**
  * Helpers to flatten the per-category modlog of pre 1.0 Lemmy into the 1.0 [ModlogView] list.
@@ -48,9 +49,13 @@ internal object LegacyModlog {
     /** The requested type only exists from 1.0, so pre 1.0 there is nothing to return. */
     fun hasNoLegacyType(form: GetModlog): Boolean = form.type_ != null && ModlogActionType.fromUniNullable(form.type_) == null
 
-    /** Client side filters for the [GetModlog] fields older servers ignore. */
+    /**
+     * Client side filters for the [GetModlog] fields older servers ignore, and for the type, as
+     * pre 1.0 [ModlogActionType.ModFeaturePost] covers both community and site features.
+     */
     fun matches(view: ModlogView, form: GetModlog): Boolean =
-        (form.post_id == null || view.target_post?.id == form.post_id) &&
+        (form.type_ == null || form.type_ == UniModlogActionType.All || view.modlog.kind.name == form.type_.name) &&
+            (form.post_id == null || view.target_post?.id == form.post_id) &&
             (form.comment_id == null || view.target_comment?.id == form.comment_id)
 
     /** Merges the categories newest first, like the 1.0 modlog. */

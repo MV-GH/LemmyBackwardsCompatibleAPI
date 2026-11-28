@@ -110,4 +110,34 @@ class LegacyModlogTest {
             client.close()
         }
     }
+
+    @Test
+    fun `pre 1_0 feature filters split community and site features`() = runBlocking {
+        val descriptor = Modlog11.serializer().descriptor
+        val response = objectWith(
+            descriptor,
+            "featured_posts" to JsonArray(
+                listOf(true, false).flatMap { community ->
+                    entry(descriptor, "featured_posts", "mod_feature_post", "is_featured_community" to JsonPrimitive(community)) as JsonArray
+                },
+            ),
+        )
+        val client = HttpClient(
+            MockEngine { request ->
+                assertEquals("ModFeaturePost", request.url.parameters["type_"])
+                respond(response.toString(), HttpStatusCode.OK, headersOf(HttpHeaders.ContentType, "application/json"))
+            },
+        )
+        val apiClient = LemmyApiClient(client)
+        try {
+            val api = apiClient.connectForVersion(LemmyInstance("lemmy.ml"), LemmyVersion("0.19.11")).getOrThrow()
+            val site = api.getModlog(GetModlog(type_ = ModlogActionType.AdminFeaturePostSite)).getOrThrow()
+            assertEquals(listOf(ModlogKind.AdminFeaturePostSite), site.items.map { it.modlog.kind })
+            val community = api.getModlog(GetModlog(type_ = ModlogActionType.ModFeaturePostCommunity)).getOrThrow()
+            assertEquals(listOf(ModlogKind.ModFeaturePostCommunity), community.items.map { it.modlog.kind })
+        } finally {
+            apiClient.close()
+            client.close()
+        }
+    }
 }

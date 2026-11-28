@@ -6,6 +6,8 @@ All notable changes to this project are documented here.
 
 ### Breaking changes
 
+- `ModlogActionType.ModFeaturePost` is now `ModFeaturePostCommunity`, as Lemmy 1.0 rejects `mod_feature_post`.
+
 - `FF.modlog()` was removed, as `getModlog` now works on every supported version.
 
 ### Added
