@@ -23,6 +23,7 @@ import it.vercruysse.lemmyapi.pictrs.PictrsService
 import it.vercruysse.lemmyapi.utils.LegacyPaging
 import it.vercruysse.lemmyapi.utils.matchesLegacyFilters
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
+import it.vercruysse.lemmyapi.utils.toSlim
 import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetPersonDetails
 
@@ -1220,7 +1221,7 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
 
     override suspend fun warnPost(form: it.vercruysse.lemmyapi.datatypes.CreatePostWarning): Result<it.vercruysse.lemmyapi.datatypes.PostResponse> = notSupported()
 
-    override suspend fun getCommentsSlim(form: it.vercruysse.lemmyapi.datatypes.GetComments): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentSlimView>> = notSupported()
+    override suspend fun getCommentsSlim(form: it.vercruysse.lemmyapi.datatypes.GetComments): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.CommentSlimView>> = getComments(form).map { it.toSlim() }
 
     override suspend fun lockComment(form: it.vercruysse.lemmyapi.datatypes.LockComment): Result<it.vercruysse.lemmyapi.datatypes.CommentResponse> = notSupported()
 
