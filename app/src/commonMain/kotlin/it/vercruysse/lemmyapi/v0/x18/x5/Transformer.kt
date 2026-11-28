@@ -21,6 +21,7 @@ import it.vercruysse.lemmyapi.enums.VoteShow
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.utils.toAt
 import it.vercruysse.lemmyapi.v0.LegacyModlog
+import it.vercruysse.lemmyapi.v0.LegacyFederatedInstances
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.LocalUser
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
 import it.vercruysse.lemmyapi.datatypes.AddAdminResponse as LemmyapiDatatypesAddAdminResponse
@@ -1864,4 +1865,6 @@ internal class Transformer(var auth: String) : MapperGenerator {
             )
         }
     }
+
+    fun toUniFederated(d: X5DatatypesInstance) = LegacyFederatedInstances.Entry(this.toUni(d = d))
 }

@@ -25,6 +25,7 @@ import it.vercruysse.lemmyapi.utils.matchesLegacyFilters
 import it.vercruysse.lemmyapi.utils.runCatchingPreservingCancellation
 import it.vercruysse.lemmyapi.utils.toSlim
 import it.vercruysse.lemmyapi.v0.LegacyModlog
+import it.vercruysse.lemmyapi.v0.LegacyFederatedInstances
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetCaptcha
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetPersonDetails
 import it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetReportCount
@@ -266,7 +267,18 @@ internal class LemmyApiUniWrapper(client: HttpClient, apiBaseUrl: String, instan
      * @GET("federated_instances")
      */
     override suspend fun getFederatedInstances(form: it.vercruysse.lemmyapi.datatypes.GetFederatedInstances): Result<PagedResponse<it.vercruysse.lemmyapi.datatypes.FederatedInstanceView>> =
-        notSupported() // Not used and complex to map
+        LegacyPaging.withPage(form.page_cursor) { page ->
+            api.getFederatedInstances(it.vercruysse.lemmyapi.v0.x18.x5.datatypes.GetFederatedInstances(auth)).map { resp ->
+                val instances = resp.federated_instances
+                LegacyFederatedInstances.page(
+                    form,
+                    page,
+                    instances?.linked.orEmpty().map(transformer::toUniFederated),
+                    instances?.allowed.orEmpty().map(transformer::toUniFederated),
+                    instances?.blocked.orEmpty().map(transformer::toUniFederated),
+                )
+            }
+        }
 
     /**
      * Get / fetch a post.

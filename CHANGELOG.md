@@ -6,6 +6,7 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- `getFederatedInstances` now works on Lemmy 0.18 and 0.19.
 - `listTaglines` now works on Lemmy 0.18 and 0.19.
 - `getCommentsSlim` now works on Lemmy 0.18 and 0.19.
 - `getModlog` now works on Lemmy 0.18 and 0.19.
