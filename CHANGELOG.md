@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-## [Unreleased]
+## [1.0.0-rc.6] - 2026-11-28
 
 ### Added
 
@@ -13,6 +13,7 @@ All notable changes to this project are documented here.
 
 ### Changed
 
+- The license is now MPL 2.0 instead of AGPL v3.
 - Pre-1.0: community `description` maps to `sidebar` instead of `summary`; create/edit send `sidebar`, falling back to `summary`.
 
 ## [1.0.0-rc.5] - 2026-11-21
