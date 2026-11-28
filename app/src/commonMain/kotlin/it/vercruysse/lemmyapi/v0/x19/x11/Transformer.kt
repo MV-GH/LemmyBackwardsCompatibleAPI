@@ -18,6 +18,7 @@ import it.vercruysse.lemmyapi.enums.VoteSettings
 import it.vercruysse.lemmyapi.enums.VoteShow
 import it.vercruysse.lemmyapi.exception.LemmyBadRequestException
 import it.vercruysse.lemmyapi.utils.toAt
+import it.vercruysse.lemmyapi.v0.LegacyFederatedInstances
 import it.vercruysse.lemmyapi.v0.LegacyModlog
 import it.vercruysse.lemmyapi.datatypes.AddAdmin as LemmyapiDatatypesAddAdmin
 import it.vercruysse.lemmyapi.datatypes.AddAdminResponse as LemmyapiDatatypesAddAdminResponse
@@ -252,6 +253,7 @@ import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.GetSiteResponse as X11Datatyp
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.HidePost as X11DatatypesHidePost
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.ImageDetails as X11DatatypesImageDetails
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.Instance as X11DatatypesInstance
+import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.InstanceWithFederationState as X11DatatypesInstanceWithFederationState
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.Language as X11DatatypesLanguage
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.LinkMetadata as X11DatatypesLinkMetadata
 import it.vercruysse.lemmyapi.v0.x19.x11.datatypes.ListCommentLikes as X11DatatypesListCommentLikes
@@ -2002,4 +2004,9 @@ internal class Transformer : MapperGenerator {
             )
         }
     }
+
+    fun toUniFederated(d: X11DatatypesInstanceWithFederationState) = LegacyFederatedInstances.Entry(
+        LemmyapiDatatypesInstance(d.id, d.domain, d.published, d.updated, d.software, d.version),
+        d.federation_state?.let { this.toUni(d = it) },
+    )
 }
